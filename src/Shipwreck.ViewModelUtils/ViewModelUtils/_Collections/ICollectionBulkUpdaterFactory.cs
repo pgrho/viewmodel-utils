@@ -1,4 +1,4 @@
-﻿namespace Shipwreck.ViewModelUtils.Collections
+﻿namespace Shipwreck.ViewModelUtils
 {
     public interface ICollectionBulkUpdaterFactory
     {

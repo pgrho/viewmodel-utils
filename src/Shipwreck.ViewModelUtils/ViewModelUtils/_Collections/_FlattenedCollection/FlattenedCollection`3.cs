@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace Shipwreck.ViewModelUtils.Collections
+namespace Shipwreck.ViewModelUtils
 {
     public abstract class FlattenedCollection<TParent, TChild1, TChild2> : FlattenedCollection<TParent>
         where TParent : class

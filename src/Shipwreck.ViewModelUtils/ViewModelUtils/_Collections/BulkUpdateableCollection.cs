@@ -7,8 +7,21 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Shipwreck.ViewModelUtils.Collections
+namespace Shipwreck.ViewModelUtils
 {
+    public interface ISelectable
+    {
+        bool IsSelected { get; set; }
+        void SetIsSelected(bool value, bool notifyHost);
+    }
+    public interface ISelectablesHost
+    {
+        bool? AllItemsSelected { get; set; }
+
+        bool? GetAllItemsSelected(ISelectable item);
+
+        void OnItemSelectionChanged(ISelectable item, bool newValue);
+    }
     public static class BulkUpdateableCollection
     {
         private sealed class DefaultUpdaterFactor : ICollectionBulkUpdaterFactory
@@ -246,7 +259,7 @@ namespace Shipwreck.ViewModelUtils.Collections
             return c;
         }
 
-        protected bool SetProperty(ref string field, string value, [CallerMemberName] string propertyName = null, Action onChanged = null)
+        protected bool SetProperty(ref string field, string value, Action onChanged = null, [CallerMemberName] string propertyName = null)
         {
             if (value != field)
             {
@@ -258,7 +271,7 @@ namespace Shipwreck.ViewModelUtils.Collections
             return false;
         }
 
-        protected bool SetProperty<TValue>(ref TValue field, TValue value, [CallerMemberName] string propertyName = null, Action onChanged = null)
+        protected bool SetProperty<TValue>(ref TValue field, TValue value, Action onChanged = null, [CallerMemberName] string propertyName = null)
         {
             if (!((field as IEquatable<TValue>)?.Equals(value) ?? Equals(field, value)))
             {
@@ -271,6 +284,29 @@ namespace Shipwreck.ViewModelUtils.Collections
             return false;
         }
 
+        protected bool SetFlagProperty(ref byte field, byte flag, bool hasFlag, Action onChanged = null, [CallerMemberName] string propertyName = null)
+        {
+            var nv = (byte)(hasFlag ? (field | flag) : (field & ~flag));
+            return SetProperty(ref field, nv, onChanged: onChanged, propertyName: propertyName);
+        }
+
+        protected bool SetFlagProperty(ref ushort field, ushort flag, bool hasFlag, Action onChanged = null, [CallerMemberName] string propertyName = null)
+        {
+            var nv = (ushort)(hasFlag ? (field | flag) : (field & ~flag));
+            return SetProperty(ref field, nv, onChanged: onChanged, propertyName: propertyName);
+        }
+
+        protected bool SetFlagProperty(ref uint field, uint flag, bool hasFlag, Action onChanged = null, [CallerMemberName] string propertyName = null)
+        {
+            var nv = hasFlag ? (field | flag) : (field & ~flag);
+            return SetProperty(ref field, nv, onChanged: onChanged, propertyName: propertyName);
+        }
+
+        protected bool SetFlagProperty(ref ulong field, ulong flag, bool hasFlag, Action onChanged = null, [CallerMemberName] string propertyName = null)
+        {
+            var nv = hasFlag ? (field | flag) : (field & ~flag);
+            return SetProperty(ref field, nv, onChanged: onChanged, propertyName: propertyName);
+        }
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         {
             OnPropertyChanged(new PropertyChangedEventArgs(propertyName));

@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace Shipwreck.ViewModelUtils.Collections
+namespace Shipwreck.ViewModelUtils
 {
     public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChanged, INotifyCollectionChanged
         where TParent : class
