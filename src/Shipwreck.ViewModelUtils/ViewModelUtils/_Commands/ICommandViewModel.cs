@@ -10,6 +10,7 @@
         bool IsEnabled { get; }
 
         string Icon { get; }
+        string Href { get; }
 
         BorderStyle Style { get; }
 

@@ -9,19 +9,6 @@ using System.Runtime.CompilerServices;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public interface ISelectable
-    {
-        bool IsSelected { get; set; }
-        void SetIsSelected(bool value, bool notifyHost);
-    }
-    public interface ISelectablesHost
-    {
-        bool? AllItemsSelected { get; set; }
-
-        bool? GetAllItemsSelected(ISelectable item);
-
-        void OnItemSelectionChanged(ISelectable item, bool newValue);
-    }
     public static class BulkUpdateableCollection
     {
         private sealed class DefaultUpdaterFactor : ICollectionBulkUpdaterFactory
