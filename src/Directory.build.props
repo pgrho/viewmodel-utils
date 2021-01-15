@@ -1,0 +1,11 @@
+﻿<Project>
+  <PropertyGroup>
+    <Version>0.0.1</Version>
+    <Authors>shipwreck.jp</Authors>
+    <Copyright>Copyright © 2021 shipwreck.jp</Copyright>
+    <IsDeterministic>true</IsDeterministic>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/pgrho/viewmodel-utils</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pgrho/viewmodel-utils</RepositoryUrl>
+  </PropertyGroup>
+</Project>
