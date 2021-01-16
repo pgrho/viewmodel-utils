@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>a9b5722f-dfc4-4a3e-ba20-8ce24ebed9c1</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Shipwreck</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\BorderStyle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IExpandable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IRequestFocus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ISelectable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ISelectablesHost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NotifyChangedHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ObservableModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\BulkUpdateableCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\CollectionObserver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\ICollectionBulkUpdaterFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\AsyncCommandBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\AsyncCommandViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandBuilderBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandBuilderExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ICommandViewModel.cs" />
+  </ItemGroup>
+</Project>

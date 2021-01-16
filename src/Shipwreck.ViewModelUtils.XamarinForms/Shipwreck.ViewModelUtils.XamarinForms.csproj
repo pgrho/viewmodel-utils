@@ -6,4 +6,9 @@
     <RootNamespace>Shipwreck</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
+  </ItemGroup>
+
+  <Import Project="..\Shipwreck.ViewModelUtils.Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
 </Project>
