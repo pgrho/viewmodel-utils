@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Shipwreck</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
+  </ItemGroup>
+
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.FontAwesome5.Shared.projitems" Label="Shared" />
+</Project>

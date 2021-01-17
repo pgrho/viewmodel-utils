@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
@@ -11,6 +11,5 @@
     <Reference Include="System.Xaml" />
   </ItemGroup>
 
-  <Import Project="..\Shipwreck.ViewModelUtils.Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
-
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.FontAwesome5.Shared.projitems" Label="Shared" />
 </Project>

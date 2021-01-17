@@ -1,14 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.2" />
   </ItemGroup>
-  
-  <Import Project="..\Shipwreck.ViewModelUtils.Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
 </Project>

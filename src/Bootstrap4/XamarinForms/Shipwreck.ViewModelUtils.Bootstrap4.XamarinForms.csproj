@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
@@ -10,5 +10,5 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
   </ItemGroup>
 
-  <Import Project="..\Shipwreck.ViewModelUtils.Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Bootstrap4.Shared.projitems" Label="Shared" />
 </Project>
