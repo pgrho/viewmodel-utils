@@ -9,5 +9,7 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Bootstrap4\ColorScheme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Bootstrap4\ColorSchemeConverter.cs" />
   </ItemGroup>
 </Project>
