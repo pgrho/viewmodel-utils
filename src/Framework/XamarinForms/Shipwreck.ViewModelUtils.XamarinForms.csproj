@@ -4,7 +4,6 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
-    <DefineConstants>$(DefineConstants);IS_XAMARIN_FORMS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,8 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
+    <ProjectReference Include="..\..\Bootstrap4\XamarinForms\Shipwreck.ViewModelUtils.Bootstrap4.XamarinForms.csproj" />
+    <ProjectReference Include="..\..\FontAwesome5\XamarinForms\Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms.csproj" />
   </ItemGroup>
 
-  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Bootstrap4.Shared.projitems" Label="Shared" />
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
 </Project>

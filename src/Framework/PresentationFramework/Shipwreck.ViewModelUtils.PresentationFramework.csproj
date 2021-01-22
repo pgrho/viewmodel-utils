@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net5.0-windows</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Shipwreck</RootNamespace>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Reference Include="System.Xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bootstrap4\PresentationFramework\Shipwreck.ViewModelUtils.Bootstrap4.PresentationFramework.csproj" />
+    <ProjectReference Include="..\..\FontAwesome5\PresentationFramework\Shipwreck.ViewModelUtils.FontAwesome5.PresentationFramework.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+
+</Project>

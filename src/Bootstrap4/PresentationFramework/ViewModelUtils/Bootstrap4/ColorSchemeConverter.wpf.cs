@@ -9,7 +9,7 @@ namespace Shipwreck.ViewModelUtils.Bootstrap4
     {
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (value is string s && ConvertFromString(s) is var r)
+            if (value is string s && ConvertFromStringCore(s) is var r)
             {
                 return r;
             }

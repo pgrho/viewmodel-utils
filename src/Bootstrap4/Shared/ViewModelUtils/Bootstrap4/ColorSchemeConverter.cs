@@ -5,7 +5,7 @@ namespace Shipwreck.ViewModelUtils.Bootstrap4
 {
     public partial class ColorSchemeConverter
     {
-        private static object ConvertFromString(string s)
+        private static object ConvertFromStringCore(string s)
             => s switch
             {
                 nameof(ColorScheme.Primary) => ColorScheme.Primary,
