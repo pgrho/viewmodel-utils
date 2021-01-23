@@ -1,0 +1,33 @@
+﻿<Window
+    x:Class="Shipwreck.ViewModelUtils.Demo.PresentationFramework.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.PresentationFramework"
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <Grid>
+        <StackPanel
+            VerticalAlignment="Top"
+            Orientation="Horizontal">
+            <TextBox
+                Name="faTextBox"
+                Width="400"
+                VerticalAlignment="Center"
+                FontSize="24"
+                Text="fas fa-pulse fa-spinner" />
+            <Grid
+                Width="64"
+                Height="64">
+                <vmu:FontAwesomeTextBlock
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    FontSize="48"
+                    Icon="{Binding ElementName=faTextBox, Path=Text}" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

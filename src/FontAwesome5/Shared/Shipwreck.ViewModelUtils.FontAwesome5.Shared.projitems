@@ -9,5 +9,7 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FontAwesome5\FontAwesome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FontAwesome5\FontAwesomeAnimation.cs" />
   </ItemGroup>
 </Project>

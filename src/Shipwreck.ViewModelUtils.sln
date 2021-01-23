@@ -49,6 +49,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.XamarinForms", "Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj", "{1BE2B82E-497E-490E-BDCD-8C856077E5DD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Demo", "5. Demo", "{AE42DF8F-F082-4673-B441-CA4741871EDB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Demo.PresentationFramework", "Demo\PresentationFramework\Shipwreck.ViewModelUtils.Demo.PresentationFramework.csproj", "{271FAB20-CE14-4401-8244-616B0FE3DA8C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Bootstrap4\Shared\Shipwreck.ViewModelUtils.Bootstrap4.Shared.projitems*{06c27048-ca49-46d9-92c0-3656ec5b8642}*SharedItemsImports = 5
@@ -207,6 +211,18 @@ Global
 		{1BE2B82E-497E-490E-BDCD-8C856077E5DD}.Release|x64.Build.0 = Release|Any CPU
 		{1BE2B82E-497E-490E-BDCD-8C856077E5DD}.Release|x86.ActiveCfg = Release|Any CPU
 		{1BE2B82E-497E-490E-BDCD-8C856077E5DD}.Release|x86.Build.0 = Release|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Debug|x64.Build.0 = Debug|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Debug|x86.Build.0 = Debug|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Release|x64.ActiveCfg = Release|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Release|x64.Build.0 = Release|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -227,6 +243,7 @@ Global
 		{9C106D03-1713-4B2E-AD83-4B99A0DD6F17} = {34DFF1AB-433A-4BF2-A1BD-1BC11288556E}
 		{E26AD196-1656-488E-BA36-8DE042A0EFB6} = {34DFF1AB-433A-4BF2-A1BD-1BC11288556E}
 		{1BE2B82E-497E-490E-BDCD-8C856077E5DD} = {34DFF1AB-433A-4BF2-A1BD-1BC11288556E}
+		{271FAB20-CE14-4401-8244-616B0FE3DA8C} = {AE42DF8F-F082-4673-B441-CA4741871EDB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFC9127-DF00-440C-BFE6-99D620181698}
