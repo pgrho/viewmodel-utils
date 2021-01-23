@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.XamarinForms"
+    x:Class="Shipwreck.ViewModelUtils.Demo.XamarinForms.MainPage">
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel />
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <Entry
+            Text="{Binding Icon}" />
+        <vmu:FontAwesomeLabel
+            FontSize="32"
+            HorizontalTextAlignment="Center"
+            Icon="{Binding Icon}" />
+    </StackLayout>
+
+</ContentPage>

@@ -57,7 +57,19 @@ namespace Shipwreck.ViewModelUtils.FontAwesome5
             switch (newValue)
             {
                 case FontAwesomeAnimation.Spin:
-                    this.RotateTo(3600 * 24 * 180, 3600 * 24, Easing.Linear);
+                    ViewExtensions.CancelAnimations(this);
+                    var s = DateTime.Now.Ticks;
+                    Device.StartTimer(TimeSpan.FromSeconds(0.025), () =>
+                    {
+                        if (Animation == FontAwesomeAnimation.Spin)
+                        {
+                            var t = DateTime.Now.Ticks;
+                            Rotation += (t - s) / (TimeSpan.TicksPerSecond / 360);
+                            s = t;
+                            return true;
+                        }
+                        return false;
+                    });
                     break;
 
                 case FontAwesomeAnimation.Pulse:
