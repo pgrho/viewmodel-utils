@@ -1,6 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
-    <Version>0.1.0</Version>
+    <Version>0.1.0.1</Version>
     <Authors>shipwreck.jp</Authors>
     <Copyright>Copyright © 2021 shipwreck.jp</Copyright>
     <LangVersion>9.0</LangVersion>
@@ -9,4 +9,11 @@
     <PackageProjectUrl>https://github.com/pgrho/viewmodel-utils</PackageProjectUrl>
     <RepositoryUrl>https://github.com/pgrho/viewmodel-utils</RepositoryUrl>
   </PropertyGroup>
+  <Target Name="PostPack"
+          AfterTargets="Pack"
+          Condition="'$(GeneratePackageOnBuild)'=='true'">
+    <Exec Command="XCOPY &quot;$(MSBuildProjectDirectory)\bin\Release\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Release&quot; /D /C /I /Y /F
+        &#xD;&#xA;XCOPY &quot;$(MSBuildProjectDirectory)\bin\Debug\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Debug&quot; /D /C /I /Y /F"
+          ContinueOnError="WarnAndContinue"/>
+  </Target>
 </Project>

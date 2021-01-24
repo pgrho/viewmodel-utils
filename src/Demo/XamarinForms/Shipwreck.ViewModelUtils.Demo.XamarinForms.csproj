@@ -1,8 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+    <UserSecretsId>ead016b0-5fba-4f6c-b076-629463eb9bf2</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -11,14 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Bootstrap4\XamarinForms\Shipwreck.ViewModelUtils.Bootstrap4.XamarinForms.csproj" />
-    <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
-    <ProjectReference Include="..\..\FontAwesome5\XamarinForms\Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms.csproj" />
-    <ProjectReference Include="..\..\Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj" />
+    <!--<ProjectReference Include="..\..\Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>-->
+    <PackageReference Include="Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms" Version="$(Version)"  />
+    <PackageReference Include="Shipwreck.ViewModelUtils.XamarinForms" Version="$(Version)"  />
   </ItemGroup>
 </Project>

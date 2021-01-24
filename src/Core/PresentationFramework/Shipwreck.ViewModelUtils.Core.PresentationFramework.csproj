@@ -12,5 +12,4 @@
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems" Label="Shared" />
-
 </Project>

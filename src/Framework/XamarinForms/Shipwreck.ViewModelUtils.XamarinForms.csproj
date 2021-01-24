@@ -1,18 +1,33 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.23">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
+    <AndroidResgenNamespace>Shipwreck.ViewModelUtils</AndroidResgenNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <!--<ProjectReference Include="..\..\Bootstrap4\XamarinForms\Shipwreck.ViewModelUtils.Bootstrap4.XamarinForms.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\..\FontAwesome5\XamarinForms\Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>-->
+    <PackageReference Include="Shipwreck.ViewModelUtils.Bootstrap4.XamarinForms" Version="$(Version)" />
+    <PackageReference Include="Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms" Version="$(Version)" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
+    <Compile Remove="**\*.android.cs" />
+    <Compile Remove="**\*.ios.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Bootstrap4\XamarinForms\Shipwreck.ViewModelUtils.Bootstrap4.XamarinForms.csproj" />
-    <ProjectReference Include="..\..\FontAwesome5\XamarinForms\Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms.csproj" />
+  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
+    <Compile Include="**\*.android.cs" />
+    <None Include="**\*.ios.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
+    <None Include="**\*.android.cs" />
+    <Compile Include="**\*.ios.cs" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />

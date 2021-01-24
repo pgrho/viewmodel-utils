@@ -1,17 +1,29 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.23">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
+    <AndroidResgenNamespace>Shipwreck.ViewModelUtils.FontAwesome5</AndroidResgenNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="..\PresentationFramework\Resources\*.ttf" Link="Resources\%(FileName).ttf" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
+    <EmbeddedResource Include="..\PresentationFramework\Resources\*.ttf" Link="Resources\%(FileName).ttf" />
+    <Compile Remove="**\*.android.cs" />
+    <Compile Remove="**\*.ios.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
+    <Compile Include="**\*.android.cs" /> 
+    <None Include="**\*.ios.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
+    <None Include="**\*.android.cs" />
+    <Compile Include="**\*.ios.cs" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.FontAwesome5.Shared.projitems" Label="Shared" />

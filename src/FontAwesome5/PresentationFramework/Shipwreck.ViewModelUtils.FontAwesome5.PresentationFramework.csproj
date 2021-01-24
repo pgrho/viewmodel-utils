@@ -25,5 +25,4 @@
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.FontAwesome5.Shared.projitems" Label="Shared" />
-
 </Project>
