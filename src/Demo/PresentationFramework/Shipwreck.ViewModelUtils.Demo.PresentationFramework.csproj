@@ -10,7 +10,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Bootstrap4\PresentationFramework\Shipwreck.ViewModelUtils.Bootstrap4.PresentationFramework.csproj" />
     <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
-    <ProjectReference Include="..\..\FontAwesome5\PresentationFramework\Shipwreck.ViewModelUtils.FontAwesome5.PresentationFramework.csproj" />
     <ProjectReference Include="..\..\Framework\PresentationFramework\Shipwreck.ViewModelUtils.PresentationFramework.csproj" />
   </ItemGroup>
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">

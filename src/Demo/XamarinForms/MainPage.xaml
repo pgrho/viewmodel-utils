@@ -2,21 +2,7 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vmufa5="clr-namespace:Shipwreck.ViewModelUtils.FontAwesome5;assembly=Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms"
-    xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.XamarinForms"
     x:Class="Shipwreck.ViewModelUtils.Demo.XamarinForms.MainPage">
-    <!--
-    xmlns:vmufa5="clr-namespace:Shipwreck.ViewModelUtils.FontAwesome5;assembly=Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms"
-    -->
     <StackLayout>
-        <Entry
-            Text="{Binding Icon}" />
-        <vmufa5:FontAwesomeLabel
-            FontSize="32"
-            HorizontalTextAlignment="Center"
-            Icon="{Binding Icon}"
-            IsPressed="{Binding IsPressed, Mode=OneWayToSource}" />
-        <Label
-            Text="{Binding IsPressed}" />
     </StackLayout>
 </ContentPage>
