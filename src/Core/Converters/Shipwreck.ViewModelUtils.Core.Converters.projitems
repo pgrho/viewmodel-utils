@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>30b44099-dfd5-486c-a4fe-c9676791cbcd</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Shipwreck</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\BooleanBoxes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\BooleanConverterBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ComparisonConverterBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConditionalConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\GreaterThanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\GreaterThanOrEqualConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\HasFlagConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IsAssignableFromConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\LessThanConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\LessThanOrEqualConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NullToFalseConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NullToTrueConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NumberContainsConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\StringNotEmptyConverter.cs" />
+  </ItemGroup>
+</Project>

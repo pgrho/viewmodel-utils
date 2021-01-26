@@ -5,6 +5,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
     <UseWPF>true</UseWPF>
+    <DefineConstants>$(DefineConstants);IS_WPF</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
@@ -12,4 +13,5 @@
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems" Label="Shared" />
 </Project>

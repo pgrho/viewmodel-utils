@@ -52,13 +52,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.ViewModelUtils.De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.ViewModelUtils.Demo.XamarinForms.iOS", "Demo\XamarinForms.iOS\Shipwreck.ViewModelUtils.Demo.XamarinForms.iOS.csproj", "{DA41B53C-615F-40E6-81C4-BDF3E7A90F57}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shipwreck.ViewModelUtils.Core.Converters", "Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.shproj", "{30B44099-DFD5-486C-A4FE-C9676791CBCD}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Bootstrap4\Shared\Shipwreck.ViewModelUtils.Bootstrap4.Shared.projitems*{06c27048-ca49-46d9-92c0-3656ec5b8642}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{0c0c36c3-5a16-4e9e-b29a-b670c6ff53dd}*SharedItemsImports = 5
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{1be2b82e-497e-490e-bdcd-8c856077e5dd}*SharedItemsImports = 5
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{30b44099-dfd5-486c-a4fe-c9676791cbcd}*SharedItemsImports = 13
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
 		Bootstrap4\Shared\Shipwreck.ViewModelUtils.Bootstrap4.Shared.projitems*{35bb9748-7738-45f7-b7c7-751346c985d8}*SharedItemsImports = 13
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9c106d03-1713-4b2e-ad83-4b99a0dd6f17}*SharedItemsImports = 5
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9eaba68f-46bb-4e67-b740-1b8732d45bb0}*SharedItemsImports = 13
@@ -364,6 +369,7 @@ Global
 		{AE512EC9-837D-42D4-ADAD-482FBB599243} = {AE42DF8F-F082-4673-B441-CA4741871EDB}
 		{52441E96-2F31-4213-B7C1-24227F4D14B7} = {AE42DF8F-F082-4673-B441-CA4741871EDB}
 		{DA41B53C-615F-40E6-81C4-BDF3E7A90F57} = {AE42DF8F-F082-4673-B441-CA4741871EDB}
+		{30B44099-DFD5-486C-A4FE-C9676791CBCD} = {E1EF93AF-DC8D-4825-B9F1-AE80703B2943}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFC9127-DF00-440C-BFE6-99D620181698}
