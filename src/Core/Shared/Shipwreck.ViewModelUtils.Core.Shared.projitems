@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\BulkUpdateableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\CollectionObserver.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\ICollectionBulkUpdaterFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\VirtualizedCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`3.cs" />

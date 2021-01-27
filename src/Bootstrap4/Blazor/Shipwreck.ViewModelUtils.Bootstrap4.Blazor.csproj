@@ -1,9 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
+    <OutputType>Library</OutputType>
+    <StaticWebAssetBasePath>.Bootstrap4</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
