@@ -12,6 +12,10 @@
     <Reference Include="System.Xaml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+  </ItemGroup>
+
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems" Label="Shared" />
   <Import Project="..\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems" Label="Shared" />
 </Project>

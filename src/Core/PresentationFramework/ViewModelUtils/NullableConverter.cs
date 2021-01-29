@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shipwreck.ViewModelUtils
 {
@@ -59,7 +60,14 @@ namespace Shipwreck.ViewModelUtils
             }
             if (value is IConvertible c)
             {
-                return c.ToType(Nullable.GetUnderlyingType(targetType) ?? targetType, culture);
+                try
+                {
+                    return c.ToType(Nullable.GetUnderlyingType(targetType) ?? targetType, culture);
+                }
+                catch (Exception ex)
+                {
+                    return new ValidationResult(ex.Message);
+                }
             }
             throw new InvalidCastException();
         }
