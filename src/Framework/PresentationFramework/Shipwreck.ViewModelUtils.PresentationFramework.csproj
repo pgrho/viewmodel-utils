@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Bootstrap4\PresentationFramework\Shipwreck.ViewModelUtils.Bootstrap4.PresentationFramework.csproj" />
+    <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />

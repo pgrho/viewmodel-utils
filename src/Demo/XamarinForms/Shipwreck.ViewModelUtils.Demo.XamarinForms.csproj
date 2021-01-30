@@ -12,10 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\..\Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>-->
-    <PackageReference Include="Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms" Version="$(Version)"  />
-    <PackageReference Include="Shipwreck.ViewModelUtils.XamarinForms" Version="$(Version)"  />
+    <ProjectReference Include="..\..\Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj"/>
   </ItemGroup>
 </Project>

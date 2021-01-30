@@ -5,17 +5,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
     <AndroidResgenNamespace>Shipwreck.ViewModelUtils</AndroidResgenNamespace>
+    <IsRemoteBuild>false</IsRemoteBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <!--<ProjectReference Include="..\..\Bootstrap4\XamarinForms\Shipwreck.ViewModelUtils.Bootstrap4.XamarinForms.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\..\FontAwesome5\XamarinForms\Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>-->
-    <PackageReference Include="Shipwreck.ViewModelUtils.Bootstrap4.XamarinForms" Version="$(Version)" />
-    <PackageReference Include="Shipwreck.ViewModelUtils.FontAwesome5.XamarinForms" Version="$(Version)" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.1874" />
     <Compile Remove="**\*.android.cs" />
     <Compile Remove="**\*.ios.cs" />
@@ -28,6 +21,9 @@
   <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
     <None Include="**\*.android.cs" />
     <Compile Include="**\*.ios.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
