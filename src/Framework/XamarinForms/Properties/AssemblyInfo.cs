@@ -1,5 +1,4 @@
-﻿using System.Windows.Markup;
+﻿using Xamarin.Forms;
 
 [assembly: XmlnsDefinition(XMLNS.URL, "Shipwreck.ViewModelUtils")]
-[assembly: XmlnsDefinition(XMLNS.URL, "Shipwreck.ViewModelUtils.Controls")]
 [assembly: XmlnsPrefix(XMLNS.URL, XMLNS.PREFIX)]

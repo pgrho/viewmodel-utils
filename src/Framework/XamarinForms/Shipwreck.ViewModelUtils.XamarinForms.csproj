@@ -6,6 +6,7 @@
     <RootNamespace>Shipwreck</RootNamespace>
     <AndroidResgenNamespace>Shipwreck.ViewModelUtils</AndroidResgenNamespace>
     <IsRemoteBuild>false</IsRemoteBuild>
+    <DefineConstants>$(DefineConstants);IS_XAMARIN_FORMS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,8 +24,12 @@
     <Compile Include="**\*.ios.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
 </Project>

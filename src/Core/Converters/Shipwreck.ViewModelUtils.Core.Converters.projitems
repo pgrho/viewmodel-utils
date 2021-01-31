@@ -19,9 +19,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IsAssignableFromConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\LessThanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\LessThanOrEqualConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NegationConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NullToFalseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NullToTrueConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NumberContainsConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\StringCollapseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\StringNotEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XMLNS.cs" />
   </ItemGroup>
