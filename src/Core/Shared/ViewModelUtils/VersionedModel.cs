@@ -26,21 +26,30 @@ namespace Shipwreck.ViewModelUtils
 
         [TargetedPatchingOptOut("")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected void Update(object other)
+        protected bool Update(object other)
         {
+            if (other == this)
+            {
+                return false;
+            }
+
             if (_PreviousUpdate != null
                 && _PreviousUpdate.TryGetTarget(out var pu)
-                && pu == other
-                && Equals(GetVersion(pu), _PreviousUpdateVersion))
+                && !ShouldUpdate(pu, _PreviousUpdateVersion, other))
             {
-                return;
+                return false;
             }
 
             _PreviousUpdate = new WeakReference<object>(other);
             _PreviousUpdateVersion = GetVersion(other);
 
             UpdateCore(other);
+
+            return true;
         }
+
+        protected bool ShouldUpdate(object previousUpdateParameter, TVersion previousUpdateVersion, object newParameter)
+            => previousUpdateParameter != newParameter || !Equals(GetVersion(previousUpdateParameter), previousUpdateVersion);
 
         void IVersionedModel<TKey, TVersion>.Update(object other) => Update(other);
 
