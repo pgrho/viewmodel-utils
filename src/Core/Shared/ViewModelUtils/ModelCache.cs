@@ -83,10 +83,7 @@ namespace Shipwreck.ViewModelUtils
                             d = converter.Create(host);
                             if (d != null)
                             {
-                                if (_Cache.IsValidKey(d.Key))
-                                {
-                                    _Dictionary[key] = new WeakReference<TModel>(d);
-                                }
+                                _Dictionary[key] = new WeakReference<TModel>(d);
                                 d.Update(parameter);
                             }
                         }
