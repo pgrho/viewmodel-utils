@@ -20,8 +20,14 @@ namespace Shipwreck.ViewModelUtils.Components
         [Parameter]
         public IEnumerable<string> IgnoresProperties { get; set; }
 
+        [Parameter]
+        public Func<string, bool> RequestedFocus { get; set; }
+
         protected override bool OnDataContextPropertyChanged(string propertyName)
             => DependsOnProperties?.Contains(propertyName) != false
             && IgnoresProperties?.Contains(propertyName) != true;
+
+        protected override bool OnDataContextRequestedFocus(string propertyName)
+            => RequestedFocus?.Invoke(propertyName) ?? base.OnDataContextRequestedFocus(propertyName);
     }
 }

@@ -145,7 +145,7 @@ namespace Shipwreck.ViewModelUtils.Components
             }
             if (dataContext is IRequestFocus r)
             {
-                r.FocusRequested -= DataContext_FocusRequested;
+                r.RequestFocus -= DataContext_RequestFocus;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Shipwreck.ViewModelUtils.Components
             }
             if (dataContext is IRequestFocus r)
             {
-                r.FocusRequested += DataContext_FocusRequested;
+                r.RequestFocus += DataContext_RequestFocus;
             }
         }
         
@@ -172,8 +172,13 @@ namespace Shipwreck.ViewModelUtils.Components
         protected virtual bool OnDataContextPropertyChanged(string propertyName)
             => true;
 
-        private void DataContext_FocusRequested(string obj)
-            => OnDataContextRequestedFocus(obj);
+        private void DataContext_RequestFocus(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender == DataContext)
+            {
+                OnDataContextRequestedFocus(e.PropertyName);
+            }
+        }
 
         protected virtual bool OnDataContextRequestedFocus(string propertyName)
         {
@@ -210,7 +215,7 @@ namespace Shipwreck.ViewModelUtils.Components
             }
             if (dataContext is IRequestFocus r)
             {
-                r.FocusRequested -= DataContext_FocusRequested;
+                r.RequestFocus -= DataContext_RequestFocus;
             }
         }
 
@@ -222,7 +227,7 @@ namespace Shipwreck.ViewModelUtils.Components
             }
             if (dataContext is IRequestFocus r)
             {
-                r.FocusRequested += DataContext_FocusRequested;
+                r.RequestFocus += DataContext_RequestFocus;
             }
         }
         
@@ -237,8 +242,13 @@ namespace Shipwreck.ViewModelUtils.Components
         protected virtual bool OnDataContextPropertyChanged(string propertyName)
             => true;
 
-        private void DataContext_FocusRequested(string obj)
-            => OnDataContextRequestedFocus(obj);
+        private void DataContext_RequestFocus(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender == DataContext)
+            {
+                OnDataContextRequestedFocus(e.PropertyName);
+            }
+        }
 
         protected virtual bool OnDataContextRequestedFocus(string propertyName)
         {
@@ -275,7 +285,7 @@ namespace Shipwreck.ViewModelUtils.Components
             }
             if (dataContext is IRequestFocus r)
             {
-                r.FocusRequested -= DataContext_FocusRequested;
+                r.RequestFocus -= DataContext_RequestFocus;
             }
         }
 
@@ -287,7 +297,7 @@ namespace Shipwreck.ViewModelUtils.Components
             }
             if (dataContext is IRequestFocus r)
             {
-                r.FocusRequested += DataContext_FocusRequested;
+                r.RequestFocus += DataContext_RequestFocus;
             }
         }
         
@@ -302,8 +312,13 @@ namespace Shipwreck.ViewModelUtils.Components
         protected virtual bool OnDataContextPropertyChanged(string propertyName)
             => true;
 
-        private void DataContext_FocusRequested(string obj)
-            => OnDataContextRequestedFocus(obj);
+        private void DataContext_RequestFocus(object sender, PropertyChangedEventArgs e)
+        {
+            if (sender == DataContext)
+            {
+                OnDataContextRequestedFocus(e.PropertyName);
+            }
+        }
 
         protected virtual bool OnDataContextRequestedFocus(string propertyName)
         {
