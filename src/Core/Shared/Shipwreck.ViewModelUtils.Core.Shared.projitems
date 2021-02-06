@@ -9,15 +9,19 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FrameworkLayoutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\BorderStyle.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FrameworkPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IExpandable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IModelCreator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IRequestFocus.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ISelectable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ISelectablesHost.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IVersionedModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\MenuItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ModelCache.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NotifyChangedHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ObjectValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ObservableModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\VersionedModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\BulkUpdateableCollection.cs" />
