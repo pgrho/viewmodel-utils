@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_common", "_common", "{4FC2
 		..\.gitignore = ..\.gitignore
 		Directory.build.props = Directory.build.props
 		nuget.config = nuget.config
+		..\remove-nupkg.ps1 = ..\remove-nupkg.ps1
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{E1EF93AF-DC8D-4825-B9F1-AE80703B2943}"
