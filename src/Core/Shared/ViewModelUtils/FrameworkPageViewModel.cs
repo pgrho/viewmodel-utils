@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Shipwreck.ViewModelUtils
@@ -25,7 +24,9 @@ namespace Shipwreck.ViewModelUtils
             }
         }
 
-        protected virtual void OnTitleChanged() { }
+        protected virtual void OnTitleChanged()
+        {
+        }
 
         #endregion Title
 
@@ -74,7 +75,17 @@ namespace Shipwreck.ViewModelUtils
         public bool IsInitialized
         {
             get => (_Flags & IS_INITIALIZED) != 0;
-            private set => SetFlagProperty(ref _Flags, IS_INITIALIZED, value);
+            private set
+            {
+                if (SetFlagProperty(ref _Flags, IS_INITIALIZED, value) && IsInitialized)
+                {
+                    OnInitialized();
+                }
+            }
+        }
+
+        protected virtual void OnInitialized()
+        {
         }
 
         #endregion IsInitialized
