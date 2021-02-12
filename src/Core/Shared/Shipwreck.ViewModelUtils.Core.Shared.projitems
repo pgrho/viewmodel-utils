@@ -39,6 +39,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandBuilderExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModelCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ICommandViewModel.cs" />
   </ItemGroup>
 </Project>
