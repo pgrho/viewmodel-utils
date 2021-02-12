@@ -8,6 +8,8 @@ namespace Shipwreck.ViewModelUtils
 {
     public abstract partial class FrameworkPageViewModel : ObservableModel, IRequestFocus, IDisposable
     {
+        public static bool ShouldCaptureContext => TaskHelper.SHOULD_CAPTURE_CONTEXT;
+
         #region Title
 
         private string _Title;
@@ -102,8 +104,8 @@ namespace Shipwreck.ViewModelUtils
             try
             {
                 IsInitializing = true;
-                await LoadConfigurationAsync().ConfigureAwait(false);
-                await InitializeDataAsync().ConfigureAwait(false);
+                await LoadConfigurationAsync().ConfigureAwait();
+                await InitializeDataAsync().ConfigureAwait();
             }
             finally
             {

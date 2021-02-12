@@ -273,7 +273,7 @@ namespace Shipwreck.ViewModelUtils
 
             try
             {
-                var r = await p.Task.ConfigureAwait(false);
+                var r = await p.Task.ConfigureAwait();
 
                 if (r.TotalCount > 0 && r.TotalCount <= r.Offset)
                 {
