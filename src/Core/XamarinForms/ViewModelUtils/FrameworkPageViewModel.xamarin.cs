@@ -1,6 +1,4 @@
 ﻿using System;
-using Microsoft.JSInterop;
-using Shipwreck.ViewModelUtils.Components;
 
 namespace Shipwreck.ViewModelUtils
 {
@@ -12,15 +10,6 @@ namespace Shipwreck.ViewModelUtils
             {
             }
         }
-
-        protected FrameworkPageViewModel(FrameworkPageBase page)
-        {
-            Page = page;
-        }
-
-        public FrameworkPageBase Page { get; }
-
-        public IJSRuntime JS => Page.JS;
 
         public ProcessingDisabled DisableProcessing()
             => default;
