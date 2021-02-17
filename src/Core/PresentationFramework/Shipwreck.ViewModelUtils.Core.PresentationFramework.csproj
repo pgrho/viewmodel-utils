@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Xaml" />
   </ItemGroup>
 
