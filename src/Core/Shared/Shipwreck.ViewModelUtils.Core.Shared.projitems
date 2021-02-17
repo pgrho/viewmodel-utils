@@ -9,6 +9,13 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ExpressionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\DirectoryPathValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\NotNullValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\RangeValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\RequiredValidator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\ValidationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\ValidatableModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FrameworkLayoutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\BorderStyle.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FrameworkPageViewModel.cs" />
@@ -24,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ObjectValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ObservableModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\TaskHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\Validator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\VersionedModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\BulkUpdateableCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\CollectionObserver.cs" />
