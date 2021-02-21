@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public interface IInterationService
+    public interface IInteractionService
     {
         #region Toast
 
@@ -41,7 +41,7 @@ namespace Shipwreck.ViewModelUtils
 
         #endregion メッセージ
 
-        #region ダウンロード
+        #region ファイル
 
         bool SupportsFileDialogs { get; }
 
@@ -68,21 +68,7 @@ namespace Shipwreck.ViewModelUtils
             object context,
             string directoryName = null);
 
-        #endregion ダウンロード
-
-        #region ダウンロード
-
-        bool SupportsDownload { get; }
-
-        Task DownloadAsync(
-            object context,
-            string method,
-            string url,
-            string content,
-            string contentType,
-            bool openFile);
-
-        #endregion ダウンロード
+        #endregion ファイル
 
         #region モーダル
 
