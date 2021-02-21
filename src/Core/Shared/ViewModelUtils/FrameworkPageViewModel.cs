@@ -3,12 +3,28 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Shipwreck.ViewModelUtils.Validation;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public abstract partial class FrameworkPageViewModel : ObservableModel, IRequestFocus, IDisposable
+    public abstract partial class FrameworkPageViewModel : ValidatableModel, IRequestFocus, IDisposable
     {
         public static bool ShouldCaptureContext => TaskHelper.SHOULD_CAPTURE_CONTEXT;
+
+        #region Interaction
+
+        private IInteractionService _Interaction;
+
+        public IInteractionService Interaction
+        {
+            get => _Interaction ??= GetInteractionService();
+            protected set => SetProperty(ref _Interaction, value);
+        }
+
+        protected virtual IInteractionService GetInteractionService()
+            => null;
+
+        #endregion Interaction
 
         #region Title
 

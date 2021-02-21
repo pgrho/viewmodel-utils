@@ -5,6 +5,16 @@ namespace Shipwreck.ViewModelUtils
 {
     public interface IInteractionService
     {
+        #region InvokeAsync
+
+        bool InvokeRequired { get; }
+
+        Task InvokeAsync(object context, Action action);
+
+        Task<T> InvokeAsync<T>(object context, Func<T> func);
+
+        #endregion InvokeAsync
+
         #region Toast
 
         bool SupportsToasts { get; }

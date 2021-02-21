@@ -28,10 +28,15 @@ namespace Shipwreck.ViewModelUtils
             return null;
         }
 
-        protected Task InvokeAsync(object context, Action operation)
+        #region InvokeAsync
+
+        public bool InvokeRequired
+            => Application.Current?.Dispatcher is var d && d.Thread != Thread.CurrentThread;
+
+        public Task InvokeAsync(object context, Action operation)
             => InvokeAsync(context, () => { operation(); return 0; });
 
-        protected Task<T> InvokeAsync<T>(object context, Func<T> operation)
+        public Task<T> InvokeAsync<T>(object context, Func<T> operation)
         {
             var dispatcher = Application.Current?.Dispatcher;
 
@@ -63,6 +68,8 @@ namespace Shipwreck.ViewModelUtils
                 return tcs.Task;
             }
         }
+
+        #endregion InvokeAsync
 
         #region Toast
 
