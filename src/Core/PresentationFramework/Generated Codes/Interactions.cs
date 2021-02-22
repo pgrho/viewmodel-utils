@@ -20,17 +20,17 @@ namespace Shipwreck.ViewModelUtils
 
         public bool SupportsToasts => Interaction?.SupportsToasts ?? false;
 
-        public Task ShowSuccessToastAsync(object context, string message)
-            => Interaction.ShowSuccessToastAsync(this, message);
+        public Task ShowSuccessToastAsync(string message, string title = null)
+            => Interaction.ShowSuccessToastAsync(this, message, title ?? Title);
 
-        public Task ShowErrorToastAsync(object context, string message)
-            => Interaction.ShowErrorToastAsync(this, message);
+        public Task ShowErrorToastAsync(string message, string title = null)
+            => Interaction.ShowErrorToastAsync(this, message, title ?? Title);
 
-        public Task ShowWarningToastAsync(object context, string message)
-            => Interaction.ShowWarningToastAsync(this, message);
+        public Task ShowWarningToastAsync(string message, string title = null)
+            => Interaction.ShowWarningToastAsync(this, message, title ?? Title);
 
-        public Task ShowInformationToastAsync(object context, string message)
-            => Interaction.ShowInformationToastAsync(this, message);
+        public Task ShowInformationToastAsync(string message, string title = null)
+            => Interaction.ShowInformationToastAsync(this, message, title ?? Title);
 
         #endregion Toast
 
@@ -147,17 +147,17 @@ namespace Shipwreck.ViewModelUtils
 
         public bool SupportsToasts => Interaction?.SupportsToasts ?? false;
 
-        public Task ShowSuccessToastAsync(object context, string message)
-            => Interaction.ShowSuccessToastAsync(this, message);
+        public Task ShowSuccessToastAsync(string message, string title = null)
+            => Interaction.ShowSuccessToastAsync(this, message, title ?? ApplicationName);
 
-        public Task ShowErrorToastAsync(object context, string message)
-            => Interaction.ShowErrorToastAsync(this, message);
+        public Task ShowErrorToastAsync(string message, string title = null)
+            => Interaction.ShowErrorToastAsync(this, message, title ?? ApplicationName);
 
-        public Task ShowWarningToastAsync(object context, string message)
-            => Interaction.ShowWarningToastAsync(this, message);
+        public Task ShowWarningToastAsync(string message, string title = null)
+            => Interaction.ShowWarningToastAsync(this, message, title ?? ApplicationName);
 
-        public Task ShowInformationToastAsync(object context, string message)
-            => Interaction.ShowInformationToastAsync(this, message);
+        public Task ShowInformationToastAsync(string message, string title = null)
+            => Interaction.ShowInformationToastAsync(this, message, title ?? ApplicationName);
 
         #endregion Toast
 

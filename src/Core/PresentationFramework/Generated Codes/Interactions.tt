@@ -4,8 +4,8 @@ using System;
 using System.Threading.Tasks;
 <#
 foreach (var c in new[]{
-    new C("FrameworkPageViewModel"),
-    new C("WindowViewModel", "IS_WPF"),
+    new C("FrameworkPageViewModel") { DefaultTitle = "Title" },
+    new C("WindowViewModel", "IS_WPF") { DefaultTitle = "ApplicationName" },
 })
 {
     if (!string.IsNullOrEmpty(c.If))
@@ -35,17 +35,17 @@ namespace <#= c.Namespace #>
 
         public bool SupportsToasts => Interaction?.SupportsToasts ?? false;
 
-        public Task ShowSuccessToastAsync(object context, string message)
-            => Interaction.ShowSuccessToastAsync(this, message);
+        public Task ShowSuccessToastAsync(string message, string title = null)
+            => Interaction.ShowSuccessToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
 
-        public Task ShowErrorToastAsync(object context, string message)
-            => Interaction.ShowErrorToastAsync(this, message);
+        public Task ShowErrorToastAsync(string message, string title = null)
+            => Interaction.ShowErrorToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
 
-        public Task ShowWarningToastAsync(object context, string message)
-            => Interaction.ShowWarningToastAsync(this, message);
+        public Task ShowWarningToastAsync(string message, string title = null)
+            => Interaction.ShowWarningToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
 
-        public Task ShowInformationToastAsync(object context, string message)
-            => Interaction.ShowInformationToastAsync(this, message);
+        public Task ShowInformationToastAsync(string message, string title = null)
+            => Interaction.ShowInformationToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
 
         #endregion Toast
 
@@ -162,5 +162,6 @@ class C
     public string Namespace;
     public string Name;
     public string If;
+    public string DefaultTitle;
 }
 #>

@@ -41,7 +41,7 @@ namespace Shipwreck.ViewModelUtils
             var dispatcher = Application.Current?.Dispatcher;
 
             if (dispatcher?.Thread == null
-                || dispatcher.Thread != Thread.CurrentThread)
+                || dispatcher.Thread == Thread.CurrentThread)
             {
                 return Task.FromResult(operation());
             }
@@ -75,23 +75,23 @@ namespace Shipwreck.ViewModelUtils
 
         bool IInteractionService.SupportsToasts => true;
 
-        public Task ShowSuccessToastAsync(object context, string message)
-            => ShowToastAsync(context, message, BorderStyle.Success);
+        public Task ShowSuccessToastAsync(object context, string message, string title)
+            => ShowToastAsync(context, message, title, BorderStyle.Success);
 
-        public Task ShowErrorToastAsync(object context, string message)
-            => ShowToastAsync(context, message, BorderStyle.Danger);
+        public Task ShowErrorToastAsync(object context, string message, string title)
+            => ShowToastAsync(context, message, title, BorderStyle.Danger);
 
-        public Task ShowWarningToastAsync(object context, string message)
-            => ShowToastAsync(context, message, BorderStyle.Warning);
+        public Task ShowWarningToastAsync(object context, string message, string title)
+            => ShowToastAsync(context, message, title, BorderStyle.Warning);
 
-        public Task ShowInformationToastAsync(object context, string message)
-            => ShowToastAsync(context, message, BorderStyle.Info);
+        public Task ShowInformationToastAsync(object context, string message, string title)
+            => ShowToastAsync(context, message, title, BorderStyle.Info);
 
-        public virtual Task ShowToastAsync(object context, string message, BorderStyle style)
-            => InvokeAsync(context, () => ShowToast(context, message, style));
+        public virtual Task ShowToastAsync(object context, string message, string title, BorderStyle style)
+            => InvokeAsync(context, () => ShowToast(context, message, title, style));
 
-        protected virtual void ShowToast(object context, string message, BorderStyle style)
-            => MessageBox.Show(GetWindow(context), message);
+        protected virtual void ShowToast(object context, string message, string title, BorderStyle style)
+            => MessageBox.Show(GetWindow(context), message, title);
 
         #endregion Toast
 

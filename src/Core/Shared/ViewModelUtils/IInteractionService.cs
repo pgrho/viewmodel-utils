@@ -19,13 +19,13 @@ namespace Shipwreck.ViewModelUtils
 
         bool SupportsToasts { get; }
 
-        Task ShowSuccessToastAsync(object context, string message);
+        Task ShowSuccessToastAsync(object context, string message, string title);
 
-        Task ShowErrorToastAsync(object context, string message);
+        Task ShowErrorToastAsync(object context, string message, string title);
 
-        Task ShowWarningToastAsync(object context, string message);
+        Task ShowWarningToastAsync(object context, string message, string title);
 
-        Task ShowInformationToastAsync(object context, string message);
+        Task ShowInformationToastAsync(object context, string message, string title);
 
         #endregion Toast
 
