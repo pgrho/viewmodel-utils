@@ -4,18 +4,21 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
     xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.PresentationFramework"
     mc:Ignorable="d"
     StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary
+                <vmu:SharedResourceDictionary
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary
+                <vmu:SharedResourceDictionary
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary
+                <vmu:SharedResourceDictionary
                     Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+                <vmu:SharedResourceDictionary
+                    Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -19,10 +19,23 @@
   <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.3" />
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.1" />
+    <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.0.0-alpha5" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\Controls.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls.Buttons.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />

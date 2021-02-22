@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.3" />
     <ProjectReference Include="..\..\Core\Blazor\Shipwreck.ViewModelUtils.Core.Blazor.csproj" />
   </ItemGroup>
 

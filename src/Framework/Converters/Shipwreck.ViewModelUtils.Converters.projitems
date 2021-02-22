@@ -9,6 +9,7 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\BorderStyleToColorSchemeConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EnumDataAnnotations.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EnumDescriptionConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EnumDisplayNameConverter.cs" />

@@ -4,9 +4,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:v="clr-namespace:Shipwreck.ViewModelUtils.Demo.PresentationFramework"
     mc:Ignorable="d"
     d:DesignHeight="450"
     d:DesignWidth="800">
-    <Grid>
-    </Grid>
+    <Window.DataContext>
+        <v:MainWindowViewModel />
+    </Window.DataContext>
+    <ItemsControl
+        ItemContainerStyle="{StaticResource CommandViewModel.ContentPresenter}"
+        ItemTemplate="{StaticResource CommandViewModel.Button.Large.DataTemplate}"
+        ItemsSource="{Binding Commands}" />
 </Window>
