@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using Shipwreck.ViewModelUtils.Validation;
 
@@ -64,8 +65,10 @@ namespace Shipwreck.ViewModelUtils
         public IInteractionService Interaction
         {
             get => _Interaction ??= GetInteractionService();
-            protected set => SetProperty(ref _Interaction, value);
+            protected internal set => SetProperty(ref _Interaction, value);
         }
+
+        protected internal bool HasInteraction => _Interaction != null;
 
         protected virtual IInteractionService GetInteractionService()
             => new InteractionService();
@@ -129,6 +132,22 @@ namespace Shipwreck.ViewModelUtils
             => RequestFocus?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         #endregion IRequestFocus
+
+        #region CloseCommand
+
+        private CommandViewModelBase _CloseCommand;
+
+        public CommandViewModelBase CloseCommand
+            => _CloseCommand ??= GetCloseCommandBuilder().Build();
+
+        protected virtual CommandBuilderBase GetCloseCommandBuilder()
+            => new AsyncCommandBuilder(CloseAsync)
+                    .SetTitle("閉じる");
+
+        public Task CloseAsync()
+            => Interaction?.CloseModalAsync(this, this);
+
+        #endregion CloseCommand
 
         #region IDisposable
 

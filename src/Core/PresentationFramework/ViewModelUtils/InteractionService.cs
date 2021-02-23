@@ -69,6 +69,40 @@ namespace Shipwreck.ViewModelUtils
             }
         }
 
+        public Task InvokeAsync(object context, Func<Task> operation)
+        {
+            var dispatcher = Application.Current?.Dispatcher;
+
+            if (dispatcher?.Thread == null
+                || dispatcher.Thread == Thread.CurrentThread)
+            {
+                return operation();
+            }
+            else
+            {
+                var tcs = new TaskCompletionSource<object>();
+
+                dispatcher.BeginInvoke((Action)(async () =>
+                {
+                    try
+                    {
+                        await operation().ConfigureAwait(false);
+                        tcs.TrySetResult(null);
+                    }
+                    catch (Exception ex)
+                    {
+                        tcs.TrySetException(ex);
+                    }
+                    finally
+                    {
+                        tcs.TrySetCanceled();
+                    }
+                }));
+
+                return tcs.Task;
+            }
+        }
+
         #endregion InvokeAsync
 
         #region Toast
@@ -326,14 +360,14 @@ namespace Shipwreck.ViewModelUtils
 
         #region モーダル
 
-        private readonly Dictionary<Type, Func<object, Window>> _WindowCreators
-            = new Dictionary<Type, Func<object, Window>>();
+        private readonly Dictionary<Type, Func<object, FrameworkElement>> _ModalCreators
+            = new Dictionary<Type, Func<object, FrameworkElement>>();
 
-        public void RegisterWindow(Type viewModelType, Func<object, Window> handler)
+        public void RegisterModal(Type viewModelType, Func<object, FrameworkElement> handler)
         {
-            lock (((ICollection)_WindowCreators).SyncRoot)
+            lock (((ICollection)_ModalCreators).SyncRoot)
             {
-                _WindowCreators[viewModelType ?? throw new ArgumentNullException(nameof(viewModelType))]
+                _ModalCreators[viewModelType ?? throw new ArgumentNullException(nameof(viewModelType))]
                     = handler ?? throw new ArgumentNullException(nameof(handler));
             }
         }
@@ -354,21 +388,57 @@ namespace Shipwreck.ViewModelUtils
         }
 
         public virtual bool IsModalSupported(object context, Type viewModelType)
-            => GetCreator(viewModelType, _WindowCreators) != null;
+            => GetCreator(viewModelType, _ModalCreators) != null;
 
         public virtual Task OpenModalAsync(object context, object viewModel)
             => InvokeAsync(context, () => OpenModal(context, viewModel));
 
-        protected virtual bool? OpenModal(object context, object viewModel)
-        {
-            var w = GetCreator(
+        protected virtual Task OpenModal(object context, object viewModel)
+            => ShowModalAsync(context, CreateModalContent(viewModel));
+
+        protected virtual FrameworkElement CreateModalContent(object viewModel)
+            => GetCreator(
                 viewModel?.GetType() ?? throw new ArgumentNullException(nameof(viewModel)),
-                _WindowCreators)
-                ?.Invoke(viewModel) ?? throw new ArgumentException(nameof(viewModel));
+                _ModalCreators)
+            ?.Invoke(viewModel) ?? throw new ArgumentException(nameof(viewModel));
 
-            w.Owner = GetWindow(context);
+        protected virtual Task ShowModalAsync(object context, FrameworkElement frameworkElement)
+        {
+            ConfigureViewModel(frameworkElement.DataContext);
 
-            return w.ShowDialog();
+            if (frameworkElement is Window w)
+            {
+                w.Owner = GetWindow(context);
+
+                w.ShowDialog();
+                return Task.CompletedTask;
+            }
+            if (frameworkElement.Parent != null)
+            {
+                throw new InvalidOperationException();
+            }
+            var cw = new Window()
+            {
+                SizeToContent = SizeToContent.WidthAndHeight,
+                ResizeMode = ResizeMode.CanResizeWithGrip,
+                ShowInTaskbar = false,
+                Owner = GetWindow(context),
+                DataContext = frameworkElement.DataContext,
+                Content = frameworkElement,
+            };
+            cw.ShowDialog();
+            return Task.CompletedTask;
+        }
+
+        protected virtual void ConfigureViewModel(object viewModel)
+        {
+            if (viewModel is WindowViewModel wvm)
+            {
+                if (!wvm.HasInteraction)
+                {
+                    wvm.Interaction = this;
+                }
+            }
         }
 
         public virtual Task CloseModalAsync(object context, object viewModel)

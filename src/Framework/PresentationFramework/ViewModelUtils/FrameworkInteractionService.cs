@@ -1,4 +1,10 @@
 ﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 #if NET5_0
 using Notifications.Wpf.Core;
@@ -47,6 +53,59 @@ namespace Shipwreck.ViewModelUtils
             }
 
             base.ShowToast(context, message, title, style);
+        }
+
+        protected override Task ShowModalAsync(object context, FrameworkElement frameworkElement)
+        {
+            if (GetWindow(context) is MetroWindow mw
+                && DialogParticipation.GetRegister(mw) != null)
+            {
+                ConfigureViewModel(frameworkElement.DataContext);
+
+                var tcs = new TaskCompletionSource<object>();
+
+                if (frameworkElement is BaseMetroDialog d)
+                {
+                    d.Unloaded += (s, e) => tcs.TrySetResult(null);
+                    mw.ShowMetroDialogAsync(d);
+                }
+                else
+                {
+                    var gd = new GenericMetroDialog()
+                    {
+                        DataContext = frameworkElement.DataContext,
+                        Content = frameworkElement,
+                    };
+                    gd.Unloaded += (s, e) => tcs.TrySetResult(null);
+                    mw.ShowMetroDialogAsync(gd);
+                }
+                return tcs.Task;
+            }
+
+            return base.ShowModalAsync(context, frameworkElement);
+        }
+
+        protected override bool CloseModal(object context, object viewModel)
+        {
+            var app = Application.Current;
+            if (app != null)
+            {
+                foreach (var mw in app.Windows.OfType<MetroWindow>().ToList())
+                {
+                    if (DialogParticipation.GetRegister(mw) != null)
+                    {
+                        var dc = mw.FindChild<Panel>("PART_MetroActiveDialogContainer");
+                        if (dc != null)
+                        {
+                            foreach (var d in dc.Children.OfType<BaseMetroDialog>().Where(e => e.DataContext == viewModel).ToList())
+                            {
+                                mw.HideMetroDialogAsync(d).GetHashCode();
+                            }
+                        }
+                    }
+                }
+            }
+            return base.CloseModal(context, viewModel);
         }
     }
 }
