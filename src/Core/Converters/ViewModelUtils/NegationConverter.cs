@@ -16,6 +16,9 @@ namespace Shipwreck.ViewModelUtils
     public sealed class NegationConverter : BooleanConverterBase
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            => ToResult(value is bool b ? b : value is IConvertible c ? c.ToBoolean(culture) : value == null, targetType, culture);
+            => ToResult(
+                value is bool b ? !b
+                : value is IConvertible c ? !c.ToBoolean(culture) 
+                : value != null, targetType, culture);
     }
 }
