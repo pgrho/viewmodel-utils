@@ -69,10 +69,18 @@ namespace Shipwreck.ViewModelUtils
             return builder;
         }
 
-        public static T SetIsEnabled<T>(this T builder, Func<bool> isEnabledGetter)
+        public static T SetIsEnabled<T>(this T builder, Func<bool> isEnabledGetter, bool isOverride = true)
             where T : CommandBuilderBase
         {
-            builder.IsEnabledGetter = isEnabledGetter;
+            if (isOverride || builder.IsEnabledGetter == null)
+            {
+                builder.IsEnabledGetter = isEnabledGetter;
+            }
+            else
+            {
+                var baseGetter = builder.IsEnabledGetter;
+                builder.IsEnabledGetter = () => isEnabledGetter() && baseGetter();
+            }
             return builder;
         }
 
@@ -83,10 +91,18 @@ namespace Shipwreck.ViewModelUtils
             return builder;
         }
 
-        public static T SetIsVisible<T>(this T builder, Func<bool> isVisibleGetter)
+        public static T SetIsVisible<T>(this T builder, Func<bool> isVisibleGetter, bool isOverride = true)
             where T : CommandBuilderBase
         {
-            builder.IsVisibleGetter = isVisibleGetter;
+            if (isOverride || builder.IsVisibleGetter == null)
+            {
+                builder.IsVisibleGetter = isVisibleGetter;
+            }
+            else
+            {
+                var baseGetter = builder.IsVisibleGetter;
+                builder.IsVisibleGetter = () => isVisibleGetter() && baseGetter();
+            }
             return builder;
         }
 
