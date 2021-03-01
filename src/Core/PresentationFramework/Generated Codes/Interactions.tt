@@ -1,6 +1,7 @@
 ﻿<#@ template language="C#" #>
 <#@ output extension=".cs" #>
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 <#
 foreach (var c in new[]{
@@ -31,21 +32,47 @@ namespace <#= c.Namespace #>
 
         #endregion InvokeAsync
 
+        #region Logger
+<#
+foreach (var t in new [] { "Verbose", "Information", "Warning", "Error", "Critical" })
+{
+#>
+        public void Log<#= t #>(string message)
+            => Logger?.Log(TraceEventType.<#= t #>, 0, message);
+        public void Log<#= t #>(string format, params object[] args)
+            => Logger?.Log(TraceEventType.<#= t #>, 0, format, args);
+        public void Log<#= t #>(int id, string message)
+            => Logger?.Log(TraceEventType.<#= t #>, id, message);
+        public void Log<#= t #>(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.<#= t #>, id, format, args);
+<#
+}
+#>
+        #endregion Logger
+
         #region Toast
 
         public bool SupportsToasts => Interaction?.SupportsToasts ?? false;
-
-        public Task ShowSuccessToastAsync(string message, string title = null)
-            => Interaction.ShowSuccessToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
-
-        public Task ShowErrorToastAsync(string message, string title = null)
-            => Interaction.ShowErrorToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
-
-        public Task ShowWarningToastAsync(string message, string title = null)
-            => Interaction.ShowWarningToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
-
-        public Task ShowInformationToastAsync(string message, string title = null)
-            => Interaction.ShowInformationToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
+        
+<#
+foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
+{
+#>
+        public Task Show<#= t #>ToastAsync(string message, string title = null)
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("Show<#= t #>ToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("Show<#= t #>ToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.Show<#= t #>ToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
+        }
+<#
+}
+#>
 
         #endregion Toast
 
@@ -58,12 +85,29 @@ namespace <#= c.Namespace #>
             string title,
             string buttonText,
             BorderStyle? buttonStyle)
-            => Interaction.AlertAsync(
+        {
+            LogInformation("AlertAsync(\"{0}\")", message);
+            var task = Interaction.AlertAsync(
                 this,
                 message,
                 title,
                 buttonText,
                 buttonStyle);
+
+            task.ContinueWith(t =>
+            {
+                if (t.Status == TaskStatus.RanToCompletion)
+                {
+                    LogInformation("AlertAsync(\"{0}\") closed", message);
+                }
+                else if (t.Exception != null)
+                {
+                    LogError("AlertAsync(\"{0}\") Exception={1}", message, t.Exception);
+                }
+            });
+
+            return task;
+        }
 
         public Task<bool> ConfirmAsync(
             string message,
@@ -72,14 +116,31 @@ namespace <#= c.Namespace #>
             BorderStyle? trueStyle,
             string falseText,
             BorderStyle? falseStyle)
-            => Interaction.ConfirmAsync(
-            this,
-            message,
-            title,
-            trueText,
-            trueStyle,
-            falseText,
-            falseStyle);
+        {
+            LogInformation("ConfirmAsync(\"{0}\")", message);
+            var task = Interaction.ConfirmAsync(
+                this,
+                message,
+                title,
+                trueText,
+                trueStyle,
+                falseText,
+                falseStyle);
+
+            task.ContinueWith(t =>
+            {
+                if (t.Status == TaskStatus.RanToCompletion)
+                {
+                    LogInformation("ConfirmAsync(\"{0}\") result={1}", message, t.Result);
+                }
+                else if (t.Exception != null)
+                {
+                    LogError("ConfirmAsync(\"{0}\") Exception={1}", message, t.Exception);
+                }
+            });
+
+            return task;
+        }
 
         #endregion メッセージ
 

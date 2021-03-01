@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 namespace Shipwreck.ViewModelUtils
 {
@@ -16,21 +17,101 @@ namespace Shipwreck.ViewModelUtils
 
         #endregion InvokeAsync
 
+        #region Logger
+        public void LogVerbose(string message)
+            => Logger?.Log(TraceEventType.Verbose, 0, message);
+        public void LogVerbose(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Verbose, 0, format, args);
+        public void LogVerbose(int id, string message)
+            => Logger?.Log(TraceEventType.Verbose, id, message);
+        public void LogVerbose(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Verbose, id, format, args);
+        public void LogInformation(string message)
+            => Logger?.Log(TraceEventType.Information, 0, message);
+        public void LogInformation(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Information, 0, format, args);
+        public void LogInformation(int id, string message)
+            => Logger?.Log(TraceEventType.Information, id, message);
+        public void LogInformation(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Information, id, format, args);
+        public void LogWarning(string message)
+            => Logger?.Log(TraceEventType.Warning, 0, message);
+        public void LogWarning(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Warning, 0, format, args);
+        public void LogWarning(int id, string message)
+            => Logger?.Log(TraceEventType.Warning, id, message);
+        public void LogWarning(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Warning, id, format, args);
+        public void LogError(string message)
+            => Logger?.Log(TraceEventType.Error, 0, message);
+        public void LogError(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Error, 0, format, args);
+        public void LogError(int id, string message)
+            => Logger?.Log(TraceEventType.Error, id, message);
+        public void LogError(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Error, id, format, args);
+        public void LogCritical(string message)
+            => Logger?.Log(TraceEventType.Critical, 0, message);
+        public void LogCritical(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Critical, 0, format, args);
+        public void LogCritical(int id, string message)
+            => Logger?.Log(TraceEventType.Critical, id, message);
+        public void LogCritical(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Critical, id, format, args);
+        #endregion Logger
+
         #region Toast
 
         public bool SupportsToasts => Interaction?.SupportsToasts ?? false;
-
+        
         public Task ShowSuccessToastAsync(string message, string title = null)
-            => Interaction.ShowSuccessToastAsync(this, message, title ?? Title);
-
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowSuccessToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowSuccessToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowSuccessToastAsync(this, message, title ?? Title);
+        }
         public Task ShowErrorToastAsync(string message, string title = null)
-            => Interaction.ShowErrorToastAsync(this, message, title ?? Title);
-
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowErrorToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowErrorToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowErrorToastAsync(this, message, title ?? Title);
+        }
         public Task ShowWarningToastAsync(string message, string title = null)
-            => Interaction.ShowWarningToastAsync(this, message, title ?? Title);
-
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowWarningToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowWarningToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowWarningToastAsync(this, message, title ?? Title);
+        }
         public Task ShowInformationToastAsync(string message, string title = null)
-            => Interaction.ShowInformationToastAsync(this, message, title ?? Title);
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowInformationToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowInformationToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowInformationToastAsync(this, message, title ?? Title);
+        }
 
         #endregion Toast
 
@@ -43,12 +124,29 @@ namespace Shipwreck.ViewModelUtils
             string title,
             string buttonText,
             BorderStyle? buttonStyle)
-            => Interaction.AlertAsync(
+        {
+            LogInformation("AlertAsync(\"{0}\")", message);
+            var task = Interaction.AlertAsync(
                 this,
                 message,
                 title,
                 buttonText,
                 buttonStyle);
+
+            task.ContinueWith(t =>
+            {
+                if (t.Status == TaskStatus.RanToCompletion)
+                {
+                    LogInformation("AlertAsync(\"{0}\") closed", message);
+                }
+                else if (t.Exception != null)
+                {
+                    LogError("AlertAsync(\"{0}\") Exception={1}", message, t.Exception);
+                }
+            });
+
+            return task;
+        }
 
         public Task<bool> ConfirmAsync(
             string message,
@@ -57,14 +155,31 @@ namespace Shipwreck.ViewModelUtils
             BorderStyle? trueStyle,
             string falseText,
             BorderStyle? falseStyle)
-            => Interaction.ConfirmAsync(
-            this,
-            message,
-            title,
-            trueText,
-            trueStyle,
-            falseText,
-            falseStyle);
+        {
+            LogInformation("ConfirmAsync(\"{0}\")", message);
+            var task = Interaction.ConfirmAsync(
+                this,
+                message,
+                title,
+                trueText,
+                trueStyle,
+                falseText,
+                falseStyle);
+
+            task.ContinueWith(t =>
+            {
+                if (t.Status == TaskStatus.RanToCompletion)
+                {
+                    LogInformation("ConfirmAsync(\"{0}\") result={1}", message, t.Result);
+                }
+                else if (t.Exception != null)
+                {
+                    LogError("ConfirmAsync(\"{0}\") Exception={1}", message, t.Exception);
+                }
+            });
+
+            return task;
+        }
 
         #endregion メッセージ
 
@@ -143,21 +258,101 @@ namespace Shipwreck.ViewModelUtils
 
         #endregion InvokeAsync
 
+        #region Logger
+        public void LogVerbose(string message)
+            => Logger?.Log(TraceEventType.Verbose, 0, message);
+        public void LogVerbose(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Verbose, 0, format, args);
+        public void LogVerbose(int id, string message)
+            => Logger?.Log(TraceEventType.Verbose, id, message);
+        public void LogVerbose(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Verbose, id, format, args);
+        public void LogInformation(string message)
+            => Logger?.Log(TraceEventType.Information, 0, message);
+        public void LogInformation(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Information, 0, format, args);
+        public void LogInformation(int id, string message)
+            => Logger?.Log(TraceEventType.Information, id, message);
+        public void LogInformation(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Information, id, format, args);
+        public void LogWarning(string message)
+            => Logger?.Log(TraceEventType.Warning, 0, message);
+        public void LogWarning(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Warning, 0, format, args);
+        public void LogWarning(int id, string message)
+            => Logger?.Log(TraceEventType.Warning, id, message);
+        public void LogWarning(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Warning, id, format, args);
+        public void LogError(string message)
+            => Logger?.Log(TraceEventType.Error, 0, message);
+        public void LogError(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Error, 0, format, args);
+        public void LogError(int id, string message)
+            => Logger?.Log(TraceEventType.Error, id, message);
+        public void LogError(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Error, id, format, args);
+        public void LogCritical(string message)
+            => Logger?.Log(TraceEventType.Critical, 0, message);
+        public void LogCritical(string format, params object[] args)
+            => Logger?.Log(TraceEventType.Critical, 0, format, args);
+        public void LogCritical(int id, string message)
+            => Logger?.Log(TraceEventType.Critical, id, message);
+        public void LogCritical(int id, string format, params object[] args)
+            => Logger?.Log(TraceEventType.Critical, id, format, args);
+        #endregion Logger
+
         #region Toast
 
         public bool SupportsToasts => Interaction?.SupportsToasts ?? false;
-
+        
         public Task ShowSuccessToastAsync(string message, string title = null)
-            => Interaction.ShowSuccessToastAsync(this, message, title ?? ApplicationName);
-
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowSuccessToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowSuccessToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowSuccessToastAsync(this, message, title ?? ApplicationName);
+        }
         public Task ShowErrorToastAsync(string message, string title = null)
-            => Interaction.ShowErrorToastAsync(this, message, title ?? ApplicationName);
-
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowErrorToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowErrorToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowErrorToastAsync(this, message, title ?? ApplicationName);
+        }
         public Task ShowWarningToastAsync(string message, string title = null)
-            => Interaction.ShowWarningToastAsync(this, message, title ?? ApplicationName);
-
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowWarningToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowWarningToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowWarningToastAsync(this, message, title ?? ApplicationName);
+        }
         public Task ShowInformationToastAsync(string message, string title = null)
-            => Interaction.ShowInformationToastAsync(this, message, title ?? ApplicationName);
+        {
+            if (string.IsNullOrEmpty(title))
+            {
+                LogInformation("ShowInformationToastAsync(\"{0}\")", message);
+            }
+            else
+            {
+                LogInformation("ShowInformationToastAsync(\"{0}\", \"{1}\")", message, title);
+            }
+            return Interaction.ShowInformationToastAsync(this, message, title ?? ApplicationName);
+        }
 
         #endregion Toast
 
@@ -170,12 +365,29 @@ namespace Shipwreck.ViewModelUtils
             string title,
             string buttonText,
             BorderStyle? buttonStyle)
-            => Interaction.AlertAsync(
+        {
+            LogInformation("AlertAsync(\"{0}\")", message);
+            var task = Interaction.AlertAsync(
                 this,
                 message,
                 title,
                 buttonText,
                 buttonStyle);
+
+            task.ContinueWith(t =>
+            {
+                if (t.Status == TaskStatus.RanToCompletion)
+                {
+                    LogInformation("AlertAsync(\"{0}\") closed", message);
+                }
+                else if (t.Exception != null)
+                {
+                    LogError("AlertAsync(\"{0}\") Exception={1}", message, t.Exception);
+                }
+            });
+
+            return task;
+        }
 
         public Task<bool> ConfirmAsync(
             string message,
@@ -184,14 +396,31 @@ namespace Shipwreck.ViewModelUtils
             BorderStyle? trueStyle,
             string falseText,
             BorderStyle? falseStyle)
-            => Interaction.ConfirmAsync(
-            this,
-            message,
-            title,
-            trueText,
-            trueStyle,
-            falseText,
-            falseStyle);
+        {
+            LogInformation("ConfirmAsync(\"{0}\")", message);
+            var task = Interaction.ConfirmAsync(
+                this,
+                message,
+                title,
+                trueText,
+                trueStyle,
+                falseText,
+                falseStyle);
+
+            task.ContinueWith(t =>
+            {
+                if (t.Status == TaskStatus.RanToCompletion)
+                {
+                    LogInformation("ConfirmAsync(\"{0}\") result={1}", message, t.Result);
+                }
+                else if (t.Exception != null)
+                {
+                    LogError("ConfirmAsync(\"{0}\") Exception={1}", message, t.Exception);
+                }
+            });
+
+            return task;
+        }
 
         #endregion メッセージ
 

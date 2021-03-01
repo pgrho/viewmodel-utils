@@ -58,6 +58,27 @@ namespace Shipwreck.ViewModelUtils
 
         #endregion Window
 
+        #region Logger
+
+        private IPageLogger _Logger;
+
+        public IPageLogger Logger
+        {
+            get => _Logger ??= GetLogger();
+            protected set => SetProperty(ref _Logger, value);
+        }
+
+        protected virtual IPageLogger GetLogger()
+        {
+            IPageLogger s = null;
+            PlatformGetLogger(ref s);
+            return s ?? new ConsolePageLogger(GetType().FullName);
+        }
+
+        static partial void PlatformGetLogger(ref IPageLogger service);
+
+        #endregion Logger
+
         #region Interaction
 
         private IInteractionService _Interaction;
