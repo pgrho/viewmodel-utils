@@ -21,5 +21,8 @@ namespace Shipwreck.ViewModelUtils
 
         public ProcessingDisabled DisableProcessing()
             => new ProcessingDisabled(Application.Current?.Dispatcher.DisableProcessing() ?? default);
+
+        static partial void PlatformGetInteractionService(ref IInteractionService service)
+            => service = new InteractionService();
     }
 }

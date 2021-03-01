@@ -11,6 +11,27 @@ namespace Shipwreck.ViewModelUtils
     {
         public static bool ShouldCaptureContext => TaskHelper.SHOULD_CAPTURE_CONTEXT;
 
+        #region Logger
+
+        private IPageLogger _Logger;
+
+        public IPageLogger Logger
+        {
+            get => _Logger ??= GetLogger();
+            protected set => SetProperty(ref _Logger, value);
+        }
+
+        protected virtual IPageLogger GetLogger()
+        {
+            IPageLogger s = null;
+            PlatformGetLogger(ref s);
+            return s ?? new ConsolePageLogger(GetType().FullName);
+        }
+
+        static partial void PlatformGetLogger(ref IPageLogger service);
+
+        #endregion Logger
+
         #region Interaction
 
         private IInteractionService _Interaction;
@@ -22,7 +43,13 @@ namespace Shipwreck.ViewModelUtils
         }
 
         protected virtual IInteractionService GetInteractionService()
-            => null;
+        {
+            IInteractionService s = null;
+            PlatformGetInteractionService(ref s);
+            return s;
+        }
+
+        static partial void PlatformGetInteractionService(ref IInteractionService service);
 
         #endregion Interaction
 
