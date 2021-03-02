@@ -38,7 +38,7 @@
     <Content Include="package.json" Pack="False" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
+    <Compile Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
   </ItemGroup>
 
 </Project>

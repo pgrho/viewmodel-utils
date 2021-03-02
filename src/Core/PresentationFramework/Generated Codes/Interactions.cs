@@ -76,6 +76,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowSuccessToastAsync(this, message, title ?? Title);
         }
+        public Task ShowSuccessToastAsync(string format, object[] args, string title = null)
+            => ShowSuccessToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowSuccessToastAsync(string format, params object[] args)
+            => ShowSuccessToastAsync(string.Format(format, args), title: null);
         public Task ShowErrorToastAsync(string message, string title = null)
         {
             if (string.IsNullOrEmpty(title))
@@ -88,6 +93,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowErrorToastAsync(this, message, title ?? Title);
         }
+        public Task ShowErrorToastAsync(string format, object[] args, string title = null)
+            => ShowErrorToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowErrorToastAsync(string format, params object[] args)
+            => ShowErrorToastAsync(string.Format(format, args), title: null);
         public Task ShowWarningToastAsync(string message, string title = null)
         {
             if (string.IsNullOrEmpty(title))
@@ -100,6 +110,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowWarningToastAsync(this, message, title ?? Title);
         }
+        public Task ShowWarningToastAsync(string format, object[] args, string title = null)
+            => ShowWarningToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowWarningToastAsync(string format, params object[] args)
+            => ShowWarningToastAsync(string.Format(format, args), title: null);
         public Task ShowInformationToastAsync(string message, string title = null)
         {
             if (string.IsNullOrEmpty(title))
@@ -112,6 +127,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowInformationToastAsync(this, message, title ?? Title);
         }
+        public Task ShowInformationToastAsync(string format, object[] args, string title = null)
+            => ShowInformationToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowInformationToastAsync(string format, params object[] args)
+            => ShowInformationToastAsync(string.Format(format, args), title: null);
 
         #endregion Toast
 
@@ -317,6 +337,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowSuccessToastAsync(this, message, title ?? ApplicationName);
         }
+        public Task ShowSuccessToastAsync(string format, object[] args, string title = null)
+            => ShowSuccessToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowSuccessToastAsync(string format, params object[] args)
+            => ShowSuccessToastAsync(string.Format(format, args), title: null);
         public Task ShowErrorToastAsync(string message, string title = null)
         {
             if (string.IsNullOrEmpty(title))
@@ -329,6 +354,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowErrorToastAsync(this, message, title ?? ApplicationName);
         }
+        public Task ShowErrorToastAsync(string format, object[] args, string title = null)
+            => ShowErrorToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowErrorToastAsync(string format, params object[] args)
+            => ShowErrorToastAsync(string.Format(format, args), title: null);
         public Task ShowWarningToastAsync(string message, string title = null)
         {
             if (string.IsNullOrEmpty(title))
@@ -341,6 +371,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowWarningToastAsync(this, message, title ?? ApplicationName);
         }
+        public Task ShowWarningToastAsync(string format, object[] args, string title = null)
+            => ShowWarningToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowWarningToastAsync(string format, params object[] args)
+            => ShowWarningToastAsync(string.Format(format, args), title: null);
         public Task ShowInformationToastAsync(string message, string title = null)
         {
             if (string.IsNullOrEmpty(title))
@@ -353,6 +388,11 @@ namespace Shipwreck.ViewModelUtils
             }
             return Interaction.ShowInformationToastAsync(this, message, title ?? ApplicationName);
         }
+        public Task ShowInformationToastAsync(string format, object[] args, string title = null)
+            => ShowInformationToastAsync(string.Format(format, args), title: title);
+
+        public Task ShowInformationToastAsync(string format, params object[] args)
+            => ShowInformationToastAsync(string.Format(format, args), title: null);
 
         #endregion Toast
 

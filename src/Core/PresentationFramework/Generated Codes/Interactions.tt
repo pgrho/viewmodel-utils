@@ -70,6 +70,11 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
             }
             return Interaction.Show<#= t #>ToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
         }
+        public Task Show<#= t #>ToastAsync(string format, object[] args, string title = null)
+            => Show<#= t #>ToastAsync(string.Format(format, args), title: title);
+
+        public Task Show<#= t #>ToastAsync(string format, params object[] args)
+            => Show<#= t #>ToastAsync(string.Format(format, args), title: null);
 <#
 }
 #>

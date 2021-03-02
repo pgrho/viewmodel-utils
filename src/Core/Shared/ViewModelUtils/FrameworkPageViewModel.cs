@@ -7,7 +7,7 @@ using Shipwreck.ViewModelUtils.Validation;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public abstract partial class FrameworkPageViewModel : ValidatableModel, IRequestFocus, IDisposable
+    public abstract partial class FrameworkPageViewModel : ValidatableModel, IFrameworkPageViewModel
     {
         public static bool ShouldCaptureContext => TaskHelper.SHOULD_CAPTURE_CONTEXT;
 

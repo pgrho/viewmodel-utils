@@ -15,6 +15,6 @@
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems" Label="Shared" />
   <Import Project="..\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems" Label="Shared" />
   <ItemGroup>
-    <None Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
+    <Compile Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
   </ItemGroup>
 </Project>

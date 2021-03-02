@@ -13,6 +13,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\ObservableCollectionTraceListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\TraceEventModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ExpressionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasInteraction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IInteractionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\TraceSourcePageLogger.cs" />

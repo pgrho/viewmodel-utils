@@ -7,7 +7,7 @@ using Shipwreck.ViewModelUtils.Validation;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public abstract partial class WindowViewModel : ValidatableModel, IHasWindow, IDisposable, IRequestFocus
+    public abstract partial class WindowViewModel : ValidatableModel, IHasWindow, IDisposable, IRequestFocus, IHasInteraction
     {
         #region Window
 
