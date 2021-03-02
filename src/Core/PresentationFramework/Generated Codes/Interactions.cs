@@ -141,9 +141,9 @@ namespace Shipwreck.ViewModelUtils
 
         public Task AlertAsync(
             string message,
-            string title,
-            string buttonText,
-            BorderStyle? buttonStyle)
+            string title = null,
+            string buttonText = null,
+            BorderStyle? buttonStyle = null)
         {
             LogInformation("AlertAsync(\"{0}\")", message);
             var task = Interaction.AlertAsync(
@@ -170,11 +170,11 @@ namespace Shipwreck.ViewModelUtils
 
         public Task<bool> ConfirmAsync(
             string message,
-            string title,
-            string trueText,
-            BorderStyle? trueStyle,
-            string falseText,
-            BorderStyle? falseStyle)
+            string title = null,
+            string trueText = null,
+            BorderStyle? trueStyle = null,
+            string falseText = null,
+            BorderStyle? falseStyle = null)
         {
             LogInformation("ConfirmAsync(\"{0}\")", message);
             var task = Interaction.ConfirmAsync(
@@ -402,9 +402,9 @@ namespace Shipwreck.ViewModelUtils
 
         public Task AlertAsync(
             string message,
-            string title,
-            string buttonText,
-            BorderStyle? buttonStyle)
+            string title = null,
+            string buttonText = null,
+            BorderStyle? buttonStyle = null)
         {
             LogInformation("AlertAsync(\"{0}\")", message);
             var task = Interaction.AlertAsync(
@@ -431,11 +431,11 @@ namespace Shipwreck.ViewModelUtils
 
         public Task<bool> ConfirmAsync(
             string message,
-            string title,
-            string trueText,
-            BorderStyle? trueStyle,
-            string falseText,
-            BorderStyle? falseStyle)
+            string title = null,
+            string trueText = null,
+            BorderStyle? trueStyle = null,
+            string falseText = null,
+            BorderStyle? falseStyle = null)
         {
             LogInformation("ConfirmAsync(\"{0}\")", message);
             var task = Interaction.ConfirmAsync(

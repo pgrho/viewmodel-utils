@@ -69,17 +69,17 @@ namespace Shipwreck.ViewModelUtils
 
         Task AlertAsync(
             string message,
-            string title,
-            string buttonText,
-            BorderStyle? buttonStyle);
+            string title = null,
+            string buttonText = null,
+            BorderStyle? buttonStyle = null);
 
         Task<bool> ConfirmAsync(
             string message,
-            string title,
-            string trueText,
-            BorderStyle? trueStyle,
-            string falseText,
-            BorderStyle? falseStyle);
+            string title = null,
+            string trueText = null,
+            BorderStyle? trueStyle = null,
+            string falseText = null,
+            BorderStyle? falseStyle = null);
 
         #endregion メッセージ
 
