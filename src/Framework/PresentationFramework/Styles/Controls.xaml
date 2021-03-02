@@ -7,5 +7,7 @@
             Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.Buttons.xaml" />
         <vmu:SharedResourceDictionary
             Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.DropDownButtons.xaml" />
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.SplitButtons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
