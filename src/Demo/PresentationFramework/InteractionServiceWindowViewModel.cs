@@ -41,6 +41,12 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
                 yield return CreateToastCommand(tf, false);
             }
 
+            yield return CreateAlertCommand(true);
+            yield return CreateAlertCommand(false);
+
+            yield return CreateConfirmCommand(true);
+            yield return CreateConfirmCommand(false);
+
             yield return CreateModalCommand(true);
             yield return CreateModalCommand(false);
         }
@@ -58,6 +64,29 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
                 Log("End CreateToastCommand ({0})", capture);
             }, title: $"{fn} ({capture})");
         }
+
+        private CommandViewModelBase CreateAlertCommand(bool capture)
+            => CommandViewModel.Create(async () =>
+            {
+                Log("Begin CreateAlertCommand ({0})", capture);
+                await Task.Delay(250).ConfigureAwait(capture);
+                Log("Calling {0}", nameof(AlertAsync));
+                await AlertAsync("Alert", title: nameof(CreateAlertCommand), buttonText: "I got it").ConfigureAwait(capture);
+                Log("Called {0}", nameof(AlertAsync));
+                Log("End CreateAlertCommand ({0})", capture);
+            }, title: $"AlertAsync ({capture})");
+
+        private CommandViewModelBase CreateConfirmCommand(bool capture)
+            => CommandViewModel.Create(async () =>
+            {
+                Log("Begin CreateConfirmCommand ({0})", capture);
+                await Task.Delay(250).ConfigureAwait(capture);
+                Log("Calling {0}", nameof(ConfirmAsync));
+                var r = await ConfirmAsync("Confirm", title: nameof(CreateConfirmCommand), trueText: "Accept", falseText: "decline").ConfigureAwait(capture);
+                Log("Called {0}", nameof(ConfirmAsync));
+                Log("Result: {0}", r);
+                Log("End CreateConfirmCommand ({0})", capture);
+            }, title: $"ConfirmAsync ({capture})");
 
         private CommandViewModelBase CreateModalCommand(bool capture)
             => CommandViewModel.Create(async () =>

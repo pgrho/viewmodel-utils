@@ -74,7 +74,7 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowSuccessToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowSuccessToastAsync(this, message, title ?? Title);
+            return Interaction.ShowSuccessToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowSuccessToastAsync(string format, object[] args, string title = null)
             => ShowSuccessToastAsync(string.Format(format, args), title: title);
@@ -91,7 +91,7 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowErrorToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowErrorToastAsync(this, message, title ?? Title);
+            return Interaction.ShowErrorToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowErrorToastAsync(string format, object[] args, string title = null)
             => ShowErrorToastAsync(string.Format(format, args), title: title);
@@ -108,7 +108,7 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowWarningToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowWarningToastAsync(this, message, title ?? Title);
+            return Interaction.ShowWarningToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowWarningToastAsync(string format, object[] args, string title = null)
             => ShowWarningToastAsync(string.Format(format, args), title: title);
@@ -125,13 +125,17 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowInformationToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowInformationToastAsync(this, message, title ?? Title);
+            return Interaction.ShowInformationToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowInformationToastAsync(string format, object[] args, string title = null)
             => ShowInformationToastAsync(string.Format(format, args), title: title);
 
         public Task ShowInformationToastAsync(string format, params object[] args)
             => ShowInformationToastAsync(string.Format(format, args), title: null);
+
+        protected virtual string GetDefaultMessageTitle(string title)
+            => !string.IsNullOrEmpty(title) ? title
+            : Title;
 
         #endregion Toast
 
@@ -149,7 +153,7 @@ namespace Shipwreck.ViewModelUtils
             var task = Interaction.AlertAsync(
                 this,
                 message,
-                title,
+                GetDefaultMessageTitle(title),
                 buttonText,
                 buttonStyle);
 
@@ -180,7 +184,7 @@ namespace Shipwreck.ViewModelUtils
             var task = Interaction.ConfirmAsync(
                 this,
                 message,
-                title,
+                GetDefaultMessageTitle(title),
                 trueText,
                 trueStyle,
                 falseText,
@@ -256,7 +260,7 @@ namespace Shipwreck.ViewModelUtils
             => Interaction.OpenModalAsync(this, viewModel);
 
         public Task CloseModalAsync(object viewModel)
-            => Interaction.OpenModalAsync(this, viewModel);
+            => Interaction.CloseModalAsync(this, viewModel);
 
         #endregion モーダル
     }
@@ -335,7 +339,7 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowSuccessToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowSuccessToastAsync(this, message, title ?? ApplicationName);
+            return Interaction.ShowSuccessToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowSuccessToastAsync(string format, object[] args, string title = null)
             => ShowSuccessToastAsync(string.Format(format, args), title: title);
@@ -352,7 +356,7 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowErrorToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowErrorToastAsync(this, message, title ?? ApplicationName);
+            return Interaction.ShowErrorToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowErrorToastAsync(string format, object[] args, string title = null)
             => ShowErrorToastAsync(string.Format(format, args), title: title);
@@ -369,7 +373,7 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowWarningToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowWarningToastAsync(this, message, title ?? ApplicationName);
+            return Interaction.ShowWarningToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowWarningToastAsync(string format, object[] args, string title = null)
             => ShowWarningToastAsync(string.Format(format, args), title: title);
@@ -386,13 +390,17 @@ namespace Shipwreck.ViewModelUtils
             {
                 LogInformation("ShowInformationToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.ShowInformationToastAsync(this, message, title ?? ApplicationName);
+            return Interaction.ShowInformationToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task ShowInformationToastAsync(string format, object[] args, string title = null)
             => ShowInformationToastAsync(string.Format(format, args), title: title);
 
         public Task ShowInformationToastAsync(string format, params object[] args)
             => ShowInformationToastAsync(string.Format(format, args), title: null);
+
+        protected virtual string GetDefaultMessageTitle(string title)
+            => !string.IsNullOrEmpty(title) ? title
+            : ApplicationName;
 
         #endregion Toast
 
@@ -410,7 +418,7 @@ namespace Shipwreck.ViewModelUtils
             var task = Interaction.AlertAsync(
                 this,
                 message,
-                title,
+                GetDefaultMessageTitle(title),
                 buttonText,
                 buttonStyle);
 
@@ -441,7 +449,7 @@ namespace Shipwreck.ViewModelUtils
             var task = Interaction.ConfirmAsync(
                 this,
                 message,
-                title,
+                GetDefaultMessageTitle(title),
                 trueText,
                 trueStyle,
                 falseText,
@@ -517,7 +525,7 @@ namespace Shipwreck.ViewModelUtils
             => Interaction.OpenModalAsync(this, viewModel);
 
         public Task CloseModalAsync(object viewModel)
-            => Interaction.OpenModalAsync(this, viewModel);
+            => Interaction.CloseModalAsync(this, viewModel);
 
         #endregion モーダル
     }

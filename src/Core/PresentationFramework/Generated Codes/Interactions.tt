@@ -68,7 +68,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
             {
                 LogInformation("Show<#= t #>ToastAsync(\"{0}\", \"{1}\")", message, title);
             }
-            return Interaction.Show<#= t #>ToastAsync(this, message, title ?? <#= c.DefaultTitle #>);
+            return Interaction.Show<#= t #>ToastAsync(this, message, GetDefaultMessageTitle(title));
         }
         public Task Show<#= t #>ToastAsync(string format, object[] args, string title = null)
             => Show<#= t #>ToastAsync(string.Format(format, args), title: title);
@@ -78,6 +78,10 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
 <#
 }
 #>
+
+        protected virtual string GetDefaultMessageTitle(string title)
+            => !string.IsNullOrEmpty(title) ? title
+            : <#= c.DefaultTitle #>;
 
         #endregion Toast
 
@@ -95,7 +99,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
             var task = Interaction.AlertAsync(
                 this,
                 message,
-                title,
+                GetDefaultMessageTitle(title),
                 buttonText,
                 buttonStyle);
 
@@ -126,7 +130,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
             var task = Interaction.ConfirmAsync(
                 this,
                 message,
-                title,
+                GetDefaultMessageTitle(title),
                 trueText,
                 trueStyle,
                 falseText,
@@ -202,7 +206,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
             => Interaction.OpenModalAsync(this, viewModel);
 
         public Task CloseModalAsync(object viewModel)
-            => Interaction.OpenModalAsync(this, viewModel);
+            => Interaction.CloseModalAsync(this, viewModel);
 
         #endregion モーダル
     }

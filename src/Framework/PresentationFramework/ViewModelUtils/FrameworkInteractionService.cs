@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -55,33 +56,101 @@ namespace Shipwreck.ViewModelUtils
             base.ShowToast(context, message, title, style);
         }
 
-        protected override Task ShowModalAsync(object context, FrameworkElement frameworkElement)
+        public override Task<MessageBoxResult> ShowMessageBoxAsync(object context, string message, string title, string trueText, BorderStyle? trueStyle, string falseText, BorderStyle? falseStyle, MessageBoxButton button, MessageBoxImage icon)
         {
-            if (GetWindow(context) is MetroWindow mw
-                && DialogParticipation.GetRegister(mw) != null)
+            if (GetWindow(context) is MetroWindow mw)
             {
-                ConfigureViewModel(frameworkElement.DataContext);
-
-                var tcs = new TaskCompletionSource<object>();
-
-                if (frameworkElement is BaseMetroDialog d)
+                Task<MessageBoxResult> showCore()
                 {
-                    d.Unloaded += (s, e) => tcs.TrySetResult(null);
-                    mw.ShowMetroDialogAsync(d);
-                }
-                else
-                {
-                    var gd = new GenericMetroDialog()
+                    if (DialogParticipation.GetRegister(mw) != null)
                     {
-                        DataContext = frameworkElement.DataContext,
-                        Content = frameworkElement,
-                    };
-                    gd.Unloaded += (s, e) => tcs.TrySetResult(null);
-                    mw.ShowMetroDialogAsync(gd);
+                        switch (button)
+                        {
+                            case MessageBoxButton.YesNo:
+                                return mw.ShowMessageAsync(title, message, MessageDialogStyle.AffirmativeAndNegative, new MetroDialogSettings
+                                {
+                                    AffirmativeButtonText = !string.IsNullOrEmpty(trueText) ? trueText : "はい",
+                                    NegativeButtonText = !string.IsNullOrEmpty(falseText) ? falseText : "いいえ",
+                                    OwnerCanCloseWithDialog = true
+                                }).ContinueWith(t => t.Status != TaskStatus.RanToCompletion ? MessageBoxResult.None : t.Result == MessageDialogResult.Affirmative ? MessageBoxResult.Yes : MessageBoxResult.No);
+
+                            case MessageBoxButton.OK:
+                                return mw.ShowMessageAsync(title, message, MessageDialogStyle.Affirmative, new MetroDialogSettings
+                                {
+                                    AffirmativeButtonText = !string.IsNullOrEmpty(trueText) ? trueText : "OK",
+                                    OwnerCanCloseWithDialog = true
+                                }).ContinueWith(t => t.Status != TaskStatus.RanToCompletion ? MessageBoxResult.None : MessageBoxResult.OK);
+                        }
+                    }
+
+                    return base.ShowMessageBoxAsync(context, message, title, trueText, trueStyle, falseText, falseStyle, button, icon);
                 }
-                return tcs.Task;
+
+                if (mw.Dispatcher.Thread != Thread.CurrentThread)
+                {
+                    var tcs = new TaskCompletionSource<MessageBoxResult>();
+                    InvokeAsync(context, () => showCore().ContinueWith(t =>
+                    {
+                        if (t.Status == TaskStatus.RanToCompletion)
+                        {
+                            tcs.TrySetResult(t.Result);
+                        }
+                        else if (t.Exception != null)
+                        {
+                            tcs.TrySetException(t.Exception);
+                        }
+                        else
+                        {
+                            tcs.TrySetCanceled();
+                        }
+                    }, TaskScheduler.FromCurrentSynchronizationContext()));
+
+                    return tcs.Task;
+                }
+                return showCore();
             }
 
+            return base.ShowMessageBoxAsync(context, message, title, trueText, trueStyle, falseText, falseStyle, button, icon);
+        }
+
+        protected override Task ShowModalAsync(object context, FrameworkElement frameworkElement)
+        {
+            if (GetWindow(context) is MetroWindow mw)
+            {
+                Task showCore()
+                {
+                    if (DialogParticipation.GetRegister(mw) != null)
+                    {
+                        ConfigureViewModel(frameworkElement.DataContext);
+
+                        var tcs = new TaskCompletionSource<object>();
+
+                        if (frameworkElement is BaseMetroDialog d)
+                        {
+                            d.Unloaded += (s, e) => tcs.TrySetResult(null);
+                            mw.ShowMetroDialogAsync(d);
+                        }
+                        else
+                        {
+                            var gd = new GenericMetroDialog()
+                            {
+                                DataContext = frameworkElement.DataContext,
+                                Content = frameworkElement,
+                            };
+                            gd.Unloaded += (s, e) => tcs.TrySetResult(null);
+                            mw.ShowMetroDialogAsync(gd);
+                        }
+                        return tcs.Task;
+                    }
+                    return base.ShowModalAsync(context, frameworkElement);
+                }
+
+                if (mw.Dispatcher.Thread != Thread.CurrentThread)
+                {
+                    return InvokeAsync(context, showCore);
+                }
+                return showCore();
+            }
             return base.ShowModalAsync(context, frameworkElement);
         }
 
