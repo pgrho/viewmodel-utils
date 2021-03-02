@@ -5,5 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <vmu:SharedResourceDictionary
             Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.Buttons.xaml" />
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.MenuItems.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

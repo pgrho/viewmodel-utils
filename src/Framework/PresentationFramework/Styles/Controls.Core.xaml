@@ -7,12 +7,17 @@
     xmlns:local="clr-namespace:Shipwreck.ViewModelUtils">
     <local:BorderStyleToColorSchemeConverter
         x:Key="BorderStyleToColorSchemeConverter" />
+    <local:BorderStyleToColorSchemeConverter
+        x:Key="BorderStyleToOutlineColorSchemeConverter"
+        ForceOutline="True" />
+
     <vmu:StringNotEmptyConverter
         x:Key="StringNotEmptyConverter" />
     <vmu:OpaqueSolidColorBrushConverter
         x:Key="OpaqueSolidColorBrushConverter" />
     <BooleanToVisibilityConverter
         x:Key="BooleanToVisibilityConverter" />
+
     <DataTemplate
         x:Key="CommandViewModel.ContentTemplate">
         <StackPanel
@@ -72,10 +77,28 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition
-                        Binding="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=IsMouseOver}"
+                        Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsMouseOver}"
                         Value="True" />
                     <Condition
-                        Binding="{Binding RelativeSource={RelativeSource AncestorType=ContentControl}, Path=IsEnabled}"
+                        Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsEnabled}"
+                        Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter
+                    TargetName="badgeBorder"
+                    Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=(TextElement.Foreground), Converter={StaticResource OpaqueSolidColorBrushConverter}}" />
+                <Setter
+                    TargetName="badgeText"
+                    Property="Foreground"
+                    Value="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Background, Converter={StaticResource OpaqueSolidColorBrushConverter}}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsPressed}"
+                        Value="True" />
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=IsEnabled}"
                         Value="True" />
                 </MultiDataTrigger.Conditions>
                 <Setter
@@ -95,6 +118,7 @@
             VerticalAlignment="Center"
             Icon="{Binding Icon}" />
     </DataTemplate>
+
     <Style
         x:Key="CommandViewModel.ContentPresenter"
         TargetType="ContentPresenter">

@@ -135,6 +135,10 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
 
         #endregion ClearCommand
 
+        protected override void BeginSave(bool shouldClose)
+        {
+        }
+
         private long ComputeCore()
         {
             var i = _Input;
