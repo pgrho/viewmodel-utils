@@ -1,0 +1,56 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.BootstrapControls.PresentationFramework;component/Styles/Controls.DropDownButtons.xaml" />
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.MenuItems.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style
+        x:Key="CommandViewModel.DropDownButton.Core"
+        TargetType="mah:DropDownButton"
+        BasedOn="{x:Null}">
+        <Setter
+            Property="ItemTemplate"
+            Value="{StaticResource CommandViewModel.ContentTemplate}" />
+        <Setter
+            Property="ItemContainerStyle"
+            Value="{x:Null}" />
+        <Setter
+            Property="ItemContainerStyleSelector"
+            Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector}" />
+    </Style>
+
+    <vmu:StyleMixer
+        x:Key="CommandViewModel.DropDownButton.Small"
+        TargetType="mah:DropDownButton">
+        <StaticResourceExtension
+            ResourceKey="BootstrapControls.DropDownButton.Small" />
+        <StaticResourceExtension
+            ResourceKey="CommandViewModel.DropDownButton.Core" />
+    </vmu:StyleMixer>
+
+    <vmu:StyleMixer
+        x:Key="CommandViewModel.DropDownButton.Medium"
+        TargetType="mah:DropDownButton">
+        <StaticResourceExtension
+            ResourceKey="BootstrapControls.DropDownButton.Medium" />
+        <StaticResourceExtension
+            ResourceKey="CommandViewModel.DropDownButton.Core" />
+    </vmu:StyleMixer>
+
+    <vmu:StyleMixer
+        x:Key="CommandViewModel.DropDownButton.Large"
+        TargetType="mah:DropDownButton">
+        <StaticResourceExtension
+            ResourceKey="BootstrapControls.DropDownButton.Large" />
+        <StaticResourceExtension
+            ResourceKey="CommandViewModel.DropDownButton.Core" />
+    </vmu:StyleMixer>
+
+</ResourceDictionary>
