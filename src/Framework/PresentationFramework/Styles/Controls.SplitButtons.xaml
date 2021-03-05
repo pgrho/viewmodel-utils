@@ -41,7 +41,7 @@
             Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector}" />
         <Setter
             Property="bs4:ColorScheme.Scheme"
-            Value="{Binding RelativeSource={RelativeSource Self}, Path=Command.Style, Converter={StaticResource ColorSchemeConverter}}" />
+            Value="{Binding RelativeSource={RelativeSource Self}, Path=Command.Style, Converter={StaticResource BorderStyleToColorSchemeConverter}}" />
         <Setter
             Property="ItemTemplate"
             Value="{StaticResource CommandViewModel.ContentTemplate}" />
