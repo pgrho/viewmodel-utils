@@ -14,7 +14,7 @@ namespace Shipwreck.ViewModelUtils
     public class EnumDescriptionConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            => EnumDataAnnotations.Get(value.GetType()).GetDescription(value);
+            => value is Enum ? EnumDataAnnotations.Get(value.GetType()).GetDescription(value) : value;
 
         object IValueConverter.ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotSupportedException();

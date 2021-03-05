@@ -25,7 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.1" />
-    <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.0-alpha6" />
+    <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.0-alpha7" />
     <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.0" />
   </ItemGroup>
   <ItemGroup>
