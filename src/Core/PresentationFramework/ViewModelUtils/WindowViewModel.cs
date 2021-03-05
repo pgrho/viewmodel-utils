@@ -170,6 +170,10 @@ namespace Shipwreck.ViewModelUtils
 
         #endregion CloseCommand
 
+        protected internal virtual void OnLoaded()
+        {
+        }
+
         #region IDisposable
 
         protected bool IsDisposed { get; private set; }
