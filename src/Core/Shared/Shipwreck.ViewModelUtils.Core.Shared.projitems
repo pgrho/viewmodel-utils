@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasInteraction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IInteractionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPageLogger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\PropertyStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\TraceSourcePageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\DirectoryPathValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\NotNullValidator.cs" />

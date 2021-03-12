@@ -43,6 +43,21 @@ namespace Shipwreck.ViewModelUtils
             return false;
         }
 
+        protected bool SetProperty<T>(ref PropertyStore<T> field, T value, Action onChanged = null, [CallerMemberName] string propertyName = null)
+        {
+            if (!((field.CurrentValue as IEquatable<T>)?.Equals(value) ?? Equals(field.CurrentValue, value)))
+            {
+                field.SetCurrentValue(value);
+                if (propertyName != null)
+                {
+                    RaisePropertyChanged(propertyName);
+                }
+                onChanged?.Invoke();
+                return true;
+            }
+            return false;
+        }
+
         protected bool SetFlagProperty(ref byte field, byte flag, bool hasFlag, Action onChanged = null, [CallerMemberName] string propertyName = null)
         {
             var nv = (byte)(hasFlag ? (field | flag) : (field & ~flag));
