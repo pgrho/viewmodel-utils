@@ -47,6 +47,21 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
             yield return CreateConfirmCommand(true);
             yield return CreateConfirmCommand(false);
 
+            yield return CreateOpenFileCommand(true);
+            yield return CreateOpenFileCommand(false);
+
+            yield return CreateOpenFilesCommand(true);
+            yield return CreateOpenFilesCommand(false);
+
+            yield return CreateSaveFileCommand(true);
+            yield return CreateSaveFileCommand(false);
+
+            yield return CreateOpenDirectoryCommand(true);
+            yield return CreateOpenDirectoryCommand(false);
+
+            yield return CreateSaveDirectoryCommand(true);
+            yield return CreateSaveDirectoryCommand(false);
+
             yield return CreateModalCommand(true);
             yield return CreateModalCommand(false);
         }
@@ -87,6 +102,79 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
                 Log("Result: {0}", r);
                 Log("End CreateConfirmCommand ({0})", capture);
             }, title: $"ConfirmAsync ({capture})");
+
+        private CommandViewModelBase CreateOpenFileCommand(bool capture)
+            => CommandViewModel.Create(async () =>
+            {
+                Log("Begin CreateOpenFileCommand ({0})", capture);
+                await Task.Delay(250).ConfigureAwait(capture);
+                Log("Calling {0}", nameof(OpenFileAsync));
+                var r = await OpenFileAsync(
+                    filter: "Text|*.txt|CSV|*.csv|All|*",
+                    filterIndex: 2,
+                    fileName: "filename",
+                    initialDirectory: "C:\\").ConfigureAwait(capture);
+                Log("Called {0}", nameof(OpenFileAsync));
+                Log("Result: {0}", r);
+                Log("End CreateOpenFileCommand ({0})", capture);
+            }, title: $"OpenFileAsync ({capture})");
+
+        private CommandViewModelBase CreateOpenFilesCommand(bool capture)
+            => CommandViewModel.Create(async () =>
+            {
+                Log("Begin CreateOpenFilesCommand ({0})", capture);
+                await Task.Delay(250).ConfigureAwait(capture);
+                Log("Calling {0}", nameof(OpenFilesAsync));
+                var r = await OpenFilesAsync(
+                    filter: "Text|*.txt|CSV|*.csv|All|*",
+                    filterIndex: 2,
+                    fileName: "filename",
+                    initialDirectory: "C:\\",
+                    multiSelect: true).ConfigureAwait(capture);
+                Log("Called {0}", nameof(OpenFilesAsync));
+                Log("Result: {0}", r == null ? null : string.Join(",", r));
+                Log("End CreateOpenFilesCommand ({0})", capture);
+            }, title: $"OpenFilesAsync ({capture})");
+
+        private CommandViewModelBase CreateSaveFileCommand(bool capture)
+            => CommandViewModel.Create(async () =>
+            {
+                Log("Begin CreateSaveFileCommand ({0})", capture);
+                await Task.Delay(250).ConfigureAwait(capture);
+                Log("Calling {0}", nameof(SaveFileAsync));
+                var r = await SaveFileAsync(
+                    filter: "Text|*.txt|CSV|*.csv|All|*",
+                    filterIndex: 2,
+                    fileName: "filename",
+                    initialDirectory: "C:\\").ConfigureAwait(capture);
+                Log("Called {0}", nameof(SaveFileAsync));
+                Log("Result: {0}", r);
+                Log("End CreateSaveFileCommand ({0})", capture);
+            }, title: $"SaveFileAsync ({capture})");
+
+        private CommandViewModelBase CreateOpenDirectoryCommand(bool capture)
+            => CommandViewModel.Create(async () =>
+            {
+                Log("Begin CreateOpenDirectoryCommand ({0})", capture);
+                await Task.Delay(250).ConfigureAwait(capture);
+                Log("Calling {0}", nameof(OpenDirectoryAsync));
+                var r = await OpenDirectoryAsync(directoryName: "hoge").ConfigureAwait(capture);
+                Log("Called {0}", nameof(OpenDirectoryAsync));
+                Log("Result: {0}", r);
+                Log("End CreateOpenDirectoryCommand ({0})", capture);
+            }, title: $"OpenDirectoryAsync ({capture})");
+
+        private CommandViewModelBase CreateSaveDirectoryCommand(bool capture)
+            => CommandViewModel.Create(async () =>
+            {
+                Log("Begin CreateSaveDirectoryCommand ({0})", capture);
+                await Task.Delay(250).ConfigureAwait(capture);
+                Log("Calling {0}", nameof(SaveDirectoryAsync));
+                var r = await SaveDirectoryAsync("fuga").ConfigureAwait(capture);
+                Log("Called {0}", nameof(SaveDirectoryAsync));
+                Log("Result: {0}", r);
+                Log("End CreateSaveDirectoryCommand ({0})", capture);
+            }, title: $"SaveDirectoryAsync ({capture})");
 
         private CommandViewModelBase CreateModalCommand(bool capture)
             => CommandViewModel.Create(async () =>

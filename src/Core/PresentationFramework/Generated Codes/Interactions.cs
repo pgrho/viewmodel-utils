@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 namespace Shipwreck.ViewModelUtils
 {
@@ -210,9 +211,21 @@ namespace Shipwreck.ViewModelUtils
         #region ファイル
 
         public bool SupportsFileDialogs => Interaction?.SupportsFileDialogs ?? false;
+        
+        public Task<string> OpenFileAsync(
+            string filter = null,
+            int filterIndex = 0,
+            string fileName = null,
+            string initialDirectory = null)
+            => OpenFilesAsync(
+            filter: filter,
+            filterIndex: filterIndex,
+            fileName: fileName,
+            initialDirectory: initialDirectory,
+            multiSelect: false).ContinueWith(t => t.Result?.FirstOrDefault());
 
         public Task<string[]> OpenFilesAsync(
-            string filter,
+            string filter = null,
             int filterIndex = 0,
             string fileName = null,
             string initialDirectory = null,
@@ -226,7 +239,7 @@ namespace Shipwreck.ViewModelUtils
             multiSelect: multiSelect);
 
         public Task<string> SaveFileAsync(
-            string filter,
+            string filter = null,
             int filterIndex = 0,
             string fileName = null,
             string initialDirectory = null)
@@ -475,9 +488,21 @@ namespace Shipwreck.ViewModelUtils
         #region ファイル
 
         public bool SupportsFileDialogs => Interaction?.SupportsFileDialogs ?? false;
+        
+        public Task<string> OpenFileAsync(
+            string filter = null,
+            int filterIndex = 0,
+            string fileName = null,
+            string initialDirectory = null)
+            => OpenFilesAsync(
+            filter: filter,
+            filterIndex: filterIndex,
+            fileName: fileName,
+            initialDirectory: initialDirectory,
+            multiSelect: false).ContinueWith(t => t.Result?.FirstOrDefault());
 
         public Task<string[]> OpenFilesAsync(
-            string filter,
+            string filter = null,
             int filterIndex = 0,
             string fileName = null,
             string initialDirectory = null,
@@ -491,7 +516,7 @@ namespace Shipwreck.ViewModelUtils
             multiSelect: multiSelect);
 
         public Task<string> SaveFileAsync(
-            string filter,
+            string filter = null,
             int filterIndex = 0,
             string fileName = null,
             string initialDirectory = null)

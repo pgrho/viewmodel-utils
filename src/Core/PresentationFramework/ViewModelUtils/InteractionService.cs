@@ -236,7 +236,7 @@ namespace Shipwreck.ViewModelUtils
         {
             var ofd = new OpenFileDialog()
             {
-                Filter = fileName,
+                Filter = filter,
                 FilterIndex = filterIndex,
                 FileName = fileName,
                 InitialDirectory = initialDirectory,
@@ -273,7 +273,7 @@ namespace Shipwreck.ViewModelUtils
         {
             var d = new SaveFileDialog()
             {
-                Filter = fileName,
+                Filter = filter,
                 FilterIndex = filterIndex,
                 FileName = fileName,
                 InitialDirectory = initialDirectory
