@@ -1,4 +1,7 @@
-﻿namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
+﻿using Notifications.Wpf.Core.Controls;
+using Shipwreck.ViewModelUtils.Controls;
+
+namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
 {
     /// <summary>
     /// InteractionServiceWindow.xaml の相互作用ロジック
@@ -10,5 +13,8 @@
             InitializeComponent();
             DataContext = viewModel;
         }
+
+        protected override FrameworkNotificationArea GetNotificationArea()
+            => NotificationArea;
     }
 }

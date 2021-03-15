@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Controls;
 using MahApps.Metro.Controls;
 
 namespace Shipwreck.ViewModelUtils.Controls
@@ -11,6 +10,9 @@ namespace Shipwreck.ViewModelUtils.Controls
             Loaded += FrameworkWindow_Loaded;
             DataContextChanged += FrameworkWindow_DataContextChanged;
         }
+
+        protected internal virtual FrameworkNotificationArea GetNotificationArea()
+            => null;
 
         private void FrameworkWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
             => (DataContext as WindowViewModel)?.OnLoaded();

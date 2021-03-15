@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Shipwreck.ViewModelUtils.Controls;
 
 #if NET5_0
 using Notifications.Wpf.Core;
@@ -32,25 +33,32 @@ namespace Shipwreck.ViewModelUtils
 
         protected override void ShowToast(object context, string message, string title, BorderStyle style)
         {
-            if (GetWindow(context)?.FindName(NotificationAreaName) is NotificationArea)
+            var w = GetWindow(context);
+            if (w != null)
             {
-                var content = new NotificationContent()
+                var na = (w as FrameworkWindow)?.GetNotificationArea()
+                    ?? w.FindName(NotificationAreaName) as NotificationArea;
+
+                if (na != null)
                 {
-                    Type = (style & BorderStyle.Success) != 0 ? NotificationType.Success
-                        : (style & BorderStyle.Danger) != 0 ? NotificationType.Error
-                        : (style & BorderStyle.Warning) != 0 ? NotificationType.Warning
-                        : NotificationType.Information,
-                    Title = title,
-                    Message = message
-                };
+                    var content = new NotificationContent()
+                    {
+                        Type = (style & BorderStyle.Success) != 0 ? NotificationType.Success
+                            : (style & BorderStyle.Danger) != 0 ? NotificationType.Error
+                            : (style & BorderStyle.Warning) != 0 ? NotificationType.Warning
+                            : NotificationType.Information,
+                        Title = title,
+                        Message = message
+                    };
 
 #if NET5_0
-                NotificationManager.ShowAsync(content, expirationTime: ToastExpirationTime, areaName: NotificationAreaName).GetHashCode();
+                    NotificationManager.ShowAsync(content, expirationTime: ToastExpirationTime, areaName: na.BindableName.EmptyToNull() ?? na.Name).GetHashCode();
 #else
-                NotificationManager.Show(content, expirationTime: ToastExpirationTime, areaName: NotificationAreaName);
+                    NotificationManager.Show(content, expirationTime: ToastExpirationTime, areaName: na.Name);
 #endif
 
-                return;
+                    return;
+                }
             }
 
             base.ShowToast(context, message, title, style);
