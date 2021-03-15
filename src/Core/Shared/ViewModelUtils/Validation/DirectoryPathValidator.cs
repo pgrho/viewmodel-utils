@@ -8,7 +8,7 @@ namespace Shipwreck.ViewModelUtils.Validation
         where TModel : ValidatableModel
     {
         public DirectoryPathValidator(Expression<Func<TModel, string>> expression, string errorMessage = null)
-            : base(expression, errorMessage ?? $"{expression.GetDisplayName()}は無効なディレクトリーです。")
+            : base(expression, errorMessage ?? string.Format(SR.Arg0IsInvalidDirectory, expression.GetDisplayName()))
         {
         }
 

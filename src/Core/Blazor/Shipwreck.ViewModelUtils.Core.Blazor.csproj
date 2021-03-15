@@ -40,5 +40,10 @@
   <ItemGroup>
     <Compile Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="..\Shared\Resources\SR.Designer.cs">
+      <DesignTime>True</DesignTime>
+    </Compile>
+  </ItemGroup>
 
 </Project>

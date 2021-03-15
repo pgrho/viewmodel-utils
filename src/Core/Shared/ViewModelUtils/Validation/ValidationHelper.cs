@@ -35,6 +35,9 @@ namespace Shipwreck.ViewModelUtils.Validation
                             expression,
                             minimum,
                             (TProperty)typeof(TProperty).GetField(nameof(int.MaxValue)).GetValue(null),
-                            $"{expression.GetDisplayName()}は{minimum}以上の値を指定してください。"));
+                            string.Format(
+                                SR.Arg0MustBeGreaterThanOrEqualToArg1,
+                                expression.GetDisplayName(),
+                                minimum)));
     }
 }

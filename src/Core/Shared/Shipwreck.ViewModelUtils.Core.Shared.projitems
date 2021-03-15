@@ -9,6 +9,11 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Resources\SR.Designer.cs">
+      <DependentUpon>SR.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConsolePageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\ObservableCollectionTraceListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\TraceEventModel.cs" />
@@ -18,6 +23,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IInteractionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\PropertyStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\StringHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\TraceSourcePageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\DirectoryPathValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\NotNullValidator.cs" />
@@ -61,5 +67,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\DisableableCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ICommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ParameteredCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\SR.ja.resx" />
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\SR.resx">
+      <CustomToolNamespace>Shipwreck.ViewModelUtils</CustomToolNamespace>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

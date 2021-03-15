@@ -7,7 +7,7 @@ namespace Shipwreck.ViewModelUtils.Validation
         where TModel : ValidatableModel
     {
         public RequiredValidator(Expression<Func<TModel, string>> expression, string errorMessage = null)
-            : base(expression, errorMessage ?? $"{expression.GetDisplayName()}は必須項目です。")
+            : base(expression, errorMessage ?? string.Format(SR.Arg0IsRequired, expression.GetDisplayName()))
         {
         }
 

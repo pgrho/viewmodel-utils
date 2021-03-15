@@ -39,7 +39,8 @@
             {
                 ExecutionHandler = () => BeginSave(false)
             }
-            .SetTitle("適用")
+            .SetTitle(StringHelper.GetTitle(SR.SaveTitle, SR.SaveMnemonic))
+            .SetDescription(SR.SaveDescription.EmptyToNull())
             .SetStyle(BorderStyle.OutlineSecondary)
             .SetIsEnabled(() => CanAccept);
 
@@ -48,7 +49,8 @@
             {
                 ExecutionHandler = () => BeginSave(true)
             }
-            .SetTitle("OK")
+            .SetTitle(StringHelper.GetTitle(SR.SaveAndCloseTitle, SR.SaveAndCloseMnemonic))
+            .SetDescription(SR.SaveAndCloseDescription.EmptyToNull())
             .SetStyle(BorderStyle.Primary)
             .SetIsEnabled(() => CanAccept);
 

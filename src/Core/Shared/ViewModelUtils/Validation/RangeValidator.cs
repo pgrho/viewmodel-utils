@@ -11,7 +11,7 @@ namespace Shipwreck.ViewModelUtils.Validation
         private TProperty _Maximum;
 
         public RangeValidator(Expression<Func<TModel, TProperty>> expression, TProperty minimum, TProperty maximum, string errorMessage = null)
-            : base(expression, errorMessage ?? $"{expression.GetDisplayName()}は{minimum}から{maximum}の間で指定してください。")
+            : base(expression, errorMessage ?? string.Format(SR.Arg0MustBeBetweenArg1AndArg2, expression.GetDisplayName(), minimum, maximum))
         {
             _Minimum = minimum;
             _Maximum = maximum;

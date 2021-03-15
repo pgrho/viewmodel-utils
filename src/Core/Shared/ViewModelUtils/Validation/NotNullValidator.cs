@@ -8,7 +8,7 @@ namespace Shipwreck.ViewModelUtils.Validation
         where TProperty : class
     {
         public NotNullValidator(Expression<Func<TModel, TProperty>> expression, string errorMessage = null)
-            : base(expression, errorMessage ?? $"{expression.GetDisplayName()}は必須項目です。")
+            : base(expression, errorMessage ?? string.Format(SR.Arg0IsRequired, expression.GetDisplayName()))
         {
         }
 
