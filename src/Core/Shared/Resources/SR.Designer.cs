@@ -176,5 +176,23 @@ namespace Shipwreck.ViewModelUtils {
                 return ResourceManager.GetString("SaveTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Select All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectAll {
+            get {
+                return ResourceManager.GetString("SelectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Default に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SelectDefault {
+            get {
+                return ResourceManager.GetString("SelectDefault", resourceCulture);
+            }
+        }
     }
 }

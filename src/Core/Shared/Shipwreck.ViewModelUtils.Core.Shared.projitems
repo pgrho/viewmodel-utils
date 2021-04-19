@@ -19,6 +19,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\TraceEventModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ExpressionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\IHasColumnModes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\IHasColumns.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\IHasExtensionColumns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasInteraction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IInteractionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPageLogger.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Collections\_FlattenedCollection\FlattenedCollection`3.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\AllColumnsCommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\AsyncCommandBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\AsyncCommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\Command.cs" />
@@ -64,9 +68,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\CommandViewModelCollection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\DefaultColumnsCommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\DisableableCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\ExtensionColumnCommandViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\FlagColumnCommandViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\HasColumnsHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ICommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ParameteredCommand.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\SelectionCommandViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\SR.ja.resx" />
@@ -75,5 +84,8 @@
       <LastGenOutput>SR.Designer.cs</LastGenOutput>
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\" />
   </ItemGroup>
 </Project>

@@ -115,4 +115,10 @@
   <data name="Arg0IsInvalidDirectory" xml:space="preserve">
     <value>{0}は無効なディレクトリです。</value>
   </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>全選択</value>
+  </data>
+  <data name="SelectDefault" xml:space="preserve">
+    <value>既定値</value>
+  </data>
 </root>

@@ -156,4 +156,11 @@
   <data name="Arg0IsInvalidDirectory" xml:space="preserve">
     <value>{0} is invalid directory path.</value>
   </data>
+  <data name="SelectAll" xml:space="preserve">
+    <value>Select All</value>
+    
+  </data>
+  <data name="SelectDefault" xml:space="preserve">
+    <value>Default</value>
+  </data>
 </root>
