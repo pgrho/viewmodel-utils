@@ -28,6 +28,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\StringCollapseConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\StringNotEmptyConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\TaskHelper.wpfxf.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ViewModelCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)XMLNS.cs" />
   </ItemGroup>
 </Project>
