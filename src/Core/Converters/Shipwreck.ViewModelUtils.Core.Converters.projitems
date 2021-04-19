@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\BooleanConverterBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ComparisonConverterBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConditionalConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Controls\GridBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EqualityConverter.wpfxf.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\GreaterThanConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\GreaterThanOrEqualConverter.cs" />
