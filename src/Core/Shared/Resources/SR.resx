@@ -163,4 +163,28 @@
   <data name="SelectDefault" xml:space="preserve">
     <value>Default</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditDescriptionOfArg0" xml:space="preserve">
+    <value>Edit items in this page.</value>
+  </data>
+  <data name="UpdatingCountArg0Confirmation" xml:space="preserve">
+    <value>Are you sure to register {0} change(s)?</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="RegisterDescription" xml:space="preserve">
+    <value>Register the changes.</value>
+  </data>
+  <data name="DiscardChanges" xml:space="preserve">
+    <value>Discard Changes</value>
+  </data>
+  <data name="DiscardChangesDescription" xml:space="preserve">
+    <value>Discard edited change(s)</value>
+  </data>
+  <data name="DiscardingCountArg0Confirmation" xml:space="preserve">
+    <value>Are you sure to discard {0} change(s)?</value>
+  </data>
 </root>

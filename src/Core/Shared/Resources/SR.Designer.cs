@@ -124,6 +124,69 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   Discard Changes に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DiscardChanges {
+            get {
+                return ResourceManager.GetString("DiscardChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Discard edited change(s) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DiscardChangesDescription {
+            get {
+                return ResourceManager.GetString("DiscardChangesDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Are you sure to discard {0} change(s)? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DiscardingCountArg0Confirmation {
+            get {
+                return ResourceManager.GetString("DiscardingCountArg0Confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Edit に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Edit items in this page. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string EditDescriptionOfArg0 {
+            get {
+                return ResourceManager.GetString("EditDescriptionOfArg0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Register に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Register the changes. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string RegisterDescription {
+            get {
+                return ResourceManager.GetString("RegisterDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string SaveAndCloseDescription {
@@ -192,6 +255,15 @@ namespace Shipwreck.ViewModelUtils {
         internal static string SelectDefault {
             get {
                 return ResourceManager.GetString("SelectDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Are you sure to register {0} change(s)? に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UpdatingCountArg0Confirmation {
+            get {
+                return ResourceManager.GetString("UpdatingCountArg0Confirmation", resourceCulture);
             }
         }
     }

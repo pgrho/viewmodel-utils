@@ -19,6 +19,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\TraceEventModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ExpressionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_BulkUpdateable\BulkUpdateableHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_BulkUpdateable\IBulkUpdateable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_BulkUpdateable\IBulkUpdateableItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\IHasColumnModes.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\IHasColumns.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\IHasExtensionColumns.cs" />

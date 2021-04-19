@@ -121,4 +121,28 @@
   <data name="SelectDefault" xml:space="preserve">
     <value>既定値</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>編集</value>
+  </data>
+  <data name="EditDescriptionOfArg0" xml:space="preserve">
+    <value>表示されている{0}を編集します。</value>
+  </data>
+  <data name="UpdatingCountArg0Confirmation" xml:space="preserve">
+    <value>{0}件の変更を登録します。よろしいでしょうか?</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>登録</value>
+  </data>
+  <data name="RegisterDescription" xml:space="preserve">
+    <value>編集内容を登録します。 </value>
+  </data>
+  <data name="DiscardChanges" xml:space="preserve">
+    <value>編集中止</value>
+  </data>
+  <data name="DiscardChangesDescription" xml:space="preserve">
+    <value>編集内容を破棄します。</value>
+  </data>
+  <data name="DiscardingCountArg0Confirmation" xml:space="preserve">
+    <value>{0}件の変更を破棄します。よろしいでしょうか?</value>
+  </data>
 </root>
