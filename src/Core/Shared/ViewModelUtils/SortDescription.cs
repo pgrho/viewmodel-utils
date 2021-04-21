@@ -6,7 +6,7 @@ namespace Shipwreck.ViewModelUtils
 {
     public struct SortDescription
     {
-        internal SortDescription(string member, bool isDescending)
+        public SortDescription(string member, bool isDescending)
         {
             Member = member;
             IsDescending = isDescending;
