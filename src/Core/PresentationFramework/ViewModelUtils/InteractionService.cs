@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -458,5 +461,156 @@ namespace Shipwreck.ViewModelUtils
         }
 
         #endregion モーダル
+
+        #region ダウンロード
+
+        protected virtual HttpClient GetHttpClient() => new HttpClient();
+
+        protected virtual bool ShouldDisposeHttpClient => true;
+
+        public virtual bool SupportsDownload => true;
+
+        public virtual async Task DownloadAsync(
+            object context,
+            string method,
+            string url,
+            string content,
+            string contentType,
+            bool openFile)
+        {
+            var m = new HttpRequestMessage(new HttpMethod(method), url);
+            if (!string.IsNullOrEmpty(content))
+            {
+                m.Content = new StringContent(content, Encoding.UTF8, contentType ?? "text/plain");
+            }
+
+            OnMessageCreated(m);
+
+            var hc = GetHttpClient();
+            try
+            {
+                var res = await hc.SendAsync(m, HttpCompletionOption.ResponseHeadersRead);
+
+                res.EnsureSuccessStatusCode();
+                var lm = res.Content.Headers.LastModified?.ToUniversalTime();
+
+                var coreFile = await GetDownloadPathAsync(res, openFile);
+                var i = 1;
+                var file = new FileInfo(coreFile);
+                while (file.Exists)
+                {
+                    if (file.Length == res.Content.Headers.ContentLength
+                        && file.LastWriteTimeUtc == lm)
+                    {
+                        if (openFile)
+                        {
+                            Open(file.FullName);
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        file = new FileInfo(
+                            Path.Combine(
+                                file.Directory.FullName,
+                                Path.GetFileNameWithoutExtension(coreFile)
+                                + (++i).ToString("' ('0')'")
+                                + Path.GetExtension(coreFile)));
+                    }
+                }
+
+                using (var cs = await res.Content.ReadAsStreamAsync().ConfigureAwait(false))
+                using (var fs = file.Open(FileMode.Create))
+                {
+                    await cs.CopyToAsync(fs).ConfigureAwait(false);
+                }
+
+                if (openFile)
+                {
+                    Open(file.FullName);
+                }
+            }
+            finally
+            {
+                if (ShouldDisposeHttpClient)
+                {
+                    hc?.Dispose();
+                }
+            }
+        }
+
+        protected virtual void OnMessageCreated(HttpRequestMessage message)
+        {
+        }
+
+        protected virtual Task<string> GetDownloadPathAsync(HttpResponseMessage response, bool openFile)
+        {
+            var fn = response.Content.Headers.ContentDisposition.FileNameStar
+                ?? response.Content.Headers.ContentDisposition.FileName;
+
+            if (fn == null)
+            {
+                var un = Path.GetFileName(response.Headers.Location.AbsolutePath);
+
+                if (!string.IsNullOrEmpty(Path.GetExtension(un)))
+                {
+                    fn = un;
+                }
+            }
+            return GetDownloadPathAsync(response, fn, openFile);
+        }
+
+        protected virtual Task<string> GetDownloadPathAsync(HttpResponseMessage response, string coreFileName, bool openFile)
+        {
+            if (string.IsNullOrEmpty(coreFileName))
+            {
+                return Task.FromResult(
+                        Path.GetTempFileName()
+                        + GuessExtension(response.Content.Headers.ContentType?.MediaType));
+            }
+            else
+            {
+                return Task.FromResult(Path.Combine(Path.GetTempPath(), coreFileName));
+            }
+        }
+
+        protected virtual void Open(string fileName)
+            => Process.Start(fileName);
+
+        protected virtual string GuessExtension(string contentType)
+            => contentType switch
+            {
+                "image/jpeg" => ".jpg",
+                "image/png" => ".png",
+                "image/gif" => ".gif",
+                "image/bmp" => ".bmp",
+                "image/ico" => ".ico",
+                "image/svg+xml" => ".svg",
+
+                "text/plain" => ".txt",
+                "text/csv" => ".csv",
+                "text/html" => ".html",
+                "text/css" => ".css",
+
+                "application/json" => ".json",
+                "application/pdf" => ".pdf",
+                "application/zip" => ".zip",
+
+                "application/vnd.ms-excel" => ".xls",
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" => ".xlsx",
+
+                "application/vnd.ms-powerpoint" => ".ppt",
+                "application/vnd.openxmlformats-officedocument.presentationml.presentation" => ".pptx",
+
+                "application/msword" => ".doc",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document" => ".docx",
+
+                "application/x-ms-application" => ".application",
+                "application/x-ms-manifest" => ".manifest",
+
+                _ => null
+            };
+
+        #endregion ダウンロード
     }
 }

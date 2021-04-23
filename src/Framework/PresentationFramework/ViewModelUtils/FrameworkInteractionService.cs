@@ -7,6 +7,9 @@ using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Shipwreck.ViewModelUtils.Controls;
+using System.Net.Http;
+using Microsoft.WindowsAPICodePack.Shell;
+using System.IO;
 
 #if NET5_0
 using Notifications.Wpf.Core;
@@ -183,6 +186,20 @@ namespace Shipwreck.ViewModelUtils
                 }
             }
             return base.CloseModal(context, viewModel);
+        }
+
+        protected override Task<string> GetDownloadPathAsync(HttpResponseMessage response, string coreFileName, bool openFile)
+        {
+            if (!string.IsNullOrEmpty(coreFileName))
+            {
+                var dp = KnownFolders.Downloads?.Path;
+                if (dp != null)
+                {
+                    return Task.FromResult(Path.Combine(dp, coreFileName));
+                }
+            }
+
+            return base.GetDownloadPathAsync(response, coreFileName, openFile);
         }
     }
 }

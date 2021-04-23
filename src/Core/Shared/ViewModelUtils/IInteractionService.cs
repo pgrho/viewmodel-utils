@@ -89,5 +89,19 @@ namespace Shipwreck.ViewModelUtils
         Task CloseModalAsync(object context, object viewModel);
 
         #endregion モーダル
+
+        #region ダウンロード
+
+        bool SupportsDownload { get; }
+
+        Task DownloadAsync(
+            object context,
+            string method,
+            string url,
+            string content,
+            string contentType,
+            bool openFile);
+
+        #endregion ダウンロード
     }
 }
