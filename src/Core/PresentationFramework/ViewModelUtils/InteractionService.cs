@@ -524,6 +524,11 @@ namespace Shipwreck.ViewModelUtils
                 {
                     await cs.CopyToAsync(fs).ConfigureAwait(false);
                 }
+                file.Refresh();
+                if (lm != null)
+                {
+                    file.LastWriteTimeUtc = lm.Value.ToUniversalTime().DateTime;
+                }
 
                 if (openFile)
                 {
