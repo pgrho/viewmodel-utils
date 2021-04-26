@@ -20,8 +20,9 @@ namespace Shipwreck.ViewModelUtils
                  Description = string.Format(SR.EditDescriptionOfArg0, page.TypeDisplayName),
                  Style = BorderStyle.OutlineSecondary,
                  Icon = "fas fa-edit",
-                 IsVisibleGetter = () => !page.IsInEditMode && page.Items.Any()
+                 IsVisibleGetter = () => !page.IsInEditMode
              };
+
         public static CommandBuilderBase GetCommitEditCommandBuilder<T>(this IBulkUpdateable<T> page)
             where T : class, IBulkUpdateableItem
             => new CommandBuilder()
