@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <RootNamespace>Shipwreck</RootNamespace>
+    <RootNamespace>Shipwreck.ViewModelUtils</RootNamespace>
     <OutputType>Library</OutputType>
   </PropertyGroup>
 

@@ -1,0 +1,1 @@
+var Shipwreck;!function(e){(e.ViewModelUtils||(e.ViewModelUtils={})).setIndeterminate=function(e,i){var t=document.getElementById(e);t?t.indeterminate=i:$(e).prop("indeterminate",i)}}(Shipwreck=Shipwreck||{});

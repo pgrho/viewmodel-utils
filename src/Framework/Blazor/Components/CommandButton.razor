@@ -1,0 +1,61 @@
+﻿@inherits BindableComponentBase<ICommandViewModel>
+@{
+    var d = DataContext;
+}
+@if (IsVisible != false && d.IsVisible)
+{
+    var cls = BaseClass
+        + " " + (CommandStyle ?? d?.Style)?.ToButtonClass(BorderStyle.OutlineSecondary)
+        + (IsActive == true ? " active" : null);
+    var disabled = IsEnabled == false ? "disabled" : null;
+
+    var title = Title ?? d.Title;
+    if (d?.Href != null)
+    {
+        <a class="@cls @disabled"
+           href="@d.Href"
+           title="@d.Description"
+           disabled="@disabled"
+           @onclick="@((Action)d.Execute)"
+           @onclick:preventDefault
+           @attributes="AdditionalAttributes">
+            @if (d.Icon != null && ShowIcon)
+            {
+                <span class="fas @d.Icon @(d?.Title?.Length > 0 ? null : "mt-1")"></span>
+            }
+            @if (ShowTitle)
+            {
+                @title
+            }
+            @if (d.BadgeCount > 0 && ShowBadge)
+            {
+                <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+            }
+        </a>
+    }
+    else
+    {
+        <button type="button"
+                class="@cls"
+                disabled="@disabled"
+                title="@d.Description"
+                @onclick="@((Action)d.Execute)"
+                @attributes="AdditionalAttributes">
+            @if (d.Icon != null && ShowIcon)
+            {
+                <span class="fas @d.Icon @(d?.Title?.Length > 0 ? null : "mt-1")"></span>
+            }
+            @if (ShowTitle)
+            {
+                @title
+            }
+            @if (d.BadgeCount > 0 && ShowBadge)
+            {
+                <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+            }
+        </button>
+    }
+}
+@code
+{
+}

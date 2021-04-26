@@ -1,0 +1,15 @@
+﻿<div class="custom-control custom-checkbox">
+    <input type="checkbox"
+           class="custom-control-input"
+           id="@_Id"
+           disabled="@(IsEnabled ? null : "disabled")"
+           @bind="@IsChecked"
+           @attributes="@AdditionalAttributes" />
+    <label class="custom-control-label"
+           for="@_Id">
+        @ChildContent
+    </label>
+</div>
+@code
+{
+}
