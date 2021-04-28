@@ -18,6 +18,10 @@ namespace Shipwreck.ViewModelUtils.Searching
 
         public string Name => Model.Name;
         public string DisplayName { get; }
+        public string TypeName => Model.TypeName;
+        public bool IsBoolean => Model is BooleanQueryPropertyInfo;
+        public bool IsDateTime => Model is DateTimeQueryPropertyInfo;
+        public bool IsEnum => Model is EnumQueryPropertyInfo;
 
         #region LocalName
 

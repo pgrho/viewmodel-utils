@@ -44,7 +44,7 @@
     }
     public partial class MultipleOptionViewModel<T> : MultipleOptionViewModel
     {
-        protected MultipleOptionViewModel(MultipleOptionConditionViewModel<T> condition, T value, string displayName, bool isSelected = false)
+        public MultipleOptionViewModel(MultipleOptionConditionViewModel<T> condition, T value, string displayName, bool isSelected = false)
             : base(displayName, isSelected)
         {
             Condition = condition;
