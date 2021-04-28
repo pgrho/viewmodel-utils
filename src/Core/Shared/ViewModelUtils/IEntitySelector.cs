@@ -31,12 +31,18 @@ namespace Shipwreck.ViewModelUtils
         string GetName(object item);
 
         string GetDisplayText(object item);
+        int GetMatchDistance(string code, object item);
 
         void ShowModal();
 
+        void Select(object item);
+        Task<bool> SelectByCodeAsync(string code, bool isExactMatch = false);
         void Clear();
 
         void Focus();
+ 
+        Task<IEnumerable> SearchAsync(string query, int maxCount, CancellationToken cancellationToken = default);
+
         Task<IList> GetItemsTask();
     }
     public interface IEntitySelector<TId, TItem> : IEntitySelector
@@ -53,9 +59,7 @@ namespace Shipwreck.ViewModelUtils
 
         string GetDisplayText(TItem item);
 
-        Task<IEnumerable<TItem>> SearchAsync(string query, int maxCount, CancellationToken cancellationToken = default);
-
-        Task<bool> SelectByCodeAsync(string code, bool isExactMatch = false);
+        new Task<IEnumerable<TItem>> SearchAsync(string query, int maxCount, CancellationToken cancellationToken = default);
 
         new Task<IReadOnlyList<TItem>> GetItemsTask();
 

@@ -46,6 +46,9 @@ namespace Shipwreck.ViewModelUtils
             => $"{GetCode(item)}: {GetName(item)}";
         string IEntitySelector.GetDisplayText(object item) => GetDisplayText((TItem)item);
 
+        int IEntitySelector.GetMatchDistance(string code, object item)
+            => GetMatchDistance(code, (TItem)item);
+
         public abstract int GetMatchDistance(string code, TItem item);
 
         protected abstract TItem GetById(TId id);
@@ -201,6 +204,9 @@ namespace Shipwreck.ViewModelUtils
                 RaisePropertyChanged(nameof(SelectedItem));
             }
         }
+
+        void IEntitySelector.Select(object item)
+            => Select((TItem)item);
 
         #endregion SelectedItem
 
@@ -369,6 +375,10 @@ namespace Shipwreck.ViewModelUtils
             => _IsSearchingCount > 0;
 
         #endregion IsSearching
+
+        Task<IEnumerable> IEntitySelector.SearchAsync(string query, int maxCount, CancellationToken cancellationToken)
+            => SearchAsync(query, maxCount, cancellationToken)
+                .ContinueWith(t => (IEnumerable)t.Result);
 
         public abstract Task<IEnumerable<TItem>> SearchAsync(string query, int maxCount, CancellationToken cancellationToken = default);
 

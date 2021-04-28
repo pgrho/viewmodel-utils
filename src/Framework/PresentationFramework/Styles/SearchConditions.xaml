@@ -1,0 +1,375 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
+    xmlns:fa5="http://schema.shipwreck.jp/fontawesome5/"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:v="clr-namespace:Shipwreck.ViewModelUtils.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.Buttons.xaml" />
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.MenuItems.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style
+        x:Key="ViewModelUtils.Styles.Condition.Name"
+        TargetType="TextBlock">
+        <Setter
+            Property="Grid.ColumnSpan"
+            Value="2" />
+        <Setter
+            Property="VerticalAlignment"
+            Value="Center" />
+        <Setter
+            Property="Text">
+            <Setter.Value>
+                <MultiBinding
+                    StringFormat="{}{0} ({1})">
+                    <Binding
+                        Path="DisplayName" />
+                    <Binding
+                        Path="Property.AncestorPath" />
+                </MultiBinding>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger
+                Binding="{Binding Property.AncestorPath}"
+                Value="{x:Null}">
+                <Setter
+                    Property="Text"
+                    Value="{Binding DisplayName}" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Property.HasUniqueLocalName}"
+                Value="True">
+                <Setter
+                    Property="Text"
+                    Value="{Binding DisplayName}" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="ViewModelUtils.Styles.Condition.RemoveButton"
+        TargetType="Button"
+        BasedOn="{StaticResource CommandViewModel.Button.Icon.Medium}">
+        <Setter
+            Property="Grid.Column"
+            Value="2" />
+        <Setter
+            Property="BorderThickness"
+            Value="0" />
+        <Setter
+            Property="Command"
+            Value="{Binding RemoveCommand}" />
+        <Setter
+            Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <fa5:FontAwesomeTextBlock
+                        Icon="fas fa-times" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="ViewModelUtils.Styles.Condition.Operators"
+        TargetType="ComboBox"
+        BasedOn="{StaticResource BootstrapControls.ComboBox.Medium}">
+        <Setter
+            Property="Grid.Row"
+            Value="1" />
+        <Setter
+            Property="SelectedValuePath"
+            Value="Token" />
+        <Setter
+            Property="DisplayMemberPath"
+            Value="Token" />
+        <Setter
+            Property="SelectedValue"
+            Value="{Binding Operator}" />
+        <Setter
+            Property="bs4:BootstrapHelper.CornerRadiusMode"
+            Value="Left" />
+    </Style>
+    <Style
+        x:Key="ViewModelUtils.Styles.Condition.Grid"
+        TargetType="Grid">
+        <Setter
+            Property="vmu:GridBehavior.RowDefinitions">
+            <Setter.Value>
+                <x:Array
+                    Type="GridLength">
+                    <GridLength>Auto</GridLength>
+                    <GridLength>Auto</GridLength>
+                </x:Array>
+            </Setter.Value>
+        </Setter>
+        <Setter
+            Property="vmu:GridBehavior.ColumnDefinitions">
+            <Setter.Value>
+                <x:Array
+                    Type="GridLength">
+                    <GridLength>Auto</GridLength>
+                    <GridLength>*</GridLength>
+                    <GridLength>Auto</GridLength>
+                </x:Array>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="ViewModelUtils.Styles.Condition.Options"
+        TargetType="ComboBox"
+        BasedOn="{StaticResource BootstrapControls.ComboBox.Medium}">
+        <Setter
+            Property="Grid.Row"
+            Value="1" />
+        <Setter
+            Property="Grid.ColumnSpan"
+            Value="3" />
+        <Setter
+            Property="ItemsSource"
+            Value="{Binding Options}" />
+        <Setter
+            Property="SelectedValuePath"
+            Value="Value" />
+        <Setter
+            Property="DisplayMemberPath"
+            Value="DisplayName" />
+        <Setter
+            Property="SelectedValue"
+            Value="{Binding Value}" />
+    </Style>
+    <vmu:StyleSelector
+        x:Key="ViewModelUtils.Styles.Condition.OptionsItemContainerStyleSelector"
+        BasedOn="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector}">
+        <Style
+            x:Key="{x:Type vmu:MultipleOptionViewModel}"
+            TargetType="MenuItem"
+            BasedOn="{StaticResource CommandViewModel.MenuItem.Medium}">
+            <Setter
+                Property="IsCheckable"
+                Value="False" />
+            <Setter
+                Property="IsChecked"
+                Value="{Binding IsSelected}" />
+            <Setter
+                Property="Command"
+                Value="{Binding ToggleSelectionCommand}" />
+        </Style>
+    </vmu:StyleSelector>
+    <DataTemplate
+        DataType="{x:Type vmu:StringConditionViewModel}">
+        <Grid
+            Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">
+            <TextBlock
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Name}" />
+            <Button
+                Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
+            <ComboBox
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Operators}"
+                ItemsSource="{x:Static vmu:StringConditionViewModel.Operators}" />
+            <TextBox
+                Style="{StaticResource BootstrapControls.TextBox.Medium}"
+                bs4:BootstrapHelper.CornerRadiusMode="Right"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Text="{Binding Value}" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate
+        DataType="{x:Type vmu:NumberConditionViewModel}">
+        <Grid
+            Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">
+            <TextBlock
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Name}" />
+            <Button
+                Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
+            <ComboBox
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Operators}"
+                ItemsSource="{x:Static vmu:NumberConditionViewModel.Operators}" />
+            <TextBox
+                Style="{StaticResource BootstrapControls.TextBox.Medium}"
+                bs4:BootstrapHelper.CornerRadiusMode="Right"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Text="{Binding Value}" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate
+        DataType="{x:Type vmu:DateTimeConditionViewModel}">
+        <Grid
+            Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">
+            <TextBlock
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Name}" />
+            <Button
+                Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
+            <ComboBox
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Operators}"
+                ItemsSource="{x:Static vmu:DateTimeConditionViewModel.Operators}" />
+            <TextBox
+                Style="{StaticResource BootstrapControls.TextBox.Medium}"
+                bs4:BootstrapHelper.CornerRadiusMode="Right"
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Visibility="{Binding IsYear, Converter={StaticResource BooleanToVisibilityConverter}}"
+                Text="{Binding Value}" />
+            <DatePicker
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                bs4:BootstrapHelper.CornerRadiusMode="Right"
+                SelectedDate="{Binding Value}">
+                <DatePicker.Style>
+                    <Style
+                        TargetType="DatePicker"
+                        BasedOn="{StaticResource BootstrapControls.DatePicker.Medium}">
+                        <Setter
+                            Property="mah:DatePickerHelper.DropDownButtonContent"
+                            Value="far fa-calendar-alt" />
+                        <Setter
+                            Property="mah:DatePickerHelper.DropDownButtonContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <fa5:FontAwesomeTextBlock
+                                        Icon="{Binding}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition
+                                        Binding="{Binding IsMonth}"
+                                        Value="False" />
+                                    <Condition
+                                        Binding="{Binding IsDate}"
+                                        Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter
+                                    Property="Visibility"
+                                    Value="Collapsed" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DatePicker.Style>
+            </DatePicker>
+            <mah:DateTimePicker
+                Grid.Row="1"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                SelectedTimeFormat="Short"
+                SelectedDateFormat="Short"
+                Culture="ja-jp"
+                SelectedDateTime="{Binding Value}">
+                <mah:DateTimePicker.Style>
+                    <Style
+                        TargetType="mah:DateTimePicker"
+                        BasedOn="{StaticResource BootstrapControls.DateTimePicker.Medium}">
+                        <Setter
+                            Property="mah:DatePickerHelper.DropDownButtonContent"
+                            Value="far fa-calendar-alt" />
+                        <Setter
+                            Property="mah:DatePickerHelper.DropDownButtonContentTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <fa5:FontAwesomeTextBlock
+                                        Icon="{Binding}"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition
+                                        Binding="{Binding IsHour}"
+                                        Value="False" />
+                                    <Condition
+                                        Binding="{Binding IsMinute}"
+                                        Value="False" />
+                                </MultiDataTrigger.Conditions>
+                                <Setter
+                                    Property="Visibility"
+                                    Value="Collapsed" />
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </mah:DateTimePicker.Style>
+            </mah:DateTimePicker>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate
+        DataType="{x:Type  vmu:BooleanConditionViewModel}">
+        <Grid
+            Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">
+            <TextBlock
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Name}" />
+            <Button
+                Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
+            <ComboBox
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Options}" />
+        </Grid>
+    </DataTemplate>
+    <DataTemplate
+        DataType="{x:Type vmu:EnumConditionViewModel}">
+        <Grid
+            Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">
+            <TextBlock
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Name}" />
+            <Button
+                Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
+            <mah:DropDownButton
+                Style="{StaticResource CommandViewModel.DropDownButton.Medium}"
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                ItemContainerStyleSelector="{StaticResource ViewModelUtils.Styles.Condition.OptionsItemContainerStyleSelector}">
+                <mah:DropDownButton.Resources>
+                    <CollectionViewSource
+                        x:Key="OptionsSource"
+                        Source="{Binding Options}" />
+                    <CollectionViewSource
+                        x:Key="SelectionCommandsSource"
+                        Source="{Binding SelectionCommands}" />
+                </mah:DropDownButton.Resources>
+                <mah:DropDownButton.ItemsSource>
+                    <CompositeCollection>
+                        <CollectionContainer
+                            Collection="{Binding Source={StaticResource OptionsSource}}" />
+                        <x:Null />
+                        <CollectionContainer
+                            Collection="{Binding Source={StaticResource SelectionCommandsSource}}" />
+                    </CompositeCollection>
+                </mah:DropDownButton.ItemsSource>
+                <mah:DropDownButton.Content>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Text="{Binding DisplayText}" />
+                    </StackPanel>
+                </mah:DropDownButton.Content>
+            </mah:DropDownButton>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate
+        DataType="{x:Type vmu:EntityConditionViewModel}">
+        <Grid
+            Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">
+            <TextBlock
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Name}" />
+            <Button
+                Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
+            <v:EntitySelectorView
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                DataContext="{Binding Selector}" />
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

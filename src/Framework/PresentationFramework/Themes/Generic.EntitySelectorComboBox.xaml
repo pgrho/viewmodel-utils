@@ -1,0 +1,66 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:v="clr-namespace:Shipwreck.ViewModelUtils.Controls"
+    xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style
+        TargetType="{x:Type v:EntitySelectorComboBox}">
+        <Style.Resources>
+            <Style
+                x:Key="DefaultTextBoxStyle"
+                TargetType="TextBox"
+                BasedOn="{StaticResource MahApps.Styles.TextBox}">
+                <Setter
+                    Property="Foreground"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Foreground}" />
+                <Setter
+                    Property="Background"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}" />
+                <Setter
+                    Property="BorderThickness"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderThickness}" />
+                <Setter
+                    Property="BorderBrush"
+                    Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=BorderBrush}" />
+            </Style>
+        </Style.Resources>
+        <Setter
+            Property="ListBoxStyle"
+            Value="{DynamicResource MahApps.Styles.ListBox}" />
+        <Setter
+            Property="TextBoxStyle"
+            Value="{StaticResource DefaultTextBoxStyle}" />
+        <Setter
+            Property="Template">
+            <Setter.Value>
+                <ControlTemplate
+                    TargetType="{x:Type v:EntitySelectorComboBox}">
+                    <Grid>
+                        <TextBox
+                            x:Name="PART_TextBox"
+                            Style="{TemplateBinding TextBoxStyle}"
+                            Padding="{TemplateBinding Padding}"
+                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            bs4:BootstrapHelper.Rem="{TemplateBinding bs4:BootstrapHelper.Rem}"
+                            bs4:BootstrapHelper.CornerRadiusMode="{TemplateBinding bs4:BootstrapHelper.CornerRadiusMode}" />
+                        <Popup
+                            x:Name="PART_Popup"
+                            PlacementTarget="{Binding ElementName=PART_TextBox}"
+                            Placement="Bottom"
+                            MinWidth="{Binding ElementName=PART_TextBox, Path=ActualWidth}"
+                            IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsOpen, Mode=OneWay}">
+                            <Border
+                                BorderThickness="1"
+                                BorderBrush="Black">
+                                <ListBox
+                                    x:Name="PART_ListBox"
+                                    Style="{TemplateBinding ListBoxStyle}"
+                                    DisplayMemberPath="DisplayName" />
+                            </Border>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
