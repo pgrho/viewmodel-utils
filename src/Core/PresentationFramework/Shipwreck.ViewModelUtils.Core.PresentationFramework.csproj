@@ -20,6 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Generated Codes\Interactions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Interactions.cs</LastGenOutput>
@@ -44,5 +48,17 @@
     <Compile Update="..\Shared\Resources\SR.Designer.cs">
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Update="Resources\SR.Designer.cs">
+      <DependentUpon>SR.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\SR.resx">
+      <CustomToolNamespace>Shipwreck.ViewModelUtils</CustomToolNamespace>
+      <LastGenOutput>SR.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

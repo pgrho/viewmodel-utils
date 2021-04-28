@@ -117,74 +117,124 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CloseDescription" xml:space="preserve">
-    <value />
-  </data>
-  <data name="CloseMnemonic" xml:space="preserve">
-    <value />
-  </data>
   <data name="CloseTitle" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="SaveAndCloseDescription" xml:space="preserve">
-    <value />
-  </data>
-  <data name="SaveAndCloseMnemonic" xml:space="preserve">
-    <value />
-  </data>
-  <data name="SaveAndCloseTitle" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="SaveDescription" xml:space="preserve">
-    <value />
-  </data>
-  <data name="SaveMnemonic" xml:space="preserve">
-    <value>A</value>
+    <value>キャンセル</value>
   </data>
   <data name="SaveTitle" xml:space="preserve">
-    <value>Apply</value>
+    <value>適用</value>
   </data>
   <data name="Arg0MustBeGreaterThanOrEqualToArg1" xml:space="preserve">
-    <value>{0} must be greater than or equal to {1}.</value>
+    <value>{0}は{1}以上の値を指定してください。</value>
   </data>
   <data name="Arg0IsRequired" xml:space="preserve">
-    <value>{0} is required.</value>
+    <value>{0}は必須項目です。</value>
   </data>
   <data name="Arg0MustBeBetweenArg1AndArg2" xml:space="preserve">
-    <value>{0} must be between {1} and {2}.</value>
+    <value>{0}は{1}から{2}の間の値を指定してください。</value>
   </data>
   <data name="Arg0IsInvalidDirectory" xml:space="preserve">
-    <value>{0} is invalid directory path.</value>
+    <value>{0}は無効なディレクトリです。</value>
   </data>
   <data name="SelectAll" xml:space="preserve">
-    <value>Select All</value>
-    
+    <value>全選択</value>
   </data>
   <data name="SelectDefault" xml:space="preserve">
-    <value>Default</value>
+    <value>既定値</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>編集</value>
   </data>
   <data name="EditDescriptionOfArg0" xml:space="preserve">
-    <value>Edit items in this page.</value>
+    <value>表示されている{0}を編集します。</value>
   </data>
   <data name="UpdatingCountArg0Confirmation" xml:space="preserve">
-    <value>Are you sure to register {0} change(s)?</value>
+    <value>{0}件の変更を登録します。よろしいでしょうか?</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Register</value>
+    <value>登録</value>
   </data>
   <data name="RegisterDescription" xml:space="preserve">
-    <value>Register the changes.</value>
+    <value>編集内容を登録します。 </value>
   </data>
   <data name="DiscardChanges" xml:space="preserve">
-    <value>Discard Changes</value>
+    <value>編集中止</value>
   </data>
   <data name="DiscardChangesDescription" xml:space="preserve">
-    <value>Discard edited change(s)</value>
+    <value>編集内容を破棄します。</value>
   </data>
   <data name="DiscardingCountArg0Confirmation" xml:space="preserve">
-    <value>Are you sure to discard {0} change(s)?</value>
+    <value>{0}件の変更を破棄します。よろしいでしょうか?</value>
+  </data>
+  <data name="AllSelected" xml:space="preserve">
+    <value>すべて</value>
+  </data>
+  <data name="ExceptForArg0" xml:space="preserve">
+    <value>{0}以外</value>
+  </data>
+  <data name="ItemsOfCountArg0" xml:space="preserve">
+    <value>{0}個の項目</value>
+  </data>
+  <data name="NoneSelected" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="UnselectAll" xml:space="preserve">
+    <value>全解除</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>部分一致</value>
+  </data>
+  <data name="EndsWith" xml:space="preserve">
+    <value>後方一致</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>一致</value>
+  </data>
+  <data name="GreaterThan" xml:space="preserve">
+    <value>超過</value>
+  </data>
+  <data name="GreaterThanOrEqual" xml:space="preserve">
+    <value>以上</value>
+  </data>
+  <data name="LessThan" xml:space="preserve">
+    <value>未満</value>
+  </data>
+  <data name="LessThanOrEqual" xml:space="preserve">
+    <value>以下</value>
+  </data>
+  <data name="NotEqual" xml:space="preserve">
+    <value>不一致</value>
+  </data>
+  <data name="StartsWith" xml:space="preserve">
+    <value>前方一致</value>
+  </data>
+  <data name="DayOperator" xml:space="preserve">
+    <value>日指定</value>
+  </data>
+  <data name="DayToken" xml:space="preserve">
+    <value>日</value>
+  </data>
+  <data name="HourOperator" xml:space="preserve">
+    <value>時指定</value>
+  </data>
+  <data name="HourToken" xml:space="preserve">
+    <value>時</value>
+  </data>
+  <data name="MinuteOperator" xml:space="preserve">
+    <value>分指定</value>
+  </data>
+  <data name="MinuteToken" xml:space="preserve">
+    <value>分</value>
+  </data>
+  <data name="MonthOperator" xml:space="preserve">
+    <value>月指定</value>
+  </data>
+  <data name="MonthToken" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="YearOperator" xml:space="preserve">
+    <value>年指定</value>
+  </data>
+  <data name="YearToken" xml:space="preserve">
+    <value>年</value>
   </data>
 </root>

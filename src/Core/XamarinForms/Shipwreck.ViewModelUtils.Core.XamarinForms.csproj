@@ -18,8 +18,10 @@
     <Compile Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="..\Shared\Resources\SR.Designer.cs">
-      <DesignTime>True</DesignTime>
-    </Compile>
+    <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\PresentationFramework\Resources\*.resx" Link="Linked Code\%(Filename).resx" />
+    <Compile Include="..\PresentationFramework\Resources\*.cs" Link="Linked Code\%(Filename).cs" />
   </ItemGroup>
 </Project>

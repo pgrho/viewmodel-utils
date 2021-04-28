@@ -9,17 +9,33 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Resources\SR.Designer.cs">
-      <DependentUpon>SR.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConsolePageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\ObservableCollectionTraceListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\TraceEventModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EntitySelectorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ExpressionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IEntitySelector.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ISortablePageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\BooleanConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\ConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\DateTimeConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\EntityConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\EnumConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\EnumOptionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IFrameworkSearchPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IMultipleOptionConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IOptionsConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\MultipleOptionConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\MultipleOptionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\NumberConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\OperatorViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\OptionsConditionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\OptionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\SearchPropertyViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SH.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\StringConditionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\SortDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_BulkUpdateable\BulkUpdateableHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_BulkUpdateable\IBulkUpdateable.cs" />
@@ -81,14 +97,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ICommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ParameteredCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\SelectionCommandViewModelBase.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\SR.ja.resx" />
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Resources\SR.resx">
-      <CustomToolNamespace>Shipwreck.ViewModelUtils</CustomToolNamespace>
-      <LastGenOutput>SR.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\" />

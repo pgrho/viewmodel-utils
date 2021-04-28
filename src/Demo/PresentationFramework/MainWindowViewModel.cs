@@ -25,6 +25,44 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
                     Owner = Window
                 }.Show(),
                 title: "FrameworkInteractionService");
+
+            //yield return CommandViewModel.Create(
+            //    async () =>
+            //    {
+            //        await ShowInformationToastAsync(typeof(QueryPropertyInfo).GetCustomAttribute<JsonConverterAttribute>()?.ConverterType?.ToString());
+
+            //        var props = new QueryPropertyInfo[]
+            //        {
+            //            new DateTimeQueryPropertyInfo
+            //            {
+            //                TypeName = "DateTime",
+            //                IsDate=true,
+            //            },
+            //            new EnumQueryPropertyInfo
+            //            {
+            //                TypeName = nameof(TypeCode),
+            //                Fields=
+            //                {
+            //                    new EnumFieldInfo { Value = 0 },
+            //                    new EnumFieldInfo { Value = 1 },
+            //                }
+            //            },
+            //            new BooleanQueryPropertyInfo
+            //            {
+            //                TypeName = nameof(Boolean),
+            //                TrueString = "T",
+            //                FalseString = "F",
+            //            },
+            //            new QueryPropertyInfo
+            //            {
+            //                TypeName = nameof(Int32)
+            //            }
+            //        };
+
+            //        await ShowInformationToastAsync(JsonConvert.SerializeObject(props));
+            //    },
+            //    title: "Client.Newtonsoft"
+            //    );
         }
     }
 }

@@ -61,6 +61,15 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string AllSelected {
+            get {
+                return ResourceManager.GetString("AllSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   {0} is invalid directory path. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Arg0IsInvalidDirectory {
@@ -124,6 +133,33 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   Contains に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Contains {
+            get {
+                return ResourceManager.GetString("Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Day に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DayOperator {
+            get {
+                return ResourceManager.GetString("DayOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   D に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DayToken {
+            get {
+                return ResourceManager.GetString("DayToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Discard Changes に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DiscardChanges {
@@ -165,6 +201,159 @@ namespace Shipwreck.ViewModelUtils {
         internal static string EditDescriptionOfArg0 {
             get {
                 return ResourceManager.GetString("EditDescriptionOfArg0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ends with に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string EndsWith {
+            get {
+                return ResourceManager.GetString("EndsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Equal to に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string Equal {
+            get {
+                return ResourceManager.GetString("Equal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Except for {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ExceptForArg0 {
+            get {
+                return ResourceManager.GetString("ExceptForArg0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Greater than に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GreaterThan {
+            get {
+                return ResourceManager.GetString("GreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Greater than or equal に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string GreaterThanOrEqual {
+            get {
+                return ResourceManager.GetString("GreaterThanOrEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hour に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HourOperator {
+            get {
+                return ResourceManager.GetString("HourOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   H に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HourToken {
+            get {
+                return ResourceManager.GetString("HourToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   ,  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemSeparator {
+            get {
+                return ResourceManager.GetString("ItemSeparator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   {0} items に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ItemsOfCountArg0 {
+            get {
+                return ResourceManager.GetString("ItemsOfCountArg0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Less than に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LessThan {
+            get {
+                return ResourceManager.GetString("LessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Less than or equal に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LessThanOrEqual {
+            get {
+                return ResourceManager.GetString("LessThanOrEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Minute に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MinuteOperator {
+            get {
+                return ResourceManager.GetString("MinuteOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Mi に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MinuteToken {
+            get {
+                return ResourceManager.GetString("MinuteToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Month に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MonthOperator {
+            get {
+                return ResourceManager.GetString("MonthOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Mo に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MonthToken {
+            get {
+                return ResourceManager.GetString("MonthToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   None に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NoneSelected {
+            get {
+                return ResourceManager.GetString("NoneSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Not Equal to に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NotEqual {
+            get {
+                return ResourceManager.GetString("NotEqual", resourceCulture);
             }
         }
         
@@ -259,11 +448,47 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   Starts with に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string StartsWith {
+            get {
+                return ResourceManager.GetString("StartsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Unselect All に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string UnselectAll {
+            get {
+                return ResourceManager.GetString("UnselectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Are you sure to register {0} change(s)? に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string UpdatingCountArg0Confirmation {
             get {
                 return ResourceManager.GetString("UpdatingCountArg0Confirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Year に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string YearOperator {
+            get {
+                return ResourceManager.GetString("YearOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Y に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string YearToken {
+            get {
+                return ResourceManager.GetString("YearToken", resourceCulture);
             }
         }
     }
