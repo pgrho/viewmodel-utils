@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -12,10 +13,10 @@ namespace Shipwreck.ViewModelUtils.Components
     {
         #region Source
 
-        private IReadOnlyList<T> _Source;
+        private IList _Source;
 
         [Parameter]
-        public IReadOnlyList<T> Source
+        public IList Source
         {
             get => _Source;
             set
@@ -38,7 +39,7 @@ namespace Shipwreck.ViewModelUtils.Components
 
                             foreach (var e in prev)
                             {
-                                OnItemRemoved(e);
+                                OnItemRemoved((T)e);
                             }
                         }
                         _Source = value;
@@ -46,7 +47,7 @@ namespace Shipwreck.ViewModelUtils.Components
                         {
                             foreach (var e in value)
                             {
-                                OnItemAdded(e);
+                                OnItemAdded((T)e);
                             }
 
                             if (value is INotifyCollectionChanged nc)
@@ -99,7 +100,7 @@ namespace Shipwreck.ViewModelUtils.Components
 
             foreach (var m in Source)
             {
-                OnItemAdded(m);
+                OnItemAdded((T)m);
             }
         }
 
