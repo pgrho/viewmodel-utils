@@ -25,7 +25,8 @@ namespace Shipwreck.ViewModelUtils.Client
 
         private bool _ShouldSerialize;
 
-        internal bool ShouldSerialize
+        [IgnoreDataMember]
+        public bool ShouldSerialize
         {
             get => _ShouldSerialize = (_ShouldSerialize || Count > 0);
             set
@@ -42,7 +43,7 @@ namespace Shipwreck.ViewModelUtils.Client
             }
         }
 
-        internal void Set(IEnumerable<KeyValuePair<string, string>> value)
+        public void Set(IEnumerable<KeyValuePair<string, string>> value)
         {
             if (value != this)
             {
