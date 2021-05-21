@@ -1,0 +1,60 @@
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+
+namespace Shipwreck.ViewModelUtils.Client
+{
+    [DataContract]
+    [TypeConverter(typeof(ExtensionDataConverter))]
+    public sealed partial class ExtensionData : Dictionary<string, string>
+    {
+        public ExtensionData()
+        {
+        }
+
+        public ExtensionData(IEnumerable<KeyValuePair<string, string>> entries)
+        {
+            if (entries != null)
+            {
+                foreach (var kv in entries)
+                {
+                    this[kv.Key] = kv.Value;
+                }
+            }
+        }
+
+        private bool _ShouldSerialize;
+
+        internal bool ShouldSerialize
+        {
+            get => _ShouldSerialize = (_ShouldSerialize || Count > 0);
+            set
+            {
+                if (value)
+                {
+                    _ShouldSerialize = true;
+                }
+                else
+                {
+                    _ShouldSerialize = false;
+                    Clear();
+                }
+            }
+        }
+
+        internal void Set(IEnumerable<KeyValuePair<string, string>> value)
+        {
+            if (value != this)
+            {
+                Clear();
+                if (value != null)
+                {
+                    foreach (var kv in value)
+                    {
+                        this[kv.Key] = kv.Value;
+                    }
+                }
+            }
+        }
+    }
+}

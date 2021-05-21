@@ -5,4 +5,8 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Shipwreck.ViewModelUtils.Models.csproj" />
+  </ItemGroup>
+
 </Project>
