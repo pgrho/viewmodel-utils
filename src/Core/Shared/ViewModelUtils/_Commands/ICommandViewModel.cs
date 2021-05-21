@@ -4,6 +4,8 @@
     {
         string Title { get; }
 
+        string Mnemonic { get; }
+
         string Description { get; }
 
         bool IsVisible { get; }

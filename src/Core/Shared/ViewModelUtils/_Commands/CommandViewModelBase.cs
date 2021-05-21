@@ -7,6 +7,7 @@ namespace Shipwreck.ViewModelUtils
     {
         protected CommandViewModelBase(
             string title = null,
+            string mnemonic = null,
             string description = null,
             bool isVisible = true,
             bool isEnabled = true,
@@ -16,6 +17,7 @@ namespace Shipwreck.ViewModelUtils
             string href = null)
         {
             _Title = title;
+            _Mnemonic = mnemonic;
             _Description = description;
             _IsVisible = isVisible;
             _IsEnabled = isEnabled;
@@ -38,6 +40,20 @@ namespace Shipwreck.ViewModelUtils
         protected virtual string ComputeTitle() => null;
 
         #endregion Title
+
+        #region Mnemonic
+
+        private string _Mnemonic;
+
+        public string Mnemonic
+        {
+            get => _Mnemonic;
+            protected set => SetProperty(ref _Mnemonic, value);
+        }
+
+        protected virtual string ComputeMnemonic() => null;
+
+        #endregion Mnemonic
 
         #region Description
 
@@ -179,6 +195,7 @@ namespace Shipwreck.ViewModelUtils
         public virtual void Invalidate()
         {
             Title = ComputeTitle() ?? _Title;
+            Mnemonic = ComputeMnemonic() ?? _Mnemonic;
             Description = ComputeDescription() ?? _Description;
             IsVisible = ComputeIsVisible() ?? _IsVisible;
             IsEnabled = ComputeIsEnabled() ?? _IsEnabled;

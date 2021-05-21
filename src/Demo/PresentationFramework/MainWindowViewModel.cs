@@ -17,14 +17,16 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
                 {
                     Owner = Window
                 }.Show(),
-                title: "InteractionService");
+                title: "InteractionService",
+                mnemonic: "A");
 
             yield return CommandViewModel.Create(
                 () => new InteractionServiceWindow(new InteractionServiceWindowViewModel(new FrameworkInteractionService()))
                 {
                     Owner = Window
                 }.Show(),
-                title: "FrameworkInteractionService");
+                title: "FrameworkInteractionService",
+                mnemonic: "F");
 
             //yield return CommandViewModel.Create(
             //    async () =>

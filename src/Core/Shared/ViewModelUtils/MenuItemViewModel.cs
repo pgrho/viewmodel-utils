@@ -42,6 +42,7 @@ namespace Shipwreck.ViewModelUtils
                     _Command?.AddPropertyChanged(Command_PropertyChanged);
 
                     RaisePropertyChanged(nameof(CommandTitle));
+                    RaisePropertyChanged(nameof(Mnemonic));
                     RaisePropertyChanged(nameof(Href));
                     RaisePropertyChanged(nameof(Description));
                     RaisePropertyChanged(nameof(Icon));
@@ -54,6 +55,9 @@ namespace Shipwreck.ViewModelUtils
         }
 
         public string CommandTitle => _Command?.Title;
+
+        public string Mnemonic => _Command?.Mnemonic;
+
         public string Href => _Command?.Href;
         public string Description => _Command?.Description;
         public string Icon => _Command?.Icon;
@@ -68,6 +72,10 @@ namespace Shipwreck.ViewModelUtils
             {
                 case nameof(Command.Title):
                     RaisePropertyChanged(nameof(CommandTitle));
+                    break;
+
+                case nameof(Command.Mnemonic):
+                    RaisePropertyChanged(nameof(Mnemonic));
                     break;
 
                 case nameof(Command.Href):

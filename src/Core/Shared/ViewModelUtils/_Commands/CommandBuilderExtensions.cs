@@ -20,6 +20,20 @@ namespace Shipwreck.ViewModelUtils
             return builder;
         }
 
+        public static T SetMnemonic<T>(this T builder, string mnemonic)
+            where T : CommandBuilderBase
+        {
+            builder.Mnemonic = mnemonic;
+            return builder;
+        }
+
+        public static T SetMnemonic<T>(this T builder, Func<string> mnemonicGetter)
+            where T : CommandBuilderBase
+        {
+            builder.MnemonicGetter = mnemonicGetter;
+            return builder;
+        }
+
         public static T SetDescription<T>(this T builder, string description)
             where T : CommandBuilderBase
         {

@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:fa="http://schema.shipwreck.jp/fontawesome5/"
     xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
+    xmlns:fa="http://schema.shipwreck.jp/fontawesome5/"
     xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Shipwreck.ViewModelUtils">
     <local:BorderStyleToColorSchemeConverter
         x:Key="BorderStyleToColorSchemeConverter" />
@@ -17,6 +17,8 @@
         x:Key="OpaqueSolidColorBrushConverter" />
     <BooleanToVisibilityConverter
         x:Key="BooleanToVisibilityConverter" />
+    <vmu:AccessTextConverter
+        x:Key="AccessTextConverter" />
 
     <DataTemplate
         x:Key="CommandViewModel.ContentTemplate">
@@ -28,11 +30,20 @@
                 VerticalAlignment="Center"
                 Margin="0,0,4,0"
                 Icon="{Binding Icon}" />
-            <TextBlock
+            <AccessText
                 SnapsToDevicePixels="True"
                 VerticalAlignment="Center"
-                Visibility="{Binding Title, Converter={StaticResource StringNotEmptyConverter}}"
-                Text="{Binding Title}" />
+                Visibility="{Binding Title, Converter={StaticResource StringNotEmptyConverter}}">
+                <AccessText.Text>
+                    <MultiBinding
+                        Converter="{StaticResource AccessTextConverter}">
+                        <Binding
+                            Path="Title" />
+                        <Binding
+                            Path="Mnemonic" />
+                    </MultiBinding>
+                </AccessText.Text>
+            </AccessText>
             <Border
                 x:Name="badgeBorder"
                 VerticalAlignment="Center"

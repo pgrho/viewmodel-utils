@@ -9,6 +9,7 @@ namespace Shipwreck.ViewModelUtils
 
         private readonly Func<Task> _Execute;
         private readonly Func<string> _TitleGetter = null;
+        private readonly Func<string> _MnemonicGetter = null;
         private readonly Func<string> _DescriptionGetter = null;
         private readonly Func<bool> _IsVisibleGetter = null;
         private readonly Func<bool> _IsEnabledGetter = null;
@@ -19,6 +20,7 @@ namespace Shipwreck.ViewModelUtils
         public AsyncCommandViewModel(
             Func<Task> execute
             , string title = null, Func<string> titleGetter = null
+            , string mnemonic = null, Func<string> mnemonicGetter = null
             , string description = null, Func<string> descriptionGetter = null
             , bool isVisible = true, Func<bool> isVisibleGetter = null
             , bool isEnabled = true, Func<bool> isEnabledGetter = null
@@ -28,6 +30,7 @@ namespace Shipwreck.ViewModelUtils
             )
             : base(
                   title: titleGetter?.Invoke() ?? title
+                  , mnemonic: mnemonicGetter?.Invoke() ?? mnemonic
                   , description: descriptionGetter?.Invoke() ?? description
                   , isVisible: isVisibleGetter?.Invoke() ?? isVisible
                   , isEnabled: isEnabledGetter?.Invoke() ?? isEnabled
@@ -37,6 +40,7 @@ namespace Shipwreck.ViewModelUtils
         {
             _Execute = execute;
             _TitleGetter = titleGetter;
+            _MnemonicGetter = mnemonicGetter;
             _DescriptionGetter = descriptionGetter;
             _IsVisibleGetter = isVisibleGetter;
             _IsEnabledGetter = isEnabledGetter;
@@ -46,6 +50,7 @@ namespace Shipwreck.ViewModelUtils
         }
 
         protected override string ComputeTitle() => _TitleGetter?.Invoke();
+        protected override string ComputeMnemonic() => _MnemonicGetter?.Invoke();
 
         protected override string ComputeDescription() => _DescriptionGetter?.Invoke();
 

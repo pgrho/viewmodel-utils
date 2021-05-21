@@ -11,6 +11,8 @@ namespace Shipwreck.ViewModelUtils
                 ExecutionHandler,
                 title: Title,
                 titleGetter: TitleGetter,
+                mnemonic: Mnemonic,
+                mnemonicGetter: MnemonicGetter,
                 description: Description,
                 descriptionGetter: DescriptionGetter,
                 isVisible: IsVisible ?? true,

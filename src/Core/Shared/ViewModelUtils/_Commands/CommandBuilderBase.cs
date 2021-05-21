@@ -6,6 +6,8 @@ namespace Shipwreck.ViewModelUtils
     {
         public string Title { get; set; }
         public Func<string> TitleGetter { get; set; }
+        public string Mnemonic { get; set; }
+        public Func<string> MnemonicGetter { get; set; }
         public string Description { get; set; }
         public Func<string> DescriptionGetter { get; set; }
         public bool? IsVisible { get; set; }

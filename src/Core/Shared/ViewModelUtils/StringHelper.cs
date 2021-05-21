@@ -1,10 +1,13 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿using System;
+
+namespace Shipwreck.ViewModelUtils
 {
     internal static partial class StringHelper
     {
         public static string EmptyToNull(this string s)
             => string.IsNullOrEmpty(s) ? null : s;
 
+        [Obsolete]
         public static string GetTitle(string title, string mnemonic)
         {
             var t = title;

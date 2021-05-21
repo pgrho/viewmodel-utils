@@ -163,7 +163,8 @@ namespace Shipwreck.ViewModelUtils
 
         protected virtual CommandBuilderBase GetCloseCommandBuilder()
             => new AsyncCommandBuilder(CloseAsync)
-                    .SetTitle(StringHelper.GetTitle(SR.CloseTitle, SR.CloseMnemonic))
+                    .SetTitle(SR.CloseTitle)
+                    .SetMnemonic(SR.CloseMnemonic)
                     .SetDescription(SR.CloseDescription.EmptyToNull());
 
         public void Close()
