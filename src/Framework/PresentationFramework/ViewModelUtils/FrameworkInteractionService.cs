@@ -130,7 +130,8 @@ namespace Shipwreck.ViewModelUtils
             {
                 Task showCore()
                 {
-                    if (DialogParticipation.GetRegister(mw) != null)
+                    if (DialogParticipation.GetRegister(mw) != null
+                        && !(frameworkElement is Window))
                     {
                         ConfigureViewModel(frameworkElement.DataContext);
 
