@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
-    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
     xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ResourceDictionary.MergedDictionaries>
@@ -47,31 +46,45 @@
             Value="{StaticResource CommandViewModel.ContentTemplate}" />
     </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.SplitButton.Small"
         TargetType="bs4:SplitButton">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.SplitButton.Small" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.SplitButton.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="bs4:SplitButton">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.SplitButton.Small" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.SplitButton.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.SplitButton.Medium"
         TargetType="bs4:SplitButton">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.SplitButton.Medium" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.SplitButton.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="bs4:SplitButton">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.SplitButton.Medium" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.SplitButton.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.SplitButton.Large"
         TargetType="bs4:SplitButton">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.SplitButton.Large" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.SplitButton.Core" />
-    </vmu:StyleMixer>
-
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="bs4:SplitButton">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.SplitButton.Large" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.SplitButton.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 </ResourceDictionary>

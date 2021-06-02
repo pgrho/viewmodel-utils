@@ -37,32 +37,47 @@
             Value="{Binding RelativeSource={RelativeSource Self}, Path=Command.Style, Converter={StaticResource BorderStyleToColorSchemeConverter}}" />
     </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.Button.Small"
         TargetType="Button">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.Button.Small" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.Button.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="Button">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.Button.Small" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.Button.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.Button.Medium"
         TargetType="Button">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.Button.Medium" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.Button.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="Button">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.Button.Medium" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.Button.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.Button.Large"
         TargetType="Button">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.Button.Large" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.Button.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="Button">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.Button.Large" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.Button.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
     <Style
         x:Key="CommandViewModel.Button.Icon.Small"

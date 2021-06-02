@@ -26,31 +26,46 @@
             Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector}" />
     </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.DropDownButton.Small"
         TargetType="mah:DropDownButton">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.DropDownButton.Small" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.DropDownButton.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="mah:DropDownButton">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.DropDownButton.Small" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.DropDownButton.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.DropDownButton.Medium"
         TargetType="mah:DropDownButton">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.DropDownButton.Medium" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.DropDownButton.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="mah:DropDownButton">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.DropDownButton.Medium" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.DropDownButton.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
-    <vmu:StyleMixer
+    <Style
         x:Key="CommandViewModel.DropDownButton.Large"
         TargetType="mah:DropDownButton">
-        <StaticResourceExtension
-            ResourceKey="BootstrapControls.DropDownButton.Large" />
-        <StaticResourceExtension
-            ResourceKey="CommandViewModel.DropDownButton.Core" />
-    </vmu:StyleMixer>
+        <Style.BasedOn>
+            <vmu:StyleMixer
+                TargetType="mah:DropDownButton">
+                <StaticResourceExtension
+                    ResourceKey="BootstrapControls.DropDownButton.Large" />
+                <StaticResourceExtension
+                    ResourceKey="CommandViewModel.DropDownButton.Core" />
+            </vmu:StyleMixer>
+        </Style.BasedOn>
+    </Style>
 
 </ResourceDictionary>
