@@ -9,6 +9,7 @@
     <Import_RootNamespace>Shipwreck</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConditionViewModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConsolePageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\ObservableCollectionTraceListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\TraceEventModel.cs" />
