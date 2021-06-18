@@ -4,10 +4,6 @@
     xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/">
     <ResourceDictionary.MergedDictionaries>
         <vmu:SharedResourceDictionary
-            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.Buttons.xaml" />
-        <vmu:SharedResourceDictionary
-            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.DropDownButtons.xaml" />
-        <vmu:SharedResourceDictionary
-            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.SplitButtons.xaml" />
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.CommandsButtons.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

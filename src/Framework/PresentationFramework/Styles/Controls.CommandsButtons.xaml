@@ -1,0 +1,343 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
+    xmlns:fa="http://schema.shipwreck.jp/fontawesome5/"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:l="clr-namespace:Shipwreck.ViewModelUtils"
+    xmlns:v="clr-namespace:Shipwreck.ViewModelUtils.Controls">
+    <ResourceDictionary.MergedDictionaries>
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.Buttons.xaml" />
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.DropDownButtons.xaml" />
+        <vmu:SharedResourceDictionary
+            Source="pack://application:,,,/Shipwreck.ViewModelUtils.PresentationFramework;component/Styles/Controls.SplitButtons.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style
+        x:Key="CommandViewModel.CommandsButton.Small"
+        TargetType="{x:Type v:CommandsButton}">
+        <Style.Resources>
+            <vmu:NullToFalseConverter
+                x:Key="NullToFalseConverter" />
+            <vmu:NumberContainsConverter
+                x:Key="IsMultipleConverter"
+                ContainsLowerbound="True"
+                Lowerbound="2" />
+            <l:BorderStyleToColorSchemeConverter
+                x:Key="BorderStyleToColorSchemeConverter" />
+            <ControlTemplate
+                x:Key="SingleCommandTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <Button
+                    Style="{StaticResource CommandViewModel.Button.Small}"
+                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}" />
+            </ControlTemplate>
+            <ControlTemplate
+                x:Key="SplitTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <bs4:SplitButton
+                    Style="{StaticResource CommandViewModel.SplitButton.Small}"
+                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}"
+                    ItemsSource="{TemplateBinding ItemsSource}" />
+            </ControlTemplate>
+            <ControlTemplate
+                x:Key="DropDownTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <mah:DropDownButton
+                    Style="{StaticResource CommandViewModel.DropDownButton.Small}"
+                    bs4:ColorScheme.Scheme="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DropDownStyle, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
+                    ItemsSource="{TemplateBinding ItemsSource}">
+                    <mah:DropDownButton.Content>
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <fa:FontAwesomeTextBlock
+                                VerticalAlignment="Center"
+                                Margin="0,0,4,0"
+                                Icon="{TemplateBinding DropDownIcon}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{TemplateBinding DropDownTitle}" />
+                        </StackPanel>
+                    </mah:DropDownButton.Content>
+                </mah:DropDownButton>
+            </ControlTemplate>
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger
+                Property="ItemsSource"
+                Value="{x:Null}">
+                <Setter
+                    Property="Visibility"
+                    Value="Collapsed" />
+            </Trigger>
+            <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount}"
+                Value="0">
+                <Setter
+                    Property="Visibility"
+                    Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount}"
+                Value="1">
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource SingleCommandTemplate}" />
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount, Converter={StaticResource IsMultipleConverter}}"
+                        Value="True" />
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=DropDownTitle, Converter={StaticResource NullToFalseConverter}}"
+                        Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource SplitTemplate}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount, Converter={StaticResource IsMultipleConverter}}"
+                        Value="True" />
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=DropDownTitle, Converter={StaticResource NullToFalseConverter}}"
+                        Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource DropDownTemplate}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+        <Setter
+            Property="BorderThickness"
+            Value="0" />
+        <Setter
+            Property="Background"
+            Value="{x:Null}" />
+        <Setter
+            Property="Focusable"
+            Value="False" />
+    </Style>
+    <Style
+        x:Key="CommandViewModel.CommandsButton.Medium"
+        TargetType="{x:Type v:CommandsButton}">
+        <Style.Resources>
+            <vmu:NullToFalseConverter
+                x:Key="NullToFalseConverter" />
+            <vmu:NumberContainsConverter
+                x:Key="IsMultipleConverter"
+                ContainsLowerbound="True"
+                Lowerbound="2" />
+            <l:BorderStyleToColorSchemeConverter
+                x:Key="BorderStyleToColorSchemeConverter" />
+            <ControlTemplate
+                x:Key="SingleCommandTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <Button
+                    Style="{StaticResource CommandViewModel.Button.Medium}"
+                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}" />
+            </ControlTemplate>
+            <ControlTemplate
+                x:Key="SplitTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <bs4:SplitButton
+                    Style="{StaticResource CommandViewModel.SplitButton.Medium}"
+                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}"
+                    ItemsSource="{TemplateBinding ItemsSource}" />
+            </ControlTemplate>
+            <ControlTemplate
+                x:Key="DropDownTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <mah:DropDownButton
+                    Style="{StaticResource CommandViewModel.DropDownButton.Medium}"
+                    bs4:ColorScheme.Scheme="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DropDownStyle, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
+                    ItemsSource="{TemplateBinding ItemsSource}">
+                    <mah:DropDownButton.Content>
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <fa:FontAwesomeTextBlock
+                                VerticalAlignment="Center"
+                                Margin="0,0,4,0"
+                                Icon="{TemplateBinding DropDownIcon}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{TemplateBinding DropDownTitle}" />
+                        </StackPanel>
+                    </mah:DropDownButton.Content>
+                </mah:DropDownButton>
+            </ControlTemplate>
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger
+                Property="ItemsSource"
+                Value="{x:Null}">
+                <Setter
+                    Property="Visibility"
+                    Value="Collapsed" />
+            </Trigger>
+            <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount}"
+                Value="0">
+                <Setter
+                    Property="Visibility"
+                    Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount}"
+                Value="1">
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource SingleCommandTemplate}" />
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount, Converter={StaticResource IsMultipleConverter}}"
+                        Value="True" />
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=DropDownTitle, Converter={StaticResource NullToFalseConverter}}"
+                        Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource SplitTemplate}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount, Converter={StaticResource IsMultipleConverter}}"
+                        Value="True" />
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=DropDownTitle, Converter={StaticResource NullToFalseConverter}}"
+                        Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource DropDownTemplate}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+        <Setter
+            Property="BorderThickness"
+            Value="0" />
+        <Setter
+            Property="Background"
+            Value="{x:Null}" />
+        <Setter
+            Property="Focusable"
+            Value="False" />
+    </Style>
+    <Style
+        x:Key="CommandViewModel.CommandsButton.Large"
+        TargetType="{x:Type v:CommandsButton}">
+        <Style.Resources>
+            <vmu:NullToFalseConverter
+                x:Key="NullToFalseConverter" />
+            <vmu:NumberContainsConverter
+                x:Key="IsMultipleConverter"
+                ContainsLowerbound="True"
+                Lowerbound="2" />
+            <l:BorderStyleToColorSchemeConverter
+                x:Key="BorderStyleToColorSchemeConverter" />
+            <ControlTemplate
+                x:Key="SingleCommandTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <Button
+                    Style="{StaticResource CommandViewModel.Button.Large}"
+                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}" />
+            </ControlTemplate>
+            <ControlTemplate
+                x:Key="SplitTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <bs4:SplitButton
+                    Style="{StaticResource CommandViewModel.SplitButton.Large}"
+                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}"
+                    ItemsSource="{TemplateBinding ItemsSource}" />
+            </ControlTemplate>
+            <ControlTemplate
+                x:Key="DropDownTemplate"
+                TargetType="{x:Type v:CommandsButton}">
+                <mah:DropDownButton
+                    Style="{StaticResource CommandViewModel.DropDownButton.Large}"
+                    bs4:ColorScheme.Scheme="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DropDownStyle, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
+                    ItemsSource="{TemplateBinding ItemsSource}">
+                    <mah:DropDownButton.Content>
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <fa:FontAwesomeTextBlock
+                                VerticalAlignment="Center"
+                                Margin="0,0,4,0"
+                                Icon="{TemplateBinding DropDownIcon}" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{TemplateBinding DropDownTitle}" />
+                        </StackPanel>
+                    </mah:DropDownButton.Content>
+                </mah:DropDownButton>
+            </ControlTemplate>
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger
+                Property="ItemsSource"
+                Value="{x:Null}">
+                <Setter
+                    Property="Visibility"
+                    Value="Collapsed" />
+            </Trigger>
+            <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount}"
+                Value="0">
+                <Setter
+                    Property="Visibility"
+                    Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount}"
+                Value="1">
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource SingleCommandTemplate}" />
+            </DataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount, Converter={StaticResource IsMultipleConverter}}"
+                        Value="True" />
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=DropDownTitle, Converter={StaticResource NullToFalseConverter}}"
+                        Value="False" />
+                </MultiDataTrigger.Conditions>
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource SplitTemplate}" />
+            </MultiDataTrigger>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=ItemsSource.VisibleCount, Converter={StaticResource IsMultipleConverter}}"
+                        Value="True" />
+                    <Condition
+                        Binding="{Binding RelativeSource={RelativeSource Self}, Path=DropDownTitle, Converter={StaticResource NullToFalseConverter}}"
+                        Value="True" />
+                </MultiDataTrigger.Conditions>
+                <Setter
+                    Property="Template"
+                    Value="{StaticResource DropDownTemplate}" />
+            </MultiDataTrigger>
+        </Style.Triggers>
+        <Setter
+            Property="BorderThickness"
+            Value="0" />
+        <Setter
+            Property="Background"
+            Value="{x:Null}" />
+        <Setter
+            Property="Focusable"
+            Value="False" />
+    </Style>
+</ResourceDictionary>

@@ -28,6 +28,15 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
                 title: "FrameworkInteractionService",
                 mnemonic: "F");
 
+            yield return CommandViewModel.Create(
+                () => new ButtonsWindow()
+                {
+                    Owner = Window,
+                    DataContext = new ButtonsWindowViewModel()
+                }.Show(),
+                title: "Buttons",
+                mnemonic: "B");
+
             //yield return CommandViewModel.Create(
             //    async () =>
             //    {

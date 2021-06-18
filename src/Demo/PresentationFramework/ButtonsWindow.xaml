@@ -1,0 +1,68 @@
+﻿<vmu:FrameworkWindow
+    x:Class="Shipwreck.ViewModelUtils.Demo.PresentationFramework.ButtonsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.PresentationFramework"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    mc:Ignorable="d"
+    Title="ButtonsWindow"
+    Height="450"
+    Width="800">
+    <ScrollViewer>
+        <StackPanel>
+            <Expander
+                Header="CommandsButton"
+                IsExpanded="True">
+                <StackPanel>
+                    <WrapPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Small}"
+                            ItemsSource="{Binding SingleCommandCollection}" />
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Small}"
+                            ItemsSource="{Binding MultipleCommandCollection}" />
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Small}"
+                            DropDownTitle="dropdown..."
+                            DropDownStyle="Warning"
+                            ItemsSource="{Binding MultipleCommandCollection}" />
+                    </WrapPanel>
+                    <WrapPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Medium}"
+                            ItemsSource="{Binding SingleCommandCollection}" />
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Medium}"
+                            ItemsSource="{Binding MultipleCommandCollection}" />
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Medium}"
+                            DropDownTitle="dropdown..."
+                            DropDownStyle="Warning"
+                            ItemsSource="{Binding MultipleCommandCollection}" />
+                    </WrapPanel>
+                    <WrapPanel
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Large}"
+                            ItemsSource="{Binding SingleCommandCollection}" />
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Large}"
+                            ItemsSource="{Binding MultipleCommandCollection}" />
+                        <vmu:CommandsButton
+                            Style="{StaticResource CommandViewModel.CommandsButton.Large}"
+                            DropDownTitle="dropdown..."
+                            DropDownStyle="Warning"
+                            ItemsSource="{Binding MultipleCommandCollection}" />
+                    </WrapPanel>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</vmu:FrameworkWindow>
