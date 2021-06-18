@@ -43,10 +43,5 @@
                     Binding="{Binding Message}" />
             </DataGrid.Columns>
         </DataGrid>
-        <vmu:FrameworkNotificationArea
-            Grid.ColumnSpan="2"
-            x:Name="NotificationArea"
-            MaxItems="3"
-            Position="BottomRight" />
     </Grid>
 </vmu:FrameworkWindow>
