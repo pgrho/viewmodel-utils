@@ -23,14 +23,15 @@
     <None Include="**\*.android.cs" />
     <Compile Include="**\*.ios.cs" />
   </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.1" />
-    <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.1-alpha1" />
+    <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.1-alpha3" />
     <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
-  </ItemGroup>
+  </ItemGroup> 
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
   <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
