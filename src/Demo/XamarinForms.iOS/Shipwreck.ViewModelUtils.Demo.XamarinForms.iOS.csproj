@@ -128,6 +128,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj">
+      <Project>{1be2b82e-497e-490e-bdcd-8c856077e5dd}</Project>
+      <Name>Shipwreck.ViewModelUtils.XamarinForms</Name>
+    </ProjectReference>
     <ProjectReference Include="..\XamarinForms\Shipwreck.ViewModelUtils.Demo.XamarinForms.csproj">
       <Project>{C6DBB039-63CB-4548-B673-D7F3A69BE8F3}</Project>
       <Name>Shipwreck.ViewModelUtils.Demo.XamarinForms</Name>

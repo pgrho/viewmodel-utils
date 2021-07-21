@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace Shipwreck.ViewModelUtils.Demo.XamarinForms
 {
@@ -10,7 +8,7 @@ namespace Shipwreck.ViewModelUtils.Demo.XamarinForms
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new NavigationPage(new MainPage());
         }
 
         protected override void OnStart()

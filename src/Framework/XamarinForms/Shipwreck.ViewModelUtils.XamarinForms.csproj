@@ -31,6 +31,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="ViewModelUtils\CommandButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup> 
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />

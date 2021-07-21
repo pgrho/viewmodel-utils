@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Forms;
 
 namespace Shipwreck.ViewModelUtils
 {
@@ -13,5 +14,8 @@ namespace Shipwreck.ViewModelUtils
 
         public ProcessingDisabled DisableProcessing()
             => default;
+
+        static partial void PlatformGetInteractionService(ref IInteractionService service)
+            => service = DependencyService.Get<IInteractionService>();
     }
 }

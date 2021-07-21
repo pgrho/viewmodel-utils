@@ -129,10 +129,12 @@ namespace Shipwreck.ViewModelUtils
         public virtual bool SupportsMessageBoxes => true;
 
         public virtual Task AlertAsync(object context, string message, string title, string buttonText, BorderStyle? buttonStyle)
-            => ResolvePage(context)?.DisplayAlert(title, message, buttonText ?? "OK");
+            => ResolvePage(context)?.DisplayAlert(title ?? string.Empty, message, buttonText ?? "OK")
+                ?? Task.FromException(new NotSupportedException());
 
         public virtual Task<bool> ConfirmAsync(object context, string message, string title, string trueText, BorderStyle? trueStyle, string falseText, BorderStyle? falseStyle)
-            => ResolvePage(context)?.DisplayAlert(title, message, trueText ?? "OK", falseText ?? "キャンセル");
+            => ResolvePage(context)?.DisplayAlert(title ?? string.Empty, message, trueText ?? "OK", falseText ?? "キャンセル")
+                ?? Task.FromException<bool>(new NotSupportedException());
 
         #endregion MessageBox
 
