@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
+﻿using System.Threading.Tasks;
 using Android.Views;
-using Android.Views.InputMethods;
 using Android.Widget;
 using Shipwreck.BootstrapControls;
-using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using System.Threading.Tasks;
 
 namespace Shipwreck.ViewModelUtils
 {

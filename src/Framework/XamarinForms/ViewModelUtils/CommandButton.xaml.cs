@@ -11,10 +11,12 @@ namespace Shipwreck.ViewModelUtils
                 nameof(FontSize), typeof(double), typeof(CommandButton),
                 defaultValue: new FontSizeConverter().ConvertFromInvariantString("Default"));
 
+        public static readonly BindableProperty ButtonPaddingProperty
+            = BindableProperty.Create(nameof(ButtonPadding), typeof(Thickness), typeof(CommandButton), defaultValue: new Thickness(8));
+
         public CommandButton()
         {
             InitializeComponent();
-            Padding = new Thickness(8);
         }
 
         [TypeConverter(typeof(FontSizeConverter))]
@@ -22,6 +24,12 @@ namespace Shipwreck.ViewModelUtils
         {
             get => (double)GetValue(FontSizeProperty);
             set => SetValue(FontSizeProperty, value);
+        }
+
+        public Thickness ButtonPadding
+        {
+            get => (Thickness)GetValue(ButtonPaddingProperty);
+            set => SetValue(ButtonPaddingProperty, value);
         }
     }
 }

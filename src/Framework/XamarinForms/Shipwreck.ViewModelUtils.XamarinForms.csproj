@@ -13,14 +13,18 @@
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
     <Compile Remove="**\*.android.cs" />
     <Compile Remove="**\*.ios.cs" />
+    <None Include="**\*.android.cs" />
+    <None Include="**\*.ios.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
+    <None Remove="**\*.android.cs" />
     <Compile Include="**\*.android.cs" />
     <None Include="**\*.ios.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
     <None Include="**\*.android.cs" />
+    <None Remove="**\*.ios.cs" />
     <Compile Include="**\*.ios.cs" />
   </ItemGroup>
 

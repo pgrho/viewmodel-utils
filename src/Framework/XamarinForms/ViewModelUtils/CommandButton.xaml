@@ -16,7 +16,7 @@
     <ContentView.Content>
         <bs4:ButtonFrame
             x:Name="frame"
-            Padding="{Binding Source={RelativeSource AncestorType={x:Type vmuf:CommandButton}}, Path=Padding}"
+            Padding="{Binding Source={RelativeSource AncestorType={x:Type vmuf:CommandButton}}, Path=ButtonPadding}"
             CornerRadius="4"
             Scheme="{Binding Style, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
             IsEnabled="{Binding IsEnabled}">
