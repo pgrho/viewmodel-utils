@@ -35,5 +35,18 @@ namespace Shipwreck.ViewModelUtils.Client
         }
 
         #endregion Fields
+
+        protected override QueryPropertyInfo CreateInstance()
+            => new EnumQueryPropertyInfo();
+
+        public override void CopyTo(QueryPropertyInfo other)
+        {
+            base.CopyTo(other);
+            if (other is EnumQueryPropertyInfo d)
+            {
+                d.IsFlags = IsFlags;
+                d.Fields = Fields;
+            }
+        }
     }
 }
