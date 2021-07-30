@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Shipwreck.ViewModelUtils.Searching
 {
@@ -43,5 +44,11 @@ namespace Shipwreck.ViewModelUtils.Searching
         int? CurrentPageSize { get; }
 
         bool SetParameter(string query, string order, int? pageIndex, int? pageSize);
+
+        IEnumerable<CommandViewModelBase> CreateConditionCommands(ConditionViewModel condition)
+#if NET5_0_OR_GREATER
+            => null
+#endif
+            ;
     }
 }

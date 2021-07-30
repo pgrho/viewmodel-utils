@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace Shipwreck.ViewModelUtils.Searching
@@ -45,12 +46,21 @@ namespace Shipwreck.ViewModelUtils.Searching
 
         public void Remove() => Page.Conditions.Remove(this);
 
+        #region ExtraCommands
+
+        private CommandViewModelCollection _ExtraCommands;
+
+        public CommandViewModelCollection ExtraCommands
+            => _ExtraCommands ??= new CommandViewModelCollection(Page.CreateConditionCommands(this) ?? Enumerable.Empty<CommandViewModelBase>());
+
+        #endregion ExtraCommands
+
         #region RemoveCommand
 
         private CommandViewModelBase _RemoveCommand;
 
         public CommandViewModelBase RemoveCommand
-            => _RemoveCommand ??= CommandViewModel.Create(Remove);
+            => _RemoveCommand ??= CommandViewModel.Create(Remove, icon: "fas fa-times", style: BorderStyle.OutlineDanger);
 
         #endregion RemoveCommand
     }

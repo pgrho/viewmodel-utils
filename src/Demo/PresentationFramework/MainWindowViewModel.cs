@@ -29,6 +29,15 @@ namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
                 mnemonic: "F");
 
             yield return CommandViewModel.Create(
+                () => new SearchPageWindow()
+                {
+                    Owner = Window,
+                    DataContext = new SearchPageWindowViewModel()
+                }.Show(),
+                title: "SearchPage",
+                mnemonic: "S");
+
+            yield return CommandViewModel.Create(
                 () => new ButtonsWindow()
                 {
                     Owner = Window,
