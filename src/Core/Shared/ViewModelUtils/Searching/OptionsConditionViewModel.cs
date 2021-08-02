@@ -68,5 +68,18 @@ namespace Shipwreck.ViewModelUtils.Searching
 
         public override void SetValue(string @operator, string value)
             => Value = Parse(value);
+
+        public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
+        {
+            @operator = null;
+            defaultValue = StringValue;
+            if (string.IsNullOrEmpty(defaultValue))
+            {
+                defaultValue = null;
+                return false;
+            }
+
+            return true;
+        }
     }
 }

@@ -117,5 +117,22 @@ namespace Shipwreck.ViewModelUtils.Searching
                 }
             }
         }
+
+        public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
+        {
+            @operator = null;
+            if (HasValue)
+            {
+                var sb = new StringBuilder();
+                AppendValueTo(sb);
+
+                defaultValue = sb.ToString();
+
+                return true;
+            }
+            defaultValue = null;
+
+            return false;
+        }
     }
 }

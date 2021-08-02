@@ -63,5 +63,10 @@ namespace Shipwreck.ViewModelUtils.Searching
             => _RemoveCommand ??= CommandViewModel.Create(Remove, icon: "fas fa-times", style: BorderStyle.OutlineDanger);
 
         #endregion RemoveCommand
+
+        public abstract bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue);
+
+        public virtual void SetDefaultValueExpression(string @operator, string defaultValue)
+            => SetValue(@operator, defaultValue);
     }
 }

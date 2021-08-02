@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Shipwreck.ViewModelUtils.Searching
 {
@@ -28,6 +29,7 @@ namespace Shipwreck.ViewModelUtils.Searching
         public static OperatorViewModel DateOperator { get; } = new OperatorViewModel(SR.DayToken, SR.DayOperator);
         public static OperatorViewModel HourOperator { get; } = new OperatorViewModel(SR.HourToken, SR.HourOperator);
         public static OperatorViewModel MinuteOperator { get; } = new OperatorViewModel(SR.MinuteToken, SR.MinuteOperator);
+
         public static ReadOnlyCollection<OperatorViewModel> Operators = Array.AsReadOnly(new[] {
             YearOperator,
             MonthOperator,
@@ -216,6 +218,95 @@ namespace Shipwreck.ViewModelUtils.Searching
             {
                 builder.Append(Operator);
                 builder.Append(Value.Value.ToString("yyyy-MM-ddTHH:mm"));
+            }
+        }
+
+        private static readonly Regex _DefaultValuePattern = new Regex(@"^\{(?<source>Today|Now)(\.(?<method>Add(?:Year|Month|Day|Hour|Minute)s)\((?<offset>-?\d+(?:\.\d+)?)\))?\:(?<format>[^}]+)\}$");
+
+        public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
+        {
+            if (Value != null)
+            {
+                var now = DateTime.Now;
+                if (SelectedOperator == YearOperator)
+                {
+                    var offset = (Value ?? now).Year - now.Year;
+                    @operator = Operator;
+                    defaultValue = offset == 0 ? "{Today:yyyy}" : $"{{Today.AddYears({offset}):yyyy}}";
+                }
+                else if (SelectedOperator == MonthOperator)
+                {
+                    var tm = Value ?? now;
+                    var offset = tm.Year * 12 + tm.Month - now.Year * 12 - now.Month;
+                    @operator = Operator;
+                    defaultValue = offset == 0 ? "{Today:yyyy-MM}" : $"{{Today.AddMonths({offset}):yyyy-MM}}";
+                }
+                else if (SelectedOperator == HourOperator)
+                {
+                    var offset = (int)Math.Round(((Value ?? now) - now).TotalHours);
+                    @operator = Operator;
+                    defaultValue = offset == 0 ? "{Now:yyyy-MM-dd HH}" : $"{{Now.AddHours({offset}):yyyy-MM-dd HH}}";
+                }
+                else if (SelectedOperator == MinuteOperator)
+                {
+                    var offset = (int)Math.Round(((Value ?? now) - now).TotalMinutes);
+                    @operator = Operator;
+                    defaultValue = offset == 0 ? "{Now:yyyy-MM-dd HH:mm}" : $"{{Now.AddMinutes({offset}):yyyy-MM-dd HH:mm}}";
+                }
+                else
+                {
+                    var offset = (int)Math.Round(((Value ?? now).Date - now.Date).TotalDays);
+                    @operator = Operator;
+                    defaultValue = offset == 0 ? "{Today:yyyy-MM-dd}" : $"{{Today.AddDays({offset}):yyyy-MM-dd}}";
+                }
+
+                return true;
+            }
+            @operator = defaultValue = null;
+
+            return false;
+        }
+
+        public override void SetDefaultValueExpression(string @operator, string defaultValue)
+        {
+            if (defaultValue != null && _DefaultValuePattern.Match(defaultValue) is var tdm && tdm.Success)
+            {
+                var dv = tdm.Groups["source"].Value == "Today" ? DateTime.Today : DateTime.Now;
+
+                var method = tdm.Groups["method"].Value;
+                var os = tdm.Groups["offset"].Value;
+                var offset = int.TryParse(os, out var i) ? i : 0;
+
+                switch (method)
+                {
+                    case nameof(DateTime.AddYears):
+                        dv = dv.AddYears(offset);
+                        break;
+
+                    case nameof(DateTime.AddMonths):
+                        dv = dv.AddMonths(offset);
+                        break;
+
+                    case nameof(DateTime.AddDays):
+                        dv = dv.AddDays(offset);
+                        break;
+
+                    case nameof(DateTime.AddHours):
+                        dv = dv.AddHours(offset);
+                        break;
+
+                    case nameof(DateTime.AddMinutes):
+                        dv = dv.AddMinutes(offset);
+                        break;
+                }
+
+                var f = tdm.Groups["format"].Value;
+
+                SetValue(@operator, dv.ToString(f));
+            }
+            else
+            {
+                base.SetDefaultValueExpression(@operator, defaultValue);
             }
         }
     }

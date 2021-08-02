@@ -43,5 +43,19 @@ namespace Shipwreck.ViewModelUtils.Searching
 
         public override void AppendValueTo(StringBuilder builder)
             => builder.Append(Value.Value ? '1' : '0');
+
+        public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
+        {
+            @operator = null;
+            if (Value != null)
+            {
+                defaultValue = Value.Value ? "1" : "0";
+
+                return true;
+            }
+            defaultValue = null;
+
+            return false;
+        }
     }
 }

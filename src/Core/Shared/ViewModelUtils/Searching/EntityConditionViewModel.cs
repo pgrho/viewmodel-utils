@@ -95,5 +95,13 @@ namespace Shipwreck.ViewModelUtils.Searching
 
         public override void AppendValueTo(StringBuilder builder)
             => builder.Append(Selector.SelectedId);
+
+        public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
+        {
+            @operator = null;
+            defaultValue = Selector.SelectedId?.ToString();
+
+            return defaultValue != null;
+        }
     }
 }
