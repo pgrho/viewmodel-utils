@@ -22,6 +22,8 @@
     </ResourceDictionary.MergedDictionaries>
     <BooleanToVisibilityConverter
         x:Key="BooleanToVisibilityConverter" />
+    <v:DateTimeYearConverter
+        x:Key="DateTimeYearConverter" />
     <Style
         x:Key="ViewModelUtils.Styles.Condition.Name"
         TargetType="TextBlock">
@@ -67,7 +69,9 @@
         <Setter
             Property="Grid.Column"
             Value="2" />
-
+        <Setter
+            Property="bs4:ColorScheme.Scheme"
+            Value="OutlineSecondary" />
         <Setter
             Property="ButtonStyle">
             <Setter.Value>
@@ -270,7 +274,7 @@
                 Grid.Column="1"
                 Grid.ColumnSpan="3"
                 Visibility="{Binding IsYear, Converter={StaticResource BooleanToVisibilityConverter}}"
-                Text="{Binding Value}" />
+                Text="{Binding Value, Converter={StaticResource DateTimeYearConverter}}" />
             <DatePicker
                 Grid.Row="1"
                 Grid.Column="1"

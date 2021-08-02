@@ -247,7 +247,10 @@ namespace Shipwreck.ViewModelUtils.Searching
                     @operator = Operator;
                     defaultValue = offset == 0 ? "{Now:yyyy-MM-dd HH}" : $"{{Now.AddHours({offset}):yyyy-MM-dd HH}}";
                 }
-                else if (SelectedOperator == MinuteOperator)
+                else if (SelectedOperator == MinuteOperator
+                    || SelectedOperator != DateOperator
+                    || Value?.Hour != 0
+                    || Value?.Minute != 0)
                 {
                     var offset = (int)Math.Round(((Value ?? now) - now).TotalMinutes);
                     @operator = Operator;
