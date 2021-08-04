@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bs4="clr-namespace:Shipwreck.BootstrapControls;assembly=Shipwreck.BootstrapControls.XamarinForms"
+    xmlns:fa5="clr-namespace:Shipwreck.FontAwesomeControls;assembly=Shipwreck.FontAwesomeControls.XamarinForms"
+    xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.XamarinForms"
+    xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.XamarinForms"
+    x:Class="Shipwreck.ViewModelUtils.IconButton">
+    <ContentView.Content>
+        <bs4:ButtonFrame
+            x:Name="frame"
+            x:DataType="vmu:ICommandViewModel"
+            Margin="0"
+            Padding="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=ButtonPadding}"
+            IsOpaque="False"
+            HasBorder="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=HasBorder}"
+            Scheme="{Binding Style, Converter={StaticResource ColorSchemeConverter}}"
+            IsEnabled="{Binding IsEnabled}">
+            <bs4:ButtonFrame.Triggers>
+                <DataTrigger
+                    TargetType="bs4:ButtonFrame"
+                    Binding="{Binding IsEnabled}"
+                    Value="False">
+                    <Setter
+                        Property="Opacity"
+                        Value="0.65" />
+                </DataTrigger>
+            </bs4:ButtonFrame.Triggers>
+            <bs4:ButtonFrame.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding}" />
+            </bs4:ButtonFrame.GestureRecognizers>
+            <fa5:FontAwesomeLabel
+                VerticalOptions="Center"
+                FontSize="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=FontSize}"
+                TextColor="{Binding Source={RelativeSource AncestorType={x:Type bs4:ButtonFrame}}, Path=TextColor}"
+                Icon="{Binding Icon}">
+            </fa5:FontAwesomeLabel>
+        </bs4:ButtonFrame>
+    </ContentView.Content>
+</ContentView>
