@@ -37,13 +37,16 @@ namespace Shipwreck.ViewModelUtils
         protected abstract TId GetId(TItem item);
 
         public abstract string GetCode(TItem item);
+
         string IEntitySelector.GetCode(object item) => GetCode((TItem)item);
 
         public abstract string GetName(TItem item);
+
         string IEntitySelector.GetName(object item) => GetName((TItem)item);
 
         public virtual string GetDisplayText(TItem item)
             => $"{GetCode(item)}: {GetName(item)}";
+
         string IEntitySelector.GetDisplayText(object item) => GetDisplayText((TItem)item);
 
         int IEntitySelector.GetMatchDistance(string code, object item)
@@ -112,24 +115,8 @@ namespace Shipwreck.ViewModelUtils
         {
             get
             {
-                if (_Items == null && _UseList)
-                {
-                    _Items = new BulkUpdateableCollection<TItem>();
-
-                    async Task<BulkUpdateableCollection<TItem>> SetItemsCore(Task<IReadOnlyList<TItem>> coreTask)
-                    {
-                        var core = await coreTask.ConfigureAwait();
-                        if (!core.SequenceEqual(_Items))
-                        {
-                            _Items.Set(core);
-                        }
-
-                        return _Items;
-                    }
-
-                    _ItemsTask = SetItemsCore(GetItemsAsync());
-                }
-                return _Items;
+                ItemsTask.GetHashCode();
+                return _Items ??= new BulkUpdateableCollection<TItem>();
             }
         }
 
@@ -137,13 +124,68 @@ namespace Shipwreck.ViewModelUtils
         {
             get
             {
-                Items.GetHashCode();
+                if (_ItemsTask == null)
+                {
+                    if (UseList)
+                    {
+                        _Items ??= new BulkUpdateableCollection<TItem>();
+                        async Task<BulkUpdateableCollection<TItem>> SetItemsCore(Task<IReadOnlyList<TItem>> coreTask)
+                        {
+                            var core = await coreTask.ConfigureAwait();
+                            SetItems(core);
+
+                            return _Items;
+                        }
+
+                        _ItemsTask = SetItemsCore(GetItemsAsync());
+                    }
+                    else
+                    {
+                        _ItemsTask = Task.FromResult(_Items ??= new BulkUpdateableCollection<TItem>());
+                    }
+                }
                 return _ItemsTask;
             }
         }
 
         Task<IReadOnlyList<TItem>> IEntitySelector<TId, TItem>.GetItemsTask() => ItemsTask.ContinueWith(t => (IReadOnlyList<TItem>)t.Result);
+
         Task<IList> IEntitySelector.GetItemsTask() => ItemsTask.ContinueWith(t => (IList)t.Result);
+
+        public virtual async void InvalidateItems()
+        {
+            if (UseList && _Items != null)
+            {
+                try
+                {
+                    _ItemsTask = null;
+                    var ns = await GetItemsAsync();
+                    SetItems(ns);
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        protected void SetItems(IReadOnlyList<TItem> items)
+        {
+            if (!items.SequenceEqual(Items))
+            {
+                Items.Set(items);
+                OnItemsSet();
+            }
+        }
+
+        protected virtual void OnItemsSet()
+        {
+            if (UseList
+                && SelectedItem != null
+                && !Items.Contains(SelectedItem))
+            {
+                SelectedItem = null;
+            }
+        }
 
         #endregion Items
 
