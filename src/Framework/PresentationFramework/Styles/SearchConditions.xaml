@@ -389,6 +389,7 @@
                 Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
             <mah:DropDownButton
                 Style="{StaticResource CommandViewModel.DropDownButton.Medium}"
+                bs4:ColorScheme.Scheme="OutlineSecondary"
                 Grid.Row="1"
                 Grid.ColumnSpan="4"
                 ItemContainerStyleSelector="{StaticResource ViewModelUtils.Styles.Condition.OptionsItemContainerStyleSelector}">
