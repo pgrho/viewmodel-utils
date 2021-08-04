@@ -46,6 +46,14 @@
     <EmbeddedResource Update="ViewModelUtils\IconButton.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ViewModelUtils\EntitySelectorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="ViewModelUtils\IconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup> 
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
