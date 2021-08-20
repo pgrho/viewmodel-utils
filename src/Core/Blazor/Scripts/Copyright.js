@@ -1,3 +1,3 @@
 ﻿/*!
- * Shipwreck.BlazorFramework.ItemsControls
+ * Shipwreck.ViewModelUtils.Core.Blazor
  */

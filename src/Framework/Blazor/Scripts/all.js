@@ -13,3 +13,23 @@ var Shipwreck;
         ViewModelUtils.setIndeterminate = setIndeterminate;
     })(ViewModelUtils = Shipwreck.ViewModelUtils || (Shipwreck.ViewModelUtils = {}));
 })(Shipwreck || (Shipwreck = {}));
+// @ts-ignore
+var Shipwreck;
+(function (Shipwreck) {
+    var ViewModelUtils;
+    (function (ViewModelUtils) {
+        function toggleModal(element, isOpen, obj) {
+            $(element).one('hidden.bs.modal', function () {
+                obj.invokeMethodAsync('OnClosed');
+            }).one('click', function (e) {
+                if (e.target === e.currentTarget) {
+                    $(e.currentTarget).modal('hide');
+                }
+            }).modal({
+                show: !!isOpen,
+                backdrop: false
+            }).modal(isOpen ? 'show' : 'hide');
+        }
+        ViewModelUtils.toggleModal = toggleModal;
+    })(ViewModelUtils = Shipwreck.ViewModelUtils || (Shipwreck.ViewModelUtils = {}));
+})(Shipwreck || (Shipwreck = {}));

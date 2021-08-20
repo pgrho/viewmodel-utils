@@ -1,7 +1,4 @@
-﻿/*!
- * Shipwreck.ViewModelUtils.Core.Blazor
- */
-// @ts-ignore
+﻿// @ts-ignore
 namespace Shipwreck.ViewModelUtils {
     interface DotNetObjectReference {
         invokeMethodAsync(methodName: string, ...args);

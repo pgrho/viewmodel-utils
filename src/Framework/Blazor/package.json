@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "devDependencies": {
     "@types/jquery": "^3.5.5",
+    "@types/bootstrap": "4.6.1",
     "del": "^5.1.0",
     "gulp": "4.0.2",
     "gulp-concat": "2.6.1",

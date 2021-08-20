@@ -15,6 +15,7 @@ gulp.task('tsc', function () {
 });
 gulp.task('scripts', function () {
     return gulp.src([
+        'Scripts/Copyright.js',
         'Scripts/all.js'
     ])
         .pipe(concat('Shipwreck.ViewModelUtils.Blazor.js'))
