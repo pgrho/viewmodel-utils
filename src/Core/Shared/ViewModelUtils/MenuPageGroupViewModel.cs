@@ -4,7 +4,7 @@ namespace Shipwreck.ViewModelUtils
 {
     public partial class MenuPageGroupViewModel : ObservableModel
     {
-        internal MenuPageGroupViewModel(string title)
+        public MenuPageGroupViewModel(string title)
         {
             Title = title;
             Items = new BulkUpdateableCollection<MenuPageItemViewModel>();
