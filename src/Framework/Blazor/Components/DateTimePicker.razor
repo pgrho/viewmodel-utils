@@ -1,0 +1,18 @@
+﻿@inherits BindableComponentBase
+<input @ref="@_Element"
+       id="@_Id"
+       type="text"
+       class="@ClassName"
+       autocomplete="off"
+       style="ime-mode: disabled"
+       data-toggle="datetimepicker"
+       data-target="#@_Id"
+       placeholder="@Placeholder"
+       disabled="@(IsEnabled ? null : "disabled")"
+       readonly="@(IsReadOnly ? "readonly" : null)"
+       @onfocus="@OnFocus"
+       @onblur="@OnBlur"
+       @attributes="@AdditionalAttributes" />
+@code
+{
+}

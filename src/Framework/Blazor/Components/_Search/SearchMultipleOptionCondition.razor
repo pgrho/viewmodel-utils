@@ -1,0 +1,95 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@using Shipwreck.ViewModelUtils.Searching
+@typeparam T
+@inherits BindableComponentBase<MultipleOptionConditionViewModel<T>>
+@{
+    var d = DataContext;
+}
+@if (d != null)
+{
+    <SearchConditionHeader DataContext="@d" />
+    <dd>
+        <div class="btn-group w-100">
+            <button type="button"
+                    class="btn btn-block btn-outline-secondary dropdown-toggle border-right-0"
+                    style="border-top-right-radius: 0; border-bottom-right-radius: 0; overflow-x: hidden;"
+                    disabled="@(d.Options.Any() ? null : "disabled")"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false">
+                @d.DisplayText
+                @if (d.IsSearching)
+                {
+                    <span class="fas fa-pulse fa-spinner"></span>
+                }
+            </button>
+            <div class="dropdown-menu w-100">
+                @if (d.IsSearching)
+                {
+                    <div>
+                        検索中です。
+                        <span class="fas fa-pulse fa-spinner"></span>
+                    </div>
+                }
+                else
+                {
+                    foreach (var op in d.Options)
+                    {
+                        <div @key="@op.GetHashCode()"
+                             class="dropdown-item py-0 px-2">
+                            <input type="checkbox"
+                                   @bind="@op.IsSelected" />
+                            <button type="button"
+                                    class="btn btn-link btn-sm p-0"
+                                    @onclick="@op.Select"
+                                    @onclick:preventDefault
+                                    @onclick:stopPropagation>
+                                @op.DisplayName
+                            </button>
+                        </div>
+                    }
+                    <hr class="my-2" />
+                    <div class="dropdown-item py-0 px-2">
+                        <button type="button"
+                                class="btn btn-link btn-sm p-0"
+                                @onclick="@d.SelectAll"
+                                @onclick:preventDefault
+                                @onclick:stopPropagation>
+                            全選択
+                        </button>
+                    </div>
+                    <div class="dropdown-item py-0 px-2">
+                        <button type="button"
+                                class="btn btn-link btn-sm p-0"
+                                @onclick="@d.UnselectAll"
+                                @onclick:preventDefault
+                                @onclick:stopPropagation>
+                            全解除
+                        </button>
+                    </div>
+                }
+            </div>
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    tabindex="-1"
+                    @onclick="@d.Remove">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </dd>
+}
+@code
+{
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(DataContext.DisplayName):
+            case nameof(DataContext.IsSearching):
+            case nameof(DataContext.DisplayText):
+            case nameof(DataContext.Options):
+                return true;
+        }
+        return false;
+    }
+}

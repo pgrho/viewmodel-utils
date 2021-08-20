@@ -1,0 +1,44 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@using Shipwreck.ViewModelUtils.Searching
+@inherits BindableComponentBase<ConditionViewModel>
+<dt>
+    @{
+        var d = DataContext;
+    }
+    @if (d != null)
+    {
+        @d.DisplayName
+        if (!d.Property.HasUniqueLocalName && d.Property.AncestorPath != null)
+        {
+            @("(" + d.Property.AncestorPath + ")")
+        }
+        <ListScope T="CommandViewModelBase" Source="@d.ExtraCommands">
+            @if (d.ExtraCommands.IsVisible)
+            {
+                <div class="dropdown"
+                     style="display: inline-block">
+                    <button class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-no-caret border-0"
+                            type="button"
+                            id="@_Id"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false">
+                        <span class="fas fa-ellipsis-h"></span>
+                    </button>
+                    <div class="dropdown-menu"
+                         aria-labelledby="@_Id">
+                        @foreach (var c in d.ExtraCommands)
+                        {
+                            <DropdownItem DataContext="@c" />
+                        }
+                    </div>
+                </div>
+            }
+        </ListScope>
+    }
+</dt>
+@code
+{
+    private static int _NewId;
+    private readonly string _Id = "condition--header--button--" + (++_NewId);
+}

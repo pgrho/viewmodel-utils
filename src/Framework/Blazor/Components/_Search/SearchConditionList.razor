@@ -1,0 +1,51 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@using Shipwreck.ViewModelUtils.Searching
+@inherits ListComponentBase<IFrameworkSearchPageViewModel, ConditionViewModel>
+@if (Source?.Count > 0)
+{
+    <dl>
+        @foreach (var c in Source)
+        {
+            switch (c)
+            {
+                case StringConditionViewModel sc:
+                    <SearchStringCondition @key="@c.GetHashCode()"
+                                           DataContext="@sc" />
+                    break;
+                case NumberConditionViewModel nc:
+                    <SearchNumberCondition @key="@c.GetHashCode()"
+                                           DataContext="@nc" />
+                    break;
+                case DateTimeConditionViewModel dc:
+                    <SearchDateTimeCondition @key="@c.GetHashCode()"
+                                             DataContext="@dc" />
+                    break;
+
+                case EntityConditionViewModel ec:
+                    <SearchEntityCondition @key="@c.GetHashCode()"
+                                           DataContext="@ec" />
+                    break;
+
+                case IOptionsConditionViewModel opc:
+                    <ContentPresenter @key="@c.GetHashCode()"
+                                      ViewType="typeof(SearchOptionsCondition<>).MakeGenericType(opc.ValueType)"
+                                      Attributes="@(new Dictionary<string, object>() { ["DataContext"] = c })" />
+                    break;
+
+                case IMultipleOptionConditionViewModel mopc:
+                    <ContentPresenter @key="@c.GetHashCode()"
+                                      ViewType="typeof(SearchMultipleOptionCondition<>).MakeGenericType(mopc.ValueType)"
+                                      Attributes="@(new Dictionary<string, object>() { ["DataContext"] = c })" />
+                    break;
+            }
+        }
+    </dl>
+}
+@code
+{
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+        => false;
+
+    protected override bool OnItemPropertyChanged(ConditionViewModel item, string propertyName)
+        => false;
+}

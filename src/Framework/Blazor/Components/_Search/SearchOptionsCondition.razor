@@ -1,0 +1,42 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@using Shipwreck.ViewModelUtils.Searching
+@typeparam T
+@inherits BindableComponentBase<OptionsConditionViewModel<T>>
+@{
+    var d = DataContext;
+}
+@if (d != null)
+{
+    <SearchConditionHeader DataContext="@d" />
+    <dd>
+        <form class="input-group"
+              @onsubmit="@d.Page.BeginSearch">
+            <select class="form-control custom-select"
+                    @bind="@d.StringValue">
+                @foreach (var op in d.Options)
+                {
+                    <option @key="@op.GetHashCode()"
+                            value="@op.StringValue"
+                            selected="@(Equals(op.Value, d.Value) ? "selected" : null)">
+                        @op.DisplayName
+                    </option>
+                }
+            </select>
+            <SearchRemoveButton DataContext="@d" />
+        </form>
+    </dd>
+}
+@code
+{
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(DataContext.DisplayName):
+            case nameof(DataContext.Options):
+            case nameof(DataContext.StringValue):
+                return true;
+        }
+        return false;
+    }
+}

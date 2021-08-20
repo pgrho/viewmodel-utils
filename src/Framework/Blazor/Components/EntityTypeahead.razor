@@ -1,0 +1,22 @@
+﻿@inherits BindableComponentBase<IEntitySelector>
+<input @ref="@_Input"
+       type="text"
+       autocomplete="off"
+       disabled="@((IsEnabled ?? DataContext.IsEnabled) ? null : "disabled")"
+       @bind="@_Text"
+       @attributes="AdditionalAttributes"
+       @onclick:stopPropagation
+       @onblur="@OnBlur"
+       @onblur:stopPropagation />
+@code
+{
+    private void OnBlur()
+    {
+        if (string.IsNullOrWhiteSpace(_Text))
+        {
+            DataContext.SelectedId = null;
+            _Text = null;
+            StateHasChanged();
+        }
+    }
+}

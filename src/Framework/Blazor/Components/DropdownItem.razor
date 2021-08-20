@@ -1,0 +1,21 @@
+﻿@inherits BindableComponentBase<ICommandViewModel>
+@{
+    var d = DataContext;
+    var os = d.Style & ~(BorderStyle.OutlineSecondary);
+}
+<a class="dropdown-item @os.ToClassName("text-")"
+   href="@(d.Href ?? "javascript:void(0)")"
+   title="@d.Description"
+   disabled="@(!d.IsEnabled ? "disabled" : null)"
+   @onclick="@(() => DataContext.Execute())"
+   @onclick:preventDefault>
+    @if (!string.IsNullOrEmpty(d.Icon))
+    {
+        <span class="@d.Icon"></span>
+    }
+    @d?.Title
+    @if (d.BadgeCount > 0)
+    {
+        <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+    }
+</a>

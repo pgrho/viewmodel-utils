@@ -1,0 +1,63 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@using Shipwreck.ViewModelUtils.Searching
+@inherits BindableComponentBase<DateTimeConditionViewModel>
+@{
+    var d = DataContext;
+}
+@if (d != null)
+{
+    <SearchConditionHeader DataContext="@d" />
+    <dd>
+        <form class="input-group"
+              @onsubmit="@d.Page.BeginSearch">
+            <SearchOperatorButton @bind-Operator="@d.Operator"
+                                  Operators="@DateTimeConditionViewModel.Operators"
+                                  OnSelected="@(() => _Input.FocusAsync())" />
+            <DateTimePicker @ref="@_Input"
+                            UseCurrent="false"
+                            Mode="@Mode"
+                            @bind-Value="@d.Value" />
+            <SearchRemoveButton DataContext="@d" />
+        </form>
+    </dd>
+}
+@code
+{
+    private DateTimePicker _Input;
+
+    private DateTimePickerMode Mode
+    {
+        get
+        {
+            if (DataContext?.Operator == DateTimeConditionViewModel.DateOperator.Token)
+            {
+                return DateTimePickerMode.Date;
+            }
+            if (DataContext?.Operator == DateTimeConditionViewModel.YearOperator.Token)
+            {
+                return DateTimePickerMode.Year;
+            }
+            if (DataContext?.Operator == DateTimeConditionViewModel.MonthOperator.Token)
+            {
+                return DateTimePickerMode.Month;
+            }
+            if (DataContext?.Operator == DateTimeConditionViewModel.HourOperator.Token)
+            {
+                return DateTimePickerMode.Hour;
+            }
+            return DateTimePickerMode.Minute;
+        }
+    }
+
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(DataContext.DisplayName):
+            case nameof(DataContext.Operator):
+            case nameof(DataContext.Value):
+                return true;
+        }
+        return false;
+    }
+}

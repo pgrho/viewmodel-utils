@@ -1,0 +1,69 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@using Shipwreck.ViewModelUtils.Searching
+@inherits BindableComponentBase<EntityConditionViewModel>
+@{
+    var d = DataContext;
+}
+@if (d != null)
+{
+    <SearchConditionHeader DataContext="@d" />
+    <dd>
+        <div class="input-group">
+            @if (d.SelectedId != null)
+            {
+                var text = d.SelectedItem != null ? d.Selector.GetDisplayText(d.SelectedItem) : $"#{d.SelectedId}";
+                <input type="text"
+                       class="form-control"
+                       readonly="readonly"
+                       value="@text"
+                       title="@text"
+                       @onkeydown="@Clear"
+                       @onkeydown:preventDefault />
+                <div class="input-group-append">
+                    <button type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                            tabindex="-1"
+                            @onclick="@Clear">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            }
+            else
+            {
+                <EntityTypeahead @ref="@_Typeahead"
+                                 DataContext="@d.Selector"
+                                 class="form-control" />
+                <SearchRemoveButton DataContext="@d" />
+            }
+        </div>
+    </dd>
+}
+@code
+{
+    private EntityTypeahead _Typeahead;
+    private bool _ShouldFocus;
+
+    private void Clear()
+    {
+        DataContext.SelectedId = null;
+        _ShouldFocus = true;
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        var t = base.OnAfterRenderAsync(firstRender);
+
+        if (DataContext?.SelectedId != null && _Typeahead != null)
+        {
+            _Typeahead.Dispose();
+            _Typeahead = null;
+        }
+        if (_ShouldFocus)
+        {
+            _Typeahead?.FocusAsync();
+            _ShouldFocus = false;
+        }
+
+        return t;
+    }
+}
