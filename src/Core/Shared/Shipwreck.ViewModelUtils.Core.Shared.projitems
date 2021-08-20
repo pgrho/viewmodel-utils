@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ISortablePageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\MenuPageGroupViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\MenuPageItemViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\BooleanConditionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\ConditionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\DateTimeConditionViewModel.cs" />
