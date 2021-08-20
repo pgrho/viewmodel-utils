@@ -1,0 +1,8 @@
+﻿@inherits ListComponentBase<MenuPageItemViewModel>
+@if (Source != null)
+{
+    foreach (MenuPageItemViewModel g in Source)
+    {
+        <MenuItem @key="@g.GetHashCode()" DataContext="@g" />
+    }
+}

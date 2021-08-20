@@ -1,0 +1,10 @@
+﻿@inherits ListComponentBase<MenuPageGroupViewModel>
+<div class="row">
+    @if (Source != null)
+    {
+        foreach (MenuPageGroupViewModel g in Source)
+        {
+            <MenuGroup @key="@g.GetHashCode()" DataContext="@g" />
+        }
+    }
+</div>
