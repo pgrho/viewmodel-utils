@@ -13,10 +13,11 @@ namespace Shipwreck.ViewModelUtils.Client
             _Message = message;
         }
 
-        protected internal IMessageObjectCollection Collection
+        [IgnoreDataMember]
+        public IMessageObjectCollection Collection
         {
             get => _Collection;
-            set
+            protected internal set
             {
                 var pc = _Collection;
                 var pr = Message;
@@ -45,7 +46,7 @@ namespace Shipwreck.ViewModelUtils.Client
                 }
                 return _Message;
             }
-            internal set
+            protected internal set
             {
                 var pc = _Collection;
                 var pr = Message;
