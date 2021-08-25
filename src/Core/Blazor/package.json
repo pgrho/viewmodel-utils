@@ -1,5 +1,5 @@
 {
-  "name": "shipwreck.blazorframework.itemscontrols",
+  "name": "shipwreck.viewmodelutils.core.blazor",
   "version": "0.0.1",
   "private": true,
   "devDependencies": {

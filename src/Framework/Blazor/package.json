@@ -1,6 +1,7 @@
 {
   "name": "shipwreck.viewmodelutils.blazor",
   "version": "1.0.0",
+  "private": true,
   "devDependencies": {
     "@types/jquery": "^3.5.5",
     "@types/bootstrap": "4.6.1",
@@ -9,6 +10,11 @@
     "gulp-concat": "2.6.1",
     "gulp-typescript": "5.0.1",
     "gulp-uglify": "^3.0.1",
-    "typescript": "3.5.3"
+    "typescript": "3.5.3",
+    "jquery": "3.5.1",
+    "moment": "2.29.0",
+    "popper.js": "1.16.1",
+    "tempusdominus-bootstrap-4": "5.1.2",
+    "tempusdominus-core": "5.0.3"
   }
 }

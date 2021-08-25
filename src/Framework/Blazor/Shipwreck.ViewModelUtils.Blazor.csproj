@@ -23,14 +23,21 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.3" />
+    <PackageReference Include="Shipwreck.BlazorJqueryToast" Version="0.1.0">
+      <GeneratePathProperty>true</GeneratePathProperty>
+    </PackageReference>
     <PackageReference Include="Shipwreck.BlazorTypeahead" Version="0.1.1">
       <GeneratePathProperty>true</GeneratePathProperty>
     </PackageReference>
-    <PackageReference Include="Shipwreck.BootstrapControls.Blazor" Version="4.0.1-alpha5" >
+    <PackageReference Include="Shipwreck.BootstrapControls.Blazor" Version="4.0.1-alpha5">
       <GeneratePathProperty>true</GeneratePathProperty>
     </PackageReference>
     <ProjectReference Include="..\..\Core\Blazor\Shipwreck.ViewModelUtils.Core.Blazor.csproj" />
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="SET PkgBlazorJqueryToast=$(PkgShipwreck_BlazorJqueryToast)&#xD;&#xA;SET PkgBlazorTypeahead=$(PkgShipwreck_BlazorTypeahead)&#xD;&#xA;$(ProjectDir)node_modules\.bin\gulp.CMD" />
+  </Target>
+  <ProjectExtensions><VisualStudio><UserProperties NpmRestoreOnProjectOpen="True" /></VisualStudio></ProjectExtensions>
 </Project>

@@ -47,6 +47,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties NpmRestoreOnProjectOpen="True" package_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 
 </Project>

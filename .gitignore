@@ -338,5 +338,11 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/src/Core/Blazor/wwwroot/*.js
 /nuget-push.ps1
+/src/Core/Blazor/Scripts/*.css
+/src/Core/Blazor/Scripts/Shipwreck.ViewModelUtils.Core.Blazor.js
+/src/Core/Blazor/wwwroot/*.js
+/src/Framework/Blazor/Scripts/*.css
+/src/Framework/Blazor/Scripts/Shipwreck.ViewModelUtils.Blazor.js
+/src/Framework/Blazor/wwwroot/*.css
+/src/Framework/Blazor/wwwroot/*.js
