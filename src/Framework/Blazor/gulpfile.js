@@ -3,12 +3,14 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var del = require('del');
 var ts = require('gulp-typescript');
+var sass = require('gulp-sass')(require('node-sass'));
+var cleanCss = require('gulp-clean-css');
 
 var jtToast = process.env['PkgBlazorJqueryToast'];
 var typeahead = process.env['PkgBlazorTypeahead'];
 
 gulp.task('clean', function () {
-    return del(['wwwroot/*.js', 'Scripts/Shipwreck.ViewModelUtils.Blazor.js']);
+    return del(['wwwroot/*.js', 'wwwroot/*.css', 'Scripts/Shipwreck.ViewModelUtils.Blazor.js']);
 });
 gulp.task('tsc', function () {
     return gulp.src(['Scripts/*.ts']).pipe(ts({
@@ -48,13 +50,21 @@ gulp.task('bundlejs', function () {
         .pipe(concat('Shipwreck.ViewModelUtils.Blazor.bundle.js'))
         .pipe(gulp.dest('wwwroot/'));
 });
+gulp.task('fwcss', function () {
+    return gulp.src(['Styles/Copyright.scss', 'Styles/*.scss'])
+        .pipe(sass())
+        .pipe(concat('Shipwreck.ViewModelUtils.Blazor.min.css'))
+        .pipe(cleanCss())
+        .pipe(gulp.dest('wwwroot/'));
+});
 gulp.task('bundlecss', function () {
     return gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
         'node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css',
-        jtToast + '\\staticwebassets\\Shipwreck.BlazorJqueryToast.css' 
+        jtToast + '\\staticwebassets\\Shipwreck.BlazorJqueryToast.css',
+        'wwwroot/Shipwreck.ViewModelUtils.Blazor.min.css'
     ])
         .pipe(concat('Shipwreck.ViewModelUtils.Blazor.bundle.css'))
         .pipe(gulp.dest('wwwroot/'));
 });
-gulp.task('default', gulp.series(['clean', 'tsc', 'concatjs', 'minifyjs', 'bundlejs']));
+gulp.task('default', gulp.series(['clean', 'tsc', 'concatjs', 'minifyjs', 'bundlejs', 'fwcss', 'bundlecss']));

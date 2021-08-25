@@ -1,0 +1,53 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase<ISortablePageViewModel>
+@{
+    var d = DataContext;
+}
+<th @attributes="@AdditionalAttributes">
+    @if (string.IsNullOrEmpty(SortKey))
+{
+        <span title="@Description">@Header</span>
+}
+else
+{
+        <a class="text-light"
+           href="javascript:void(0)"
+           title="@Description"
+           @onclick="@(() => d?.ToggleSortKey(SortKey))"
+           @onclick:preventDefault>
+            @Header
+            <span class="fas @(d?.Order?.FirstOrDefault().Member != SortKey ? null : d.Order[0].IsDescending ? "fas fa-caret-down" : "fas fa-caret-up")"></span>
+        </a>
+}
+</th>
+@code
+{
+    [CascadingParameter]
+    public ISortablePageViewModel SearchPage
+    {
+        get => DataContext;
+        set => DataContext = value;
+    }
+
+    [Parameter]
+    public string Header { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
+    [Parameter]
+    public string SortKey { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(DataContext.Order):
+                return true;
+        }
+        return false;
+    }
+}

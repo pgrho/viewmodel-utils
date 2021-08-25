@@ -1,0 +1,3 @@
+﻿/*!
+ * Shipwreck.ViewModelUtils.Blazor
+ */

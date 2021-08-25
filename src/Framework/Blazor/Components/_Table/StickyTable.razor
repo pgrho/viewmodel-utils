@@ -1,0 +1,24 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@typeparam T
+@inherits ListComponentBase<T>
+<CascadingValue Value="SearchPage">
+    <div @ref="_Element"
+         class="table-fixed-container"
+         @attributes="@AdditionalAttributes">
+
+        <table class="@TableClass">
+            <thead class="@TheadClass">
+                @HeaderTemplate
+            </thead>
+            <tbody>
+                @if (Source != null)
+                {
+                    for (var i = 0; i < Source.Count; i++)
+                    {
+                        @ItemTemplate(new ItemTemplateContext<T>(i, (T)Source[i]))
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</CascadingValue>

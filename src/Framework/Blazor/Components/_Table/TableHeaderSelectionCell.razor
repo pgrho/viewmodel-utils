@@ -1,0 +1,23 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase<ISelectablesHost>
+<th @attributes="@AdditionalAttributes">
+    @if (DataContext != null)
+    {
+        <Checkbox @bind-NullableIsChecked="@DataContext.AllItemsSelected" />
+    }
+</th>
+@code
+{
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(DataContext.AllItemsSelected):
+                return true;
+        }
+        return false;
+    }
+}
