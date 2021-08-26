@@ -5,17 +5,18 @@ var del = require('del');
 var ts = require('gulp-typescript');
 var sass = require('gulp-sass')(require('node-sass'));
 var cleanCss = require('gulp-clean-css');
+var tsProject = ts.createProject('Scripts/tsconfig.json');
 
 var jtToast = process.env['PkgBlazorJqueryToast'];
 var typeahead = process.env['PkgBlazorTypeahead'];
-
 gulp.task('clean', function () {
     return del(['wwwroot/*.js', 'wwwroot/*.css', 'Scripts/Shipwreck.ViewModelUtils.Blazor.js']);
 });
 gulp.task('tsc', function () {
     return gulp.src(['Scripts/*.ts']).pipe(ts({
+        rootDir: "Scripts/",
         outFile: 'Shipwreck.ViewModelUtils.Blazor.js'
-    })).pipe(gulp.dest('Scripts/'));
+    }, ts.reporter.longReporter())).pipe(gulp.dest('Scripts/'));
 });
 gulp.task('concatjs', function () {
     return gulp.src(['Scripts/Copyright.js', 'Scripts/Shipwreck.ViewModelUtils.Blazor.js'])
