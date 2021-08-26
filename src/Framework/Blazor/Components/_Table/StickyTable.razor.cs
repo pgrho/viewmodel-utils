@@ -14,6 +14,9 @@ namespace Shipwreck.ViewModelUtils.Components
         public RenderFragment HeaderTemplate { get; set; }
 
         [Parameter]
+        public RenderFragment FooterTemplate { get; set; }
+
+        [Parameter]
         public RenderFragment<ItemTemplateContext<T>> ItemTemplate { get; set; }
 
         [Parameter]
