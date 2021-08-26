@@ -15,7 +15,25 @@ namespace Shipwreck.ViewModelUtils.Components
         private WeakReference<ComponentBase> _Modal;
 
         public ComponentBase Modal
-            => _Modal != null && _Modal.TryGetTarget(out var c) ? c : null;
+        {
+            get => _Modal != null && _Modal.TryGetTarget(out var c) ? c : null;
+            private set
+            {
+                var current = Modal;
+                if (current != value)
+                {
+                    _Modal = value == null ? null : new WeakReference<ComponentBase>(value);
+                    if (current is IModal currentModal)
+                    {
+                        currentModal.Presenter = null;
+                    }
+                    if (value is IModal newModal)
+                    {
+                        newModal.Presenter = this;
+                    }
+                }
+            }
+        }
 
         public void ShowModal(Type modalType, IEnumerable<KeyValuePair<string, object>> properties)
         {
@@ -69,7 +87,7 @@ namespace Shipwreck.ViewModelUtils.Components
                     }
                 }
 
-                builder.AddComponentReferenceCapture(i++, c => _Modal = c == null ? null : new WeakReference<ComponentBase>((ComponentBase)c));
+                builder.AddComponentReferenceCapture(i++, m => Modal = m as ComponentBase);
 
                 builder.CloseComponent();
 

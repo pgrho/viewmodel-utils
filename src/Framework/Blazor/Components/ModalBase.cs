@@ -12,8 +12,13 @@ namespace Shipwreck.ViewModelUtils.Components
 
         private bool _IsRendered;
 
-        //[Inject]
-        //public SessionState Session { get; set; }
+        protected internal ModalPresenter Presenter { get; set; }
+
+        ModalPresenter IModal.Presenter
+        {
+            get => Presenter;
+            set => Presenter = value;
+        }
 
         [Inject]
         public IJSRuntime JS { get; set; }
@@ -75,6 +80,11 @@ namespace Shipwreck.ViewModelUtils.Components
         public virtual void OnClosed()
         {
             _IsOpen = false;
+
+            if (Presenter?.Modal == this)
+            {
+                Presenter.CloseModal();
+            }
         }
 
         public void Dispose()
