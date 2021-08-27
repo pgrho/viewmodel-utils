@@ -376,6 +376,15 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   No に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NoTitle {
+            get {
+                return ResourceManager.GetString("NoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Register に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Register {
@@ -507,6 +516,15 @@ namespace Shipwreck.ViewModelUtils {
         internal static string YearToken {
             get {
                 return ResourceManager.GetString("YearToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Yes に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string YesTitle {
+            get {
+                return ResourceManager.GetString("YesTitle", resourceCulture);
             }
         }
     }

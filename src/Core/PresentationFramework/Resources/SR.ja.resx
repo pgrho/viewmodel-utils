@@ -243,4 +243,10 @@
   <data name="CancelTitle" xml:space="preserve">
     <value>キャンセル</value>
   </data>
+  <data name="NoTitle" xml:space="preserve">
+    <value>いいえ</value>
+  </data>
+  <data name="YesTitle" xml:space="preserve">
+    <value>はい</value>
+  </data>
 </root>

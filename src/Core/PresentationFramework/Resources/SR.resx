@@ -267,4 +267,10 @@
   <data name="CancelTitle" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="NoTitle" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="YesTitle" xml:space="preserve">
+    <value>Yes</value>
+  </data>
 </root>
