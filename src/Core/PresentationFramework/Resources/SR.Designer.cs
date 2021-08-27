@@ -61,6 +61,15 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   Add Conditions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string AddSearchConditionTitle {
+            get {
+                return ResourceManager.GetString("AddSearchConditionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   All に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string AllSelected {
@@ -106,6 +115,15 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   Cancel に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CancelTitle {
+            get {
+                return ResourceManager.GetString("CancelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CloseDescription {
@@ -124,7 +142,7 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
-        ///   Cancel に類似しているローカライズされた文字列を検索します。
+        ///   Close に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string CloseTitle {
             get {

@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Diagnostics\TraceEventModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EntitySelectorBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ExpressionHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FrameworkModalViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IEntitySelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
@@ -39,6 +40,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\OperatorViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\OptionsConditionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\OptionViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\SearchPropertiesModalViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\SearchPropertyGroupViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\SearchPropertyViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SH.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\StringConditionViewModel.cs" />

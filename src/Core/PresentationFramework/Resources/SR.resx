@@ -124,7 +124,7 @@
     <value />
   </data>
   <data name="CloseTitle" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Close</value>
   </data>
   <data name="SaveAndCloseDescription" xml:space="preserve">
     <value />
@@ -260,5 +260,11 @@
   </data>
   <data name="YearToken" xml:space="preserve">
     <value>Y</value>
+  </data>
+  <data name="AddSearchConditionTitle" xml:space="preserve">
+    <value>Add Conditions</value>
+  </data>
+  <data name="CancelTitle" xml:space="preserve">
+    <value>Cancel</value>
   </data>
 </root>

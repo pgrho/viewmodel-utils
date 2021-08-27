@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CloseTitle" xml:space="preserve">
-    <value>キャンセル</value>
+    <value>閉じる</value>
   </data>
   <data name="SaveTitle" xml:space="preserve">
     <value>適用</value>
@@ -236,5 +236,11 @@
   </data>
   <data name="YearToken" xml:space="preserve">
     <value>年</value>
+  </data>
+  <data name="AddSearchConditionTitle" xml:space="preserve">
+    <value>検索条件の追加</value>
+  </data>
+  <data name="CancelTitle" xml:space="preserve">
+    <value>キャンセル</value>
   </data>
 </root>
