@@ -6,7 +6,7 @@ using Microsoft.JSInterop;
 
 namespace Shipwreck.ViewModelUtils.Components
 {
-    public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>
+    public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>, IHasJSRuntime
     {
         [Inject]
         public IJSRuntime JS { get; set; }

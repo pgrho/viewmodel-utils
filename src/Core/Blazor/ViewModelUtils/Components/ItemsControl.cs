@@ -12,7 +12,7 @@ using Shipwreck.ViewModelUtils.JSInterop;
 
 namespace Shipwreck.ViewModelUtils.Components
 {
-    public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScrollEventListener
+    public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScrollEventListener, IHasJSRuntime
           where T : class
     {
         private const string ITEM_INDEX_ATTRIBUTE = "data-itemindex";

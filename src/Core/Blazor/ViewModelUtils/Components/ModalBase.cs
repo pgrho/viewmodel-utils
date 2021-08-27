@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 
 namespace Shipwreck.ViewModelUtils.Components
 {
-    public abstract class ModalBase<T> : BindableComponentBase<T>, IModal
+    public abstract class ModalBase<T> : BindableComponentBase<T>, IModal, IHasJSRuntime
         where T : class
     {
         public ElementReference ModalElement { get; set; }
