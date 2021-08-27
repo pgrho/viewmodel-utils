@@ -6,15 +6,15 @@ using Microsoft.JSInterop;
 namespace Shipwreck.ViewModelUtils.Components
 {
     public abstract class ModalBase<T> : BindableComponentBase<T>, IModal
-          where T : class
+        where T : class
     {
         public ElementReference ModalElement { get; set; }
 
         private bool _IsRendered;
 
-        protected internal ModalPresenter Presenter { get; set; }
+        protected internal ModalPresenterBase Presenter { get; set; }
 
-        ModalPresenter IModal.Presenter
+        ModalPresenterBase IModal.Presenter
         {
             get => Presenter;
             set => Presenter = value;
@@ -66,15 +66,18 @@ namespace Shipwreck.ViewModelUtils.Components
 
             if (_IsOpen)
             {
-                await JS.InvokeVoidAsync("Shipwreck.ViewModelUtils.toggleModal", ModalElement, true, DotNetObjectReference.Create(this)).ConfigureAwait(false);
+                await ShowAsyncCore().ConfigureAwait(false);
             }
             else if (_IsRendered)
             {
-                await JS.InvokeVoidAsync("Shipwreck.ViewModelUtils.toggleModal", ModalElement, false, DotNetObjectReference.Create(this)).ConfigureAwait(false);
+                await HideAsyncCore().ConfigureAwait(false);
             }
 
             _IsRendered = true;
         }
+
+        protected abstract ValueTask ShowAsyncCore();
+        protected abstract ValueTask HideAsyncCore();
 
         [JSInvokable]
         public virtual void OnClosed()

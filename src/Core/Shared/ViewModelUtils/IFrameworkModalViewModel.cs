@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public interface IFrameworkModalViewModel : INotifyPropertyChanged, IDisposable
+    public interface IFrameworkModalViewModel : INotifyPropertyChanged, IDisposable, IHasInteractionService, IHasPageLogger
     {
         CommandViewModelBase CancelCommand { get; }
 

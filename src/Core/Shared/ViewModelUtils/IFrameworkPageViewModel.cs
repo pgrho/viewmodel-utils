@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public interface IFrameworkPageViewModel : IHasInteraction, IRequestFocus, IDisposable, INotifyDataErrorInfo, INotifyPropertyChanged
+    public interface IFrameworkPageViewModel : IHasInteraction, IRequestFocus, IDisposable, INotifyDataErrorInfo, INotifyPropertyChanged, IHasInteractionService, IHasPageLogger
     {
         string Title { get; }
         bool IsBusy { get; }

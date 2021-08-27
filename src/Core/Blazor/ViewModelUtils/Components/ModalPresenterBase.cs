@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Shipwreck.ViewModelUtils.Components
 {
-    public sealed class ModalPresenter : ComponentBase
+    public abstract class ModalPresenterBase : ComponentBase
     {
         private Type _ModalType;
 
@@ -96,9 +96,10 @@ namespace Shipwreck.ViewModelUtils.Components
 
                 if (isModal)
                 {
-                    builder.AddMarkupContent(i++, "<div class=\"modal-backdrop show\"></div>");
+                    BuildModalBackdropTree(builder, i);
                 }
             }
         }
+        protected abstract void BuildModalBackdropTree(RenderTreeBuilder builder, int sequence);
     }
 }

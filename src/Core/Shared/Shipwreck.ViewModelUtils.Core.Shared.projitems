@@ -18,6 +18,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IEntitySelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasFrameworkPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasInteractionService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasPageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ISortablePageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\MenuPageGroupViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\MenuPageItemViewModel.cs" />
