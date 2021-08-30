@@ -1,0 +1,52 @@
+﻿@using System.ComponentModel.DataAnnotations
+@inherits ListComponentBase<FrameworkPageViewModel, ValidationResult>
+@if (IsVisible)
+{
+    <div class="alert alert-danger">
+        <div>
+            <div>入力値が無効です。</div>
+            <ul>
+                @foreach (ValidationResult r in Source)
+                {
+                    <li>
+                        <a href="#"
+                           @onclick="@(() => DataContext?.Focus(r.MemberNames.FirstOrDefault()))"
+                           @onclick:preventDefault>
+                            @r.ErrorMessage
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+@code
+{
+    private bool _IsVisible;
+
+    [Parameter]
+    public bool IsVisible
+    {
+        get => _IsVisible;
+        set
+        {
+            if (SetProperty(ref _IsVisible, value))
+            {
+                IsVisibleChanged?.Invoke(_IsVisible);
+            }
+        }
+    }
+
+    [Parameter]
+    public Action<bool> IsVisibleChanged { get; set; }
+
+    protected override bool OnDataContextPropertyChanged(string propertyName) => false;
+
+    protected override bool OnItemPropertyChanged(ValidationResult item, string propertyName) => false;
+}
