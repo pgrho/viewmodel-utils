@@ -7,7 +7,7 @@ namespace Shipwreck.ViewModelUtils.Searching
 {
     public sealed partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBase
     {
-        internal SearchPropertiesModalViewModel(FrameworkPageViewModel page)
+        public SearchPropertiesModalViewModel(FrameworkPageViewModel page)
             : base(page)
         {
         }
