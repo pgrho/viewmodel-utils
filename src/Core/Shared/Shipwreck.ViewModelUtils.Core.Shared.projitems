@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IEntitySelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IFrameworkSearchModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasFrameworkPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasInteractionService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasPageLogger.cs" />
