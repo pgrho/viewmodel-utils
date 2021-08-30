@@ -128,16 +128,25 @@ namespace Shipwreck.ViewModelUtils
                 {
                     if (UseList)
                     {
+                        var tcs = new TaskCompletionSource<BulkUpdateableCollection<TItem>>();
+                        _ItemsTask = tcs.Task;
                         _Items ??= new BulkUpdateableCollection<TItem>();
-                        async Task<BulkUpdateableCollection<TItem>> SetItemsCore(Task<IReadOnlyList<TItem>> coreTask)
-                        {
-                            var core = await coreTask.ConfigureAwait();
-                            SetItems(core);
 
-                            return _Items;
+                        async void SetItemsCore()
+                        {
+                            try
+                            {
+                                var core = await GetItemsAsync().ConfigureAwait();
+                                SetItems(core);
+                                tcs.TrySetResult(_Items);
+                            }
+                            catch (Exception ex)
+                            {
+                                tcs.TrySetException(ex);
+                            }
                         }
 
-                        _ItemsTask = SetItemsCore(GetItemsAsync());
+                        SetItemsCore();
                     }
                     else
                     {
