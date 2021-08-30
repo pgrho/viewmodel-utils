@@ -52,5 +52,68 @@ namespace Shipwreck.ViewModelUtils.JSInterop
 
             return JsonSerializer.Deserialize<ItemsControlScrollInfo>(json);
         }
+
+        public static string GetUserAgent(this IJSRuntime js)
+         => ((IJSInProcessRuntime)js).Invoke<string>("Shipwreck.ViewModelUtils.userAgent");
+
+        #region localStorage
+
+        #region string
+
+        public static ValueTask<string> ReadLocalStorageAsync(this IJSRuntime js, string name)
+            => js.InvokeAsync<string>("Shipwreck.ViewModelUtils.readLocalStorage", name);
+
+        public static ValueTask WriteLocalStorageAsync(this IJSRuntime js, string name, string value)
+            => js.InvokeVoidAsync("Shipwreck.ViewModelUtils.writeLocalStorage", name, value);
+
+        public static ValueTask<string> ReadSessionStorageAsync(this IJSRuntime js, string name)
+            => js.InvokeAsync<string>("Shipwreck.ViewModelUtils.readSessionStorage", name);
+
+        public static ValueTask WriteSessionStorageAsync(this IJSRuntime js, string name, string value)
+            => js.InvokeVoidAsync("Shipwreck.ViewModelUtils.writeSessionStorage", name, value);
+
+        public static string ReadLocalStorage(this IJSInProcessRuntime js, string name)
+            => js.Invoke<string>("Shipwreck.ViewModelUtils.readLocalStorage", name);
+
+        public static void WriteLocalStorage(this IJSInProcessRuntime js, string name, string value)
+            => js.InvokeVoid("Shipwreck.ViewModelUtils.writeLocalStorage", name, value);
+
+        public static string ReadSessionStorage(this IJSInProcessRuntime js, string name)
+            => js.Invoke<string>("Shipwreck.ViewModelUtils.readSessionStorage", name);
+
+        public static void WriteSessionStorage(this IJSInProcessRuntime js, string name, string value)
+            => js.InvokeVoid("Shipwreck.ViewModelUtils.writeSessionStorage", name, value);
+
+        #endregion string
+
+        #region Int32
+
+        public static async ValueTask<int?> ReadLocalStorageAsInt32Async(this IJSRuntime js, string name)
+            => int.TryParse(await js.ReadLocalStorageAsync(name).ConfigureAwait(false), out var i) ? i : (int?)null;
+
+        public static ValueTask WriteLocalStorageAsync(this IJSRuntime js, string name, int? value)
+            => js.WriteLocalStorageAsync(name, value?.ToString() ?? string.Empty);
+
+        public static async ValueTask<int?> ReadSessionStorageAsInt32Async(this IJSRuntime js, string name)
+            => int.TryParse(await js.ReadSessionStorageAsync(name).ConfigureAwait(false), out var i) ? i : (int?)null;
+
+        public static ValueTask WriteSessionStorageAsync(this IJSRuntime js, string name, int? value)
+            => js.WriteSessionStorageAsync(name, value?.ToString() ?? string.Empty);
+
+        public static int? ReadLocalStorageAsInt32(this IJSInProcessRuntime js, string name)
+            => int.TryParse(js.ReadLocalStorage(name), out var i) ? i : (int?)null;
+
+        public static void WriteLocalStorage(this IJSInProcessRuntime js, string name, int? value)
+            => js.WriteLocalStorage(name, value?.ToString() ?? string.Empty);
+
+        public static int? ReadSessionStorageAsInt32(this IJSInProcessRuntime js, string name)
+            => int.TryParse(js.ReadSessionStorage(name), out var i) ? i : (int?)null;
+
+        public static void WriteSessionStorage(this IJSInProcessRuntime js, string name, int? value)
+            => js.WriteSessionStorage(name, value?.ToString() ?? string.Empty);
+
+        #endregion Int32
+
+        #endregion localStorage
     }
 }
