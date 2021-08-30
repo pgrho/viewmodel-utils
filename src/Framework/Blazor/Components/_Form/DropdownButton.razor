@@ -1,6 +1,7 @@
-﻿@inherits ListComponentBase<ICommandViewModel>
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits ListComponentBase<ICommandViewModel>
 @{
-    var src =(Source?.OfType<ICommandViewModel>() ?? Enumerable.Empty<ICommandViewModel>()).Where(e => e.IsVisible).ToList();
+    var src = (Source?.OfType<ICommandViewModel>() ?? Enumerable.Empty<ICommandViewModel>()).Where(e => e.IsVisible).ToList();
     var disabled = src.Count > 0 ? null : "disabled";
     var isBlock = BaseClass.Contains("btn-block") || BaseClass.Contains("btn-half");
 }
