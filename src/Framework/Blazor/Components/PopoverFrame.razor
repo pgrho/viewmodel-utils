@@ -1,0 +1,70 @@
+﻿<div @ref="@_PopperElement"
+     class="popover bs-popover-@(_Placement ?? "never")"
+     role="tooltip">
+    <div @ref="@_ArrowElement"
+         class="arrow"></div>
+    @if (!string.IsNullOrEmpty(Header))
+    {
+        <h3 class="popover-header">@Header</h3>
+    }
+    <div class="popover-body">
+        @ChildContent
+    </div>
+</div>
+@code
+{
+    private ElementReference _PopperElement;
+    private ElementReference _ArrowElement;
+    private string _Placement;
+
+    [Inject]
+    public IJSRuntime JS { get; set; }
+
+    [Parameter]
+    public ElementReference ReferenceElement { get; set; }
+
+    [Parameter]
+    public ElementReference Boundaries { get; set; }
+
+    [Parameter]
+    public string Header { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public Action OnClosed { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var t = base.OnAfterRenderAsync(firstRender);
+        if (t != null)
+        {
+            await t.ConfigureAwait(false);
+        }
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync(
+                "Shipwreck.ViewModelUtils.initializePopper",
+                DotNetObjectReference.Create(this),
+                ReferenceElement,
+                _PopperElement,
+                Boundaries,
+                _ArrowElement).ConfigureAwait(false);
+        }
+    }
+
+    [JSInvokable]
+    public void OnPlacementChanged(string placement)
+    {
+        var v = placement?.Split('-')?.FirstOrDefault();
+        if (_Placement != v)
+        {
+            _Placement = v;
+            StateHasChanged();
+        }
+    }
+    [JSInvokable]
+    public void OnDestroy()
+        => OnClosed?.Invoke();
+}

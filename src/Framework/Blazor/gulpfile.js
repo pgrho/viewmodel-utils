@@ -13,7 +13,11 @@ gulp.task('clean', function () {
     return del(['wwwroot/*.js', 'wwwroot/*.css', 'Scripts/Shipwreck.ViewModelUtils.Blazor.js']);
 });
 gulp.task('tsc', function () {
-    return gulp.src(['Scripts/*.ts']).pipe(ts({
+    return gulp.src([
+        'node_modules/@types/jquery/**/*.d.ts',
+        'node_modules/popper.js/index.d.ts',
+        'Scripts/*.ts'
+    ]).pipe(ts({
         rootDir: "Scripts/",
         outFile: 'Shipwreck.ViewModelUtils.Blazor.js'
     }, ts.reporter.longReporter())).pipe(gulp.dest('Scripts/'));
