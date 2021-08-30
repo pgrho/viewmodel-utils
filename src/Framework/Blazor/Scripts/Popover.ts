@@ -1,8 +1,7 @@
 ﻿/// <reference path="../node_modules/popper.js/index.d.ts" />
 var Popper;
 namespace Shipwreck.ViewModelUtils {
-
-    function initializePopper(obj, reference: Element, popper: Element, boundaries: Element, arrow: Element) {
+    export function initializePopper(obj, reference: Element, popper: Element, boundaries: Element, arrow: Element) {
         let placement;
         const handleData = function (data, isCreation) {
             if (data.placement !== placement) {
