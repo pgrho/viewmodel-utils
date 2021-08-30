@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_common", "_common", "{4FC2
 		..\.editorconfig = ..\.editorconfig
 		..\.gitattributes = ..\.gitattributes
 		..\.gitignore = ..\.gitignore
+		..\build-projects.ps1 = ..\build-projects.ps1
 		Directory.build.props = Directory.build.props
 		nuget.config = nuget.config
 		..\remove-nupkg.ps1 = ..\remove-nupkg.ps1
@@ -49,7 +50,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Shipwreck.ViewModelUtils.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Models", "Core\Models\Shipwreck.ViewModelUtils.Models.csproj", "{024E8176-D6A5-4C9D-816D-AC68D7FD2CF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.ViewModelUtils.Client", "Core\Client\Shipwreck.ViewModelUtils.Client.csproj", "{F75EA419-8DB8-407E-85FD-605EFDA36315}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Client", "Core\Client\Shipwreck.ViewModelUtils.Client.csproj", "{F75EA419-8DB8-407E-85FD-605EFDA36315}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Client.Newtonsoft", "Core\Client.Newtonsoft\Shipwreck.ViewModelUtils.Client.Newtonsoft.csproj", "{29A9B1B6-D39A-4CBE-A4AD-816C9539C436}"
 EndProject
