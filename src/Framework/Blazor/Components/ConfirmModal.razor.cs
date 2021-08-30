@@ -40,7 +40,7 @@ namespace Shipwreck.ViewModelUtils.Components
             DataContext?.TrySetResult(false);
         }
 
-        internal static Task<bool> ShowAsync(
+        public static Task<bool> ShowAsync(
             IInteractionService interaction,
             ModalPresenterBase presenter,
             string message,

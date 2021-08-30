@@ -1,0 +1,44 @@
+﻿@inherits BindableComponentBase
+<div class="text-center text-muted my-4">
+    <div>
+        @Message
+        @if (TotalCount > 0)
+        {
+            @($" ({Progress:#,0}/{TotalCount:#,0})")
+        }
+    </div>
+    <div class="mt-2">
+        <span class="fas fa-pulse fa-spinner fa-6x"></span>
+    </div>
+</div>
+@code
+{
+    [Parameter]
+    public string Message { get; set; } = "データを取得しています。";
+
+    #region TotalCount
+
+    private int _TotalCount;
+
+    [Parameter]
+    public int TotalCount
+    {
+        get => _TotalCount;
+        set => SetProperty(ref _TotalCount, value);
+    }
+
+    #endregion TotalCount
+
+    #region Progress
+
+    private int _Progress;
+
+    [Parameter]
+    public int Progress
+    {
+        get => _Progress;
+        set => SetProperty(ref _Progress, value);
+    }
+
+    #endregion Progress
+}
