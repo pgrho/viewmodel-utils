@@ -29,5 +29,26 @@
         }
         jq.val(value);
     }
-
 }
+(function () {
+    const locale =
+        ((<any>navigator).userLanguage
+            || (<any>navigator).browserLanguage
+            || navigator.language
+            || 'en').substr(0, 2);
+    (<any>window).moment.locale(locale);
+    ($.fn as any).datetimepicker.Constructor.Default = $.extend({}, ($.fn as any).datetimepicker.Constructor.Default, {
+        //icons: {
+        //    time: 'far fa-clock',
+        //    date: 'far fa-calendar',
+        //    up: 'far fa-arrow-up',
+        //    down: 'far fa-arrow-down',
+        //    previous: 'far fa-chevron-left',
+        //    next: 'far fa-chevron-right',
+        //    today: 'far fa-calendar-check-o',
+        //    clear: 'far fa-trash',
+        //    close: 'far fa-times'
+        //},
+        dayViewHeaderFormat: /^ja$/i.test(locale) ? 'YYYY年 MMM' : 'MMMM YYYY'
+    });
+}());
