@@ -19,33 +19,43 @@ if (!$devenv.Exists) {
 }
 
 if ($devenv.Exists) {
+    
+    $projs = Get-ChildItem "${PSScriptRoot}\src\*\*\*.csproj"
+    
+    foreach ($fi in $projs) {
+        $proj = $fi.FullName
+        if ($proj -notlike "*XamarinForms*") {
+            Write-Host "Cleaning $proj"
+            $p = Start-Process dotnet -ArgumentList "clean $proj -c Release -v m" -PassThru
+            $p.WaitForExit()
+            if ($p.ExitCode -ne 0) {
+                throw "Failed to clean ${proj}."
+            }
+        }
+    }
+    foreach ($fi in $projs) {
+        $proj = $fi.FullName
+        if ($proj -notlike "*XamarinForms*") {
+            Write-Host "Building $proj"
+            $p = Start-Process dotnet -ArgumentList "build $proj -c Release -v m" -PassThru
+            $p.WaitForExit()
+            if ($p.ExitCode -ne 0) {
+                throw "Failed to build ${proj}."
+            }
+        }
+    }
+    
     $sln = "${PSScriptRoot}\src\Shipwreck.ViewModelUtils.sln"
-    
-    Write-Host "Cleaning Shipwreck.ViewModelUtils.Models.csproj"
-    Start-Process dotnet -ArgumentList "`clean ${PSScriptRoot}/src/Core/Models/Shipwreck.ViewModelUtils.Models.csproj -c Release" -Wait -PassThru
+    foreach ($proj in @("Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj", "Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj")) {
+        Write-Host "Building $proj"
+        $p = Start-Process $devenv.FullName -ArgumentList "`"$sln`" /Build Release /Project $proj" -PassThru
+        $p.WaitForExit()
+        if ($p.ExitCode -ne 0) {
+            throw "Failed to build ${proj}."
+        }
+    }
 
-    Write-Host "Building Shipwreck.ViewModelUtils.Client.csproj"
-    Start-Process dotnet -ArgumentList "`build ${PSScriptRoot}/src/Core/Client/Shipwreck.ViewModelUtils.Client.csproj -c Release" -Wait -PassThru
-
-    Write-Host "Building Shipwreck.ViewModelUtils.Client.CoreFx.csproj"
-    Start-Process dotnet -ArgumentList "`build ${PSScriptRoot}/src/Core/Client.CoreFx/Shipwreck.ViewModelUtils.Client.CoreFx.csproj -c Release" -Wait -PassThru
-
-    Write-Host "Building Shipwreck.ViewModelUtils.Client.Newtonsoft.csproj"
-    Start-Process dotnet -ArgumentList "`build ${PSScriptRoot}/src/Core/Client.Newtonsoft/Shipwreck.ViewModelUtils.Client.Newtonsoft.csproj -c Release" -Wait -PassThru
-    
-    Write-Host "Building Shipwreck.ViewModelUtils.Blazor.csproj"
-    Start-Process dotnet -ArgumentList "`build ${PSScriptRoot}/src/Framework/Blazor/Shipwreck.ViewModelUtils.Blazor.csproj -c Release" -Wait -PassThru
-
-    Write-Host "Building Shipwreck.ViewModelUtils.PresentationFramework.csproj"
-    Start-Process dotnet -ArgumentList "`build ${PSScriptRoot}/src/Framework/PresentationFramework/Shipwreck.ViewModelUtils.PresentationFramework.csproj -c Release" -Wait -PassThru
-
-    Write-Host "Building Shipwreck.ViewModelUtils.Core.XamarinForms.csproj"
-    Start-Process $devenv.FullName -ArgumentList "`"$sln`" /Build Release /Project Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" -Wait -PassThru
-
-    Write-Host "Building Shipwreck.ViewModelUtils.XamarinForms.csproj"
-    Start-Process $devenv.FullName -ArgumentList "`"$sln`" /Build Release /Project Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj" -Wait -PassThru
-
-    if ($nugetSource -ne "" && $nugetApiKey -ne "") {
+    if (($nugetSource -ne "") -and ($nugetApiKey -ne "")) {
       
         $xd = [System.Xml.Linq.XDocument]::Load("$PSScriptRoot\src\Directory.build.props")
         $ver = $xd.Root.Element("PropertyGroup").Element("Version").Value
