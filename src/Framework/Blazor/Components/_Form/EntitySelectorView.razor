@@ -1,0 +1,150 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase<IEntitySelector>
+@{
+    var d = DataContext;
+    var isEnabled = d != null && (IsEnabled ?? d.IsEnabled);
+}
+<div class="input-group">
+    @if (d.UseList)
+    {
+        // TODO: expose list
+        if (_ItemsTask == null)
+        {
+            _ItemsTask = d.GetItemsTask();
+            if (_ItemsTask.Status < TaskStatus.RanToCompletion)
+            {
+                _ItemsTask.ContinueWith(_ => StateHasChanged());
+            }
+        }
+        <select class="custom-select"
+                @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")">
+            @if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
+            {
+                foreach (var e in _ItemsTask.Result)
+                {
+                    <option @key="@d.GetCode(e)"
+                            value="@d.GetCode(e)"
+                            selected="@(e == d.SelectedItem ? "selected" : null)">
+                        @d.GetDisplayText(e)
+                    </option>
+                }
+            }
+        </select>
+        @if (d.HasModal && isEnabled)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary"
+                        tabindex="-1"
+                        @onclick="@d.ShowModal">
+                    <span class="fas fa-ellipsis-h"></span>
+                </button>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="input-group-prepend">
+            <EntityTypeahead id="@Id"
+                             class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} header-selector-code {(IsRequired ? "required" : null)}")"
+                             style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                             IsEnabled="@isEnabled"
+                             AppendToSelector="@AppendToSelector"
+                             DataContext="@d" />
+        </div>
+        @if (d.HasModal && isEnabled)
+        {
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary"
+                        tabindex="-1"
+                        @onclick="@d.ShowModal">
+                    <span class="fas fa-ellipsis-h"></span>
+                </button>
+            </div>
+        }
+        <div class="@((Theme?? FormGroupTheme.Default).ControlClass)"
+             readonly="readonly"
+             tabindex="-1">
+            @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
+        </div>
+    }
+
+</div>
+@code
+{
+    private Task<System.Collections.IList> _ItemsTask;
+
+    [Parameter]
+    public string AppendToSelector { get; set; } = ".body-root";
+
+    #region Id
+
+    private static int _NewId;
+
+    public string _Id;
+
+    public string Id => _Id ?? ($"entity--selector--view--{++_NewId}");
+
+    #endregion Id
+
+    #region Theme
+
+    private FormGroupTheme _Theme;
+
+    [CascadingParameter]
+    public FormGroupTheme Theme
+    {
+        get => _Theme;
+        set => SetProperty(ref _Theme, value);
+    }
+
+    #endregion Theme
+
+    #region IsEnabled
+
+    private bool? _IsEnabled;
+
+    [Parameter]
+    public bool? IsEnabled
+    {
+        get => _IsEnabled;
+        set => SetProperty(ref _IsEnabled, value);
+    }
+
+    #endregion IsEnabled
+
+    #region IsRequired
+
+    private bool _IsRequired;
+
+    [Parameter]
+    public bool IsRequired
+    {
+        get => _IsRequired;
+        set => SetProperty(ref _IsRequired, value);
+    }
+
+    #endregion IsRequired
+
+    private string SelectedCode
+    {
+        get => DataContext?.SelectedItem != null ? DataContext.GetCode(DataContext.SelectedItem) : null;
+        set
+        {
+            if (string.IsNullOrEmpty(value))
+            {
+                DataContext.SelectedItem = null;
+            }
+            else if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
+            {
+                DataContext.SelectedItem = _ItemsTask.Result.OfType<object>().FirstOrDefault(e => DataContext.GetCode(e) == value)
+                                        ?? DataContext.SelectedItem;
+            }
+        }
+    }
+
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+    {
+        _ItemsTask = null;
+        return base.OnDataContextPropertyChanged(propertyName);
+    }
+}
