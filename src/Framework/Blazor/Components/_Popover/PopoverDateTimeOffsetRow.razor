@@ -1,0 +1,23 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase
+@if (Value > DateTimeOffset.MinValue)
+{
+    var v = Value.Value.LocalDateTime;
+    <dt class="col-@LabelColumn">
+        <label>@Label</label>
+    </dt>
+    <dd class="col-@(12 - LabelColumn)">
+        <span title="@v.ToString("yyyy/MM/dd (ddd) HH:mm.ss.fff")">@v.ToString("yyyy/MM/dd HH:mm.ss")</span>
+    </dd>
+}
+@code
+{
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public int LabelColumn { get; set; }
+
+    [Parameter]
+    public DateTimeOffset? Value { get; set; }
+}

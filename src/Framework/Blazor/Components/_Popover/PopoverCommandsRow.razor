@@ -1,0 +1,35 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase<IPopoverCommands>
+@{
+    var d = DataContext;
+}
+<div>
+    <ListScope T="CommandViewModelBase" Source="d.PrimaryCommands">
+        @foreach (var c in d.PrimaryCommands)
+        {
+            <CommandButton @key="c.GetHashCode()"
+                           BaseClass="btn mb-2 mr-2"
+                           DataContext="c" />
+        }
+    </ListScope>
+    <CommandsButton DropDownTitle="状態変更.."
+                    BaseClass="btn mb-2 mr-2"
+                    Source="d.StateCommands" />
+    <CommandsButton DropDownTitle="印刷.."
+                    BaseClass="btn mb-2 mr-2"
+                    Source="d.PrintCommands" />
+</div>
+@code
+{
+    protected override bool OnDataContextPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(DataContext.PrimaryCommands):
+            case nameof(DataContext.StateCommands):
+            case nameof(DataContext.PrintCommands):
+                return true;
+        }
+        return false;
+    }
+}

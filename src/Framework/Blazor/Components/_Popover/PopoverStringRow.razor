@@ -1,0 +1,37 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase
+@if (!string.IsNullOrEmpty(Value))
+{
+    <dt class="col-@LabelColumn">
+        <label>@Label</label>
+    </dt>
+    <dd class="col-@(12 - LabelColumn)">
+        @if (Command == null)
+        {
+            @Value
+        }
+        else
+        {
+            <a href="@(Command.Href ?? "javascript:void(0)")"
+               title="@Command.Description"
+               @onclick="@Command.Execute"
+               @onclick:preventDefault>
+                @Value
+            </a>
+        }
+    </dd>
+}
+@code
+{
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public int LabelColumn { get; set; }
+
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public ICommandViewModel Command { get; set; }
+}

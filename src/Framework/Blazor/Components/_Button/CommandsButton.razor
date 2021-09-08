@@ -1,0 +1,40 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits ListComponentBase<CommandViewModelBase>
+@{
+    var pcs = Source?.Cast<CommandViewModelBase>().Where(e => e.IsVisible).ToList();
+    @if (pcs?.Count >= 1)
+    {
+        if (pcs.Count > 1 && DropDownTitle != null)
+        {
+            <DropdownButton BaseClass="@BaseClass"
+                            Style="@(DropDownStyle ?? pcs[0].Style)"
+                            Source="@pcs">
+                @if (!string.IsNullOrEmpty(DropDownIcon))
+                {
+                    <span class="@DropDownIcon"></span>
+                }
+                @DropDownTitle
+            </DropdownButton>
+        }
+        else
+        {
+            <SplitButton BaseClass="@BaseClass"
+                         DataContext="@pcs[0]"
+                         Source="@pcs" />
+        }
+    }
+}
+@code
+{
+    [Parameter]
+    public string BaseClass { get; set; } = "btn";
+
+    [Parameter]
+    public string DropDownIcon { get; set; }
+
+    [Parameter]
+    public string DropDownTitle { get; set; }
+
+    [Parameter]
+    public BorderStyle? DropDownStyle { get; set; }
+}
