@@ -160,6 +160,15 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   d&apos;:&apos;hh&apos; hours&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DatesTimeSpanFormat {
+            get {
+                return ResourceManager.GetString("DatesTimeSpanFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Day に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DayOperator {
@@ -277,6 +286,15 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   h&apos;:&apos;mm&apos; mins&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string HoursTimeSpanFormat {
+            get {
+                return ResourceManager.GetString("HoursTimeSpanFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   H に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string HourToken {
@@ -327,6 +345,15 @@ namespace Shipwreck.ViewModelUtils {
         internal static string MinuteOperator {
             get {
                 return ResourceManager.GetString("MinuteOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   m&apos;:&apos;ss&apos; secs&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MinutesTimeSpanFormat {
+            get {
+                return ResourceManager.GetString("MinutesTimeSpanFormat", resourceCulture);
             }
         }
         
@@ -453,6 +480,15 @@ namespace Shipwreck.ViewModelUtils {
         internal static string SaveTitle {
             get {
                 return ResourceManager.GetString("SaveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   s&apos; secs&apos; に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string SecondsTimeSpanFormat {
+            get {
+                return ResourceManager.GetString("SecondsTimeSpanFormat", resourceCulture);
             }
         }
         

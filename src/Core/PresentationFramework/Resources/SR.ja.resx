@@ -249,4 +249,16 @@
   <data name="YesTitle" xml:space="preserve">
     <value>はい</value>
   </data>
+  <data name="DatesTimeSpanFormat" xml:space="preserve">
+    <value>d'日'hh'時間'</value>
+  </data>
+  <data name="HoursTimeSpanFormat" xml:space="preserve">
+    <value>h'時間'mm'分'</value>
+  </data>
+  <data name="MinutesTimeSpanFormat" xml:space="preserve">
+    <value>m'分'ss'秒'</value>
+  </data>
+  <data name="SecondsTimeSpanFormat" xml:space="preserve">
+    <value>s'秒'</value>
+  </data>
 </root>

@@ -273,4 +273,16 @@
   <data name="YesTitle" xml:space="preserve">
     <value>Yes</value>
   </data>
+  <data name="DatesTimeSpanFormat" xml:space="preserve">
+    <value>d':'hh' hours'</value>
+  </data>
+  <data name="HoursTimeSpanFormat" xml:space="preserve">
+    <value>h':'mm' mins'</value>
+  </data>
+  <data name="MinutesTimeSpanFormat" xml:space="preserve">
+    <value>m':'ss' secs'</value>
+  </data>
+  <data name="SecondsTimeSpanFormat" xml:space="preserve">
+    <value>s' secs'</value>
+  </data>
 </root>
