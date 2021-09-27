@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -115,5 +116,16 @@ namespace Shipwreck.ViewModelUtils.JSInterop
         #endregion Int32
 
         #endregion localStorage
+
+        public static async ValueTask<JsonHttpResponse> SendFileAsync(this IJSRuntime js, string method, string url, IEnumerable<KeyValuePair<string, string>> headers, ElementReference input)
+        {
+            var json = await js.InvokeAsync<string>(
+                "Shipwreck.ViewModelUtils.sendFiles",
+                method,
+                url,
+                headers != null ? JsonSerializer.Serialize(new Dictionary<string, string>(headers)) : null,
+                input).ConfigureAwait(false);
+            return JsonSerializer.Deserialize<JsonHttpResponse>(json);
+        }
     }
 }
