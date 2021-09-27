@@ -127,5 +127,10 @@ namespace Shipwreck.ViewModelUtils.JSInterop
                 input).ConfigureAwait(false);
             return JsonSerializer.Deserialize<JsonHttpResponse>(json);
         }
+
+        public static ValueTask<bool> OpenWindowAsync(this IJSRuntime js, string url, string name, string features)
+            => js.InvokeAsync<bool>(
+                "Shipwreck.ViewModelUtils.openWindow",
+                url, name, features);
     }
 }
