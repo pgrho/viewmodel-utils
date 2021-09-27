@@ -188,13 +188,25 @@ namespace Shipwreck.ViewModelUtils
 
         protected virtual void OnItemsSet()
         {
-            if (UseList
-                && SelectedItem != null
-                && !Items.Contains(SelectedItem))
+            if (UseList)
             {
-                SelectedItem = null;
+                if (SelectedItem != null)
+                {
+                    if (!Items.Contains(SelectedItem))
+                    {
+                        SelectedItem = null;
+                    }
+                }
+                else if (SelectedId != null
+                    && GetById(SelectedId) is TItem item)
+                {
+                    SelectedItem = item;
+                }
+                ItemLoaded?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        public event EventHandler ItemLoaded;
 
         #endregion Items
 
