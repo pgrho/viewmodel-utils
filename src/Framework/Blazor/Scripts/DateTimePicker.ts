@@ -37,18 +37,21 @@
             || navigator.language
             || 'en').substr(0, 2);
     (<any>window).moment.locale(locale);
-    ($.fn as any).datetimepicker.Constructor.Default = $.extend({}, ($.fn as any).datetimepicker.Constructor.Default, {
-        //icons: {
-        //    time: 'far fa-clock',
-        //    date: 'far fa-calendar',
-        //    up: 'far fa-arrow-up',
-        //    down: 'far fa-arrow-down',
-        //    previous: 'far fa-chevron-left',
-        //    next: 'far fa-chevron-right',
-        //    today: 'far fa-calendar-check-o',
-        //    clear: 'far fa-trash',
-        //    close: 'far fa-times'
-        //},
+    const _$: any = $;
+    _$.fn.datetimepicker.Constructor.Default = _$.extend({}, _$.fn.datetimepicker.Constructor.Default, {
+        icons: {
+            time: 'far fa-clock',
+            date: 'far fa-calendar',
+            up: 'fas fa-arrow-up',
+            down: 'fas fa-arrow-down',
+            previous: 'fas fa-chevron-left',
+            next: 'fas fa-chevron-right',
+            today: 'far fa-calendar-check',
+            clear: 'fas fa-trash',
+            close: 'fas fa-times'
+        },
+
         dayViewHeaderFormat: /^ja$/i.test(locale) ? 'YYYY年 MMM' : 'MMMM YYYY'
     });
+    console.dir(_$.fn.datetimepicker.Constructor.Default);
 }());
