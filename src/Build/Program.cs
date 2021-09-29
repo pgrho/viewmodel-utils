@@ -238,6 +238,7 @@ namespace Build
             var nupkg = Path.Combine(Path.GetDirectoryName(proj), "bin", "Release", pn + "." + version + ".nupkg");
             if (!File.Exists(nupkg))
             {
+                Console.Error?.WriteLine("NuGet package {0} not found.", nupkg);
                 return false;
             }
 
@@ -260,6 +261,7 @@ namespace Build
                         var v = dep.Attribute("version")?.Value;
                         if (id?.StartsWith("Shipwreck.ViewModelUtils") == true && v != version)
                         {
+                            Console.Error?.WriteLine("Found invalid version: {0} vs {1}", version, v);
                             return false;
                         }
                     }
@@ -280,6 +282,7 @@ namespace Build
                             {
                                 if (za.GetEntry("staticwebassets/" + name) == null)
                                 {
+                                    Console.Error?.WriteLine("Found invalid staticwebassets: {0}", name);
                                     return false;
                                 }
                             }
