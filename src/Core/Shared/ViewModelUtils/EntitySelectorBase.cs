@@ -54,7 +54,9 @@ namespace Shipwreck.ViewModelUtils
 
         public abstract int GetMatchDistance(string code, TItem item);
 
-        protected abstract TItem GetById(TId id);
+        public abstract TItem GetById(TId id);
+
+        object IEntitySelector.GetById(object id) => id is TId i ? GetById(i) : null;
 
         #endregion TItem
 

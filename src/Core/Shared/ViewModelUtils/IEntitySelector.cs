@@ -34,6 +34,7 @@ namespace Shipwreck.ViewModelUtils
         string GetDisplayText(object item);
 
         int GetMatchDistance(string code, object item);
+        object GetById(object id); 
 
         void ShowModal();
 

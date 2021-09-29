@@ -15,6 +15,15 @@
             {
                 _ItemsTask.ContinueWith(_ => StateHasChanged());
             }
+            _ItemsTask.ContinueWith(_ =>
+            {
+                if (d.SelectedId != null
+                    && d.SelectedItem == null
+                    && d.GetById(d.SelectedId) is object sel)
+                {
+                    d.SelectedItem = sel;
+                }
+            });
         }
         <select class="custom-select"
                 @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")">
@@ -45,8 +54,8 @@
     {
         <div class="input-group-prepend">
             <EntityTypeahead id="@Id"
-                             class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} header-selector-code {(IsRequired ? "required" : null)}")"
-                             style="border-top-right-radius:0;border-bottom-right-radius:0;"
+                             class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
+                             style="@CodeStyle"
                              IsEnabled="@isEnabled"
                              AppendToSelector="@AppendToSelector"
                              DataContext="@d" />
@@ -61,13 +70,13 @@
                 </button>
             </div>
         }
-        <div class="@((Theme?? FormGroupTheme.Default).ControlClass)"
+        <div class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} {NameClass}")"
+             style="@CodeStyle"
              readonly="readonly"
              tabindex="-1">
             @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
         </div>
     }
-
 </div>
 @code
 {
@@ -124,6 +133,18 @@
     }
 
     #endregion IsRequired
+
+    [Parameter]
+    public string CodeClass { get; set; } = "entity-selector-code";
+
+    [Parameter]
+    public string CodeStyle { get; set; } = "border-top-right-radius:0;border-bottom-right-radius:0;";
+
+    [Parameter]
+    public string NameClass { get; set; } = "entity-selector-name";
+
+    [Parameter]
+    public string NameeStyle { get; set; }
 
     private string SelectedCode
     {
