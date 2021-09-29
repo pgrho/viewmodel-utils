@@ -467,6 +467,7 @@ namespace Shipwreck.ViewModelUtils
             => _ShowModalCommand ??= CommandViewModel.Create(
                 ShowModal,
                 icon: "fas fa-ellipsis-h",
+                style: BorderStyle.OutlineSecondary,
                 isVisibleGetter: () => HasModal && IsEnabled);
 
         #endregion ShowModalCommand

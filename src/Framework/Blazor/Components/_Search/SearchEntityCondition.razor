@@ -20,6 +20,8 @@
                        @onkeydown="@Clear"
                        @onkeydown:preventDefault />
                 <div class="input-group-append">
+                    <CommandButton BaseClass="btn btn-sm"
+                                   DataContext="d.Selector.ShowModalCommand" />
                     <button type="button"
                             class="btn btn-sm btn-outline-secondary"
                             tabindex="-1"
@@ -33,7 +35,16 @@
                 <EntityTypeahead @ref="@_Typeahead"
                                  DataContext="@d.Selector"
                                  class="form-control" />
-                <SearchRemoveButton DataContext="@d" />
+                <div class="input-group-append">
+                    <CommandButton BaseClass="btn btn-sm"
+                                   DataContext="d.Selector.ShowModalCommand" />
+                    <button type="button"
+                            class="btn btn-sm btn-outline-secondary"
+                            tabindex="-1"
+                            @onclick="@d.Remove">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
             }
         </div>
     </dd>

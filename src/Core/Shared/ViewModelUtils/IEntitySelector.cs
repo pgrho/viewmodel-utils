@@ -23,6 +23,7 @@ namespace Shipwreck.ViewModelUtils
         CommandViewModelBase SelectCommand { get; }
         CommandViewModelBase ClearCommand { get; }
         CommandViewModelBase SelectOrClearCommand { get; }
+        CommandViewModelBase ShowModalCommand { get; }
 
         bool IsValid(object id);
 
@@ -31,20 +32,24 @@ namespace Shipwreck.ViewModelUtils
         string GetName(object item);
 
         string GetDisplayText(object item);
+
         int GetMatchDistance(string code, object item);
 
         void ShowModal();
 
         void Select(object item);
+
         Task<bool> SelectByCodeAsync(string code, bool isExactMatch = false);
+
         void Clear();
 
         void Focus();
- 
+
         Task<IEnumerable> SearchAsync(string query, int maxCount, CancellationToken cancellationToken = default);
 
         Task<IList> GetItemsTask();
     }
+
     public interface IEntitySelector<TId, TItem> : IEntitySelector
         where TItem : class
     {
