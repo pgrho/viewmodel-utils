@@ -1,0 +1,71 @@
+﻿@inherits BindableComponentBase
+<div class="accordion"
+     id="@_ParentId"
+     @attributes="AdditionalAttributes">
+    <div class="card">
+        <div class="card-header p-0" id="@_HeadingId">
+            <h5 class="mb-0">
+                <button class="btn btn-block btn-primary py-2"
+                        type="button"
+                        style="border-radius:0; box-shadow:none"
+                        data-toggle="@_CollapseId"
+                        data-target="#@_CollapseId"
+                        aria-expanded="true"
+                        aria-controls="@_CollapseId"
+                        @onclick="@(() => _IsExpanded = !_IsExpanded)"
+                        @onclick:preventDefault>
+                    @_Header
+                </button>
+            </h5>
+        </div>
+        <div id="@_CollapseId"
+             class="collapse @(_IsExpanded ? "show" : null)"
+             aria-labelledby="@_HeadingId"
+             data-parent="#@_ParentId">
+            <div class="card-body py-2">
+                @ChildContent
+            </div>
+        </div>
+    </div>
+</div>
+@code
+{
+    private static int _IdSeed;
+
+    private string _ParentId = "expander--parent--" + (++_IdSeed);
+    private string _HeadingId = "expander--heading--" + _IdSeed;
+    private string _CollapseId = "expander--collapse--" + _IdSeed;
+
+    private string _Header;
+
+    [Parameter]
+    public string Header
+    {
+        get => _Header;
+        set => SetProperty(ref _Header, value);
+    }
+
+    private bool _IsExpanded = true;
+
+    [Parameter]
+    public bool IsExpanded
+    {
+        get => _IsExpanded;
+        set
+        {
+            if (SetProperty(ref _IsExpanded, value))
+            {
+                IsExpandedChanged?.Invoke(_IsExpanded);
+            }
+        }
+    }
+
+    [Parameter]
+    public Action<bool> IsExpandedChanged { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> AdditionalAttributes { get; set; }
+}
