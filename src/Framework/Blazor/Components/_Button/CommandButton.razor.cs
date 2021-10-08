@@ -16,7 +16,13 @@ namespace Shipwreck.ViewModelUtils.Components
         public BorderStyle? CommandStyle { get; set; }
 
         [Parameter]
+        public string Icon { get; set; }
+
+        [Parameter]
         public string Title { get; set; }
+
+        [Parameter]
+        public int? BadgeCount { get; set; }
 
         [Parameter]
         public bool? IsVisible { get; set; }
@@ -38,5 +44,8 @@ namespace Shipwreck.ViewModelUtils.Components
 
         [Parameter]
         public bool ShowBadge { get; set; } = true;
+
+        [Parameter]
+        public BorderStyle BadgeStyle { get; set; } = BorderStyle.Danger;
     }
 }
