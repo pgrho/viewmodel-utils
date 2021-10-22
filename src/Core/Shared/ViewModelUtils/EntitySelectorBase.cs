@@ -164,7 +164,7 @@ namespace Shipwreck.ViewModelUtils
 
         Task<IList> IEntitySelector.GetItemsTask() => ItemsTask.ContinueWith(t => (IList)t.Result);
 
-        public void InvalidateItems() 
+        public virtual void InvalidateItems()
             => CreateItemsTask().GetHashCode();
 
         protected void SetItems(IReadOnlyList<TItem> items)
