@@ -71,12 +71,7 @@ namespace Shipwreck.ViewModelUtils
             {
                 if (SetProperty(ref _UseList, value))
                 {
-                    if (_UseList)
-                    {
-                    }
-                    else
-                    {
-                    }
+                    InvalidateItems();
                 }
             }
         }
@@ -123,61 +118,54 @@ namespace Shipwreck.ViewModelUtils
         }
 
         internal Task<BulkUpdateableCollection<TItem>> ItemsTask
+            => _ItemsTask ?? CreateItemsTask();
+
+        private Task<BulkUpdateableCollection<TItem>> CreateItemsTask()
         {
-            get
+            if (UseList)
             {
-                if (_ItemsTask == null)
+                var tcs = new TaskCompletionSource<BulkUpdateableCollection<TItem>>();
+                _ItemsTask = tcs.Task;
+                _Items ??= new BulkUpdateableCollection<TItem>();
+
+                async void SetItemsCore()
                 {
-                    if (UseList)
+                    try
                     {
-                        var tcs = new TaskCompletionSource<BulkUpdateableCollection<TItem>>();
-                        _ItemsTask = tcs.Task;
-                        _Items ??= new BulkUpdateableCollection<TItem>();
-
-                        async void SetItemsCore()
+                        var core = await GetItemsAsync().ConfigureAwait();
+                        if (_ItemsTask == tcs.Task)
                         {
-                            try
-                            {
-                                var core = await GetItemsAsync().ConfigureAwait();
-                                SetItems(core);
-                                tcs.TrySetResult(_Items);
-                            }
-                            catch (Exception ex)
-                            {
-                                tcs.TrySetException(ex);
-                            }
+                            SetItems(core);
+                            tcs.TrySetResult(_Items);
                         }
-
-                        SetItemsCore();
+                        else
+                        {
+                            tcs.TrySetCanceled();
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        _ItemsTask = Task.FromResult(_Items ??= new BulkUpdateableCollection<TItem>());
+                        tcs.TrySetException(ex);
                     }
                 }
-                return _ItemsTask;
+
+                SetItemsCore();
             }
+            else
+            {
+                _Items ??= new BulkUpdateableCollection<TItem>();
+                SetItems(Array.Empty<TItem>());
+                _ItemsTask = Task.FromResult(_Items);
+            }
+            return _ItemsTask;
         }
 
         Task<IReadOnlyList<TItem>> IEntitySelector<TId, TItem>.GetItemsTask() => ItemsTask.ContinueWith(t => (IReadOnlyList<TItem>)t.Result);
 
         Task<IList> IEntitySelector.GetItemsTask() => ItemsTask.ContinueWith(t => (IList)t.Result);
 
-        public virtual async void InvalidateItems()
-        {
-            if (UseList && _Items != null)
-            {
-                try
-                {
-                    _ItemsTask = null;
-                    var ns = await GetItemsAsync();
-                    SetItems(ns);
-                }
-                catch
-                {
-                }
-            }
-        }
+        public void InvalidateItems() 
+            => CreateItemsTask().GetHashCode();
 
         protected void SetItems(IReadOnlyList<TItem> items)
         {
