@@ -154,8 +154,8 @@ namespace Shipwreck.ViewModelUtils
             else
             {
                 _Items ??= new BulkUpdateableCollection<TItem>();
-                SetItems(Array.Empty<TItem>());
                 _ItemsTask = Task.FromResult(_Items);
+                SetItems(Array.Empty<TItem>());
             }
             return _ItemsTask;
         }
