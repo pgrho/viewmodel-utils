@@ -18,13 +18,14 @@
             _ItemsTask.ContinueWith(_ =>
             {
                 if (d.SelectedId != null
-                && d.SelectedItem == null
-                && d.GetById(d.SelectedId) is object sel)
+        && d.SelectedItem == null
+        && d.GetById(d.SelectedId) is object sel)
                 {
                     d.SelectedItem = sel;
                 }
             });
         }
+
         <select class="custom-select"
             @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")">
             @if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
@@ -33,8 +34,8 @@
                 {
                     var id = Id + "/" + d.GetId(e);
                     <option @key="@id"
-                            value="@d.GetCode(e)"
-                            selected="@(e == d.SelectedItem ? "selected" : null)">
+                value="@d.GetCode(e)"
+                selected="@(e == d.SelectedItem ? "selected" : null)">
                         @d.GetDisplayText(e)
                     </option>
                 }
@@ -92,7 +93,7 @@
 
     public string _Id;
 
-    public string Id => _Id ?? ($"entity--selector--view--{++_NewId}");
+    public string Id => _Id ??= ($"entity--selector--view--{++_NewId}");
 
     #endregion Id
 
@@ -152,21 +153,40 @@
         get => DataContext?.SelectedItem != null ? DataContext.GetCode(DataContext.SelectedItem) : null;
         set
         {
-            if (string.IsNullOrEmpty(value))
+            try
             {
-                DataContext.SelectedItem = null;
+                _IsUpdatingSelectedCode = true;
+                if (string.IsNullOrEmpty(value))
+                {
+                    DataContext.SelectedItem = null;
+                }
+                else if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
+                {
+                    DataContext.SelectedItem = _ItemsTask.Result.OfType<object>().FirstOrDefault(e => DataContext.GetCode(e) == value)
+                                            ?? DataContext.SelectedItem;
+                }
             }
-            else if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
+            finally
             {
-                DataContext.SelectedItem = _ItemsTask.Result.OfType<object>().FirstOrDefault(e => DataContext.GetCode(e) == value)
-                                        ?? DataContext.SelectedItem;
+                _IsUpdatingSelectedCode = false;
             }
         }
     }
 
+    private bool _IsUpdatingSelectedCode;
+
     protected override bool OnDataContextPropertyChanged(string propertyName)
     {
         _ItemsTask = null;
+        if (_IsUpdatingSelectedCode)
+        {
+            switch (propertyName)
+            {
+                case nameof(DataContext.SelectedId):
+                case nameof(DataContext.SelectedItem):
+                    return false;
+            }
+        }
         return base.OnDataContextPropertyChanged(propertyName);
     }
 }
