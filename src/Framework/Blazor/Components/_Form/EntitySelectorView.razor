@@ -18,20 +18,21 @@
             _ItemsTask.ContinueWith(_ =>
             {
                 if (d.SelectedId != null
-                    && d.SelectedItem == null
-                    && d.GetById(d.SelectedId) is object sel)
+                && d.SelectedItem == null
+                && d.GetById(d.SelectedId) is object sel)
                 {
                     d.SelectedItem = sel;
                 }
             });
         }
         <select class="custom-select"
-                @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")">
+            @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")">
             @if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
             {
                 foreach (var e in _ItemsTask.Result)
                 {
-                    <option @key="@d.GetCode(e)"
+                    var id = Id + "/" + d.GetId(e);
+                    <option @key="@id"
                             value="@d.GetCode(e)"
                             selected="@(e == d.SelectedItem ? "selected" : null)">
                         @d.GetDisplayText(e)
@@ -43,8 +44,8 @@
         {
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary"
-                        tabindex="-1"
-                        @onclick="@d.ShowModal">
+                tabindex="-1"
+                @onclick="@d.ShowModal">
                     <span class="fas fa-ellipsis-h"></span>
                 </button>
             </div>
@@ -54,26 +55,26 @@
     {
         <div class="input-group-prepend">
             <EntityTypeahead id="@Id"
-                             class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
-                             style="@CodeStyle"
-                             IsEnabled="@isEnabled"
-                             AppendToSelector="@AppendToSelector"
-                             DataContext="@d" />
+                         class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
+                         style="@CodeStyle"
+                         IsEnabled="@isEnabled"
+                         AppendToSelector="@AppendToSelector"
+                         DataContext="@d" />
         </div>
         @if (d.HasModal && isEnabled)
         {
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary"
-                        tabindex="-1"
-                        @onclick="@d.ShowModal">
+                tabindex="-1"
+                @onclick="@d.ShowModal">
                     <span class="fas fa-ellipsis-h"></span>
                 </button>
             </div>
         }
         <div class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} {NameClass}")"
-             style="@CodeStyle"
-             readonly="readonly"
-             tabindex="-1">
+         style="@CodeStyle"
+         readonly="readonly"
+         tabindex="-1">
             @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
         </div>
     }

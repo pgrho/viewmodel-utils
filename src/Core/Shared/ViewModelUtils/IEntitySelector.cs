@@ -27,6 +27,7 @@ namespace Shipwreck.ViewModelUtils
 
         bool IsValid(object id);
 
+        object GetId(object item);
         string GetCode(object item);
 
         string GetName(object item);
@@ -34,7 +35,7 @@ namespace Shipwreck.ViewModelUtils
         string GetDisplayText(object item);
 
         int GetMatchDistance(string code, object item);
-        object GetById(object id); 
+        object GetById(object id);
 
         void ShowModal();
 
@@ -59,6 +60,7 @@ namespace Shipwreck.ViewModelUtils
         new TItem SelectedItem { get; set; }
         new TId SelectedId { get; set; }
 
+        TId GetId(TItem item);
         string GetCode(TItem item);
 
         string GetName(TItem item);

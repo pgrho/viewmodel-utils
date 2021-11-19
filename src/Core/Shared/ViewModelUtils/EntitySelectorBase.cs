@@ -34,7 +34,9 @@ namespace Shipwreck.ViewModelUtils
 
         #region TItem
 
-        protected abstract TId GetId(TItem item);
+        public abstract TId GetId(TItem item);
+
+        object IEntitySelector.GetId(object item) => GetId((TItem)item);
 
         public abstract string GetCode(TItem item);
 
