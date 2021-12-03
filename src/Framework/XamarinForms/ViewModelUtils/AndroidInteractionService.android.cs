@@ -29,7 +29,7 @@ namespace Shipwreck.ViewModelUtils
             var t = Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
             t.SetGravity(GravityFlags.Top | GravityFlags.Center, 0, 30);
             t.View?.SetBackgroundColor(scheme.BackgroundColor.ToAndroid());
-            if (t.View?.FindViewById<TextView>(Android.Resource.Id.Message) is var tv)
+            if (t.View?.FindViewById<TextView>(Android.Resource.Id.Message) is TextView tv)
             {
                 tv.SetTextColor(scheme.ForegroundColor.ToAndroid());
             }
