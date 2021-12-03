@@ -24,7 +24,7 @@ namespace Shipwreck.ViewModelUtils
         public override Task ShowInformationToastAsync(object context, string message, string title)
             => ShowToast(message, ColorScheme.Info);
 
-        private Task ShowToast(string message, ColorScheme scheme)
+        protected virtual Task ShowToast(string message, ColorScheme scheme)
         {
             var t = Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
             t.SetGravity(GravityFlags.Top | GravityFlags.Center, 0, 30);

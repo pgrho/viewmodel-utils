@@ -28,13 +28,13 @@ namespace Shipwreck.ViewModelUtils
         public override Task ShowInformationToastAsync(object context, string message, string title)
             => ShowToast(message, title);
 
-        private Task ShowToast(string message, string title)
+        protected virtual Task ShowToast(string message, string title)
         {
             ShowAlert(message, title, SHORT_DELAY);
             return Task.CompletedTask;
         }
 
-        private void ShowAlert(string message, string title, double seconds)
+        protected void ShowAlert(string message, string title, double seconds)
         {
             UIAlertController alert = null;
             var alertDelay = NSTimer.CreateScheduledTimer(seconds, obj =>
