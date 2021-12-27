@@ -479,7 +479,7 @@ namespace Shipwreck.ViewModelUtils
             bool openFile)
             => DownloadAsync(context, method, url, content, contentType, openFile, null);
 
-        public virtual async Task DownloadAsync(
+        public async Task DownloadAsync(
             object context,
             string method,
             string url,
@@ -487,6 +487,22 @@ namespace Shipwreck.ViewModelUtils
             string contentType,
             bool openFile,
             Action<string> opener)
+        {
+            var file = await DownloadCore(context, method, url, content, contentType, openFile).ConfigureAwait(false);
+
+            if (openFile)
+            {
+                (opener ?? Open)(file.FullName);
+            }
+        }
+
+        protected virtual async Task<FileInfo> DownloadCore(
+            object context,
+            string method,
+            string url,
+            string content,
+            string contentType,
+            bool openFile)
         {
             var m = new HttpRequestMessage(new HttpMethod(method), url);
             if (!string.IsNullOrEmpty(content))
@@ -512,11 +528,7 @@ namespace Shipwreck.ViewModelUtils
                     if (file.Length == res.Content.Headers.ContentLength
                         && file.LastWriteTimeUtc == lm)
                     {
-                        if (openFile)
-                        {
-                            (opener ?? Open)(file.FullName);
-                        }
-                        return;
+                        return file;
                     }
                     else
                     {
@@ -540,10 +552,7 @@ namespace Shipwreck.ViewModelUtils
                     file.LastWriteTimeUtc = lm.Value.ToUniversalTime().DateTime;
                 }
 
-                if (openFile)
-                {
-                    (opener ?? Open)(file.FullName);
-                }
+                return file;
             }
             finally
             {
