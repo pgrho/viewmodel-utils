@@ -49,13 +49,23 @@ namespace Shipwreck.ViewModelUtils
 
         public bool SupportsDownload => true;
 
-        public async Task DownloadAsync(
+        public Task DownloadAsync(
             object context,
             string method,
             string url,
             string content,
             string contentType,
             bool openFile)
+            => DownloadAsync(context, method, url, content, contentType, openFile, null);
+
+        public virtual async Task DownloadAsync(
+            object context,
+            string method,
+            string url,
+            string content,
+            string contentType,
+            bool openFile,
+            Action<string> opener)
         {
             // var page = context as PageViewModel ?? (context as IHasPageViewModel)?.Page;
 
@@ -86,6 +96,12 @@ namespace Shipwreck.ViewModelUtils
                 }
 
                 Console.WriteLine("ファイルを出力しました: {0}", file);
+
+                if (opener != null)
+                {
+                    opener(file);
+                    return;
+                }
 
                 await Share.RequestAsync(new ShareFileRequest
                 {

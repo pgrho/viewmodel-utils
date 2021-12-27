@@ -470,13 +470,23 @@ namespace Shipwreck.ViewModelUtils
 
         public virtual bool SupportsDownload => true;
 
-        public virtual async Task DownloadAsync(
+        public Task DownloadAsync(
             object context,
             string method,
             string url,
             string content,
             string contentType,
             bool openFile)
+            => DownloadAsync(context, method, url, content, contentType, openFile, null);
+
+        public virtual async Task DownloadAsync(
+            object context,
+            string method,
+            string url,
+            string content,
+            string contentType,
+            bool openFile,
+            Action<string> opener)
         {
             var m = new HttpRequestMessage(new HttpMethod(method), url);
             if (!string.IsNullOrEmpty(content))
@@ -504,7 +514,7 @@ namespace Shipwreck.ViewModelUtils
                     {
                         if (openFile)
                         {
-                            Open(file.FullName);
+                            (opener ?? Open)(file.FullName);
                         }
                         return;
                     }
@@ -532,7 +542,7 @@ namespace Shipwreck.ViewModelUtils
 
                 if (openFile)
                 {
-                    Open(file.FullName);
+                    (opener ?? Open)(file.FullName);
                 }
             }
             finally
