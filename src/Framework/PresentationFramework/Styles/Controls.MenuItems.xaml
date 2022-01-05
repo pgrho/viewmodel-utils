@@ -42,6 +42,14 @@
             Property="HeaderTemplate"
             Value="{StaticResource CommandViewModel.ContentTemplate}" />
     </Style>
+    <Style
+        x:Key="CommandViewModel.MenuItem.Medium.IgnoreDefault"
+        TargetType="MenuItem"
+        BasedOn="{StaticResource CommandViewModel.MenuItem.Medium}">
+        <Setter
+            Property="bs4:ColorScheme.Scheme"
+            Value="{Binding RelativeSource={RelativeSource Self}, Path=Command.Style, Converter={StaticResource BorderStyleToOutlineDefaultColorSchemeConverter}}" />
+    </Style>
     <vmu:StyleSelector
         x:Key="CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector">
         <Style
@@ -68,4 +76,29 @@
         </vmu:StyleSelector.DefaultStyle>
     </vmu:StyleSelector>
 
+    <vmu:StyleSelector
+        x:Key="CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault">
+        <Style
+            x:Key="{x:Type vmu:CommandViewModelBase}"
+            TargetType="MenuItem"
+            BasedOn="{StaticResource CommandViewModel.MenuItem.Medium.IgnoreDefault}">
+            <Setter
+                Property="Command"
+                Value="{Binding}" />
+        </Style>
+        <vmu:StyleSelector.DefaultStyle>
+            <Style
+                TargetType="MenuItem">
+                <Setter
+                    Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Separator
+                                Style="{StaticResource {x:Static MenuItem.SeparatorStyleKey}}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </vmu:StyleSelector.DefaultStyle>
+    </vmu:StyleSelector>
 </ResourceDictionary>

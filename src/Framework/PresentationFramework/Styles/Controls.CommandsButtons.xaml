@@ -39,7 +39,7 @@
                 x:Key="SplitTemplate"
                 TargetType="{x:Type v:CommandsButton}">
                 <bs4:SplitButton
-                    Style="{StaticResource CommandViewModel.SplitButton.Small}"
+                    Style="{StaticResource CommandViewModel.SplitButton.Small.IgnoreDefault}"
                     Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}"
                     ItemsSource="{TemplateBinding ItemsSource}" />
             </ControlTemplate>
@@ -47,7 +47,7 @@
                 x:Key="DropDownTemplate"
                 TargetType="{x:Type v:CommandsButton}">
                 <mah:DropDownButton
-                    Style="{StaticResource CommandViewModel.DropDownButton.Small}"
+                    Style="{StaticResource CommandViewModel.DropDownButton.Small.IgnoreDefault}"
                     bs4:ColorScheme.Scheme="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DropDownStyle, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
                     ItemsSource="{TemplateBinding ItemsSource}">
                     <mah:DropDownButton.Content>
@@ -147,7 +147,7 @@
                 x:Key="SplitTemplate"
                 TargetType="{x:Type v:CommandsButton}">
                 <bs4:SplitButton
-                    Style="{StaticResource CommandViewModel.SplitButton.Medium}"
+                    Style="{StaticResource CommandViewModel.SplitButton.Medium.IgnoreDefault}"
                     Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}"
                     ItemsSource="{TemplateBinding ItemsSource}" />
             </ControlTemplate>
@@ -155,7 +155,7 @@
                 x:Key="DropDownTemplate"
                 TargetType="{x:Type v:CommandsButton}">
                 <mah:DropDownButton
-                    Style="{StaticResource CommandViewModel.DropDownButton.Medium}"
+                    Style="{StaticResource CommandViewModel.DropDownButton.Medium.IgnoreDefault}"
                     bs4:ColorScheme.Scheme="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DropDownStyle, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
                     ItemsSource="{TemplateBinding ItemsSource}">
                     <mah:DropDownButton.Content>
@@ -255,7 +255,7 @@
                 x:Key="SplitTemplate"
                 TargetType="{x:Type v:CommandsButton}">
                 <bs4:SplitButton
-                    Style="{StaticResource CommandViewModel.SplitButton.Large}"
+                    Style="{StaticResource CommandViewModel.SplitButton.Large.IgnoreDefault}"
                     Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ItemsSource.FirstCommand}"
                     ItemsSource="{TemplateBinding ItemsSource}" />
             </ControlTemplate>
@@ -263,7 +263,7 @@
                 x:Key="DropDownTemplate"
                 TargetType="{x:Type v:CommandsButton}">
                 <mah:DropDownButton
-                    Style="{StaticResource CommandViewModel.DropDownButton.Large}"
+                    Style="{StaticResource CommandViewModel.DropDownButton.Large.IgnoreDefault}"
                     bs4:ColorScheme.Scheme="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DropDownStyle, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
                     ItemsSource="{TemplateBinding ItemsSource}">
                     <mah:DropDownButton.Content>

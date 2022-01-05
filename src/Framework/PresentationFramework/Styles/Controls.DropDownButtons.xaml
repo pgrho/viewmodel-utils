@@ -68,4 +68,31 @@
         </Style.BasedOn>
     </Style>
 
+    <Style
+        x:Key="CommandViewModel.DropDownButton.Small.IgnoreDefault"
+        TargetType="mah:DropDownButton"
+        BasedOn="{StaticResource CommandViewModel.DropDownButton.Small}">
+        <Setter
+            Property="ItemContainerStyleSelector"
+            Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault}" />
+    </Style>
+
+    <Style
+        x:Key="CommandViewModel.DropDownButton.Medium.IgnoreDefault"
+        TargetType="mah:DropDownButton"
+        BasedOn="{StaticResource CommandViewModel.DropDownButton.Medium}">
+        <Setter
+            Property="ItemContainerStyleSelector"
+            Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault}" />
+    </Style>
+
+    <Style
+        x:Key="CommandViewModel.DropDownButton.Large.IgnoreDefault"
+        TargetType="mah:DropDownButton"
+        BasedOn="{StaticResource CommandViewModel.DropDownButton.Large}">
+        <Setter
+            Property="ItemContainerStyleSelector"
+            Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault}" />
+    </Style>
+
 </ResourceDictionary>

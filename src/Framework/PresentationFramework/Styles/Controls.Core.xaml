@@ -9,7 +9,11 @@
         x:Key="BorderStyleToColorSchemeConverter" />
     <local:BorderStyleToColorSchemeConverter
         x:Key="BorderStyleToOutlineColorSchemeConverter"
-        ForceOutline="True" />
+        ForceOutline="True" /> 
+    <local:BorderStyleToColorSchemeConverter
+        x:Key="BorderStyleToOutlineDefaultColorSchemeConverter"
+        ForceOutline="True"
+        DefaultStyle="OutlineSecondary" />
 
     <vmu:StringNotEmptyConverter
         x:Key="StringNotEmptyConverter" />

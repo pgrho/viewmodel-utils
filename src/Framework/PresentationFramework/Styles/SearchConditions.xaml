@@ -194,11 +194,11 @@
     </Style>
     <vmu:StyleSelector
         x:Key="ViewModelUtils.Styles.Condition.OptionsItemContainerStyleSelector"
-        BasedOn="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector}">
+        BasedOn="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault}">
         <Style
             x:Key="{x:Type vmu:MultipleOptionViewModel}"
             TargetType="MenuItem"
-            BasedOn="{StaticResource CommandViewModel.MenuItem.Medium}">
+            BasedOn="{StaticResource CommandViewModel.MenuItem.Medium.IgnoreDefault}">
             <Setter
                 Property="IsCheckable"
                 Value="False" />

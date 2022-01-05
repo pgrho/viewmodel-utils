@@ -15,12 +15,18 @@ namespace Shipwreck.ViewModelUtils
 #endif
     public sealed partial class BorderStyleToColorSchemeConverter : IValueConverter
     {
+        public BorderStyle? DefaultStyle { get; set; }
+
         public bool ForceOutline { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var bs = value is BorderStyle a ? a : default;
-
+            if (bs == DefaultStyle
+                || (ForceOutline && (bs | BorderStyle.Outline) == DefaultStyle))
+            {
+                return null;
+            }
             if ((bs & BorderStyle.Primary) != 0)
             {
                 return ForceOutline || (bs & BorderStyle.Outline) != 0 ? ColorScheme.OutlinePrimary : ColorScheme.Primary;

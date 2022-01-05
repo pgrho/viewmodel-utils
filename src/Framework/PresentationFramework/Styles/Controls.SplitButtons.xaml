@@ -87,4 +87,32 @@
             </vmu:StyleMixer>
         </Style.BasedOn>
     </Style>
+
+    <Style
+        x:Key="CommandViewModel.SplitButton.Small.IgnoreDefault"
+        TargetType="bs4:SplitButton"
+        BasedOn="{StaticResource CommandViewModel.SplitButton.Small}">
+        <Setter
+            Property="ItemContainerStyleSelector"
+            Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault}" />
+    </Style>
+
+    <Style
+        x:Key="CommandViewModel.SplitButton.Medium.IgnoreDefault"
+        TargetType="bs4:SplitButton"
+        BasedOn="{StaticResource CommandViewModel.SplitButton.Medium}">
+        <Setter
+            Property="ItemContainerStyleSelector"
+            Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault}" />
+    </Style>
+
+    <Style
+        x:Key="CommandViewModel.SplitButton.Large.IgnoreDefault"
+        TargetType="bs4:SplitButton"
+        BasedOn="{StaticResource CommandViewModel.SplitButton.Large}">
+        <Setter
+            Property="ItemContainerStyleSelector"
+            Value="{StaticResource CommandViewModel.MenuItem.Medium.ItemContainerStyleSelector.IgnoreDefault}" />
+    </Style>
+
 </ResourceDictionary>
