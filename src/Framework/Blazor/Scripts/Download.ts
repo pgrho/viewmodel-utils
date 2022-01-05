@@ -1,6 +1,6 @@
 ﻿// @ts-ignore
 namespace Shipwreck.ViewModelUtils {
-    export async function downloadFile(obj, method: string, url: string, headersJson: string, content: string, contentType: string) {
+    export async function downloadFile(obj, method: string, url: string, headersJson: string, content: string, contentType: string, openFile: boolean) {
 
         const reqHeaders = JSON.parse(headersJson || '{}');
         if (contentType && content) {
@@ -27,6 +27,9 @@ namespace Shipwreck.ViewModelUtils {
             a.style.display = 'none';
             a.href = ou;
             a.download = fn;
+            if (openFile) {
+                a.target = '_blank';
+            }
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);

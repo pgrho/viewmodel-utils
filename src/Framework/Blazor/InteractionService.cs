@@ -195,7 +195,8 @@ namespace Shipwreck.ViewModelUtils
                 url,
                 headers?.Count > 0 ? JsonSerializer.Serialize(headers) : "{}",
                 content,
-                contentType).AsTask();
+                contentType,
+                openFile).AsTask();
         }
 
         [JSInvokable]
