@@ -4,7 +4,7 @@ using Shipwreck.ViewModelUtils.Components;
 
 namespace Shipwreck.ViewModelUtils
 {
-    public partial class FrameworkPageViewModel
+    public partial class FrameworkPageViewModel : IHasJSRuntime
     {
         public struct ProcessingDisabled : IDisposable
         {
