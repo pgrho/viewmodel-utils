@@ -31,7 +31,7 @@ namespace Shipwreck.ViewModelUtils.Demo.Blazor.Pages
             => Page?.Interaction;
 
         public void OpenFile()
-            => base.BeginDownload("/test.png", openFile: true);
+            => base.BeginDownload("/test.dat", openFile: true);
 
         public void DownloadFile()
             => base.BeginDownload("/test.png", openFile: false);
