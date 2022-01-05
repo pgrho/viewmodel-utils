@@ -18,7 +18,6 @@ namespace Shipwreck.ViewModelUtils {
 
             res.headers.forEach((v, k) => resHeaders[k] = v);
 
-            const fn = (await obj.invokeMethodAsync('GetDownloadingFileName', url, res.url, JSON.stringify(resHeaders))) || 'download';
 
             const b = await res.blob();
             const ou = URL.createObjectURL(b);
@@ -26,9 +25,11 @@ namespace Shipwreck.ViewModelUtils {
             const a = document.createElement('a');
             a.style.display = 'none';
             a.href = ou;
-            a.download = fn;
             if (openFile) {
                 a.target = '_blank';
+            } else {
+                const fn = (await obj.invokeMethodAsync('GetDownloadingFileName', url, res.url, JSON.stringify(resHeaders))) || 'download';
+                a.download = fn;
             }
             document.body.appendChild(a);
             a.click();
