@@ -2,48 +2,36 @@
 @inherits ListComponentBase<ICommandViewModel, ICommandViewModel>
 @{
     var d = DataContext;
+    var src = (Source?.OfType<ICommandViewModel>() ?? Enumerable.Empty<ICommandViewModel>()).Where(e => e.IsVisible).ToList();
 }
 @if (d != null)
 {
-    if (Source?.Count > 0 && (Source.Count != 1 || Source[0] != DataContext))
+    if (src.Count > 0 && (src.Count != 1 || src[0] != DataContext))
     {
         var typeClass = d?.Style.ToButtonClass(BorderStyle.OutlineSecondary);
         var disabled = IsEnabled == false ? "disabled" : null;
 
         <div class="btn-group @BaseClass p-0">
             <CommandButton BaseClass="@("btn " + BaseClass)"
-                           IsVisible="@IsVisible"
-                           IsEnabled="@IsEnabled"
-                           IsActive="@IsActive"
-                           ShowIcon="@ShowIcon"
-                           ShowTitle="@ShowTitle"
-                           ShowBadge="@ShowBadge"
-                           DataContext="@d" />
+                   IsVisible="@IsVisible"
+                   IsEnabled="@IsEnabled"
+                   IsActive="@IsActive"
+                   ShowIcon="@ShowIcon"
+                   ShowTitle="@ShowTitle"
+                   ShowBadge="@ShowBadge"
+                   DataContext="@d" />
             <button type="button"
-                    class="btn @typeClass @(IsActive == true ? " active" : null) dropdown-toggle dropdown-toggle-split"
-                    disabled="@disabled"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false">
+            class="btn @typeClass @(IsActive == true ? " active" : null) dropdown-toggle dropdown-toggle-split"
+            disabled="@disabled"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false">
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <div class="dropdown-menu w-100">
-                @foreach (ICommandViewModel c in Source)
+                @foreach (var c in src)
                 {
-                    var os = c.Style & ~(BorderStyle.OutlineSecondary);
-                    <a @key="@c.GetHashCode()"
-                       class="dropdown-item @os.ToClassName("text-")"
-                       href="@c.Href"
-                       title="@c.Description"
-                       disabled="@disabled"
-                       @onclick="@(() => c.Execute())"
-                       @onclick:preventDefault>
-                        @if (c.Icon != null)
-                        {
-                            <span class="fas @c.Icon"></span>
-                        }
-                        @c.Title
-                    </a>
+                    <DropdownItem DataContext="@c" />
                 }
             </div>
         </div>
@@ -51,10 +39,10 @@
     else
     {
         <CommandButton BaseClass="@BaseClass"
-                       IsVisible="@IsVisible"
-                       IsEnabled="@IsEnabled"
-                       IsActive="@IsActive"
-                       DataContext="@d" />
+               IsVisible="@IsVisible"
+               IsEnabled="@IsEnabled"
+               IsActive="@IsActive"
+               DataContext="@d" />
     }
 }
 @code
