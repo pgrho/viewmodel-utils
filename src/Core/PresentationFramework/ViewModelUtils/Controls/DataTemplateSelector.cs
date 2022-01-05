@@ -42,6 +42,9 @@ namespace Shipwreck.ViewModelUtils.Controls
             }
 
             return BasedOn?.SelectTemplate(item, container)
+                ?? (item is BindingProxy bp
+                    && bp.Data != null
+                    && bp.Data != bp ? SelectTemplate(bp.Data, container) : null)
                 ?? base.SelectTemplate(item, container);
         }
     }
