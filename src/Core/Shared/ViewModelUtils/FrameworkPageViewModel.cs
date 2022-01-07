@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Shipwreck.ViewModelUtils.Client;
 using Shipwreck.ViewModelUtils.Validation;
 
 namespace Shipwreck.ViewModelUtils
@@ -168,6 +169,7 @@ namespace Shipwreck.ViewModelUtils
                 {
                     await InitializeAsync().ConfigureAwait();
                 }
+                await ResumeConnectionAsync().ConfigureAwait();
             }
             catch (Exception ex)
             {
@@ -175,9 +177,97 @@ namespace Shipwreck.ViewModelUtils
             }
         }
 
-        protected virtual Task OnDisappearing() => Task.CompletedTask;
+        protected virtual Task OnDisappearing()
+        {
+            try
+            {
+                Disconnect();
+            }
+            catch (Exception ex)
+            {
+                LogError("An exception caught while OnDisappearing: {0}", ex);
+            }
+
+            return Task.CompletedTask;
+        }
 
         #endregion IsVisible
+
+        #region IRealTimeConnection
+
+        private HubConnectionBase _Connection;
+        private Task<HubConnectionBase> _ConnectionTask;
+
+        public Task<HubConnectionBase> GetOrCreateConnectionAsync()
+            => _ConnectionTask ??= GetOrCreateConnectionAsyncCore();
+
+        private async Task<HubConnectionBase> GetOrCreateConnectionAsyncCore()
+        {
+            var c = _Connection;
+            if (c == null)
+            {
+                _Connection = c = CreateConnection();
+                if (c != null)
+                {
+                    LogInformation("Connecting SignalR");
+
+                    await c.StartAsync().ConfigureAwait();
+                }
+            }
+            return c;
+        }
+
+        protected virtual HubConnectionBase CreateConnection() => null;
+
+        protected virtual void Disconnect()
+        {
+            var c = _Connection;
+            _Connection = null;
+            _ConnectionTask = null;
+            BeginDisconnect(c);
+        }
+
+        private async void BeginDisconnect(HubConnectionBase c)
+        {
+            if (c != null)
+            {
+                LogInformation("Disconnecting SignalR");
+
+                try
+                {
+                    await c.StopAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    LogError("An exception caught while HubConnectionBase.StopAsync(): {0}", ex);
+                }
+
+                try
+                {
+                    c.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    LogError("An exception caught while HubConnectionBase.Dispose(): {0}", ex);
+                }
+            }
+        }
+
+        protected virtual Task ResumeConnectionAsync()
+            => Task.CompletedTask;
+
+        #endregion IRealTimeConnection
+
+        #region ClearCache
+
+        public static void ClearCache()
+        {
+            ClearingCache?.Invoke(typeof(FrameworkPageViewModel), EventArgs.Empty);
+        }
+
+        public static event EventHandler ClearingCache;
+
+        #endregion ClearCache
 
         public event PropertyChangedEventHandler RequestFocus;
 
