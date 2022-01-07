@@ -52,5 +52,23 @@ namespace Shipwreck.ViewModelUtils
         protected virtual void OnFocusRequested(string propertyName)
         {
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is FrameworkPageViewModel vm)
+            {
+                vm.IsVisible = true;
+            }
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            if (BindingContext is FrameworkPageViewModel vm)
+            {
+                vm.IsVisible = false;
+            }
+        }
     }
 }

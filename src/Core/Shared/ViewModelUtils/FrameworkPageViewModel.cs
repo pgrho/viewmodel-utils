@@ -137,6 +137,48 @@ namespace Shipwreck.ViewModelUtils
 
         #endregion Flags
 
+        #region IsVisible
+
+        private bool _IsVisible;
+
+        public bool IsVisible
+        {
+            get => _IsVisible;
+            set
+            {
+                if (SetProperty(ref _IsVisible, value))
+                {
+                    if (_IsVisible)
+                    {
+                        OnAppearing().GetHashCode();
+                    }
+                    else
+                    {
+                        OnDisappearing().GetHashCode();
+                    }
+                }
+            }
+        }
+
+        protected virtual async Task OnAppearing()
+        {
+            try
+            {
+                if (!IsInitializing && !IsInitialized)
+                {
+                    await InitializeAsync().ConfigureAwait();
+                }
+            }
+            catch (Exception ex)
+            {
+                LogError("An exception caught while OnAppearing: {0}", ex);
+            }
+        }
+
+        protected virtual Task OnDisappearing() => Task.CompletedTask;
+
+        #endregion IsVisible
+
         public event PropertyChangedEventHandler RequestFocus;
 
         public virtual void Focus(string propertyName)

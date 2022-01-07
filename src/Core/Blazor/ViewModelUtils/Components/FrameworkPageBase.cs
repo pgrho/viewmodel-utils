@@ -86,6 +86,7 @@ namespace Shipwreck.ViewModelUtils.Components
             if (dc != null)
             {
                 await dc.OnAfterRenderAsync(firstRender).ConfigureAwait(false);
+                dc.IsVisible = true;
             }
         }
     }
