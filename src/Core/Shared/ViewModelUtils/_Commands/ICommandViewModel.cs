@@ -1,25 +1,24 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public partial interface ICommandViewModel
 {
-    public partial interface ICommandViewModel
-    {
-        string Title { get; }
+    string Title { get; }
 
-        string Mnemonic { get; }
+    string Mnemonic { get; }
 
-        string Description { get; }
+    string Description { get; }
 
-        bool IsVisible { get; }
-        bool IsEnabled { get; }
+    bool IsVisible { get; }
+    bool IsEnabled { get; }
 
-        string Icon { get; }
-        string Href { get; }
+    string Icon { get; }
+    string Href { get; }
 
-        BorderStyle Style { get; }
+    BorderStyle Style { get; }
 
-        int BadgeCount { get; }
+    int BadgeCount { get; }
 
-        void Execute();
+    void Execute();
 
-        void Invalidate();
-    }
+    void Invalidate();
 }

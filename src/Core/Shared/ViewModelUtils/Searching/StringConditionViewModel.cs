@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+﻿namespace Shipwreck.ViewModelUtils.Searching;
 
-namespace Shipwreck.ViewModelUtils.Searching
+public sealed class StringConditionViewModel : ConditionViewModel
 {
-    public sealed class StringConditionViewModel : ConditionViewModel
-    {
-        public static OperatorViewModel DefaultOperator { get; } = new OperatorViewModel("*=", SR.Contains);
+    public static OperatorViewModel DefaultOperator { get; } = new OperatorViewModel("*=", SR.Contains);
 
-        public static ReadOnlyCollection<OperatorViewModel> Operators { get; } = Array.AsReadOnly(new[]
-        {
+    public static ReadOnlyCollection<OperatorViewModel> Operators { get; } = Array.AsReadOnly(new[]
+    {
             new OperatorViewModel("=", SR.Equal),
             new OperatorViewModel("!=", SR.NotEqual),
             new OperatorViewModel("^=", SR.StartsWith),
@@ -22,116 +17,115 @@ namespace Shipwreck.ViewModelUtils.Searching
             new OperatorViewModel(">=", SR.GreaterThanOrEqual)
         });
 
-        public StringConditionViewModel(SearchPropertyViewModel property)
-            : base(property)
+    public StringConditionViewModel(SearchPropertyViewModel property)
+        : base(property)
+    {
+        _Operator = GetDefaultOperator();
+    }
+
+    private string GetDefaultOperator()
+        => Operators.FirstOrDefault(e => e.Token == Property.Model.DefaultOperator)?.Token ?? DefaultOperator.Token;
+
+    #region Operator
+
+    private string _Operator;
+
+    public string Operator
+    {
+        get => _Operator;
+        set
         {
-            _Operator = GetDefaultOperator();
-        }
-
-        private string GetDefaultOperator()
-            => Operators.FirstOrDefault(e => e.Token == Property.Model.DefaultOperator)?.Token ?? DefaultOperator.Token;
-
-        #region Operator
-
-        private string _Operator;
-
-        public string Operator
-        {
-            get => _Operator;
-            set
+            if (SetProperty(ref _Operator, value))
             {
-                if (SetProperty(ref _Operator, value))
+                RaisePropertyChanged(nameof(SelectedOperator));
+            }
+        }
+    }
+
+    public OperatorViewModel SelectedOperator
+    {
+        get => Operators.FirstOrDefault(e => e.Token == _Operator) ?? DefaultOperator;
+        set => Operator = (value ?? DefaultOperator).Token;
+    }
+
+    #endregion Operator
+
+    #region Value
+
+    private string _Value;
+
+    public string Value
+    {
+        get => _Value;
+        set => SetProperty(ref _Value, value);
+    }
+
+    #endregion Value
+
+    public override void SetValue(string @operator, string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            Value = null;
+        }
+        else
+        {
+            if (string.IsNullOrEmpty(@operator))
+            {
+                var op = Operators.OrderByDescending(e => e.Token.Length).FirstOrDefault(e => e.Token.Length < value.Length && value.StartsWith(e.Token));
+                if (op != null)
                 {
-                    RaisePropertyChanged(nameof(SelectedOperator));
+                    @operator = op.Token;
+                    value = value.Substring(op.Token.Length);
+                }
+                else
+                {
+                    @operator = Property.Model.DefaultOperator?.TrimOrNull() ?? DefaultOperator.Token;
                 }
             }
-        }
 
-        public OperatorViewModel SelectedOperator
+            Operator = @operator;
+            Value = value.TrimOrNull();
+        }
+    }
+
+    public override bool HasValue => !string.IsNullOrEmpty(Value);
+
+    public override void AppendValueTo(StringBuilder builder)
+    {
+        if (Operator != GetDefaultOperator())
         {
-            get => Operators.FirstOrDefault(e => e.Token == _Operator) ?? DefaultOperator;
-            set => Operator = (value ?? DefaultOperator).Token;
+            builder.Append(Operator);
         }
-
-        #endregion Operator
-
-        #region Value
-
-        private string _Value;
-
-        public string Value
+        else if (Value.IndexOfAny(new[] { '"', ':', ' ', '<', '>', '=' }) < 0)
         {
-            get => _Value;
-            set => SetProperty(ref _Value, value);
+            builder.Append(Value);
+            return;
         }
 
-        #endregion Value
-
-        public override void SetValue(string @operator, string value)
+        builder.Append('"');
+        foreach (var c in Value)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (c == '"')
             {
-                Value = null;
+                builder.Append('"');
             }
-            else
-            {
-                if (string.IsNullOrEmpty(@operator))
-                {
-                    var op = Operators.OrderByDescending(e => e.Token.Length).FirstOrDefault(e => e.Token.Length < value.Length && value.StartsWith(e.Token));
-                    if (op != null)
-                    {
-                        @operator = op.Token;
-                        value = value.Substring(op.Token.Length);
-                    }
-                    else
-                    {
-                        @operator = Property.Model.DefaultOperator?.TrimOrNull() ?? DefaultOperator.Token;
-                    }
-                }
-
-                Operator = @operator;
-                Value = value.TrimOrNull();
-            }
+            builder.Append(c);
         }
+        builder.Append('"');
+    }
 
-        public override bool HasValue => !string.IsNullOrEmpty(Value);
-
-        public override void AppendValueTo(StringBuilder builder)
+    public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
+    {
+        if (!string.IsNullOrWhiteSpace(Value))
         {
-            if (Operator != GetDefaultOperator())
-            {
-                builder.Append(Operator);
-            }
-            else if (Value.IndexOfAny(new[] { '"', ':', ' ', '<', '>', '=' }) < 0)
-            {
-                builder.Append(Value);
-                return;
-            }
+            @operator = Operator;
+            defaultValue = Value.Trim();
 
-            builder.Append('"');
-            foreach (var c in Value)
-            {
-                if (c == '"')
-                {
-                    builder.Append('"');
-                }
-                builder.Append(c);
-            }
-            builder.Append('"');
+            return true;
         }
+        @operator = defaultValue = null;
 
-        public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
-        {
-            if (!string.IsNullOrWhiteSpace(Value))
-            {
-                @operator = Operator;
-                defaultValue = Value.Trim();
-
-                return true;
-            }
-            @operator = defaultValue = null;
-
-            return false;
-        }
+        return false;
     }
 }

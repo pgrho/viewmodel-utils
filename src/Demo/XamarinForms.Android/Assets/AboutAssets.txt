@@ -11,7 +11,6 @@ public class ReadAsset : Activity
         base.OnCreate (bundle);
 
         InputStream input = Assets.Open ("my_asset.txt");
-    }
 }
 
 Additionally, some Android functions will automatically load asset files:

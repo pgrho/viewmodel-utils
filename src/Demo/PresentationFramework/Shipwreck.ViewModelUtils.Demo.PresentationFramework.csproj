@@ -1,22 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-  <PropertyGroup>
-    <TargetFrameworks>net5.0-windows</TargetFrameworks>
-    <UseWPF>true</UseWPF>
-    <OutputType>WinExe</OutputType>
-    <StartupObject>Shipwreck.ViewModelUtils.Demo.PresentationFramework.App</StartupObject>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net5.0-windows</TargetFrameworks>
+        <UseWPF>true</UseWPF>
+        <OutputType>WinExe</OutputType>
+        <StartupObject>Shipwreck.ViewModelUtils.Demo.PresentationFramework.App</StartupObject>
+        <LangVersion>10.0</LangVersion>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
-    <ProjectReference Include="..\..\Framework\PresentationFramework\Shipwreck.ViewModelUtils.PresentationFramework.csproj" />
-  </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-
-
+    <ItemGroup>
+        <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
+        <ProjectReference Include="..\..\Framework\PresentationFramework\Shipwreck.ViewModelUtils.PresentationFramework.csproj" />
+    </ItemGroup>
+    <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+        <Reference Include="PresentationCore" />
+        <Reference Include="PresentationFramework" />
+        <Reference Include="System.Xaml" />
+        <Reference Include="WindowsBase" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Remove="..\..\_GlobalUsings.cs"   />
+        <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
+    </ItemGroup>
 </Project>

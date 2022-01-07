@@ -1,59 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Rendering;
+﻿namespace Shipwreck.ViewModelUtils.Components;
 
-namespace Shipwreck.ViewModelUtils.Components
+public sealed class ContentPresenter : ComponentBase
 {
-    public sealed class ContentPresenter : ComponentBase
+    [Parameter]
+    public Type ViewType { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; }
+
+    private WeakReference<ComponentBase> _View;
+
+    public ComponentBase View
     {
-        [Parameter]
-        public Type ViewType { get; set; }
-
-        [Parameter(CaptureUnmatchedValues = true)]
-        public Dictionary<string, object> Attributes { get; set; }
-
-        private WeakReference<ComponentBase> _View;
-
-        public ComponentBase View
+        get
         {
-            get
+            if (_View != null && _View.TryGetTarget(out var c))
             {
-                if (_View != null && _View.TryGetTarget(out var c))
+                if (c is ContentPresenter cp && ViewType != typeof(ContentPresenter))
                 {
-                    if (c is ContentPresenter cp && ViewType != typeof(ContentPresenter))
-                    {
-                        return cp.View;
-                    }
-                    return c;
+                    return cp.View;
                 }
-                return null;
+                return c;
             }
-            internal set => _View = value == null ? null : new WeakReference<ComponentBase>(value);
+            return null;
         }
+        internal set => _View = value == null ? null : new WeakReference<ComponentBase>(value);
+    }
 
-        protected override void BuildRenderTree(RenderTreeBuilder builder)
+    protected override void BuildRenderTree(RenderTreeBuilder builder)
+    {
+        if (ViewType != null)
         {
-            if (ViewType != null)
-            {
-                var i = 0;
-                builder.OpenComponent(++i, ViewType);
+            var i = 0;
+            builder.OpenComponent(++i, ViewType);
 
-                if (Attributes != null)
+            if (Attributes != null)
+            {
+                foreach (var kv in Attributes)
                 {
-                    foreach (var kv in Attributes)
-                    {
-                        builder.AddAttribute(++i, kv.Key, kv.Value);
-                    }
+                    builder.AddAttribute(++i, kv.Key, kv.Value);
                 }
-                builder.AddComponentReferenceCapture(++i, c => View = c as ComponentBase);
+            }
+            builder.AddComponentReferenceCapture(++i, c => View = c as ComponentBase);
 
-                builder.CloseComponent();
-            }
-            else
-            {
-                _View = null;
-            }
+            builder.CloseComponent();
+        }
+        else
+        {
+            _View = null;
         }
     }
 }

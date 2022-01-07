@@ -1,9 +1,6 @@
-﻿using System;
+﻿namespace Shipwreck.ViewModelUtils.Searching;
 
-namespace Shipwreck.ViewModelUtils.Searching
+public interface IMultipleOptionConditionViewModel
 {
-    public interface IMultipleOptionConditionViewModel
-    {
-        Type ValueType { get; }
-    }
+    Type ValueType { get; }
 }

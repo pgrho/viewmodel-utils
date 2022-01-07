@@ -1,222 +1,215 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime;
-using System.Runtime.CompilerServices;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public class ModelCache<TKey, TVersion>
 {
-    public class ModelCache<TKey, TVersion>
+    private interface ITypeCache
     {
-        private interface ITypeCache
-        {
-            int Count { get; }
+        int Count { get; }
 
-            void Flush();
+        void Flush();
+    }
+
+    protected sealed class TypeCache<TModel> : ITypeCache
+        where TModel : class, IVersionedModel<TKey, TVersion>
+    {
+        private readonly ModelCache<TKey, TVersion> _Cache;
+        private readonly Dictionary<TKey, WeakReference<TModel>> _Dictionary;
+
+        public TypeCache(ModelCache<TKey, TVersion> cache)
+        {
+            _Cache = cache;
+            _Dictionary = new Dictionary<TKey, WeakReference<TModel>>();
         }
 
-        protected sealed class TypeCache<TModel> : ITypeCache
-            where TModel : class, IVersionedModel<TKey, TVersion>
+        public int Count => _Dictionary.Count;
+
+        [TargetedPatchingOptOut("")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TModel GetByKey(TKey key)
         {
-            private readonly ModelCache<TKey, TVersion> _Cache;
-            private readonly Dictionary<TKey, WeakReference<TModel>> _Dictionary;
-
-            public TypeCache(ModelCache<TKey, TVersion> cache)
+            lock (_Dictionary)
             {
-                _Cache = cache;
-                _Dictionary = new Dictionary<TKey, WeakReference<TModel>>();
+                return _Cache.IsValidKey(key)
+                    && _Dictionary.TryGetValue(key, out var r)
+                    && r.TryGetTarget(out var e) ? e : null;
             }
+        }
 
-            public int Count => _Dictionary.Count;
-
-            [TargetedPatchingOptOut("")]
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public TModel GetByKey(TKey key)
+        [TargetedPatchingOptOut("")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public IEnumerable<TModel> GetByKeys(IEnumerable<TKey> keys)
+        {
+            lock (_Dictionary)
             {
-                lock (_Dictionary)
+                foreach (var k in keys)
                 {
-                    return _Cache.IsValidKey(key)
-                        && _Dictionary.TryGetValue(key, out var r)
-                        && r.TryGetTarget(out var e) ? e : null;
-                }
-            }
-
-            [TargetedPatchingOptOut("")]
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public IEnumerable<TModel> GetByKeys(IEnumerable<TKey> keys)
-            {
-                lock (_Dictionary)
-                {
-                    foreach (var k in keys)
+                    if (_Cache.IsValidKey(k))
                     {
-                        if (_Cache.IsValidKey(k))
+                        var r = GetByKey(k);
+                        if (r != null)
                         {
-                            var r = GetByKey(k);
-                            if (r != null)
-                            {
-                                yield return r;
-                            }
+                            yield return r;
                         }
                     }
                 }
             }
+        }
 
-            [TargetedPatchingOptOut("")]
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public TModel GetOrCreate<TParameter, TConverter>(TParameter parameter, TKey key, TConverter converter, object host)
-                where TConverter : IModelCreator<TModel>
+        [TargetedPatchingOptOut("")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public TModel GetOrCreate<TParameter, TConverter>(TParameter parameter, TKey key, TConverter converter, object host)
+            where TConverter : IModelCreator<TModel>
+        {
+            lock (_Dictionary)
             {
-                lock (_Dictionary)
+                if (_Cache.IsValidParameter(parameter))
                 {
-                    if (_Cache.IsValidParameter(parameter))
-                    {
-                        TModel d;
+                    TModel d;
 
-                        if ((_Cache.IsValidKey(key) || _Cache.IsValidKey(key = _Cache.GetKeyFromParameter(parameter)))
-                            && _Dictionary.TryGetValue(key, out var dr)
-                            && dr.TryGetTarget(out d))
-                        {
-                            d.Update(parameter);
-                        }
-                        else
-                        {
-                            d = converter.Create(host);
-                            if (d != null)
-                            {
-                                _Dictionary[key] = new WeakReference<TModel>(d);
-                                d.Update(parameter);
-                            }
-                        }
-                        return d;
+                    if ((_Cache.IsValidKey(key) || _Cache.IsValidKey(key = _Cache.GetKeyFromParameter(parameter)))
+                        && _Dictionary.TryGetValue(key, out var dr)
+                        && dr.TryGetTarget(out d))
+                    {
+                        d.Update(parameter);
                     }
                     else
                     {
-                        return GetByKey(key);
+                        d = converter.Create(host);
+                        if (d != null)
+                        {
+                            _Dictionary[key] = new WeakReference<TModel>(d);
+                            d.Update(parameter);
+                        }
                     }
+                    return d;
+                }
+                else
+                {
+                    return GetByKey(key);
                 }
             }
+        }
 
-            [TargetedPatchingOptOut("")]
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public List<TModel> GetOrCreate<TParameter, TConverter>(IEnumerable<TParameter> parameters, TConverter converter, object host)
-                  where TConverter : IModelCreator<TModel>
+        [TargetedPatchingOptOut("")]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public List<TModel> GetOrCreate<TParameter, TConverter>(IEnumerable<TParameter> parameters, TConverter converter, object host)
+              where TConverter : IModelCreator<TModel>
+        {
+            lock (_Dictionary)
             {
-                lock (_Dictionary)
+                var list = new List<TModel>();
+                if (parameters != null)
                 {
-                    var list = new List<TModel>();
-                    if (parameters != null)
+                    foreach (var e in parameters)
                     {
-                        foreach (var e in parameters)
+                        if (_Cache.IsValidParameter(e))
                         {
-                            if (_Cache.IsValidParameter(e))
+                            var r = GetOrCreate(e, default, converter, host);
+                            if (r != null)
                             {
-                                var r = GetOrCreate(e, default, converter, host);
-                                if (r != null)
-                                {
-                                    list.Add(r);
-                                }
+                                list.Add(r);
                             }
                         }
                     }
-                    return list;
                 }
+                return list;
             }
-
-            [TargetedPatchingOptOut("")]
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            public void Attach(TModel entity)
-            {
-                lock (_Dictionary)
-                {
-                    if (entity != null)
-                    {
-                        _Dictionary.Add(entity.Key, new WeakReference<TModel>(entity));
-                    }
-                }
-            }
-
-            public void Flush()
-            {
-                lock (_Dictionary)
-                {
-                    foreach (var kv in _Dictionary.ToArray())
-                    {
-                        if (!kv.Value.TryGetTarget(out var t))
-                        {
-                            _Dictionary.Remove(kv.Key);
-                        }
-                    }
-                }
-            }
-
-            public IEnumerable<TModel> Enumerate()
-            {
-                lock (_Dictionary)
-                {
-                    foreach (var kv in _Dictionary.ToArray())
-                    {
-                        if (kv.Value.TryGetTarget(out var t))
-                        {
-                            yield return t;
-                        }
-                        else
-                        {
-                            _Dictionary.Remove(kv.Key);
-                        }
-                    }
-                }
-            }
-        }
-
-        private Dictionary<Type, ITypeCache> _Caches;
-
-        protected virtual bool IsValidKey(TKey key) => true;
-
-        protected virtual bool IsValidParameter(object parameter) => parameter != null;
-
-        protected virtual TKey GetKeyFromParameter(object parameter) => default;
-
-        [TargetedPatchingOptOut("")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected TypeCache<TModel> GetCache<TModel>()
-            where TModel : class, IVersionedModel<TKey, TVersion>
-        {
-            if (_Caches == null)
-            {
-                _Caches = new Dictionary<Type, ITypeCache>();
-            }
-            else if (_Caches.TryGetValue(typeof(TModel), out var obj) && obj is TypeCache<TModel> c)
-            {
-                return c;
-            }
-            var r = new TypeCache<TModel>(this);
-            _Caches[typeof(TModel)] = r;
-            return r;
         }
 
         [TargetedPatchingOptOut("")]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected void ClearCache<TModel>()
+        public void Attach(TModel entity)
         {
-            if (_Caches != null)
+            lock (_Dictionary)
             {
-                _Caches.Remove(typeof(TModel));
+                if (entity != null)
+                {
+                    _Dictionary.Add(entity.Key, new WeakReference<TModel>(entity));
+                }
             }
         }
 
         public void Flush()
         {
-            if (_Caches != null)
+            lock (_Dictionary)
             {
-                foreach (var kv in _Caches.ToArray())
+                foreach (var kv in _Dictionary.ToArray())
                 {
-                    var oc = kv.Value.Count;
-                    kv.Value.Flush();
-
-                    if (kv.Value.Count <= 0)
+                    if (!kv.Value.TryGetTarget(out var t))
                     {
-                        _Caches.Remove(kv.Key);
+                        _Dictionary.Remove(kv.Key);
                     }
+                }
+            }
+        }
+
+        public IEnumerable<TModel> Enumerate()
+        {
+            lock (_Dictionary)
+            {
+                foreach (var kv in _Dictionary.ToArray())
+                {
+                    if (kv.Value.TryGetTarget(out var t))
+                    {
+                        yield return t;
+                    }
+                    else
+                    {
+                        _Dictionary.Remove(kv.Key);
+                    }
+                }
+            }
+        }
+    }
+
+    private Dictionary<Type, ITypeCache> _Caches;
+
+    protected virtual bool IsValidKey(TKey key) => true;
+
+    protected virtual bool IsValidParameter(object parameter) => parameter != null;
+
+    protected virtual TKey GetKeyFromParameter(object parameter) => default;
+
+    [TargetedPatchingOptOut("")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected TypeCache<TModel> GetCache<TModel>()
+        where TModel : class, IVersionedModel<TKey, TVersion>
+    {
+        if (_Caches == null)
+        {
+            _Caches = new Dictionary<Type, ITypeCache>();
+        }
+        else if (_Caches.TryGetValue(typeof(TModel), out var obj) && obj is TypeCache<TModel> c)
+        {
+            return c;
+        }
+        var r = new TypeCache<TModel>(this);
+        _Caches[typeof(TModel)] = r;
+        return r;
+    }
+
+    [TargetedPatchingOptOut("")]
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    protected void ClearCache<TModel>()
+    {
+        if (_Caches != null)
+        {
+            _Caches.Remove(typeof(TModel));
+        }
+    }
+
+    public void Flush()
+    {
+        if (_Caches != null)
+        {
+            foreach (var kv in _Caches.ToArray())
+            {
+                var oc = kv.Value.Count;
+                kv.Value.Flush();
+
+                if (kv.Value.Count <= 0)
+                {
+                    _Caches.Remove(kv.Key);
                 }
             }
         }

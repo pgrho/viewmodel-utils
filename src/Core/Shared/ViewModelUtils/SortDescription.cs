@@ -1,50 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public struct SortDescription
 {
-    public struct SortDescription
+    public SortDescription(string member, bool isDescending)
     {
-        public SortDescription(string member, bool isDescending)
+        Member = member;
+        IsDescending = isDescending;
+    }
+
+    public string Member { get; }
+    public bool IsDescending { get; }
+
+    public static string ToString(IEnumerable<SortDescription> sortDescriptions)
+        => sortDescriptions == null ? null : string.Join(",", sortDescriptions.Select(e => e.IsDescending ? e.Member + " desc" : e.Member));
+
+    public static SortDescription[] Parse(string order)
+    {
+        if (!string.IsNullOrWhiteSpace(order))
         {
-            Member = member;
-            IsDescending = isDescending;
-        }
+            var ss = order.Split(',');
+            var list = new List<SortDescription>(ss.Length);
+            var wp = new[] { ' ', '\t', '\r', '\n' };
 
-        public string Member { get; }
-        public bool IsDescending { get; }
-
-        public static string ToString(IEnumerable<SortDescription> sortDescriptions)
-            => sortDescriptions == null ? null : string.Join(",", sortDescriptions.Select(e => e.IsDescending ? e.Member + " desc" : e.Member));
-
-        public static SortDescription[] Parse(string order)
-        {
-            if (!string.IsNullOrWhiteSpace(order))
+            foreach (var s in ss)
             {
-                var ss = order.Split(',');
-                var list = new List<SortDescription>(ss.Length);
-                var wp = new[] { ' ', '\t', '\r', '\n' };
+                var comps = s.Split(wp);
 
-                foreach (var s in ss)
+                var n = comps.FirstOrDefault();
+
+                if (string.IsNullOrWhiteSpace(n) || list.Any(e => e.Member == n))
                 {
-                    var comps = s.Split(wp);
-
-                    var n = comps.FirstOrDefault();
-
-                    if (string.IsNullOrWhiteSpace(n) || list.Any(e => e.Member == n))
-                    {
-                        continue;
-                    }
-
-                    list.Add(new SortDescription(n, "desc".Equals(comps.ElementAtOrDefault(1), StringComparison.InvariantCultureIgnoreCase)));
+                    continue;
                 }
-                if (list.Count > 0)
-                {
-                    return list.ToArray();
-                }
+
+                list.Add(new SortDescription(n, "desc".Equals(comps.ElementAtOrDefault(1), StringComparison.InvariantCultureIgnoreCase)));
             }
-            return null;
+            if (list.Count > 0)
+            {
+                return list.ToArray();
+            }
         }
+        return null;
     }
 }

@@ -1,11 +1,10 @@
-﻿namespace Shipwreck.ViewModelUtils.JSInterop
+﻿namespace Shipwreck.ViewModelUtils.JSInterop;
+
+public sealed class JsonHttpResponse
 {
-    public sealed class JsonHttpResponse
-    {
-        public int Status { get; set; }
+    public int Status { get; set; }
 
-        public string StatusText { get; set; }
+    public string StatusText { get; set; }
 
-        public string ResponseText { get; set; }
-    }
+    public string ResponseText { get; set; }
 }

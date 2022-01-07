@@ -1,59 +1,54 @@
-﻿using System;
-using System.ComponentModel;
-using System.Linq;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public sealed class AllColumnsCommandViewModel : FlagColumnCommandViewModel
 {
-    public sealed class AllColumnsCommandViewModel : FlagColumnCommandViewModel
+    private readonly IHasExtensionColumns _Extensions;
+
+    public AllColumnsCommandViewModel(IHasColumns page)
+        : this(page, page.GetFlags().Aggregate(0L, (s, kv) => s | ((IConvertible)kv.Key).ToInt64(null)))
     {
-        private readonly IHasExtensionColumns _Extensions;
+    }
 
-        public AllColumnsCommandViewModel(IHasColumns page)
-            : this(page, page.GetFlags().Aggregate(0L, (s, kv) => s | ((IConvertible)kv.Key).ToInt64(null)))
+    private AllColumnsCommandViewModel(IHasColumns page, long allFlags)
+        : base(page, allFlags, SR.SelectAll, isSelected: (page.Columns & allFlags) == allFlags)
+    {
+        _Extensions = page as IHasExtensionColumns;
+        if (_Extensions != null)
         {
+            OnColumnsChanged();
         }
+    }
 
-        private AllColumnsCommandViewModel(IHasColumns page, long allFlags)
-            : base(page, allFlags, SR.SelectAll, isSelected: (page.Columns & allFlags) == allFlags)
+    protected override void OnExecute()
+    {
+        base.OnExecute();
+        if (_Extensions != null)
         {
-            _Extensions = page as IHasExtensionColumns;
-            if (_Extensions != null)
-            {
-                OnColumnsChanged();
-            }
+            _Extensions.SelectedExtensionColumns = _Extensions.ExtensionColumns.ToList();
         }
+    }
 
-        protected override void OnExecute()
+    protected override void OnPagePropertyChanged(PropertyChangedEventArgs e)
+    {
+        base.OnPagePropertyChanged(e);
+        if (!IsExecuting
+            && _Extensions != null
+            && e.PropertyName == nameof(IHasExtensionColumns.SelectedExtensionColumns))
         {
-            base.OnExecute();
-            if (_Extensions != null)
-            {
-                _Extensions.SelectedExtensionColumns = _Extensions.ExtensionColumns.ToList();
-            }
+            OnColumnsChanged();
         }
+    }
 
-        protected override void OnPagePropertyChanged(PropertyChangedEventArgs e)
+    protected override void OnColumnsChanged()
+    {
+        if (_Extensions == null)
         {
-            base.OnPagePropertyChanged(e);
-            if (!IsExecuting
-                && _Extensions != null
-                && e.PropertyName == nameof(IHasExtensionColumns.SelectedExtensionColumns))
-            {
-                OnColumnsChanged();
-            }
+            base.OnColumnsChanged();
         }
-
-        protected override void OnColumnsChanged()
+        else
         {
-            if (_Extensions == null)
-            {
-                base.OnColumnsChanged();
-            }
-            else
-            {
-                IsSelected = (Page.Columns & (Value | UnselectValue)) == Value
-                    && !_Extensions.ExtensionColumns.Except(_Extensions.SelectedExtensionColumns).Any();
-            }
+            IsSelected = (Page.Columns & (Value | UnselectValue)) == Value
+                && !_Extensions.ExtensionColumns.Except(_Extensions.SelectedExtensionColumns).Any();
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿namespace Shipwreck.ViewModelUtils.Controls
+﻿namespace Shipwreck.ViewModelUtils.Controls;
+
+public enum PaginatorLinkType : byte
 {
-    public enum PaginatorLinkType : byte
-    {
-        Number,
-        First,
-        Last,
-        Previous,
-        Next,
-    }
+    Number,
+    First,
+    Last,
+    Previous,
+    Next,
 }

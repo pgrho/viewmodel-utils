@@ -1,12 +1,11 @@
-﻿namespace Shipwreck.ViewModelUtils.Components
+﻿namespace Shipwreck.ViewModelUtils.Components;
+
+public enum DateTimePickerMode
 {
-    public enum DateTimePickerMode
-    {
-        Year,
-        Month,
-        Date,
-        Hour,
-        Minute,
-        Second
-    }
+    Year,
+    Month,
+    Date,
+    Hour,
+    Minute,
+    Second
 }

@@ -1,10 +1,9 @@
-﻿namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
+﻿namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework;
+
+public partial class MainWindow
 {
-    public partial class MainWindow
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

@@ -1,12 +1,9 @@
-﻿using UIKit;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public class IosKeyboardService : IKeyboardService
 {
-    public class IosKeyboardService : IKeyboardService
+    public void Hide()
     {
-        public void Hide()
-        {
-            UIApplication.SharedApplication.KeyWindow.EndEditing(true);
-        }
+        UIApplication.SharedApplication.KeyWindow.EndEditing(true);
     }
 }

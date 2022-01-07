@@ -1,8 +1,7 @@
-﻿namespace Shipwreck.ViewModelUtils.Client
+﻿namespace Shipwreck.ViewModelUtils.Client;
+
+public interface IMessageObjectCollection
 {
-    public interface IMessageObjectCollection
-    {
-        FrameworkMessageObject Owner { get; }
-        FrameworkMessageBase Message { get; }
-    }
+    FrameworkMessageObject Owner { get; }
+    FrameworkMessageBase Message { get; }
 }

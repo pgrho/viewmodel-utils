@@ -1,9 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Controls;
-using MahApps.Metro.Controls;
-
-#if NET5_0
+﻿#if NET5_0
 using Notifications.Wpf.Core.Controls;
 #else
 
@@ -11,74 +6,73 @@ using Notifications.Wpf.Controls;
 
 #endif
 
-namespace Shipwreck.ViewModelUtils.Controls
+namespace Shipwreck.ViewModelUtils.Controls;
+
+public class FrameworkWindow : MetroWindow
 {
-    public class FrameworkWindow : MetroWindow
+    public FrameworkWindow()
     {
-        public FrameworkWindow()
-        {
-            Loaded += FrameworkWindow_Loaded;
-            DataContextChanged += FrameworkWindow_DataContextChanged;
-        }
+        Loaded += FrameworkWindow_Loaded;
+        DataContextChanged += FrameworkWindow_DataContextChanged;
+    }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
+    public override void OnApplyTemplate()
+    {
+        base.OnApplyTemplate();
 
-            if (GetTemplateChild("PART_MetroActiveDialogContainer") is FrameworkElement dg && dg.Parent is Grid pg)
+        if (GetTemplateChild("PART_MetroActiveDialogContainer") is FrameworkElement dg && dg.Parent is Grid pg)
+        {
+            _NotificationArea = new FrameworkNotificationArea()
             {
-                _NotificationArea = new FrameworkNotificationArea()
-                {
-                    MaxItems = 3,
-                    Position = NotificationPosition.BottomRight,
-                    Name = "GeneratedNotificationArea_" + GetHashCode()
-                };
-                Grid.SetRow(_NotificationArea, Grid.GetRow(dg));
-                Grid.SetColumn(_NotificationArea, Grid.GetColumn(dg));
-                Grid.SetRowSpan(_NotificationArea, Grid.GetRowSpan(dg));
-                Grid.SetColumnSpan(_NotificationArea, Grid.GetColumnSpan(dg));
-                Panel.SetZIndex(_NotificationArea, Panel.GetZIndex(dg) + 1);
+                MaxItems = 3,
+                Position = NotificationPosition.BottomRight,
+                Name = "GeneratedNotificationArea_" + GetHashCode()
+            };
+            Grid.SetRow(_NotificationArea, Grid.GetRow(dg));
+            Grid.SetColumn(_NotificationArea, Grid.GetColumn(dg));
+            Grid.SetRowSpan(_NotificationArea, Grid.GetRowSpan(dg));
+            Grid.SetColumnSpan(_NotificationArea, Grid.GetColumnSpan(dg));
+            Panel.SetZIndex(_NotificationArea, Panel.GetZIndex(dg) + 1);
 
-                pg.Children.Add(_NotificationArea);
-            }
-            else
-            {
-                _NotificationArea = null;
-            }
+            pg.Children.Add(_NotificationArea);
         }
-
-        private FrameworkNotificationArea _NotificationArea;
-
-        protected internal virtual FrameworkNotificationArea GetNotificationArea()
-            => _NotificationArea;
-
-        private void FrameworkWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
-            => (DataContext as WindowViewModel)?.OnLoaded();
-
-        private void FrameworkWindow_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+        else
         {
-            if (e.OldValue is IRequestFocus of)
-            {
-                of.RequestFocus -= RequestFocus_RequestFocus;
-            }
-            if (e.NewValue is IRequestFocus f)
-            {
-                f.RequestFocus -= RequestFocus_RequestFocus;
-                f.RequestFocus += RequestFocus_RequestFocus;
-            }
+            _NotificationArea = null;
         }
+    }
 
-        private void RequestFocus_RequestFocus(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-            => FocusRequested(e.PropertyName);
+    private FrameworkNotificationArea _NotificationArea;
 
-        protected virtual void FocusRequested(string propertyName)
+    protected internal virtual FrameworkNotificationArea GetNotificationArea()
+        => _NotificationArea;
+
+    private void FrameworkWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        => (DataContext as WindowViewModel)?.OnLoaded();
+
+    private void FrameworkWindow_DataContextChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        if (e.OldValue is IRequestFocus of)
         {
+            of.RequestFocus -= RequestFocus_RequestFocus;
         }
-
-        protected override void OnClosed(EventArgs e)
+        if (e.NewValue is IRequestFocus f)
         {
-            (DataContext as IDisposable)?.Dispose();
-            base.OnClosed(e);
+            f.RequestFocus -= RequestFocus_RequestFocus;
+            f.RequestFocus += RequestFocus_RequestFocus;
         }
+    }
+
+    private void RequestFocus_RequestFocus(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        => FocusRequested(e.PropertyName);
+
+    protected virtual void FocusRequested(string propertyName)
+    {
+    }
+
+    protected override void OnClosed(EventArgs e)
+    {
+        (DataContext as IDisposable)?.Dispose();
+        base.OnClosed(e);
     }
 }

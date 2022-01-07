@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IHasExtensionData
 {
-    public interface IHasExtensionData
-    {
-        bool IsExtensionDataSet { get; }
+    bool IsExtensionDataSet { get; }
 
-        IEnumerable<KeyValuePair<string, string>> GetExtensionData();
-    }
+    IEnumerable<KeyValuePair<string, string>> GetExtensionData();
 }

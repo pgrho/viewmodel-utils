@@ -1,135 +1,128 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public class CommandViewModelCollection : BulkUpdateableCollection<CommandViewModelBase>
 {
-    public class CommandViewModelCollection : BulkUpdateableCollection<CommandViewModelBase>
+    private sealed class Observer : CollectionObserver<CommandViewModelBase, (int visible, int enabled, CommandViewModelBase first)>
     {
-        private sealed class Observer : CollectionObserver<CommandViewModelBase, (int visible, int enabled, CommandViewModelBase first)>
-        {
-            protected override bool OnItemPropertyChanged(string propertyName)
-                => propertyName == nameof(CommandViewModelBase.IsVisible)
-                || propertyName == nameof(CommandViewModelBase.IsEnabled);
+        protected override bool OnItemPropertyChanged(string propertyName)
+            => propertyName == nameof(CommandViewModelBase.IsVisible)
+            || propertyName == nameof(CommandViewModelBase.IsEnabled);
 
-            protected override (int visible, int enabled, CommandViewModelBase first) Calculate()
+        protected override (int visible, int enabled, CommandViewModelBase first) Calculate()
+        {
+            int v = 0, e = 0;
+            CommandViewModelBase first = null;
+            if (Source != null)
             {
-                int v = 0, e = 0;
-                CommandViewModelBase first = null;
-                if (Source != null)
+                foreach (var c in Source)
                 {
-                    foreach (var c in Source)
+                    if (c.IsVisible)
                     {
-                        if (c.IsVisible)
+                        first = first ?? c;
+                        v++;
+                        if (c.IsEnabled)
                         {
-                            first = first ?? c;
-                            v++;
-                            if (c.IsEnabled)
-                            {
-                                e++;
-                            }
+                            e++;
                         }
                     }
                 }
-                return (v, e, first);
             }
-
-            protected override void OnValueChanged()
-            {
-                base.OnValueChanged();
-                (Source as CommandViewModelCollection)?.InvalidateCounts();
-            }
+            return (v, e, first);
         }
 
-        public CommandViewModelCollection()
+        protected override void OnValueChanged()
         {
-            _Observer = new Observer
-            {
-                Source = this
-            };
+            base.OnValueChanged();
+            (Source as CommandViewModelCollection)?.InvalidateCounts();
         }
+    }
 
-        public CommandViewModelCollection(IEnumerable<CommandViewModelBase> items)
-            : base(items)
+    public CommandViewModelCollection()
+    {
+        _Observer = new Observer
         {
-            _Observer = new Observer
-            {
-                Source = this
-            };
+            Source = this
+        };
+    }
 
-            if (Count > 0)
-            {
-                InvalidateCounts();
-            }
+    public CommandViewModelCollection(IEnumerable<CommandViewModelBase> items)
+        : base(items)
+    {
+        _Observer = new Observer
+        {
+            Source = this
+        };
+
+        if (Count > 0)
+        {
+            InvalidateCounts();
         }
+    }
 
-        private readonly Observer _Observer;
+    private readonly Observer _Observer;
 
-        #region VisibleCount
+    #region VisibleCount
 
-        private int _VisibleCount;
+    private int _VisibleCount;
 
-        public int VisibleCount
+    public int VisibleCount
+    {
+        get => _VisibleCount;
+        private set
         {
-            get => _VisibleCount;
-            private set
+            var iv = IsVisible;
+            if (SetProperty(ref _VisibleCount, value))
             {
-                var iv = IsVisible;
-                if (SetProperty(ref _VisibleCount, value))
+                if (iv != IsVisible)
                 {
-                    if (iv != IsVisible)
-                    {
-                        RaisePropertyChanged(nameof(IsVisible));
-                    }
+                    RaisePropertyChanged(nameof(IsVisible));
                 }
             }
         }
+    }
 
-        public bool IsVisible => _VisibleCount > 0;
+    public bool IsVisible => _VisibleCount > 0;
 
-        #endregion VisibleCount
+    #endregion VisibleCount
 
-        #region EnabledCount
+    #region EnabledCount
 
-        private int _EnabledCount;
+    private int _EnabledCount;
 
-        public int EnabledCount
+    public int EnabledCount
+    {
+        get => _EnabledCount;
+        private set => SetProperty(ref _EnabledCount, value);
+    }
+
+    #endregion EnabledCount
+
+    #region FirstCommand
+
+    private CommandViewModelBase _FirstCommand;
+
+    public CommandViewModelBase FirstCommand
+    {
+        get => _FirstCommand;
+        private set => SetProperty(ref _FirstCommand, value);
+    }
+
+    #endregion FirstCommand
+
+    public void Invalidate()
+    {
+        foreach (var c in this)
         {
-            get => _EnabledCount;
-            private set => SetProperty(ref _EnabledCount, value);
+            c.Invalidate();
         }
+        InvalidateCounts();
+    }
 
-        #endregion EnabledCount
-
-        #region FirstCommand
-
-        private CommandViewModelBase _FirstCommand;
-
-        public CommandViewModelBase FirstCommand
-        {
-            get => _FirstCommand;
-            private set => SetProperty(ref _FirstCommand, value);
-        }
-
-        #endregion FirstCommand
-
-        public void Invalidate()
-        {
-            foreach (var c in this)
-            {
-                c.Invalidate();
-            }
-            InvalidateCounts();
-        }
-
-        private void InvalidateCounts()
-        {
-            var c = _Observer.Value;
-            VisibleCount = c.visible;
-            EnabledCount = c.enabled;
-            FirstCommand = c.first;
-        }
+    private void InvalidateCounts()
+    {
+        var c = _Observer.Value;
+        VisibleCount = c.visible;
+        EnabledCount = c.enabled;
+        FirstCommand = c.first;
     }
 }

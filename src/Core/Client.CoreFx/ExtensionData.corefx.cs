@@ -1,9 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace Shipwreck.ViewModelUtils.Client;
 
-namespace Shipwreck.ViewModelUtils.Client
+[JsonConverter(typeof(ExtensionDataJsonConverter))]
+public partial class ExtensionData
 {
-    [JsonConverter(typeof(ExtensionDataJsonConverter))]
-    public partial class ExtensionData
-    {
-    }
 }

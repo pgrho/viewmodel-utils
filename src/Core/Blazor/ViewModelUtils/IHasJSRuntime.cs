@@ -1,9 +1,6 @@
-﻿using Microsoft.JSInterop;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IHasJSRuntime
 {
-    public interface IHasJSRuntime
-    { 
-        IJSRuntime JS { get; }
-    }
+    IJSRuntime JS { get; }
 }

@@ -1,35 +1,31 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+[XamlCompilation(XamlCompilationOptions.Compile)]
+public partial class CommandButton : ContentView
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CommandButton : ContentView
+    public static readonly BindableProperty FontSizeProperty
+        = BindableProperty.Create(
+            nameof(FontSize), typeof(double), typeof(CommandButton),
+            defaultValue: new FontSizeConverter().ConvertFromInvariantString("Default"));
+
+    public static readonly BindableProperty ButtonPaddingProperty
+        = BindableProperty.Create(nameof(ButtonPadding), typeof(Thickness), typeof(CommandButton), defaultValue: new Thickness(8));
+
+    public CommandButton()
     {
-        public static readonly BindableProperty FontSizeProperty
-            = BindableProperty.Create(
-                nameof(FontSize), typeof(double), typeof(CommandButton),
-                defaultValue: new FontSizeConverter().ConvertFromInvariantString("Default"));
+        InitializeComponent();
+    }
 
-        public static readonly BindableProperty ButtonPaddingProperty
-            = BindableProperty.Create(nameof(ButtonPadding), typeof(Thickness), typeof(CommandButton), defaultValue: new Thickness(8));
+    [Xamarin.Forms.TypeConverter(typeof(FontSizeConverter))]
+    public double FontSize
+    {
+        get => (double)GetValue(FontSizeProperty);
+        set => SetValue(FontSizeProperty, value);
+    }
 
-        public CommandButton()
-        {
-            InitializeComponent();
-        }
-
-        [TypeConverter(typeof(FontSizeConverter))]
-        public double FontSize
-        {
-            get => (double)GetValue(FontSizeProperty);
-            set => SetValue(FontSizeProperty, value);
-        }
-
-        public Thickness ButtonPadding
-        {
-            get => (Thickness)GetValue(ButtonPaddingProperty);
-            set => SetValue(ButtonPaddingProperty, value);
-        }
+    public Thickness ButtonPadding
+    {
+        get => (Thickness)GetValue(ButtonPaddingProperty);
+        set => SetValue(ButtonPaddingProperty, value);
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace Shipwreck.ViewModelUtils.Components
+﻿namespace Shipwreck.ViewModelUtils.Components;
+
+public enum PopoverTargetCommandMode
 {
-    public enum PopoverTargetCommandMode
-    {
-        Prepend,
-        Replace
-    }
+    Prepend,
+    Replace
 }

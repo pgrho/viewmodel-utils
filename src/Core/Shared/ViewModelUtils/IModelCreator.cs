@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface IModelCreator<TDest>
 {
-    public interface IModelCreator<TDest>
-    {
-        TDest Create(object host);
-    }
+    TDest Create(object host);
 }

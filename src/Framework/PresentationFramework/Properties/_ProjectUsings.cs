@@ -1,0 +1,9 @@
+﻿global using System.Windows;
+global using System.Windows.Controls;
+global using System.Windows.Controls.Primitives;
+global using System.Windows.Data;
+global using System.Windows.Input;
+global using MahApps.Metro.Controls;
+global using MahApps.Metro.Controls.Dialogs;
+global using Microsoft.WindowsAPICodePack.Shell;
+global using Shipwreck.ViewModelUtils.Controls;

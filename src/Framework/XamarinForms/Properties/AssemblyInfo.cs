@@ -1,6 +1,3 @@
-﻿using Xamarin.Forms;
-using Xamarin.Forms.Internals;
-
-[assembly: XmlnsDefinition(XMLNS.URL, "Shipwreck.ViewModelUtils")]
+﻿[assembly: XmlnsDefinition(XMLNS.URL, "Shipwreck.ViewModelUtils")]
 [assembly: XmlnsPrefix(XMLNS.URL, XMLNS.PREFIX)]
-[assembly: Preserve(AllMembers = true)]
+[assembly: Xamarin.Forms.Internals.Preserve(AllMembers = true)]

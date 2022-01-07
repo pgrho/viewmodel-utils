@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils.JSInterop
+﻿namespace Shipwreck.ViewModelUtils.JSInterop;
+
+public interface IScrollEventListener : IWindowResizeEventListener
 {
-    public interface IScrollEventListener : IWindowResizeEventListener
-    {
-        void OnElementScroll(string jsonScrollInfo);
-    }
+    void OnElementScroll(string jsonScrollInfo);
 }

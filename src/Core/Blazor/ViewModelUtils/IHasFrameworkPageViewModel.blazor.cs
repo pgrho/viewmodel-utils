@@ -1,9 +1,6 @@
-﻿using Microsoft.JSInterop;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public partial interface IHasFrameworkPageViewModel : IHasModalPresenter, IHasPopoverPresenter, IHasJSRuntime
 {
-    public partial interface IHasFrameworkPageViewModel : IHasModalPresenter, IHasPopoverPresenter, IHasJSRuntime
-    {
-        IJSRuntime IHasJSRuntime.JS => Page?.JS;
-    }
+    IJSRuntime IHasJSRuntime.JS => Page?.JS;
 }

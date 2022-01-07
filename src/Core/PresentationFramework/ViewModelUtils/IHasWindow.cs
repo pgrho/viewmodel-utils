@@ -1,9 +1,6 @@
-﻿using System.Windows;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IHasWindow
 {
-    public interface IHasWindow
-    {
-        Window Window { get; }
-    }
+    Window Window { get; }
 }

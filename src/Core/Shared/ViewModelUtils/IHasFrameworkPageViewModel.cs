@@ -1,13 +1,12 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public partial interface IHasFrameworkPageViewModel : IHasInteractionService, IHasPageLogger
 {
-    public partial interface IHasFrameworkPageViewModel : IHasInteractionService, IHasPageLogger
-    {
-        FrameworkPageViewModel Page { get; }
+    FrameworkPageViewModel Page { get; }
 
 #if NETCOREAPP3_0_OR_GREATER
-        IPageLogger IHasPageLogger.Logger => Page?.Logger;
+    IPageLogger IHasPageLogger.Logger => Page?.Logger;
 
-        IInteractionService IHasInteractionService.Interaction => Page?.Interaction;
+    IInteractionService IHasInteractionService.Interaction => Page?.Interaction;
 #endif
-    }
 }

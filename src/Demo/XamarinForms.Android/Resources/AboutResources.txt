@@ -42,7 +42,6 @@ public class Resource {
     public class strings {
         public const int first_string = 0xabc;
         public const int second_string = 0xbcd;
-    }
 }
 
 You would then use R.drawable.icon to reference the drawable/icon.png file, or Resource.layout.main 

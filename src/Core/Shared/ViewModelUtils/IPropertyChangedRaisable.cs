@@ -1,9 +1,6 @@
-﻿using System.ComponentModel;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IPropertyChangedRaisable : INotifyPropertyChanged
 {
-    public interface IPropertyChangedRaisable : INotifyPropertyChanged
-    {
-        void RaisePropertyChanged(string propertyName);
-    }
+    void RaisePropertyChanged(string propertyName);
 }

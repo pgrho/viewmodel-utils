@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-
-namespace Shipwreck.ViewModelUtils.Components
+﻿namespace Shipwreck.ViewModelUtils.Components
 {
     public partial class ConfirmModal : BootstrapModalBase<TaskCompletionSource<bool>>
     {

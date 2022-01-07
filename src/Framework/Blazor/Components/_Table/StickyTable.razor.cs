@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 
-namespace Shipwreck.ViewModelUtils.Components
-{
+namespace Shipwreck.ViewModelUtils.Components;
+
     public partial class StickyTable<T> : ListComponentBase<T>
         where T : class
     {
@@ -30,5 +30,4 @@ namespace Shipwreck.ViewModelUtils.Components
 
         [Parameter]
         public string TheadClass { get; set; } = "thead-dark";
-    }
 }

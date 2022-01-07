@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils.JSInterop
+﻿namespace Shipwreck.ViewModelUtils.JSInterop;
+
+public interface IWindowResizeEventListener
 {
-    public interface IWindowResizeEventListener
-    {
-        void OnWindowResized();
-    }
+    void OnWindowResized();
 }

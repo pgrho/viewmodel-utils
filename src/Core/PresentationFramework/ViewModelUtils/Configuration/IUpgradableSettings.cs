@@ -1,8 +1,8 @@
-﻿namespace Shipwreck.ViewModelUtils.Configuration
+﻿namespace Shipwreck.ViewModelUtils.Configuration;
+
+public interface IUpgradableSettings
 {
-    public interface IUpgradableSettings
-    {
-        bool IsSettingsUpgraded { get; set; }
-        void Upgrade();
-    }
+    bool IsSettingsUpgraded { get; set; }
+
+    void Upgrade();
 }

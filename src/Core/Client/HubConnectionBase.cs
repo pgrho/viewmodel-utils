@@ -1,30 +1,27 @@
-﻿using System;
-using System.Threading.Tasks;
-namespace Shipwreck.ViewModelUtils.Client
+﻿namespace Shipwreck.ViewModelUtils.Client;
+
+public abstract class HubConnectionBase : IDisposable
 {
-    public abstract class HubConnectionBase : IDisposable
+    private protected IFrameworkRealTimeConnection Connection { get; }
+
+    internal HubConnectionBase(IFrameworkRealTimeConnection connection)
+        => Connection = connection;
+
+    public Task StartAsync() => Connection.StartAsync();
+
+    public Task StopAsync() => Connection.StopAsync();
+
+    public async void Dispose()
     {
-        private protected IFrameworkRealTimeConnection Connection { get; }
-
-        internal HubConnectionBase(IFrameworkRealTimeConnection connection)
-            => Connection = connection;
-
-        public Task StartAsync() => Connection.StartAsync();
-
-        public Task StopAsync() => Connection.StopAsync();
-
-        public async void Dispose()
+        try
         {
-            try
-            {
-                await Connection.StopAsync().ConfigureAwait(false);
-            }
-            catch { }
-            try
-            {
-                Connection.Dispose();
-            }
-            catch { }
+            await Connection.StopAsync().ConfigureAwait(false);
         }
+        catch { }
+        try
+        {
+            Connection.Dispose();
+        }
+        catch { }
     }
 }

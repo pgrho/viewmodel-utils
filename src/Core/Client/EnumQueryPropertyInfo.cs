@@ -1,52 +1,49 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
+﻿using System.Collections.ObjectModel;
 
-namespace Shipwreck.ViewModelUtils.Client
+namespace Shipwreck.ViewModelUtils.Client;
+
+[DataContract]
+public partial class EnumQueryPropertyInfo : QueryPropertyInfo
 {
-    [DataContract]
-    public partial class EnumQueryPropertyInfo : QueryPropertyInfo
+    [DataMember]
+    public bool IsFlags { get; set; }
+
+    #region Fields
+
+    private Collection<EnumFieldInfo> _Fields;
+
+    [DataMember]
+    public IList<EnumFieldInfo> Fields
     {
-        [DataMember]
-        public bool IsFlags { get; set; }
-
-        #region Fields
-
-        private Collection<EnumFieldInfo> _Fields;
-
-        [DataMember]
-        public IList<EnumFieldInfo> Fields
+        get => _Fields ??= new Collection<EnumFieldInfo>();
+        set
         {
-            get => _Fields ??= new Collection<EnumFieldInfo>();
-            set
+            if (value != _Fields)
             {
-                if (value != _Fields)
+                _Fields?.Clear();
+                if (value?.Count > 0)
                 {
-                    _Fields?.Clear();
-                    if (value?.Count > 0)
+                    foreach (var e in value)
                     {
-                        foreach (var e in value)
-                        {
-                            Fields.Add(e);
-                        }
+                        Fields.Add(e);
                     }
                 }
             }
         }
+    }
 
-        #endregion Fields
+    #endregion Fields
 
-        protected override QueryPropertyInfo CreateInstance()
-            => new EnumQueryPropertyInfo();
+    protected override QueryPropertyInfo CreateInstance()
+        => new EnumQueryPropertyInfo();
 
-        public override void CopyTo(QueryPropertyInfo other)
+    public override void CopyTo(QueryPropertyInfo other)
+    {
+        base.CopyTo(other);
+        if (other is EnumQueryPropertyInfo d)
         {
-            base.CopyTo(other);
-            if (other is EnumQueryPropertyInfo d)
-            {
-                d.IsFlags = IsFlags;
-                d.Fields = Fields;
-            }
+            d.IsFlags = IsFlags;
+            d.Fields = Fields;
         }
     }
 }

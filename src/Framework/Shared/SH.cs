@@ -1,8 +1,7 @@
-﻿namespace Shipwreck
+﻿namespace Shipwreck;
+
+internal static class SH
 {
-    internal static class SH
-    {
-        public static string TrimOrEmpty(this string s)
-            => s?.TrimEnd();
-    }
+    public static string TrimOrEmpty(this string s)
+        => s?.TrimEnd();
 }

@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IBulkUpdateableItem
 {
-    public interface IBulkUpdateableItem
-    {
-        bool IsNew { get; }
-        bool ShouldSave();
-        void CancelEdit();
-        Task<bool> SaveAsync(bool forceUpdate = false);
-    }
+    bool IsNew { get; }
+    bool ShouldSave();
+    void CancelEdit();
+    Task<bool> SaveAsync(bool forceUpdate = false);
 }

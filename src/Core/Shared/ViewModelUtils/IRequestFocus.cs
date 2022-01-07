@@ -1,9 +1,6 @@
-﻿using System.ComponentModel;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IRequestFocus
 {
-    public interface IRequestFocus
-    {
-        event PropertyChangedEventHandler RequestFocus;
-    }
+    event PropertyChangedEventHandler RequestFocus;
 }

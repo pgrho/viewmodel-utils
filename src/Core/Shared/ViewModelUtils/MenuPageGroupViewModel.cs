@@ -1,43 +1,40 @@
-﻿using System.Linq;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public partial class MenuPageGroupViewModel : ObservableModel
 {
-    public partial class MenuPageGroupViewModel : ObservableModel
+    public MenuPageGroupViewModel(string title)
     {
-        public MenuPageGroupViewModel(string title)
-        {
-            Title = title;
-            Items = new BulkUpdateableCollection<MenuPageItemViewModel>();
-        }
+        Title = title;
+        Items = new BulkUpdateableCollection<MenuPageItemViewModel>();
+    }
 
-        public string Title { get; }
+    public string Title { get; }
 
-        public BulkUpdateableCollection<MenuPageItemViewModel> Items { get; }
+    public BulkUpdateableCollection<MenuPageItemViewModel> Items { get; }
 
-        #region IsVisible
+    #region IsVisible
 
-        private bool _IsVisible;
+    private bool _IsVisible;
 
-        public bool IsVisible
-        {
-            get => _IsVisible;
-            private set => SetProperty(ref _IsVisible, value);
-        }
+    public bool IsVisible
+    {
+        get => _IsVisible;
+        private set => SetProperty(ref _IsVisible, value);
+    }
 
-        #endregion IsVisible
+    #endregion IsVisible
 
-        public MenuPageItemViewModel AddAction(CommandViewModelBase command, bool isExtension = false)
-        {
-            var item = new MenuPageItemViewModel(this, command, isExtension: isExtension);
-            Items.Add(item);
-            Invalidate();
-            return item;
-        }
+    public MenuPageItemViewModel AddAction(CommandViewModelBase command, bool isExtension = false)
+    {
+        var item = new MenuPageItemViewModel(this, command, isExtension: isExtension);
+        Items.Add(item);
+        Invalidate();
+        return item;
+    }
 
-        public MenuPageGroupViewModel Invalidate()
-        {
-            IsVisible = Items.Any(e => e.Command.IsVisible);
-            return this;
-        }
+    public MenuPageGroupViewModel Invalidate()
+    {
+        IsVisible = Items.Any(e => e.Command.IsVisible);
+        return this;
     }
 }

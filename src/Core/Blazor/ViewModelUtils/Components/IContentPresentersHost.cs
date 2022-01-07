@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils.Components
+﻿namespace Shipwreck.ViewModelUtils.Components;
+
+public interface IContentPresentersHost
 {
-    public interface IContentPresentersHost
-    {
-        ContentPresenters ContentPresenters { get; }
-    }
+    ContentPresenters ContentPresenters { get; }
 }

@@ -1,9 +1,5 @@
 ﻿<#@ template language="C#" #>
 <#@ output extension=".cs" #>
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 <#
 foreach (var c in new[]{
     new C("FrameworkPageViewModel") { DefaultTitle = "Title" },

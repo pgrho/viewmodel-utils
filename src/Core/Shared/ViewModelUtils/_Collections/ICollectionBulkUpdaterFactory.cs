@@ -1,8 +1,7 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface ICollectionBulkUpdaterFactory
 {
-    public interface ICollectionBulkUpdaterFactory
-    {
-        BulkUpdateableCollection<T>.CollectionBulkUpdater Create<T>()
-            where T : class;
-    }
+    BulkUpdateableCollection<T>.CollectionBulkUpdater Create<T>()
+        where T : class;
 }

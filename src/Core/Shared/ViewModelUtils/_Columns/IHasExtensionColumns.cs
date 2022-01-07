@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IHasExtensionColumns : IHasColumns
 {
-    public interface IHasExtensionColumns : IHasColumns
-    {
-        BulkUpdateableCollection<string> ExtensionColumns { get; }
-        IReadOnlyList<string> SelectedExtensionColumns { get; set; }
+    BulkUpdateableCollection<string> ExtensionColumns { get; }
+    IReadOnlyList<string> SelectedExtensionColumns { get; set; }
 
-        IEnumerable<string> GetDefaultExtensionColumns();
-    }
+    IEnumerable<string> GetDefaultExtensionColumns();
 }

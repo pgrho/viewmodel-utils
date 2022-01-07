@@ -1,9 +1,8 @@
-﻿namespace Shipwreck.ViewModelUtils.Searching
-{
-    public interface IFrameworkSearchModalViewModel : IFrameworkModalViewModel
-    {
-        IFrameworkSearchPageViewModel SearchPage { get; }
+﻿namespace Shipwreck.ViewModelUtils.Searching;
 
-        void Select(object item);
-    }
+public interface IFrameworkSearchModalViewModel : IFrameworkModalViewModel
+{
+    IFrameworkSearchPageViewModel SearchPage { get; }
+
+    void Select(object item);
 }

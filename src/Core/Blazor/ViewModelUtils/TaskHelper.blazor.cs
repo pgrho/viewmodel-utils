@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public static partial class TaskHelper
 {
-    public static partial class TaskHelper
-    {
-        internal const bool SHOULD_CAPTURE_CONTEXT = false;
-    }
+    internal const bool SHOULD_CAPTURE_CONTEXT = false;
 }

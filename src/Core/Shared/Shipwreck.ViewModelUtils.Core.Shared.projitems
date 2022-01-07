@@ -109,6 +109,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ICommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ParameteredCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\SelectionCommandViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_SharedProjectUsings.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\" />

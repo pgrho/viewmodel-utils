@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils
 {
     partial class FrameworkPageViewModel
     {

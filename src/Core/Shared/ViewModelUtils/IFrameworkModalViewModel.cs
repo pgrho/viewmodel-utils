@@ -1,15 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Threading.Tasks;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IFrameworkModalViewModel : INotifyPropertyChanged, IDisposable, IHasInteractionService, IHasPageLogger
 {
-    public interface IFrameworkModalViewModel : INotifyPropertyChanged, IDisposable, IHasInteractionService, IHasPageLogger
-    {
-        CommandViewModelBase CancelCommand { get; }
+    CommandViewModelBase CancelCommand { get; }
 
-        Task OpenAsync();
+    Task OpenAsync();
 
-        Task CloseAsync();
-    }
+    Task CloseAsync();
 }

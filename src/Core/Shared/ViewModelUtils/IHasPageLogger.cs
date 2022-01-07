@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public partial interface IHasPageLogger
 {
-    public partial interface IHasPageLogger
-    {
-        IPageLogger Logger { get; }
-    }
+    IPageLogger Logger { get; }
 }

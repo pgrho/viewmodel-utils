@@ -1,27 +1,24 @@
-﻿using System.Runtime.Serialization;
+﻿namespace Shipwreck.ViewModelUtils.Client;
 
-namespace Shipwreck.ViewModelUtils.Client
+[DataContract]
+public partial class BooleanQueryPropertyInfo : QueryPropertyInfo
 {
-    [DataContract]
-    public partial class BooleanQueryPropertyInfo : QueryPropertyInfo
+    [DataMember]
+    public string TrueString { get; set; }
+
+    [DataMember]
+    public string FalseString { get; set; }
+
+    protected override QueryPropertyInfo CreateInstance()
+        => new BooleanQueryPropertyInfo();
+
+    public override void CopyTo(QueryPropertyInfo other)
     {
-        [DataMember]
-        public string TrueString { get; set; }
-
-        [DataMember]
-        public string FalseString { get; set; }
-
-        protected override QueryPropertyInfo CreateInstance()
-            => new BooleanQueryPropertyInfo();
-
-        public override void CopyTo(QueryPropertyInfo other)
+        base.CopyTo(other);
+        if (other is BooleanQueryPropertyInfo b)
         {
-            base.CopyTo(other);
-            if (other is BooleanQueryPropertyInfo b)
-            {
-                b.TrueString = TrueString;
-                b.FalseString = FalseString;
-            }
+            b.TrueString = TrueString;
+            b.FalseString = FalseString;
         }
     }
 }

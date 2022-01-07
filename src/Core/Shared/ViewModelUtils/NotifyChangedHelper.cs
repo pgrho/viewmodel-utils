@@ -1,40 +1,38 @@
 ﻿using System.Collections.Specialized;
-using System.ComponentModel;
 
-namespace Shipwreck.ViewModelUtils
+namespace Shipwreck.ViewModelUtils;
+
+public static class NotifyChangedHelper
 {
-    public static class NotifyChangedHelper
+    public static void AddPropertyChanged(this INotifyPropertyChanged obj, PropertyChangedEventHandler handler)
     {
-        public static void AddPropertyChanged(this INotifyPropertyChanged obj, PropertyChangedEventHandler handler)
+        if (obj != null)
         {
-            if (obj != null)
-            {
-                obj.PropertyChanged += handler;
-            }
+            obj.PropertyChanged += handler;
         }
+    }
 
-        public static void RemovePropertyChanged(this INotifyPropertyChanged obj, PropertyChangedEventHandler handler)
+    public static void RemovePropertyChanged(this INotifyPropertyChanged obj, PropertyChangedEventHandler handler)
+    {
+        if (obj != null)
         {
-            if (obj != null)
-            {
-                obj.PropertyChanged -= handler;
-            }
+            obj.PropertyChanged -= handler;
         }
+    }
 
-        public static void AddCollectionChanged(this INotifyCollectionChanged obj, NotifyCollectionChangedEventHandler handler)
+    public static void AddCollectionChanged(this INotifyCollectionChanged obj, NotifyCollectionChangedEventHandler handler)
+    {
+        if (obj != null)
         {
-            if (obj != null)
-            {
-                obj.CollectionChanged += handler;
-            }
+            obj.CollectionChanged += handler;
         }
+    }
 
-        public static void RemoveCollectionChanged(this INotifyCollectionChanged obj, NotifyCollectionChangedEventHandler handler)
+    public static void RemoveCollectionChanged(this INotifyCollectionChanged obj, NotifyCollectionChangedEventHandler handler)
+    {
+        if (obj != null)
         {
-            if (obj != null)
-            {
-                obj.CollectionChanged -= handler;
-            }
+            obj.CollectionChanged -= handler;
         }
     }
 }

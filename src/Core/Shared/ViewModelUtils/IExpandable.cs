@@ -1,8 +1,7 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface IExpandable
 {
-    public interface IExpandable
-    {
-        bool IsExpandable { get; }
-        bool IsExpanded { get; set; }
-    }
+    bool IsExpandable { get; }
+    bool IsExpanded { get; set; }
 }

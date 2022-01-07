@@ -1,9 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿namespace Shipwreck.ViewModelUtils.Client;
 
-namespace Shipwreck.ViewModelUtils.Client
+[DataContract]
+public abstract class FrameworkMessageBase
 {
-    [DataContract]
-    public abstract class FrameworkMessageBase
-    {
-    }
 }

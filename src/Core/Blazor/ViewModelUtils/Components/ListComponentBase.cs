@@ -1,126 +1,152 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using Microsoft.AspNetCore.Components;
 
-namespace Shipwreck.ViewModelUtils.Components
+namespace Shipwreck.ViewModelUtils.Components;
+
+public abstract partial class ListComponentBase<T> : BindableComponentBase
+    where T : class
 {
-    public abstract partial class ListComponentBase<T> : BindableComponentBase
-        where T : class
+    #region Source
+
+    private IList _Source;
+
+    [Parameter]
+    public IList Source
     {
-        #region Source
-
-        private IList _Source;
-
-        [Parameter]
-        public IList Source
+        get => _Source;
+        set
         {
-            get => _Source;
-            set
+            var prev = _Source;
+            if (value != prev)
             {
-                var prev = _Source;
-                if (value != prev)
+                using (BeginUpdate())
                 {
-                    using (BeginUpdate())
+                    if (prev != null)
                     {
-                        if (prev != null)
+                        if (prev is INotifyCollectionChanged nc)
                         {
-                            if (prev is INotifyCollectionChanged nc)
-                            {
-                                nc.CollectionChanged -= Source_CollectionChanged;
-                            }
-                            if (prev is INotifyPropertyChanged np)
-                            {
-                                np.PropertyChanged -= ListComponentBase_PropertyChanged;
-                            }
-
-                            foreach (var e in prev)
-                            {
-                                OnItemRemoved((T)e);
-                            }
+                            nc.CollectionChanged -= Source_CollectionChanged;
                         }
-                        _Source = value;
-                        if (value != null)
+                        if (prev is INotifyPropertyChanged np)
                         {
-                            foreach (var e in value)
-                            {
-                                OnItemAdded((T)e);
-                            }
+                            np.PropertyChanged -= ListComponentBase_PropertyChanged;
+                        }
 
-                            if (value is INotifyCollectionChanged nc)
-                            {
-                                nc.CollectionChanged += Source_CollectionChanged;
-                            }
-                            if (value is INotifyPropertyChanged np)
-                            {
-                                np.PropertyChanged += ListComponentBase_PropertyChanged;
-                            }
+                        foreach (var e in prev)
+                        {
+                            OnItemRemoved((T)e);
+                        }
+                    }
+                    _Source = value;
+                    if (value != null)
+                    {
+                        foreach (var e in value)
+                        {
+                            OnItemAdded((T)e);
+                        }
+
+                        if (value is INotifyCollectionChanged nc)
+                        {
+                            nc.CollectionChanged += Source_CollectionChanged;
+                        }
+                        if (value is INotifyPropertyChanged np)
+                        {
+                            np.PropertyChanged += ListComponentBase_PropertyChanged;
                         }
                     }
                 }
             }
         }
+    }
 
-        private List<T> _Handled;
+    private List<T> _Handled;
 
-        protected virtual void OnItemAdded(T item)
+    protected virtual void OnItemAdded(T item)
+    {
+        if (item is INotifyPropertyChanged n)
         {
-            if (item is INotifyPropertyChanged n)
+            _Handled = _Handled ?? new List<T>();
+            if (!_Handled.Contains(item))
             {
-                _Handled = _Handled ?? new List<T>();
-                if (!_Handled.Contains(item))
-                {
-                    n.PropertyChanged += Item_PropertyChanged;
-                    _Handled.Add(item);
-                }
+                n.PropertyChanged += Item_PropertyChanged;
+                _Handled.Add(item);
+            }
+        }
+    }
+
+    protected virtual void OnItemRemoved(T item)
+    {
+        if (item is INotifyPropertyChanged n)
+        {
+            n.PropertyChanged -= Item_PropertyChanged;
+            _Handled.Remove(item);
+        }
+    }
+
+    protected virtual void OnReset()
+    {
+        if (_Handled != null)
+        {
+            foreach (var item in _Handled.ToArray())
+            {
+                OnItemRemoved(item);
             }
         }
 
-        protected virtual void OnItemRemoved(T item)
+        foreach (var m in Source)
         {
-            if (item is INotifyPropertyChanged n)
-            {
-                n.PropertyChanged -= Item_PropertyChanged;
-                _Handled.Remove(item);
-            }
+            OnItemAdded((T)m);
+        }
+    }
+
+    private void Source_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (_Source != sender)
+        {
+            return;
         }
 
-        protected virtual void OnReset()
+        OnCollectionChanged(e);
+    }
+
+    protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+    {
+        using (BeginUpdate())
         {
-            if (_Handled != null)
+            switch (e.Action)
             {
-                foreach (var item in _Handled.ToArray())
-                {
-                    OnItemRemoved(item);
-                }
-            }
+                case NotifyCollectionChangedAction.Add:
+                    if (e.NewItems != null)
+                    {
+                        foreach (T m in e.NewItems)
+                        {
+                            OnItemAdded(m);
+                        }
+                        StateHasChanged();
+                        return;
+                    }
+                    break;
 
-            foreach (var m in Source)
-            {
-                OnItemAdded((T)m);
-            }
-        }
+                case NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems != null)
+                    {
+                        foreach (T m in e.OldItems)
+                        {
+                            OnItemRemoved(m);
+                        }
+                        StateHasChanged();
+                        return;
+                    }
+                    break;
 
-        private void Source_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (_Source != sender)
-            {
-                return;
-            }
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.OldItems != null)
+                    {
+                        foreach (T m in e.OldItems)
+                        {
+                            OnItemRemoved(m);
+                        }
 
-            OnCollectionChanged(e);
-        }
-
-        protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
-        {
-            using (BeginUpdate())
-            {
-                switch (e.Action)
-                {
-                    case NotifyCollectionChangedAction.Add:
                         if (e.NewItems != null)
                         {
                             foreach (T m in e.NewItems)
@@ -130,87 +156,55 @@ namespace Shipwreck.ViewModelUtils.Components
                             StateHasChanged();
                             return;
                         }
-                        break;
+                    }
+                    break;
 
-                    case NotifyCollectionChangedAction.Remove:
-                        if (e.OldItems != null)
-                        {
-                            foreach (T m in e.OldItems)
-                            {
-                                OnItemRemoved(m);
-                            }
-                            StateHasChanged();
-                            return;
-                        }
-                        break;
-
-                    case NotifyCollectionChangedAction.Replace:
-                        if (e.OldItems != null)
-                        {
-                            foreach (T m in e.OldItems)
-                            {
-                                OnItemRemoved(m);
-                            }
-
-                            if (e.NewItems != null)
-                            {
-                                foreach (T m in e.NewItems)
-                                {
-                                    OnItemAdded(m);
-                                }
-                                StateHasChanged();
-                                return;
-                            }
-                        }
-                        break;
-
-                    case NotifyCollectionChangedAction.Move:
-                        StateHasChanged();
-                        return;
-                }
-
-                OnReset();
-
-                StateHasChanged();
+                case NotifyCollectionChangedAction.Move:
+                    StateHasChanged();
+                    return;
             }
+
+            OnReset();
+
+            StateHasChanged();
         }
-
-        private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (OnItemPropertyChanged((T)sender, e.PropertyName))
-            {
-                StateHasChanged();
-            }
-        }
-
-        private void ListComponentBase_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (OnSourcePropertyChanged(e.PropertyName))
-            {
-                StateHasChanged();
-            }
-        }
-
-        [Parameter]
-        public IEnumerable<string> DependsOnItemProperties { get; set; }
-
-        [Parameter]
-        public IEnumerable<string> IgnoresItemProperties { get; set; }
-
-        protected virtual bool OnItemPropertyChanged(T item, string propertyName)
-        => (DependsOnItemProperties == null && IgnoresItemProperties == null)
-            || (DependsOnItemProperties?.Contains(propertyName) != false && IgnoresItemProperties?.Contains(propertyName) != true);
-
-        protected virtual bool OnSourcePropertyChanged(string propertyName)
-            => propertyName != nameof(Source.Count) && propertyName != "[]";
-
-        #endregion Source
     }
 
-    public abstract partial class ListComponentBase<TDataContext, TItem> : ListComponentBase<TItem>, IBindableComponent
-        where TDataContext : class
-        where TItem : class
+    private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        object IBindableComponent.DataContext => DataContext;
+        if (OnItemPropertyChanged((T)sender, e.PropertyName))
+        {
+            StateHasChanged();
+        }
     }
+
+    private void ListComponentBase_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (OnSourcePropertyChanged(e.PropertyName))
+        {
+            StateHasChanged();
+        }
+    }
+
+    [Parameter]
+    public IEnumerable<string> DependsOnItemProperties { get; set; }
+
+    [Parameter]
+    public IEnumerable<string> IgnoresItemProperties { get; set; }
+
+    protected virtual bool OnItemPropertyChanged(T item, string propertyName)
+    => (DependsOnItemProperties == null && IgnoresItemProperties == null)
+        || (DependsOnItemProperties?.Contains(propertyName) != false && IgnoresItemProperties?.Contains(propertyName) != true);
+
+    protected virtual bool OnSourcePropertyChanged(string propertyName)
+        => propertyName != nameof(Source.Count) && propertyName != "[]";
+
+    #endregion Source
+}
+
+public abstract partial class ListComponentBase<TDataContext, TItem> : ListComponentBase<TItem>, IBindableComponent
+    where TDataContext : class
+    where TItem : class
+{
+    object IBindableComponent.DataContext => DataContext;
 }

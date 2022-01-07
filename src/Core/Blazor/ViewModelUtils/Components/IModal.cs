@@ -1,11 +1,7 @@
-﻿using System;
-using Microsoft.AspNetCore.Components;
+﻿namespace Shipwreck.ViewModelUtils.Components;
 
-namespace Shipwreck.ViewModelUtils.Components
+public interface IModal : IDisposable
 {
-    public interface IModal : IDisposable
-    {
-        ElementReference ModalElement { get; }
-        ModalPresenterBase Presenter { get; set; }
-    }
+    ElementReference ModalElement { get; }
+    ModalPresenterBase Presenter { get; set; }
 }

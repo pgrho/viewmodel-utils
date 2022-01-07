@@ -1,107 +1,103 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IInteractionService
 {
-    public interface IInteractionService
-    {
-        #region InvokeAsync
+    #region InvokeAsync
 
-        bool InvokeRequired { get; }
+    bool InvokeRequired { get; }
 
-        Task InvokeAsync(object context, Action action);
+    Task InvokeAsync(object context, Action action);
 
-        Task<T> InvokeAsync<T>(object context, Func<T> func);
+    Task<T> InvokeAsync<T>(object context, Func<T> func);
 
-        #endregion InvokeAsync
+    #endregion InvokeAsync
 
-        #region Toast
+    #region Toast
 
-        bool SupportsToasts { get; }
+    bool SupportsToasts { get; }
 
-        Task ShowSuccessToastAsync(object context, string message, string title);
+    Task ShowSuccessToastAsync(object context, string message, string title);
 
-        Task ShowErrorToastAsync(object context, string message, string title);
+    Task ShowErrorToastAsync(object context, string message, string title);
 
-        Task ShowWarningToastAsync(object context, string message, string title);
+    Task ShowWarningToastAsync(object context, string message, string title);
 
-        Task ShowInformationToastAsync(object context, string message, string title);
+    Task ShowInformationToastAsync(object context, string message, string title);
 
-        #endregion Toast
+    #endregion Toast
 
-        #region メッセージ
+    #region メッセージ
 
-        bool SupportsMessageBoxes { get; }
+    bool SupportsMessageBoxes { get; }
 
-        Task AlertAsync(
-            object context,
-            string message,
-            string title,
-            string buttonText,
-            BorderStyle? buttonStyle);
+    Task AlertAsync(
+        object context,
+        string message,
+        string title,
+        string buttonText,
+        BorderStyle? buttonStyle);
 
-        Task<bool> ConfirmAsync(
-            object context,
-            string message,
-            string title,
-            string trueText,
-            BorderStyle? trueStyle,
-            string falseText,
-            BorderStyle? falseStyle);
+    Task<bool> ConfirmAsync(
+        object context,
+        string message,
+        string title,
+        string trueText,
+        BorderStyle? trueStyle,
+        string falseText,
+        BorderStyle? falseStyle);
 
-        #endregion メッセージ
+    #endregion メッセージ
 
-        #region ファイル
+    #region ファイル
 
-        bool SupportsFileDialogs { get; }
+    bool SupportsFileDialogs { get; }
 
-        Task<string[]> OpenFilesAsync(
-            object context,
-            string filter,
-            int filterIndex = 0,
-            string fileName = null,
-            string initialDirectory = null,
-            bool multiSelect = false);
+    Task<string[]> OpenFilesAsync(
+        object context,
+        string filter,
+        int filterIndex = 0,
+        string fileName = null,
+        string initialDirectory = null,
+        bool multiSelect = false);
 
-        Task<string> SaveFileAsync(
-            object context,
-            string filter,
-            int filterIndex = 0,
-            string fileName = null,
-            string initialDirectory = null);
+    Task<string> SaveFileAsync(
+        object context,
+        string filter,
+        int filterIndex = 0,
+        string fileName = null,
+        string initialDirectory = null);
 
-        Task<string> OpenDirectoryAsync(
-            object context,
-            string directoryName = null);
+    Task<string> OpenDirectoryAsync(
+        object context,
+        string directoryName = null);
 
-        Task<string> SaveDirectoryAsync(
-            object context,
-            string directoryName = null);
+    Task<string> SaveDirectoryAsync(
+        object context,
+        string directoryName = null);
 
-        #endregion ファイル
+    #endregion ファイル
 
-        #region モーダル
+    #region モーダル
 
-        bool IsModalSupported(object context, Type viewModelType);
+    bool IsModalSupported(object context, Type viewModelType);
 
-        Task OpenModalAsync(object context, object viewModel);
+    Task OpenModalAsync(object context, object viewModel);
 
-        Task CloseModalAsync(object context, object viewModel);
+    Task CloseModalAsync(object context, object viewModel);
 
-        #endregion モーダル
+    #endregion モーダル
 
-        #region ダウンロード
+    #region ダウンロード
 
-        bool SupportsDownload { get; }
+    bool SupportsDownload { get; }
 
-        Task DownloadAsync(
-            object context,
-            string method,
-            string url,
-            string content,
-            string contentType,
-            bool openFile);
+    Task DownloadAsync(
+        object context,
+        string method,
+        string url,
+        string content,
+        string contentType,
+        bool openFile);
 
-        #endregion ダウンロード
-    }
+    #endregion ダウンロード
 }

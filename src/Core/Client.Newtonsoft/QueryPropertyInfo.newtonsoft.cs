@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿namespace Shipwreck.ViewModelUtils.Client;
 
-namespace Shipwreck.ViewModelUtils.Client
+[JsonConverter(typeof(QueryPropertyInfoJsonConverter))]
+public partial class QueryPropertyInfo
 {
-    [JsonConverter(typeof(QueryPropertyInfoJsonConverter))]
-    public partial class QueryPropertyInfo
-    {
-    }
 }

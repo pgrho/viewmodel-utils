@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils.Components
+﻿namespace Shipwreck.ViewModelUtils.Components;
+
+public interface IBindableComponent
 {
-    public interface IBindableComponent
-    {
-        object DataContext { get; }
-    }
+    object DataContext { get; }
 }

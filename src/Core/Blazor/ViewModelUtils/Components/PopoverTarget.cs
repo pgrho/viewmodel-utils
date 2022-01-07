@@ -1,64 +1,61 @@
-﻿using System.Windows.Input;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+﻿using Microsoft.AspNetCore.Components.Web;
 
-namespace Shipwreck.ViewModelUtils.Components
+namespace Shipwreck.ViewModelUtils.Components;
+
+public abstract class PopoverTarget<T> : BindableComponentBase<T>
+    where T : class
 {
-    public abstract class PopoverTarget<T> : BindableComponentBase<T>
-        where T : class
+    protected ElementReference TargetElement { get; set; }
+
+    [CascadingParameter]
+    public IHasPopoverPresenter PopoverPresenterProvider { get; set; }
+
+    [CascadingParameter]
+    public IContainerElementProvider ContainerElementProvider { get; set; }
+
+    [Parameter]
+    public ICommand Command { get; set; }
+
+    [Parameter]
+    public PopoverTargetCommandMode CommandMode { get; set; } = PopoverTargetCommandMode.Replace;
+
+    protected ElementReference ContainerElement => ContainerElementProvider?.Container ?? default;
+
+    protected void OnKeyDown(KeyboardEventArgs e)
     {
-        protected ElementReference TargetElement { get; set; }
-
-        [CascadingParameter]
-        public IHasPopoverPresenter PopoverPresenterProvider { get; set; }
-
-        [CascadingParameter]
-        public IContainerElementProvider ContainerElementProvider { get; set; }
-
-        [Parameter]
-        public ICommand Command { get; set; }
-
-        [Parameter]
-        public PopoverTargetCommandMode CommandMode { get; set; } = PopoverTargetCommandMode.Replace;
-
-        protected ElementReference ContainerElement => ContainerElementProvider?.Container ?? default;
-
-        protected void OnKeyDown(KeyboardEventArgs e)
+        if (ShouldPopover(e))
         {
-            if (ShouldPopover(e))
+            if (Command?.CanExecute(DataContext) == true)
             {
-                if (Command?.CanExecute(DataContext) == true)
+                Command.Execute(DataContext);
+                if (CommandMode == PopoverTargetCommandMode.Replace)
                 {
-                    Command.Execute(DataContext);
-                    if (CommandMode == PopoverTargetCommandMode.Replace)
-                    {
-                        return;
-                    }
+                    return;
                 }
-                ShowPopover(DataContext);
             }
+            ShowPopover(DataContext);
         }
-
-        protected virtual bool ShouldPopover(KeyboardEventArgs e) => e.Key == " " || e.Key == "Enter";
-
-        protected virtual bool ShouldPopover(MouseEventArgs e) => true;
-
-        protected void OnClick(MouseEventArgs e)
-        {
-            if (ShouldPopover(e))
-            {
-                if (Command?.CanExecute(DataContext) == true)
-                {
-                    Command.Execute(DataContext);
-                    if (CommandMode == PopoverTargetCommandMode.Replace)
-                    {
-                        return;
-                    }
-                }
-                ShowPopover(DataContext);
-            }
-        }
-
-        protected abstract void ShowPopover(T dataContext);
     }
+
+    protected virtual bool ShouldPopover(KeyboardEventArgs e) => e.Key == " " || e.Key == "Enter";
+
+    protected virtual bool ShouldPopover(MouseEventArgs e) => true;
+
+    protected void OnClick(MouseEventArgs e)
+    {
+        if (ShouldPopover(e))
+        {
+            if (Command?.CanExecute(DataContext) == true)
+            {
+                Command.Execute(DataContext);
+                if (CommandMode == PopoverTargetCommandMode.Replace)
+                {
+                    return;
+                }
+            }
+            ShowPopover(DataContext);
+        }
+    }
+
+    protected abstract void ShowPopover(T dataContext);
 }

@@ -1,34 +1,33 @@
-﻿namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework
+﻿namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework;
+
+public sealed class ButtonsWindowViewModel : WindowViewModel
 {
-    public sealed class ButtonsWindowViewModel : WindowViewModel
-    {
-        #region DropDownButtons
+    #region DropDownButtons
 
-        #region SingleCommandCollection
+    #region SingleCommandCollection
 
-        private CommandViewModelCollection _SingleCommandCollection;
+    private CommandViewModelCollection _SingleCommandCollection;
 
-        public CommandViewModelCollection SingleCommandCollection
-            => _SingleCommandCollection ??= new CommandViewModelCollection(new[]
-            {
+    public CommandViewModelCollection SingleCommandCollection
+        => _SingleCommandCollection ??= new CommandViewModelCollection(new[]
+        {
                 CommandViewModel.Create(() => ShowSuccessToastAsync("Single"), "Single", style: BorderStyle.Primary)
-            });
+        });
 
-        #endregion SingleCommandCollection
+    #endregion SingleCommandCollection
 
-        #region MultipleCommandCollection
+    #region MultipleCommandCollection
 
-        private CommandViewModelCollection _MultipleCommandCollection;
+    private CommandViewModelCollection _MultipleCommandCollection;
 
-        public CommandViewModelCollection MultipleCommandCollection
-            => _MultipleCommandCollection ??= new CommandViewModelCollection(new[]
-            {
+    public CommandViewModelCollection MultipleCommandCollection
+        => _MultipleCommandCollection ??= new CommandViewModelCollection(new[]
+        {
                 CommandViewModel.Create(() => ShowSuccessToastAsync("Primary"), "Primary", style: BorderStyle.Primary),
                 CommandViewModel.Create(() => ShowSuccessToastAsync("Secondary"), "Secondary", style: BorderStyle.Secondary)
-            });
+        });
 
-        #endregion MultipleCommandCollection
+    #endregion MultipleCommandCollection
 
-        #endregion DropDownButtons
-    }
+    #endregion DropDownButtons
 }

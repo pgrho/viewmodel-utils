@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public partial interface IHasInteractionService
 {
-    public partial interface IHasInteractionService
-    {
-        IInteractionService Interaction { get; }
-    }
+    IInteractionService Interaction { get; }
 }

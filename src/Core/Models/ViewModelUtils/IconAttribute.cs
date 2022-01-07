@@ -1,15 +1,12 @@
-﻿using System;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+[AttributeUsage(AttributeTargets.Field)]
+public class IconAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Field)]
-    public class IconAttribute : Attribute
+    public IconAttribute(string icon)
     {
-        public IconAttribute(string icon)
-        {
-            Icon = icon;
-        }
-
-        public string Icon { get; }
+        Icon = icon;
     }
+
+    public string Icon { get; }
 }

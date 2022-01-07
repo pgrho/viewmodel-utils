@@ -1,11 +1,10 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface ISelectablesHost
 {
-    public interface ISelectablesHost
-    {
-        bool? AllItemsSelected { get; set; }
+    bool? AllItemsSelected { get; set; }
 
-        bool? GetAllItemsSelected(ISelectable item);
+    bool? GetAllItemsSelected(ISelectable item);
 
-        void OnItemSelectionChanged(ISelectable item, bool newValue);
-    }
+    void OnItemSelectionChanged(ISelectable item, bool newValue);
 }

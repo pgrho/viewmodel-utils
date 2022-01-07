@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IHasColumns : IFrameworkPageViewModel
 {
-    public interface IHasColumns : IFrameworkPageViewModel
-    {
-        long DefaultColumns { get; }
-        long Columns { get; set; }
+    long DefaultColumns { get; }
+    long Columns { get; set; }
 
-        IEnumerable<KeyValuePair<Enum, string>> GetFlags();
-    }
+    IEnumerable<KeyValuePair<Enum, string>> GetFlags();
 }

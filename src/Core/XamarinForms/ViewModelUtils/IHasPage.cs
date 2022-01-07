@@ -1,9 +1,6 @@
-﻿using Xamarin.Forms;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IHasPage
 {
-    public interface IHasPage
-    {
-        Page Page { get; }
-    }
+    Page Page { get; }
 }

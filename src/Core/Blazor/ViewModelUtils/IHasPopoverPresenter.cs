@@ -1,9 +1,6 @@
-﻿using Shipwreck.ViewModelUtils.Components;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public interface IHasPopoverPresenter
 {
-    public interface IHasPopoverPresenter
-    {
-        ModalPresenterBase PopoverPresenter { get; }
-    }
+    ModalPresenterBase PopoverPresenter { get; }
 }

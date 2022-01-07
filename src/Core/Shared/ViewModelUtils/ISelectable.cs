@@ -1,8 +1,7 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface ISelectable
 {
-    public interface ISelectable
-    {
-        bool IsSelected { get; set; }
-        void SetIsSelected(bool value, bool notifyHost);
-    }
+    bool IsSelected { get; set; }
+    void SetIsSelected(bool value, bool notifyHost);
 }

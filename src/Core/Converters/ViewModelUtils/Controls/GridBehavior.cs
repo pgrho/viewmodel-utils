@@ -1,27 +1,18 @@
-﻿#if IS_WPF
+﻿namespace Shipwreck.ViewModelUtils.Controls;
 
-using System.Windows;
-using System.Windows.Controls;
-
-#else
-using Xamarin.Forms;
-#endif
-
-namespace Shipwreck.ViewModelUtils.Controls
+public static class GridBehavior
 {
-    public static class GridBehavior
-    {
 #if IS_WPF
 
-        public static readonly DependencyProperty ColumnDefinitionsProperty
-            = DependencyProperty.RegisterAttached(
-                "ColumnDefinitions", typeof(GridLength[]), typeof(GridBehavior),
-                new FrameworkPropertyMetadata(null, (d, e) => OnColumnDefinitionsChanged(d as Grid, e.OldValue, e.NewValue)));
+    public static readonly DependencyProperty ColumnDefinitionsProperty
+        = DependencyProperty.RegisterAttached(
+            "ColumnDefinitions", typeof(GridLength[]), typeof(GridBehavior),
+            new FrameworkPropertyMetadata(null, (d, e) => OnColumnDefinitionsChanged(d as Grid, e.OldValue, e.NewValue)));
 
-        public static readonly DependencyProperty RowDefinitionsProperty
-            = DependencyProperty.RegisterAttached(
-                "RowDefinitions", typeof(GridLength[]), typeof(GridBehavior),
-                new FrameworkPropertyMetadata(null, (d, e) => OnRowDefinitionsChanged(d as Grid, e.OldValue, e.NewValue)));
+    public static readonly DependencyProperty RowDefinitionsProperty
+        = DependencyProperty.RegisterAttached(
+            "RowDefinitions", typeof(GridLength[]), typeof(GridBehavior),
+            new FrameworkPropertyMetadata(null, (d, e) => OnRowDefinitionsChanged(d as Grid, e.OldValue, e.NewValue)));
 
 #else
 
@@ -37,70 +28,69 @@ namespace Shipwreck.ViewModelUtils.Controls
 
 #endif
 
-        #region ColumnDefinitions
+    #region ColumnDefinitions
 
-        public static GridLength[] GetColumnDefinitions(Grid obj)
-            => (GridLength[])obj.GetValue(ColumnDefinitionsProperty);
+    public static GridLength[] GetColumnDefinitions(Grid obj)
+        => (GridLength[])obj.GetValue(ColumnDefinitionsProperty);
 
-        public static void SetColumnDefinitions(Grid obj, GridLength[] value)
-            => obj.SetValue(ColumnDefinitionsProperty, value);
+    public static void SetColumnDefinitions(Grid obj, GridLength[] value)
+        => obj.SetValue(ColumnDefinitionsProperty, value);
 
-        private static void OnColumnDefinitionsChanged(Grid g, object oldValue, object newValue)
+    private static void OnColumnDefinitionsChanged(Grid g, object oldValue, object newValue)
+    {
+        if (g != null)
         {
-            if (g != null)
+            var v = newValue as GridLength[];
+            if (v?.Length > 0)
             {
-                var v = newValue as GridLength[];
-                if (v?.Length > 0)
+                g.ColumnDefinitions.Clear();
+                foreach (var l in v)
                 {
-                    g.ColumnDefinitions.Clear();
-                    foreach (var l in v)
+                    g.ColumnDefinitions.Add(new ColumnDefinition()
                     {
-                        g.ColumnDefinitions.Add(new ColumnDefinition()
-                        {
-                            Width = l
-                        });
-                    }
-                }
-                else
-                {
-                    g.ColumnDefinitions.Clear();
+                        Width = l
+                    });
                 }
             }
-        }
-
-        #endregion ColumnDefinitions
-
-        #region RowDefinitions
-
-        public static GridLength[] GetRowDefinitions(Grid obj)
-            => (GridLength[])obj.GetValue(RowDefinitionsProperty);
-
-        public static void SetRowDefinitions(Grid obj, GridLength[] value)
-            => obj.SetValue(RowDefinitionsProperty, value);
-
-        private static void OnRowDefinitionsChanged(Grid g, object oldValue, object newValue)
-        {
-            if (g != null)
+            else
             {
-                var v = newValue as GridLength[];
-                if (v?.Length > 0)
-                {
-                    g.RowDefinitions.Clear();
-                    foreach (var l in v)
-                    {
-                        g.RowDefinitions.Add(new RowDefinition()
-                        {
-                            Height = l
-                        });
-                    }
-                }
-                else
-                {
-                    g.RowDefinitions.Clear();
-                }
+                g.ColumnDefinitions.Clear();
             }
         }
-
-        #endregion RowDefinitions
     }
+
+    #endregion ColumnDefinitions
+
+    #region RowDefinitions
+
+    public static GridLength[] GetRowDefinitions(Grid obj)
+        => (GridLength[])obj.GetValue(RowDefinitionsProperty);
+
+    public static void SetRowDefinitions(Grid obj, GridLength[] value)
+        => obj.SetValue(RowDefinitionsProperty, value);
+
+    private static void OnRowDefinitionsChanged(Grid g, object oldValue, object newValue)
+    {
+        if (g != null)
+        {
+            var v = newValue as GridLength[];
+            if (v?.Length > 0)
+            {
+                g.RowDefinitions.Clear();
+                foreach (var l in v)
+                {
+                    g.RowDefinitions.Add(new RowDefinition()
+                    {
+                        Height = l
+                    });
+                }
+            }
+            else
+            {
+                g.RowDefinitions.Clear();
+            }
+        }
+    }
+
+    #endregion RowDefinitions
 }

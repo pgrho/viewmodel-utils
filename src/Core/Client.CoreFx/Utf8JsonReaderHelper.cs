@@ -1,41 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.Json;
+﻿namespace Shipwreck.ViewModelUtils.Client;
 
-namespace Shipwreck.ViewModelUtils.Client
+internal static class Utf8JsonReaderHelper
 {
-    internal static class Utf8JsonReaderHelper
+    public static List<string> ReadStringList(this ref Utf8JsonReader reader)
     {
-        public static List<string> ReadStringList(this ref Utf8JsonReader reader)
+        if (!reader.Read())
         {
-            if (!reader.Read())
+            throw new InvalidOperationException();
+        }
+        if (reader.TokenType == JsonTokenType.Null)
+        {
+            return null;
+        }
+        else if (reader.TokenType == JsonTokenType.StartArray)
+        {
+            List<string> list = null;
+            for (; ; )
             {
-                throw new InvalidOperationException();
-            }
-            if (reader.TokenType == JsonTokenType.Null)
-            {
-                return null;
-            }
-            else if (reader.TokenType == JsonTokenType.StartArray)
-            {
-                List<string> list = null;
-                for (; ; )
+                if (!reader.Read())
                 {
-                    if (!reader.Read())
-                    {
-                        throw new InvalidOperationException();
-                    }
-                    if (reader.TokenType == JsonTokenType.EndArray)
-                    {
-                        return list;
-                    }
-                    (list ??= new List<string>()).Add(reader.ReadString());
+                    throw new InvalidOperationException();
                 }
+                if (reader.TokenType == JsonTokenType.EndArray)
+                {
+                    return list;
+                }
+                (list ??= new List<string>()).Add(reader.ReadString());
             }
-            else
-            {
-                throw new InvalidOperationException();
-            }
+        }
+        else
+        {
+            throw new InvalidOperationException();
         }
     }
 }

@@ -1,42 +1,38 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿namespace Shipwreck.ViewModelUtils.Client;
 
-namespace Shipwreck.ViewModelUtils.Client
+[JsonConverter(typeof(QueryPropertyInfoJsonConverter))]
+public partial class EnumQueryPropertyInfo
 {
-    [JsonConverter(typeof(QueryPropertyInfoJsonConverter))]
-    public partial class EnumQueryPropertyInfo
+    protected internal static bool TryReadProperty(ref Utf8JsonReader reader, EnumQueryPropertyInfo obj, JsonSerializerOptions options)
     {
-        protected internal static bool TryReadProperty(ref Utf8JsonReader reader, EnumQueryPropertyInfo obj, JsonSerializerOptions options)
+        if (reader.ValueTextEquals(nameof(obj.IsFlags)))
         {
-            if (reader.ValueTextEquals(nameof(obj.IsFlags)))
-            {
-                obj.IsFlags = reader.ReadBoolean();
-                return true;
-            }
-            if (reader.ValueTextEquals(nameof(obj.Fields)))
-            {
-                obj.Fields = new EnumFieldInfoJsonConverter().ReadList(ref reader, options);
-                return true;
-            }
-
-            return QueryPropertyInfo.TryReadProperty(ref reader, obj, options);
+            obj.IsFlags = reader.ReadBoolean();
+            return true;
+        }
+        if (reader.ValueTextEquals(nameof(obj.Fields)))
+        {
+            obj.Fields = new EnumFieldInfoJsonConverter().ReadList(ref reader, options);
+            return true;
         }
 
-        protected internal static void WriteProperties(Utf8JsonWriter writer, EnumQueryPropertyInfo value, JsonSerializerOptions options)
-        {
-            writer.WriteBoolean(nameof(value.IsFlags), value.IsFlags);
+        return QueryPropertyInfo.TryReadProperty(ref reader, obj, options);
+    }
 
-            if (value.Fields != null)
+    protected internal static void WriteProperties(Utf8JsonWriter writer, EnumQueryPropertyInfo value, JsonSerializerOptions options)
+    {
+        writer.WriteBoolean(nameof(value.IsFlags), value.IsFlags);
+
+        if (value.Fields != null)
+        {
+            writer.WritePropertyName(nameof(value.Fields));
+            writer.WriteStartArray();
+            foreach (var e in value.Fields)
             {
-                writer.WritePropertyName(nameof(value.Fields));
-                writer.WriteStartArray();
-                foreach (var e in value.Fields)
-                {
-                    new EnumFieldInfoJsonConverter().Write(writer, e, options);
-                }
-                writer.WriteEndArray();
+                new EnumFieldInfoJsonConverter().Write(writer, e, options);
             }
-            QueryPropertyInfo.WriteProperties(writer, value, options);
+            writer.WriteEndArray();
         }
+        QueryPropertyInfo.WriteProperties(writer, value, options);
     }
 }

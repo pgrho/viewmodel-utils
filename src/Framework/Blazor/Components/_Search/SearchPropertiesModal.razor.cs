@@ -1,8 +1,7 @@
 ﻿using Shipwreck.ViewModelUtils.Searching;
 
-namespace Shipwreck.ViewModelUtils.Components
+namespace Shipwreck.ViewModelUtils.Components;
+
+public partial class SearchPropertiesModal : BootstrapModalBase<SearchPropertiesModalViewModel>
 {
-    public partial class SearchPropertiesModal : BootstrapModalBase<SearchPropertiesModalViewModel>
-    {
-    }
 }

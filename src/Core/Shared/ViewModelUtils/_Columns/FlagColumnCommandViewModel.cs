@@ -1,74 +1,71 @@
-﻿using System.ComponentModel;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public class FlagColumnCommandViewModel : SelectionCommandViewModelBase
 {
-    public class FlagColumnCommandViewModel : SelectionCommandViewModelBase
+    public FlagColumnCommandViewModel(IHasColumns page, long value, string title, bool isSelected = false, long unselectValue = 0)
+        : base(title: title, isSelected: isSelected)
     {
-        public FlagColumnCommandViewModel(IHasColumns page, long value, string title, bool isSelected = false, long unselectValue = 0)
-            : base(title: title, isSelected: isSelected)
+        Page = page;
+        Value = value;
+        UnselectValue = unselectValue;
+        Invalidate();
+        Page.PropertyChanged += Page_PropertyChanged;
+    }
+
+    internal IHasColumns Page { get; }
+
+    internal long Value { get; private protected set; }
+    internal long UnselectValue { get; private protected set; }
+
+    public override void Execute()
+    {
+        if (IsEnabled)
         {
-            Page = page;
-            Value = value;
-            UnselectValue = unselectValue;
-            Invalidate();
-            Page.PropertyChanged += Page_PropertyChanged;
+            IsExecuting = true;
+            OnExecute();
+            IsExecuting = false;
         }
+    }
 
-        internal IHasColumns Page { get; }
+    protected virtual void OnExecute()
+    {
+        var c = Page.Columns;
 
-        internal long Value { get; private protected set; }
-        internal long UnselectValue { get; private protected set; }
-
-        public override void Execute()
+        if (IsSelected)
         {
-            if (IsEnabled)
-            {
-                IsExecuting = true;
-                OnExecute();
-                IsExecuting = false;
-            }
+            c = (c & ~Value) | UnselectValue;
+            IsSelected = false;
         }
-
-        protected virtual void OnExecute()
+        else
         {
-            var c = Page.Columns;
-
-            if (IsSelected)
-            {
-                c = (c & ~Value) | UnselectValue;
-                IsSelected = false;
-            }
-            else
-            {
-                c = (c | Value) & ~UnselectValue;
-                IsSelected = true;
-            }
-            Page.Columns = c;
+            c = (c | Value) & ~UnselectValue;
+            IsSelected = true;
         }
+        Page.Columns = c;
+    }
 
-        private void Page_PropertyChanged(object sender, PropertyChangedEventArgs e)
-            => OnPagePropertyChanged(e);
+    private void Page_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        => OnPagePropertyChanged(e);
 
-        protected virtual void OnPagePropertyChanged(PropertyChangedEventArgs e)
+    protected virtual void OnPagePropertyChanged(PropertyChangedEventArgs e)
+    {
+        if (!IsExecuting && e.PropertyName == nameof(IHasColumns.Columns))
         {
-            if (!IsExecuting && e.PropertyName == nameof(IHasColumns.Columns))
-            {
-                OnColumnsChanged();
-            }
+            OnColumnsChanged();
         }
+    }
 
-        protected virtual void OnColumnsChanged()
-        {
-            IsSelected = (Page.Columns & (Value | UnselectValue)) == Value;
-        }
+    protected virtual void OnColumnsChanged()
+    {
+        IsSelected = (Page.Columns & (Value | UnselectValue)) == Value;
+    }
 
-        protected override void Dispose(bool disposing)
+    protected override void Dispose(bool disposing)
+    {
+        base.Dispose(disposing);
+        if (disposing)
         {
-            base.Dispose(disposing);
-            if (disposing)
-            {
-                Page.PropertyChanged -= Page_PropertyChanged;
-            }
+            Page.PropertyChanged -= Page_PropertyChanged;
         }
     }
 }

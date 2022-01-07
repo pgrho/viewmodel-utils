@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿namespace Shipwreck.ViewModelUtils.Components;
 
-namespace Shipwreck.ViewModelUtils.Components
+public interface IContainerElementProvider
 {
-    public interface IContainerElementProvider
-    {
-        ElementReference Container { get; }
-    }
+    ElementReference Container { get; }
 }

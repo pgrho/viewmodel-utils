@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace Shipwreck.ViewModelUtils.Searching;
 
-namespace Shipwreck.ViewModelUtils.Searching
+public interface IOptionsConditionViewModel
 {
-    public interface IOptionsConditionViewModel
-    {
-        string DisplayName { get; }
-        Type ValueType { get; }
-    }
+    string DisplayName { get; }
+    Type ValueType { get; }
 }

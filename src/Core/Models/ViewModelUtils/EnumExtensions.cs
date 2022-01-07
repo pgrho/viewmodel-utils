@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿namespace Shipwreck.ViewModelUtils;
 
-namespace Shipwreck.ViewModelUtils
+public static partial class EnumExtensions
 {
-    public static partial class EnumExtensions
+    private static class EnumInfo<T>
+        where T : struct, Enum, IConvertible
     {
-        private static class EnumInfo<T>
-            where T : struct, Enum, IConvertible
+        internal static readonly Dictionary<T, string> Icons;
+
+        static EnumInfo()
         {
-            internal static readonly Dictionary<T, string> Icons;
-
-            static EnumInfo()
+            Icons = new Dictionary<T, string>();
+            foreach (var f in typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static))
             {
-                Icons = new Dictionary<T, string>();
-                foreach (var f in typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static))
-                {
-                    var v = (T)f.GetValue(null);
+                var v = (T)f.GetValue(null);
 
-                    var icon = f.GetCustomAttribute<IconAttribute>()?.Icon;
-                    if (!string.IsNullOrEmpty(icon))
-                    {
-                        Icons[v] = icon;
-                    }
+                var icon = f.GetCustomAttribute<IconAttribute>()?.Icon;
+                if (!string.IsNullOrEmpty(icon))
+                {
+                    Icons[v] = icon;
                 }
             }
         }
-
-        public static string GetIcon<T>(this T value)
-            where T : struct, Enum, IConvertible
-            => EnumInfo<T>.Icons.TryGetValue(value, out var s) ? s : null;
     }
+
+    public static string GetIcon<T>(this T value)
+        where T : struct, Enum, IConvertible
+        => EnumInfo<T>.Icons.TryGetValue(value, out var s) ? s : null;
 }

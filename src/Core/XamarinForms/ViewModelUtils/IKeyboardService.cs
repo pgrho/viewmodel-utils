@@ -1,7 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface IKeyboardService
 {
-    public interface IKeyboardService
-    {
-        void Hide();
-    }
+    void Hide();
 }
