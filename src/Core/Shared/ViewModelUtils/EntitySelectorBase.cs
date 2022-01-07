@@ -169,7 +169,7 @@ namespace Shipwreck.ViewModelUtils
         public virtual void InvalidateItems()
             => CreateItemsTask().GetHashCode();
 
-        protected void SetItems(IReadOnlyList<TItem> items)
+        protected virtual void SetItems(IReadOnlyList<TItem> items)
         {
             if (!items.SequenceEqual(Items))
             {
