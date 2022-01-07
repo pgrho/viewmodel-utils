@@ -2,10 +2,10 @@
 
 public abstract class HubConnectionBase : IDisposable
 {
-    private protected IFrameworkRealTimeConnection Connection { get; }
-
-    internal HubConnectionBase(IFrameworkRealTimeConnection connection)
+    protected HubConnectionBase(IFrameworkRealTimeConnection connection)
         => Connection = connection;
+
+    protected IFrameworkRealTimeConnection Connection { get; }
 
     public Task StartAsync() => Connection.StartAsync();
 
