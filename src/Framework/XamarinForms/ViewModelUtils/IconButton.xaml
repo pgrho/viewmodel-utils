@@ -7,6 +7,10 @@
     xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.XamarinForms"
     xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.XamarinForms"
     x:Class="Shipwreck.ViewModelUtils.IconButton">
+    <ContentView.Resources>
+        <vmuf:BorderStyleToColorSchemeConverter
+            x:Key="BorderStyleToColorSchemeConverter" />
+    </ContentView.Resources>
     <ContentView.Content>
         <bs4:ButtonFrame
             x:Name="frame"
@@ -15,7 +19,7 @@
             Padding="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=ButtonPadding}"
             IsOpaque="False"
             HasBorder="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=HasBorder}"
-            Scheme="{Binding Style, Converter={StaticResource ColorSchemeConverter}}"
+            Scheme="{Binding Style, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
             IsEnabled="{Binding IsEnabled}">
             <bs4:ButtonFrame.Triggers>
                 <DataTrigger
