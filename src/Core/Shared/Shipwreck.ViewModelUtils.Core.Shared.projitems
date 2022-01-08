@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IEntitySelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IKeyDownHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPopoverCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPropertyChangedRaisable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IFrameworkSearchModalViewModel.cs" />
