@@ -33,6 +33,7 @@
                 Keyboard="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Keyboard}"
                 TextColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}"
                 PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=PlaceholderColor}"
+                IsKeyboardEnabled="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}"
                 Text="{Binding Code}"
                 Opacity="0"
                 ReturnCommand="{Binding SelectCommand}"

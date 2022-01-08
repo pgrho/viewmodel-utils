@@ -17,9 +17,10 @@ public class SelectableEntryRenderer : EntryRenderer
         if (Control != null)
         {
             Control.SetSelectAllOnFocus((Element as SelectableEntry)?.SelectAllOnFocus ?? false);
+            Control.ShowSoftInputOnFocus = (Element as SelectableEntry)?.IsKeyboardEnabled ?? true;
         }
     }
-
+  
     protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         base.OnElementPropertyChanged(sender, e);
@@ -38,6 +39,10 @@ public class SelectableEntryRenderer : EntryRenderer
 
                 case nameof(SelectableEntry.SelectAllOnFocus):
                     Control.SetSelectAllOnFocus((Element as SelectableEntry)?.SelectAllOnFocus ?? false);
+                    break;
+
+                case nameof(SelectableEntry.IsKeyboardEnabled):
+                    Control.ShowSoftInputOnFocus = (Element as SelectableEntry)?.IsKeyboardEnabled ?? true;
                     break;
             }
         }

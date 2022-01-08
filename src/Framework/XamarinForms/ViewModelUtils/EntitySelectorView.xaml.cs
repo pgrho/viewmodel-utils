@@ -58,6 +58,23 @@ public partial class EntitySelectorView
         set => SetValue(PlaceholderColorProperty, value);
     }
 
+    #region IsKeyboardEnabled
+
+    public static readonly BindableProperty IsKeyboardEnabledProperty
+        = BindableProperty.Create(
+            nameof(IsKeyboardEnabled),
+            typeof(bool),
+            typeof(EntitySelectorView),
+            defaultValue: true);
+
+    public bool IsKeyboardEnabled
+    {
+        get => (bool)GetValue(IsKeyboardEnabledProperty);
+        set => SetValue(IsKeyboardEnabledProperty, value);
+    }
+
+    #endregion IsKeyboardEnabled
+
     #region ShowListCommand
 
     private CommandViewModelBase _ShowListCommand;
