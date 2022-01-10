@@ -16,31 +16,61 @@ public class SelectableEntryRenderer : EntryRenderer
 
         if (Control != null)
         {
-            Control.SetSelectAllOnFocus((Element as SelectableEntry)?.SelectAllOnFocus ?? false);
             Control.ShowSoftInputOnFocus = (Element as SelectableEntry)?.IsKeyboardEnabled ?? true;
         }
     }
-  
+
+    private bool _IsFocusing;
+
     protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
+        if (Control != null && Element != null)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(SelectableEntry.IsFocused):
+                    if (Element.IsFocused
+                        && (Element as SelectableEntry)?.SelectAllOnFocus == true
+                        && Control.RequestFocus())
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            try
+                            {
+                                _IsFocusing = true;
+
+                                ((SelectableEntry)Element).CursorPosition = 0;
+                                ((SelectableEntry)Element).SelectionLength = Element.Text?.Length ?? 0;
+                                Control.SelectAll();
+                            }
+                            finally
+                            {
+                                _IsFocusing = false;
+                            }
+                        });
+                    }
+                    return;
+
+                case nameof(SelectableEntry.CursorPosition):
+                case nameof(SelectableEntry.SelectionLength):
+
+                    if (Control.IsFocused && !_IsFocusing)
+                    {
+                        var start = Math.Max(0, Element.CursorPosition);
+                        var stop = Math.Min(Element.Text?.Length ?? 0, Element.CursorPosition + Element.SelectionLength);
+                        Control.SetSelection(start, stop);
+                    }
+
+                    return;
+            }
+        }
+
         base.OnElementPropertyChanged(sender, e);
 
         if (Control != null && Element != null)
         {
             switch (e.PropertyName)
             {
-                case nameof(SelectableEntry.CursorPosition):
-                case nameof(SelectableEntry.SelectionLength):
-                    Control.RequestFocus();
-                    Control.SetSelection(
-                        Math.Max(0, Element.CursorPosition),
-                        Math.Min(Element.Text?.Length ?? 0, Element.CursorPosition + Element.SelectionLength));
-                    break;
-
-                case nameof(SelectableEntry.SelectAllOnFocus):
-                    Control.SetSelectAllOnFocus((Element as SelectableEntry)?.SelectAllOnFocus ?? false);
-                    break;
-
                 case nameof(SelectableEntry.IsKeyboardEnabled):
                     Control.ShowSoftInputOnFocus = (Element as SelectableEntry)?.IsKeyboardEnabled ?? true;
                     break;
