@@ -19,32 +19,47 @@ public static class SelectableEntryHelper
                 var nt = new string(fl.Where(func).ToArray());
 
                 string text;
-                int cp, sl;
+                int cursorPosition, selectionLength;
                 if (replaceText)
                 {
                     text = nt;
-                    cp = 0;
-                    sl = text.Length;
+                    cursorPosition = 0;
+                    selectionLength = text.Length;
                 }
                 else if (entry.IsFocused)
                 {
                     text = entry.Text;
-                    cp = entry.CursorPosition;
-                    sl = entry.SelectionLength;
-                    text = text.Substring(0, cp) + nt + text.Substring(cp + sl);
-                    cp += nt.Length;
-                    sl = 0;
+                    cursorPosition = entry.CursorPosition;
+                    selectionLength = entry.SelectionLength;
+                    text = text.Substring(0, cursorPosition) + nt + text.Substring(cursorPosition + selectionLength);
+                    cursorPosition += nt.Length;
+                    selectionLength = 0;
                 }
                 else
                 {
                     text = entry.Text + nt;
-                    cp = text.Length;
-                    sl = 0;
+                    cursorPosition = text.Length;
+                    selectionLength = 0;
                 }
 
                 entry.Text = text;
-                entry.CursorPosition = cp;
-                entry.SelectionLength = sl;
+                if (entry.IsFocused)
+                {
+                    entry.CursorPosition = cursorPosition;
+                    entry.SelectionLength = selectionLength;
+                }
+                else
+                {
+                    var sa = entry.SelectAllOnFocus;
+                    entry.SelectAllOnFocus = false;
+                    entry.Focus();
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        entry.CursorPosition = cursorPosition;
+                        entry.SelectionLength = selectionLength;
+                        entry.SelectAllOnFocus = sa;
+                    });
+                }
             }
 
             if (lines.Length > 1)
