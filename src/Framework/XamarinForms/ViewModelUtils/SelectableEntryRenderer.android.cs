@@ -1,4 +1,5 @@
 ﻿using Shipwreck.ViewModelUtils;
+using Application = Android.App.Application;
 
 [assembly: ExportRenderer(typeof(SelectableEntry), typeof(SelectableEntryRenderer))]
 namespace Shipwreck.ViewModelUtils;
@@ -20,6 +21,7 @@ public class SelectableEntryRenderer : EntryRenderer
         }
     }
 
+    protected new SelectableEntry Element => (SelectableEntry)base.Element;
     private bool _IsFocusing;
 
     protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -30,7 +32,7 @@ public class SelectableEntryRenderer : EntryRenderer
             {
                 case nameof(SelectableEntry.IsFocused):
                     if (Element.IsFocused
-                        && (Element as SelectableEntry)?.SelectAllOnFocus == true
+                        && Element?.SelectAllOnFocus == true
                         && Control.RequestFocus())
                     {
                         Device.BeginInvokeOnMainThread(() =>
@@ -39,15 +41,21 @@ public class SelectableEntryRenderer : EntryRenderer
                             {
                                 _IsFocusing = true;
 
-                                ((SelectableEntry)Element).CursorPosition = 0;
-                                ((SelectableEntry)Element).SelectionLength = Element.Text?.Length ?? 0;
+                                Element.CursorPosition = 0;
+                                Element.SelectionLength = Element.Text?.Length ?? 0;
                                 Control.SelectAll();
+
+                                HideSoftInput();
                             }
                             finally
                             {
                                 _IsFocusing = false;
                             }
                         });
+                    }
+                    else
+                    {
+                        HideSoftInput();
                     }
                     return;
 
@@ -72,9 +80,29 @@ public class SelectableEntryRenderer : EntryRenderer
             switch (e.PropertyName)
             {
                 case nameof(SelectableEntry.IsKeyboardEnabled):
-                    Control.ShowSoftInputOnFocus = (Element as SelectableEntry)?.IsKeyboardEnabled ?? true;
+                    Control.ShowSoftInputOnFocus = Element?.IsKeyboardEnabled ?? true;
+                    HideSoftInput();
+                    break;
+
+                case nameof(SelectableEntry.IsFocused):
+                    HideSoftInput();
                     break;
             }
         }
+    }
+
+    private void HideSoftInput()
+    {
+        try
+        {
+            if (!Control.ShowSoftInputOnFocus && Control.IsFocused)
+            {
+                if (Application.Context?.GetSystemService(Context.InputMethodService) is InputMethodManager imm)
+                {
+                    imm.HideSoftInputFromWindow(Control.WindowToken, HideSoftInputFlags.None);
+                }
+            }
+        }
+        catch { }
     }
 }
