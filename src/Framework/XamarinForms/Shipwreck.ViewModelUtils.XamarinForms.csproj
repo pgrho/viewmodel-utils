@@ -1,65 +1,65 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/3.0.23">
 
-    <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <RootNamespace>Shipwreck</RootNamespace>
-        <AndroidResgenNamespace>Shipwreck.ViewModelUtils</AndroidResgenNamespace>
-        <IsRemoteBuild>false</IsRemoteBuild>
-        <DefineConstants>$(DefineConstants);IS_XAMARIN_FORMS</DefineConstants>
-        <LangVersion>10.0</LangVersion>
-    </PropertyGroup>
-    <ItemGroup>
-        <Compile Remove="..\..\_GlobalUsings.cs"   />
-        <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
-        <Compile Remove="**\*.android.cs" />
-        <Compile Remove="**\*.ios.cs" />
-        <None Include="**\*.android.cs" />
-        <None Include="**\*.ios.cs" />
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Shipwreck</RootNamespace>
+    <AndroidResgenNamespace>Shipwreck.ViewModelUtils</AndroidResgenNamespace>
+    <IsRemoteBuild>false</IsRemoteBuild>
+    <DefineConstants>$(DefineConstants);IS_XAMARIN_FORMS</DefineConstants>
+    <LangVersion>10.0</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="..\..\_GlobalUsings.cs" />
+    <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2083" />
+    <Compile Remove="**\*.android.cs" />
+    <Compile Remove="**\*.ios.cs" />
+    <None Include="**\*.android.cs" />
+    <None Include="**\*.ios.cs" />
+  </ItemGroup>
 
-    <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
-        <None Remove="**\*.android.cs" />
-        <Compile Include="**\*.android.cs" />
-        <None Include="**\*.ios.cs" />
-    </ItemGroup>
-    <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
-        <None Include="**\*.android.cs" />
-        <None Remove="**\*.ios.cs" />
-        <Compile Include="**\*.ios.cs" />
-    </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid'))">
+    <None Remove="**\*.android.cs" />
+    <Compile Include="**\*.android.cs" />
+    <None Include="**\*.ios.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS'))">
+    <None Include="**\*.android.cs" />
+    <None Remove="**\*.ios.cs" />
+    <Compile Include="**\*.ios.cs" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.1" />
-        <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.1-alpha5" />
-        <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.1" />
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Update="ViewModelUtils\CommandButton.xaml">
-            <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-        </EmbeddedResource>
-        <EmbeddedResource Update="ViewModelUtils\EntitySelectorView.xaml">
-            <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-        </EmbeddedResource>
-        <EmbeddedResource Update="ViewModelUtils\IconButton.xaml">
-            <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <None Update="ViewModelUtils\EntitySelectorView.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </None>
-        <None Update="ViewModelUtils\IconButton.xaml">
-            <Generator>MSBuild:Compile</Generator>
-        </None>
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.1" />
+    <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.1-alpha5" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="ViewModelUtils\CommandButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ViewModelUtils\EntitySelectorView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ViewModelUtils\IconButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="ViewModelUtils\EntitySelectorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="ViewModelUtils\IconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
 
-    <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
-    <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
 </Project>

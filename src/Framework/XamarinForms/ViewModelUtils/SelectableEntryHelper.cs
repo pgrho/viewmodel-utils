@@ -2,6 +2,18 @@
 
 public static class SelectableEntryHelper
 {
+    public static bool FocusOrSelectAll(this SelectableEntry entry)
+    {
+        if (entry.IsFocused || entry.Focus())
+        {
+            entry.CursorPosition = 0;
+            entry.SelectionLength = entry.Text?.Length ?? 0;
+
+            return true;
+        }
+        return false;
+    }
+
     public static bool HandleKeyDown(this SelectableEntry entry, string keys, bool replaceText)
     {
         if (entry.IsVisible)
@@ -43,22 +55,41 @@ public static class SelectableEntryHelper
                 }
 
                 entry.Text = text;
+                if (lines.Length > 1)
+                {
+                    entry.SendCompleted();
+                    return true;
+                }
+
                 if (entry.IsFocused)
                 {
                     entry.CursorPosition = cursorPosition;
                     entry.SelectionLength = selectionLength;
+                    if (!entry.IsKeyboardEnabled)
+                    {
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            DependencyService.Get<IKeyboardHelper>()?.HideKeyboard();
+                        });
+                    }
                 }
                 else
                 {
                     var sa = entry.SelectAllOnFocus;
                     entry.SelectAllOnFocus = false;
-                    entry.Focus();
-                    Device.BeginInvokeOnMainThread(() =>
+                    if (entry.Focus())
                     {
-                        entry.CursorPosition = cursorPosition;
-                        entry.SelectionLength = selectionLength;
-                        entry.SelectAllOnFocus = sa;
-                    });
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            entry.CursorPosition = cursorPosition;
+                            entry.SelectionLength = selectionLength;
+                            entry.SelectAllOnFocus = sa;
+                            if (!entry.IsKeyboardEnabled)
+                            {
+                                DependencyService.Get<IKeyboardHelper>()?.HideKeyboard();
+                            }
+                        });
+                    }
                 }
             }
 
