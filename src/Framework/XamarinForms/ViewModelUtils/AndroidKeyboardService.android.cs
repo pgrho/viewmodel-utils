@@ -1,18 +1,25 @@
-﻿namespace Shipwreck.ViewModelUtils;
+﻿using Application = Android.App.Application;
+
+[assembly: Xamarin.Forms.Dependency(typeof(Shipwreck.ViewModelUtils.AndroidKeyboardService))]
+namespace Shipwreck.ViewModelUtils;
 
 public class AndroidKeyboardService : IKeyboardService
+#pragma warning disable CS0612 // 型またはメンバーが旧型式です
+    , IKeyboardHelper
+#pragma warning restore CS0612 // 型またはメンバーが旧型式です
 {
     public void Hide()
     {
-        var context = Forms.Context;
-        var inputMethodManager = context.GetSystemService(Context.InputMethodService) as InputMethodManager;
-        if (inputMethodManager != null && context is Activity)
+        if (Application.Context is Activity a
+            && a?.GetSystemService(Context.InputMethodService) is InputMethodManager imm
+            && a.CurrentFocus != null)
         {
-            var activity = context as Activity;
-            var token = activity.CurrentFocus?.WindowToken;
-            inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None);
+            imm.HideSoftInputFromWindow(a.CurrentFocus.WindowToken, HideSoftInputFlags.None);
 
-            activity.Window.DecorView.ClearFocus();
+            a.Window.DecorView.ClearFocus();
         }
     }
+#pragma warning disable CS0612 // 型またはメンバーが旧型式です
+    void IKeyboardHelper.HideKeyboard() => Hide();
+#pragma warning restore CS0612 // 型またはメンバーが旧型式です
 }

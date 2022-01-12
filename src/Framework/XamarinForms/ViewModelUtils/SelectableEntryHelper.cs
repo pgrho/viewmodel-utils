@@ -69,7 +69,7 @@ public static class SelectableEntryHelper
                     {
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            DependencyService.Get<IKeyboardHelper>()?.HideKeyboard();
+                            DependencyService.Get<IKeyboardService>()?.Hide();
                         });
                     }
                 }
@@ -86,7 +86,7 @@ public static class SelectableEntryHelper
                             entry.SelectAllOnFocus = sa;
                             if (!entry.IsKeyboardEnabled)
                             {
-                                DependencyService.Get<IKeyboardHelper>()?.HideKeyboard();
+                                DependencyService.Get<IKeyboardService>()?.Hide();
                             }
                         });
                     }

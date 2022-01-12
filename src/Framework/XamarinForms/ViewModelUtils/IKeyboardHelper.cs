@@ -1,5 +1,8 @@
 ﻿namespace Shipwreck.ViewModelUtils;
-public interface IKeyboardHelper
+
+[Obsolete]
+[EditorBrowsable(EditorBrowsableState.Never)]
+public interface IKeyboardHelper : IKeyboardService
 {
     void HideKeyboard();
 }
