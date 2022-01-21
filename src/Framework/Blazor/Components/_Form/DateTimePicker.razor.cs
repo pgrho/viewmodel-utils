@@ -127,7 +127,12 @@ public partial class DateTimePicker : BindableComponentBase
         if (value != _Value)
         {
             _Value = value;
-            ValueChanged?.Invoke(_Value);
+
+            using (Host?.PushPropertyChangedExpectation())
+            {
+                ValueChanged?.Invoke(_Value);
+            }
+
             if (shouldRender)
             {
                 StateHasChanged();

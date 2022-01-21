@@ -123,8 +123,16 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
                 _LastIndex += v - _FirstIndex;
                 _FirstIndex = v;
 
-                FirstIndexChanged?.Invoke(_FirstIndex);
-                LastIndexChanged?.Invoke(_LastIndex);
+
+                using (Host?.PushPropertyChangedExpectation())
+                {
+                    FirstIndexChanged?.Invoke(_FirstIndex);
+                }
+
+                using (Host?.PushPropertyChangedExpectation())
+                {
+                    LastIndexChanged?.Invoke(_LastIndex);
+                }
 
                 CollectionChanged = true;
                 StateHasChanged();
@@ -149,8 +157,16 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
                 _FirstIndex += v - _LastIndex;
                 _LastIndex = v;
 
-                FirstIndexChanged?.Invoke(_FirstIndex);
-                LastIndexChanged?.Invoke(_LastIndex);
+
+                using (Host?.PushPropertyChangedExpectation())
+                {
+                    FirstIndexChanged?.Invoke(_FirstIndex);
+                }
+
+                using (Host?.PushPropertyChangedExpectation())
+                {
+                    LastIndexChanged?.Invoke(_LastIndex);
+                }
 
                 CollectionChanged = true;
 
@@ -177,8 +193,16 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
             _FirstIndex = first;
             _LastIndex = last;
 
-            FirstIndexChanged?.Invoke(_FirstIndex);
-            LastIndexChanged?.Invoke(_LastIndex);
+
+            using (Host?.PushPropertyChangedExpectation())
+            {
+                FirstIndexChanged?.Invoke(_FirstIndex);
+            }
+
+            using (Host?.PushPropertyChangedExpectation())
+            {
+                LastIndexChanged?.Invoke(_LastIndex);
+            }
 
             StateHasChanged();
             if (forceScroll && first >= 0)

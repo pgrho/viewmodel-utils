@@ -56,7 +56,10 @@
         {
             if (SetProperty(ref _IsExpanded, value))
             {
-                IsExpandedChanged?.Invoke(_IsExpanded);
+                using (Host?.PushPropertyChangedExpectation())
+                {
+                    IsExpandedChanged?.Invoke(_IsExpanded);
+                }
             }
         }
     }

@@ -32,10 +32,17 @@ public partial class Checkbox : BindableComponentBase
             if (_IsChecked != value)
             {
                 _IsChecked = value;
-                NullableIsCheckedChanged?.Invoke(_IsChecked);
+
+                using (Host?.PushPropertyChangedExpectation())
+                {
+                    NullableIsCheckedChanged?.Invoke(_IsChecked);
+                }
                 if (_IsChecked != null)
                 {
-                    IsCheckedChanged?.Invoke(_IsChecked.Value);
+                    using (Host?.PushPropertyChangedExpectation())
+                    {
+                        IsCheckedChanged?.Invoke(_IsChecked.Value);
+                    }
                 }
                 StateHasChanged();
 
