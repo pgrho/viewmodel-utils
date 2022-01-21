@@ -128,4 +128,7 @@ public static class JSRuntimeHelper
         => js.InvokeAsync<bool>(
             "Shipwreck.ViewModelUtils.openWindow",
             url, name, features);
+
+    public static ValueTask FocusAsync(this IJSRuntime js, ElementReference element, bool selectAll)
+        => js.InvokeVoidAsync("Shipwreck.ViewModelUtils.focus", element, selectAll);
 }
