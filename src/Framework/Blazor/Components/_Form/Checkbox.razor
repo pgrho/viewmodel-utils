@@ -1,7 +1,8 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase
 <div class="custom-control custom-checkbox">
-    <input type="checkbox"
+    <input @ref="_Input"
+           type="checkbox"
            class="custom-control-input"
            id="@_Id"
            disabled="@(IsEnabled ? null : "disabled")"
@@ -14,4 +15,7 @@
 </div>
 @code
 {
+    private ElementReference _Input;
+    public ValueTask FocusAsync(bool selectAll = false)
+        => _Input.FocusAsync();
 }

@@ -203,8 +203,8 @@ public partial class DateTimePicker : BindableComponentBase
         }
     }
 
-    public ValueTask FocusAsync(bool select = true)
-        => _Element.FocusAsync();
+    public ValueTask FocusAsync(bool selectAll = false)
+        => JS.FocusAsync(_Element, selectAll);
 
     [JSInvokable]
     public void SetValueFromJS(string value)

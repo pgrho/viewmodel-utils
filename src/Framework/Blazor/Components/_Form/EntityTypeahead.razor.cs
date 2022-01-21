@@ -63,8 +63,8 @@ namespace Shipwreck.ViewModelUtils.Components
             }
         }
 
-        public ValueTask FocusAsync(bool select = true)
-            => _Input.FocusAsync();
+        public ValueTask FocusAsync(bool selectAll = false)
+            => JS.FocusAsync(_Input, selectAll);
 
         public void Dispose()
         {
