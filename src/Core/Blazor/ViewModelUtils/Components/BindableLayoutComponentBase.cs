@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract partial class BindableLayoutComponentBase : LayoutComponentBase, ComponentUpdateScope.IComponent, IBindableComponentsHost
+public abstract partial class BindableLayoutComponentBase : LayoutComponentBase, ComponentUpdateScope.IComponent
 {
     protected bool IsUpdatingSource { get; set; }
 
@@ -64,19 +64,10 @@ public abstract partial class BindableLayoutComponentBase : LayoutComponentBase,
 
     #endregion BindableComponentBase
 
-    #region IBindableComponentsHost
+    [CascadingParameter(Name = nameof(IBindableComponent))]
+    public IBindableComponent Host { get; set; }
 
-    private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
-
-
-    public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
-    {
-        var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
-        _PropertyChangedExpectations.Push(s);
-        return s;
-    }
-
-    #endregion IBindableComponentsHost
+    public static string HostParameterName => nameof(IBindableComponent);
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {

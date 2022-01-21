@@ -3,4 +3,5 @@
 public interface IBindableComponent
 {
     object DataContext { get; }
+    IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null);
 }

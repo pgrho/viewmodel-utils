@@ -90,6 +90,8 @@ foreach (var t in new [] {
     partial class <#= t.Class #>
     {
         private <#= t.Property #> _DataContext;
+    private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
+
 
         [Parameter]
         public virtual <#= t.Property #> DataContext
@@ -107,6 +109,16 @@ foreach (var t in new [] {
                 }
             }
         }
+         
+
+
+    public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
+    {
+        var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
+        _PropertyChangedExpectations.Push(s);
+        return s;
+    }
+     
 
         protected virtual void OnDataContextRemoved(<#= t.Property #> dataContext)
         {
@@ -141,7 +153,14 @@ foreach (var t in new [] {
         }
         
         protected virtual bool OnDataContextPropertyChanged(string propertyName)
-            => true;
+        {
+            if (_PropertyChangedExpectations.TryPeek(out var top)
+                && top.ShouldIgnorePropertyChanged(propertyName))
+            {
+                return false;
+            }
+            return true;
+        }
 
         private void DataContext_RequestFocus(object sender, PropertyChangedEventArgs e)
         {
