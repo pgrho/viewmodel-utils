@@ -56,7 +56,8 @@ namespace Shipwreck.ViewModelUtils.Components
         }
         protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null, bool shouldNotify = true)
         {
-            if (shouldNotify) StateHasChanged();
+            if (shouldNotify) ShouldRenderCore = true;
+
         }
     }
     partial class BindableLayoutComponentBase
@@ -110,7 +111,8 @@ namespace Shipwreck.ViewModelUtils.Components
         }
         protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null, bool shouldNotify = true)
         {
-            if (shouldNotify) StateHasChanged();
+            if (shouldNotify) ShouldRenderCore = true;
+
         }
     }
 }
@@ -132,7 +134,7 @@ namespace Shipwreck.ViewModelUtils.Components
                     OnDataContextRemoved(prev);
                     _DataContext = value;
                     OnDataContextSet(value);
-                    StateHasChanged();
+                    ShouldRenderCore = true;
                 }
             }
         }
@@ -165,7 +167,7 @@ namespace Shipwreck.ViewModelUtils.Components
         {
             if (OnDataContextPropertyChanged(e.PropertyName))
             {
-                StateHasChanged();
+                ShouldRenderCore = true;
             }
         }
         
@@ -202,7 +204,7 @@ namespace Shipwreck.ViewModelUtils.Components
                     OnDataContextRemoved(prev);
                     _DataContext = value;
                     OnDataContextSet(value);
-                    StateHasChanged();
+                    ShouldRenderCore = true;
                 }
             }
         }
@@ -235,7 +237,7 @@ namespace Shipwreck.ViewModelUtils.Components
         {
             if (OnDataContextPropertyChanged(e.PropertyName))
             {
-                StateHasChanged();
+                ShouldRenderCore = true;
             }
         }
         
@@ -272,7 +274,7 @@ namespace Shipwreck.ViewModelUtils.Components
                     OnDataContextRemoved(prev);
                     _DataContext = value;
                     OnDataContextSet(value);
-                    StateHasChanged();
+                    ShouldRenderCore = true;
                 }
             }
         }
@@ -305,7 +307,7 @@ namespace Shipwreck.ViewModelUtils.Components
         {
             if (OnDataContextPropertyChanged(e.PropertyName))
             {
-                StateHasChanged();
+                ShouldRenderCore = true;
             }
         }
         

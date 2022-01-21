@@ -1,7 +1,33 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract partial class BindableLayoutComponentBase : LayoutComponentBase, ComponentUpdateScope.IComponent
+public abstract partial class BindableLayoutComponentBase : LayoutComponentBase, ComponentUpdateScope.IComponent, IBindableComponentsHost
 {
+    protected bool IsUpdatingSource { get; set; }
+
+    #region ShouldRenderCore
+
+    private bool _ShouldRenderCore = true;
+
+    protected bool ShouldRenderCore
+    {
+        get => _ShouldRenderCore;
+        set
+        {
+            if (value != _ShouldRenderCore)
+            {
+                _ShouldRenderCore = value;
+                if (_ShouldRenderCore)
+                {
+                    base.StateHasChanged();
+                }
+            }
+        }
+    }
+
+    protected override bool ShouldRender() => _ShouldRenderCore;
+
+    #endregion ShouldRenderCore
+
     #region BindableComponentBase
 
     private List<WeakReference<ComponentUpdateScope>> _Scopes;
@@ -19,7 +45,7 @@ public abstract partial class BindableLayoutComponentBase : LayoutComponentBase,
         if (!ComponentUpdateScope.HasScopes(_Scopes, scope) && _IsChangeDefered)
         {
             _IsChangeDefered = false;
-            base.StateHasChanged();
+            ShouldRenderCore = true;
         }
     }
 
@@ -32,11 +58,32 @@ public abstract partial class BindableLayoutComponentBase : LayoutComponentBase,
         else
         {
             _IsChangeDefered = false;
-            base.StateHasChanged();
+            ShouldRenderCore = true;
         }
     }
 
     #endregion BindableComponentBase
+
+    #region IBindableComponentsHost
+
+    private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
+
+
+    public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
+    {
+        var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
+        _PropertyChangedExpectations.Push(s);
+        return s;
+    }
+
+    #endregion IBindableComponentsHost
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        var t = base.OnAfterRenderAsync(firstRender);
+        ShouldRenderCore = false;
+        return t;
+    }
 }
 
 public abstract partial class BindableLayoutComponentBase<T> : BindableLayoutComponentBase, IBindableComponent

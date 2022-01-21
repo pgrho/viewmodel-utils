@@ -64,7 +64,8 @@ if (isComponent)
 #>
         protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null, bool shouldNotify = true)
         {
-            if (shouldNotify) StateHasChanged();
+            if (shouldNotify) ShouldRenderCore = true;
+
         }
 <#
 }
@@ -102,7 +103,7 @@ foreach (var t in new [] {
                     OnDataContextRemoved(prev);
                     _DataContext = value;
                     OnDataContextSet(value);
-                    StateHasChanged();
+                    ShouldRenderCore = true;
                 }
             }
         }
@@ -135,7 +136,7 @@ foreach (var t in new [] {
         {
             if (OnDataContextPropertyChanged(e.PropertyName))
             {
-                StateHasChanged();
+                ShouldRenderCore = true;
             }
         }
         

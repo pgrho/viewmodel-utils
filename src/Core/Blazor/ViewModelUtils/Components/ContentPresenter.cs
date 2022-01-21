@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public sealed class ContentPresenter : ComponentBase
+public sealed class ContentPresenter : BindableComponentBase
 {
     [Parameter]
     public Type ViewType { get; set; }

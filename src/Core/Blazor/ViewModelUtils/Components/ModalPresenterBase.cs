@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract class ModalPresenterBase : ComponentBase
+public abstract class ModalPresenterBase : BindableComponentBase
 {
     private Type _ModalType;
 

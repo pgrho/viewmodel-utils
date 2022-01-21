@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public partial class Checkbox : ComponentBase
+public partial class Checkbox : BindableComponentBase
 {
     public static Func<int, string> IdCreator { get; set; } = i => $"checkbox-{i}";
 
