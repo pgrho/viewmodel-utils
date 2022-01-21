@@ -1,0 +1,38 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@typeparam T
+@inherits FormGroupBase
+<div id="@FormGroupId"
+     class="@Theme?.FormGroupClass @AdditionalClass">
+    <label for="@SelectId"
+           class="@Theme?.LabelClass @AdditionalLabelClass"
+           title="@Description">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Title
+        }
+    </label>
+
+    <select id="@SelectId"
+            class="@Theme?.SelectControlClass @AdditionalInputClass"
+            @ref="_Select"
+            @bind="@InternalValue"
+            disabled="@(!IsEnabled ? "disabled" : null)"
+            @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
+            @onkeydown="@OnKeyDown">
+        @foreach (var op in Options)
+        {
+            <option value="@op.Key">@op.Value</option>
+        }
+    </select>
+</div>
+@code
+{
+    private ElementReference _Select;
+
+    public ValueTask FocusAsync(bool selectAll = false)
+        => _Select.FocusAsync();
+}

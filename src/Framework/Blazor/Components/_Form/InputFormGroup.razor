@@ -1,0 +1,37 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@typeparam T
+@inherits FormGroupBase
+<form id="@FormGroupId"
+      class="@Theme?.FormGroupClass @AdditionalClass"
+      @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+      @onsubmit:preventDefault>
+    <label for="@InputId"
+           class="@Theme?.LabelClass @AdditionalLabelClass"
+           title="@Description">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Title
+        }
+    </label>
+    <input id="@InputId"
+           class="@Theme?.ControlClass @AdditionalInputClass"
+           @ref="_Input"
+           @bind="@InternalValue"
+           disabled="@(!IsEnabled ? "disabled" : null)"
+           readonly="@(IsReadOnly ? "readonly" : null)"
+           @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
+</form>
+@code
+{
+    private ElementReference _Input;
+
+    [Inject]
+    public IJSRuntime JS { get; set; }
+
+    public ValueTask FocusAsync(bool selectAll = false)
+        => JS.FocusAsync(_Input, selectAll);
+}

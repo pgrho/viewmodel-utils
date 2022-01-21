@@ -4,6 +4,11 @@ public abstract partial class BindableComponentBase : ComponentBase, ComponentUp
 {
     protected bool IsUpdatingSource { get; set; }
 
+    [CascadingParameter(Name = nameof(IBindableComponentsHost))]
+    public IBindableComponentsHost Host { get; set; }
+
+    public static string HostParameterName => nameof(IBindableComponentsHost);
+
     #region ShouldRenderCore
 
     private bool _ShouldRenderCore = true;
