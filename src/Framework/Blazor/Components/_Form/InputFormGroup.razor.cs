@@ -15,6 +15,19 @@ public partial class InputFormGroup<T> : FormGroupBase
 
     #endregion InputId
 
+    #region DataListId
+
+    private string _DataListId;
+
+    [Parameter]
+    public string DataListId
+    {
+        get => _DataListId ??= (FormGroupId + "--datalist");
+        set => SetProperty(ref _DataListId, value);
+    }
+
+    #endregion DataListId
+
     #region Value
 
     private T _Value;
@@ -61,7 +74,7 @@ public partial class InputFormGroup<T> : FormGroupBase
 
     #region Type
 
-    private string _Type = "text";
+    private string _Type;
 
     [Parameter]
     public string Type
@@ -97,4 +110,25 @@ public partial class InputFormGroup<T> : FormGroupBase
     }
 
     #endregion IsReadOnly
+
+    #region DataList
+
+    private ReadOnlyCollection<string> _DataList;
+
+    [Parameter]
+    public IList<string> DataList
+    {
+        get => _DataList;
+        set
+        {
+            var vs = value?.Count > 0 ? Array.AsReadOnly(value.ToArray()) : null;
+            if (vs?.SequenceEqual(_DataList) != true
+                && (vs != null || _DataList != null))
+            {
+                SetProperty(ref _DataList, vs);
+            }
+        }
+    }
+
+    #endregion DataList
 }

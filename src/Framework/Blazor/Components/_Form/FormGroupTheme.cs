@@ -6,6 +6,7 @@ public class FormGroupTheme
     public string FormGroupClass { get; set; } = "form-group";
     public string LabelClass { get; set; } = "form-label";
     public string ControlClass { get; set; } = "form-control";
+    public string InputGroupClass { get; set; } = "input-group";
     public string SelectControlClass { get; set; } = "form-control custom-select";
     public string ErrorMessageClass { get; set; } = "field-validation-valid text-danger";
 }

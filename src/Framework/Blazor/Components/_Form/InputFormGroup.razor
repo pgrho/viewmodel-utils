@@ -17,15 +17,50 @@
             @Title
         }
     </label>
-    <input id="@InputId"
+    @{
+        var shouldGroup = DataList?.Count > 0;
+
+        if (shouldGroup)
+        {
+            <div class="@Theme?.InputGroupClass">
+                <input id="@InputId"
+               class="@Theme?.ControlClass @AdditionalInputClass"
+               type="@(Type ?? (DataList?.Count> 0 ? "search" : "text"))"
+                   @ref="_Input"
+                   @bind="@InternalValue"
+               placeholder="@Placeholder"
+               autocomplete="@(AutoComplete ?? "on")"
+               disabled="@(!IsEnabled ? "disabled" : null)"
+               readonly="@(IsReadOnly ? "readonly" : null)"
+               list="@(DataList?.Count>0 ? DataListId : null)"
+                   @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
+                @if (DataList?.Count > 0)
+                {
+                    <span class="fas fa-chevron-down text-muted"
+                  style="pointer-events: none; position: absolute; right: 0.5rem; top: 0.5rem"></span>
+                    <datalist id="@DataListId">
+                        @foreach (var t in DataList)
+                        {
+                            <option>@t</option>
+                        }
+                    </datalist>
+                }
+            </div>
+        }
+        else
+        {
+            <input id="@InputId"
            class="@Theme?.ControlClass @AdditionalInputClass"
-           @ref="_Input"
-           @bind="@InternalValue"
+           type="@(Type ?? "text")"
+               @ref="_Input"
+               @bind="@InternalValue"
            placeholder="@Placeholder"
            autocomplete="@AutoComplete"
            disabled="@(!IsEnabled ? "disabled" : null)"
            readonly="@(IsReadOnly ? "readonly" : null)"
-           @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
+               @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
+        }
+    }
 </form>
 @code
 {
