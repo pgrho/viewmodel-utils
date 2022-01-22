@@ -10,8 +10,18 @@ public partial class Checkbox : BindableComponentBase
     [Inject]
     public IJSRuntime JS { get; set; }
 
+    #region ChildContent
+
+    private RenderFragment _ChildContent;
+
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment ChildContent
+    {
+        get => _ChildContent;
+        set => SetProperty(ref _ChildContent, value);
+    }
+
+    #endregion ChildContent
 
     private bool? _IsChecked;
     private bool _ScriptIndeterminate;

@@ -17,8 +17,18 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
     [Inject]
     public IJSRuntime JS { get; set; }
 
+    #region ItemSelector
+
+    private string _ItemSelector = ":scope > *[data-itemindex]";
+
     [Parameter]
-    public string ItemSelector { get; set; } = ":scope > *[data-itemindex]";
+    public string ItemSelector
+    {
+        get => _ItemSelector;
+        set => SetProperty(ref _ItemSelector, value);
+    }
+
+    #endregion ItemSelector
 
     #region ItemTemplate
 
@@ -123,7 +133,6 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
                 _LastIndex += v - _FirstIndex;
                 _FirstIndex = v;
 
-
                 using (Host?.PushPropertyChangedExpectation())
                 {
                     FirstIndexChanged?.Invoke(_FirstIndex);
@@ -156,7 +165,6 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
             {
                 _FirstIndex += v - _LastIndex;
                 _LastIndex = v;
-
 
                 using (Host?.PushPropertyChangedExpectation())
                 {
@@ -192,7 +200,6 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
         {
             _FirstIndex = first;
             _LastIndex = last;
-
 
             using (Host?.PushPropertyChangedExpectation())
             {

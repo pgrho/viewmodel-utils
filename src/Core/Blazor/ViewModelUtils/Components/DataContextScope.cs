@@ -5,14 +5,44 @@ public class DataContextScope : BindableComponentBase<object>
     protected override void BuildRenderTree(RenderTreeBuilder builder)
         => builder.AddContent(0, ChildContent);
 
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    #region ChildContent
+
+    private RenderFragment _ChildContent;
 
     [Parameter]
-    public IEnumerable<string> DependsOnProperties { get; set; }
+    public RenderFragment ChildContent
+    {
+        get => _ChildContent;
+        set => SetProperty(ref _ChildContent, value);
+    }
+
+    #endregion ChildContent
+
+    #region DependsOnProperties
+
+    private IEnumerable<string> _DependsOnProperties;
 
     [Parameter]
-    public IEnumerable<string> IgnoresProperties { get; set; }
+    public IEnumerable<string> DependsOnProperties
+    {
+        get => _DependsOnProperties;
+        set => SetProperty(ref _DependsOnProperties, value);
+    }
+
+    #endregion DependsOnProperties
+
+    #region IgnoresProperties
+
+    private IEnumerable<string> _IgnoresProperties;
+
+    [Parameter]
+    public IEnumerable<string> IgnoresProperties
+    {
+        get => _IgnoresProperties;
+        set => SetProperty(ref _IgnoresProperties, value);
+    }
+
+    #endregion IgnoresProperties
 
     [Parameter]
     public Func<string, bool> RequestedFocus { get; set; }

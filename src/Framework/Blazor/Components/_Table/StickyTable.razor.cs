@@ -1,33 +1,90 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Components;
+﻿namespace Shipwreck.ViewModelUtils.Components;
 
-namespace Shipwreck.ViewModelUtils.Components;
+public partial class StickyTable<T> : ListComponentBase<T>
+    where T : class
+{
+    private ElementReference _Element;
 
-    public partial class StickyTable<T> : ListComponentBase<T>
-        where T : class
+    public ElementReference Container => _Element;
+
+    #region HeaderTemplate
+
+    private RenderFragment _HeaderTemplate;
+
+    [Parameter]
+    public RenderFragment HeaderTemplate
     {
-        private ElementReference _Element;
+        get => _HeaderTemplate;
+        set => SetProperty(ref _HeaderTemplate, value);
+    }
 
-        public ElementReference Container => _Element;
+    #endregion HeaderTemplate
 
-        [Parameter]
-        public RenderFragment HeaderTemplate { get; set; }
+    #region FooterTemplate
 
-        [Parameter]
-        public RenderFragment FooterTemplate { get; set; }
+    private RenderFragment _FooterTemplate;
 
-        [Parameter]
-        public RenderFragment<ItemTemplateContext<T>> ItemTemplate { get; set; }
+    [Parameter]
+    public RenderFragment FooterTemplate
+    {
+        get => _FooterTemplate;
+        set => SetProperty(ref _FooterTemplate, value);
+    }
 
-        [Parameter]
-        public ISortablePageViewModel SearchPage { get; set; }
+    #endregion FooterTemplate
 
-        [Parameter(CaptureUnmatchedValues = true)]
-        public IDictionary<string, object> AdditionalAttributes { get; set; }
+    #region ItemTemplate
 
-        [Parameter]
-        public string TableClass { get; set; } = "table table-sm table-hover";
+    private RenderFragment<ItemTemplateContext<T>> _ItemTemplate;
 
-        [Parameter]
-        public string TheadClass { get; set; } = "thead-dark";
+    [Parameter]
+    public RenderFragment<ItemTemplateContext<T>> ItemTemplate
+    {
+        get => _ItemTemplate;
+        set => SetProperty(ref _ItemTemplate, value);
+    }
+
+    #endregion ItemTemplate
+
+    #region SearchPage
+
+    private ISortablePageViewModel _SearchPage;
+
+    [Parameter]
+    public ISortablePageViewModel SearchPage
+    {
+        get => _SearchPage;
+        set => SetProperty(ref _SearchPage, value);
+    }
+
+    #endregion SearchPage
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
+
+    #region TableClass
+
+    private string _TableClass = "table table-sm table-hover";
+
+    [Parameter]
+    public string TableClass
+    {
+        get => _TableClass;
+        set => SetProperty(ref _TableClass, value);
+    }
+
+    #endregion TableClass
+
+    #region TheadClass
+
+    private string _TheadClass = "thead-dark";
+
+    [Parameter]
+    public string TheadClass
+    {
+        get => _TheadClass;
+        set => SetProperty(ref _TheadClass, value);
+    }
+
+    #endregion TheadClass
 }

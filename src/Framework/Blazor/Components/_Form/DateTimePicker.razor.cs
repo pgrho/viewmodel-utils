@@ -18,23 +18,83 @@ public partial class DateTimePicker : BindableComponentBase
     [Inject]
     public IJSRuntime JS { get; set; }
 
-    [Parameter]
-    public string ClassName { get; set; } = "form-control datetimepicker-input";
+    #region ClassName
+
+    private string _ClassName = "form-control datetimepicker-input";
 
     [Parameter]
-    public string Placeholder { get; set; }
+    public string ClassName
+    {
+        get => _ClassName;
+        set => SetProperty(ref _ClassName, value);
+    }
+
+    #endregion ClassName
+
+    #region Placeholder
+
+    private string _Placeholder;
 
     [Parameter]
-    public bool IsEnabled { get; set; } = true;
+    public string Placeholder
+    {
+        get => _Placeholder;
+        set => SetProperty(ref _Placeholder, value);
+    }
+
+    #endregion Placeholder
+
+    #region IsEnabled
+
+    private bool _IsEnabled = true;
 
     [Parameter]
-    public bool IsReadOnly { get; set; }
+    public bool IsEnabled
+    {
+        get => _IsEnabled;
+        set => SetProperty(ref _IsEnabled, value);
+    }
+
+    #endregion IsEnabled
+
+    #region IsReadOnly
+
+    private bool _IsReadOnly;
 
     [Parameter]
-    public Action OnFocus { get; set; }
+    public bool IsReadOnly
+    {
+        get => _IsReadOnly;
+        set => SetProperty(ref _IsReadOnly, value);
+    }
+
+    #endregion IsReadOnly
+
+    #region OnFocus
+
+    private Action _OnFocus;
 
     [Parameter]
-    public Action OnBlur { get; set; }
+    public Action OnFocus
+    {
+        get => _OnFocus;
+        set => SetProperty(ref _OnFocus, value);
+    }
+
+    #endregion OnFocus
+
+    #region OnBlur
+
+    private Action _OnBlur;
+
+    [Parameter]
+    public Action OnBlur
+    {
+        get => _OnBlur;
+        set => SetProperty(ref _OnBlur, value);
+    }
+
+    #endregion OnBlur
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IDictionary<string, object> AdditionalAttributes { get; set; }

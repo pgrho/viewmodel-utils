@@ -186,11 +186,31 @@ public abstract partial class ListComponentBase<T> : BindableComponentBase
         }
     }
 
-    [Parameter]
-    public IEnumerable<string> DependsOnItemProperties { get; set; }
+    #region DependsOnItemProperties
+
+    private IEnumerable<string> _DependsOnItemProperties;
 
     [Parameter]
-    public IEnumerable<string> IgnoresItemProperties { get; set; }
+    public IEnumerable<string> DependsOnItemProperties
+    {
+        get => _DependsOnItemProperties;
+        set => SetProperty(ref _DependsOnItemProperties, value);
+    }
+
+    #endregion DependsOnItemProperties
+
+    #region IgnoresItemProperties
+
+    private IEnumerable<string> _IgnoresItemProperties;
+
+    [Parameter]
+    public IEnumerable<string> IgnoresItemProperties
+    {
+        get => _IgnoresItemProperties;
+        set => SetProperty(ref _IgnoresItemProperties, value);
+    }
+
+    #endregion IgnoresItemProperties
 
     protected virtual bool OnItemPropertyChanged(T item, string propertyName)
     => (DependsOnItemProperties == null && IgnoresItemProperties == null)

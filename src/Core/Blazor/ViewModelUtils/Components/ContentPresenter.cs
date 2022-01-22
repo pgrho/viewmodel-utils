@@ -2,8 +2,18 @@
 
 public sealed class ContentPresenter : BindableComponentBase
 {
+    #region ViewType
+
+    private Type _ViewType;
+
     [Parameter]
-    public Type ViewType { get; set; }
+    public Type ViewType
+    {
+        get => _ViewType;
+        set => SetProperty(ref _ViewType, value);
+    }
+
+    #endregion ViewType
 
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> Attributes { get; set; }

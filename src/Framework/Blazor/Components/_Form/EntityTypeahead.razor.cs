@@ -9,17 +9,57 @@ namespace Shipwreck.ViewModelUtils.Components
         [Inject]
         public IJSRuntime JS { get; set; }
 
-        [Parameter]
-        public int MaxCount { get; set; } = 8;
+        #region MaxCount
+
+        private int _MaxCount = 8;
 
         [Parameter]
-        public int MinLength { get; set; } = 1;
+        public int MaxCount
+        {
+            get => _MaxCount;
+            set => SetProperty(ref _MaxCount, value);
+        }
+
+        #endregion MaxCount
+
+        #region MinLength
+
+        private int _MinLength = 1;
 
         [Parameter]
-        public bool? IsEnabled { get; set; }
+        public int MinLength
+        {
+            get => _MinLength;
+            set => SetProperty(ref _MinLength, value);
+        }
+
+        #endregion MinLength
+
+        #region IsEnabled
+
+        private bool? _IsEnabled;
 
         [Parameter]
-        public string AppendToSelector { get; set; } = ".body-root";
+        public bool? IsEnabled
+        {
+            get => _IsEnabled;
+            set => SetProperty(ref _IsEnabled, value);
+        }
+
+        #endregion IsEnabled
+
+        #region AppendToSelector
+
+        private string _AppendToSelector = ".body-root";
+
+        [Parameter]
+        public string AppendToSelector
+        {
+            get => _AppendToSelector;
+            set => SetProperty(ref _AppendToSelector, value);
+        }
+
+        #endregion AppendToSelector
 
         protected override void OnDataContextSet(IEntitySelector dataContext)
         {

@@ -67,8 +67,18 @@ public partial class StackPanel<T> : ItemsControl<T>
 
     #region BuildRenderTree
 
+    #region TagName
+
+    private string _TagName;
+
     [Parameter]
-    public string TagName { get; set; }
+    public string TagName
+    {
+        get => _TagName;
+        set => SetProperty(ref _TagName, value);
+    }
+
+    #endregion TagName
 
     protected override string GetTagName() => TagName ?? base.GetTagName();
 

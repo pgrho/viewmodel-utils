@@ -8,16 +8,46 @@
             ItemSelector = ":scope > table > tbody > tr[data-itemindex]";
         }
 
+        #region Theme
+
+        private ScrollableTableTheme _Theme;
+
         [CascadingParameter]
-        public ScrollableTableTheme Theme { get; set; }
+        public ScrollableTableTheme Theme
+        {
+            get => _Theme;
+            set => SetProperty(ref _Theme, value);
+        }
+
+        #endregion Theme
+
+        #region HeaderHeight
+
+        private string _HeaderHeight;
 
         [Parameter]
-        public string HeaderHeight { get; set; }
+        public string HeaderHeight
+        {
+            get => _HeaderHeight;
+            set => SetProperty(ref _HeaderHeight, value);
+        }
+
+        #endregion HeaderHeight
 
         #region Wrapper
 
+        #region ElementClass
+
+        private string _ElementClass;
+
         [Parameter]
-        public string ElementClass { get; set; }
+        public string ElementClass
+        {
+            get => _ElementClass;
+            set => SetProperty(ref _ElementClass, value);
+        }
+
+        #endregion ElementClass
 
         protected virtual IEnumerable<KeyValuePair<string, object>> GetElementAttributes()
         {
@@ -35,20 +65,70 @@
 
         #region Header Background
 
-        [Parameter]
-        public string HeaderBackgroundClass { get; set; }
+        #region HeaderBackgroundClass
+
+        private string _HeaderBackgroundClass;
 
         [Parameter]
-        public string HeaderBackgroundBackground { get; set; }
+        public string HeaderBackgroundClass
+        {
+            get => _HeaderBackgroundClass;
+            set => SetProperty(ref _HeaderBackgroundClass, value);
+        }
+
+        #endregion HeaderBackgroundClass
+
+        #region HeaderBackgroundBackground
+
+        private string _HeaderBackgroundBackground;
 
         [Parameter]
-        public Dictionary<string, object> HeaderBackgroundAttributes { get; set; }
+        public string HeaderBackgroundBackground
+        {
+            get => _HeaderBackgroundBackground;
+            set => SetProperty(ref _HeaderBackgroundBackground, value);
+        }
+
+        #endregion HeaderBackgroundBackground
+
+        #region HeaderBackgroundAttributes
+
+        private Dictionary<string, object> _HeaderBackgroundAttributes;
 
         [Parameter]
-        public RenderFragment HeaderTemplate { get; set; }
+        public Dictionary<string, object> HeaderBackgroundAttributes
+        {
+            get => _HeaderBackgroundAttributes;
+            set => SetProperty(ref _HeaderBackgroundAttributes, value);
+        }
+
+        #endregion HeaderBackgroundAttributes
+
+        #region HeaderTemplate
+
+        private RenderFragment _HeaderTemplate;
 
         [Parameter]
-        public RenderFragment FooterTemplate { get; set; }
+        public RenderFragment HeaderTemplate
+        {
+            get => _HeaderTemplate;
+            set => SetProperty(ref _HeaderTemplate, value);
+        }
+
+        #endregion HeaderTemplate
+
+        #region FooterTemplate
+
+        private RenderFragment _FooterTemplate;
+
+        [Parameter]
+        public RenderFragment FooterTemplate
+        {
+            get => _FooterTemplate;
+            set => SetProperty(ref _FooterTemplate, value);
+        }
+
+        #endregion FooterTemplate
 
         protected virtual IEnumerable<KeyValuePair<string, object>> GetHeaderBackgroundAttributes()
         {
@@ -73,11 +153,31 @@
 
         #region Scroller
 
-        [Parameter]
-        public string ScrollerClass { get; set; }
+        #region ScrollerClass
+
+        private string _ScrollerClass;
 
         [Parameter]
-        public Dictionary<string, object> ScrollerAttributes { get; set; }
+        public string ScrollerClass
+        {
+            get => _ScrollerClass;
+            set => SetProperty(ref _ScrollerClass, value);
+        }
+
+        #endregion ScrollerClass
+
+        #region ScrollerAttributes
+
+        private Dictionary<string, object> _ScrollerAttributes;
+
+        [Parameter]
+        public Dictionary<string, object> ScrollerAttributes
+        {
+            get => _ScrollerAttributes;
+            set => SetProperty(ref _ScrollerAttributes, value);
+        }
+
+        #endregion ScrollerAttributes
 
         protected virtual IEnumerable<KeyValuePair<string, object>> GetScrollerAttributes()
             => ScrollerAttributes.MergeAttributes(Theme?.ScrollerAttributes)
@@ -88,11 +188,31 @@
 
         #region Table
 
-        [Parameter]
-        public string TableClass { get; set; }
+        #region TableClass
+
+        private string _TableClass;
 
         [Parameter]
-        public Dictionary<string, object> TableAttributes { get; set; }
+        public string TableClass
+        {
+            get => _TableClass;
+            set => SetProperty(ref _TableClass, value);
+        }
+
+        #endregion TableClass
+
+        #region TableAttributes
+
+        private Dictionary<string, object> _TableAttributes;
+
+        [Parameter]
+        public Dictionary<string, object> TableAttributes
+        {
+            get => _TableAttributes;
+            set => SetProperty(ref _TableAttributes, value);
+        }
+
+        #endregion TableAttributes
 
         protected virtual IEnumerable<KeyValuePair<string, object>> GetTableAttributes()
             => TableAttributes.MergeAttributes(Theme?.TableAttributes)
@@ -103,11 +223,33 @@
 
         #region Table Head
 
-        [Parameter]
-        public string TableHeadClass { get; set; }
+        #region TableHeadClass
+
+        private string _TableHeadClass;
 
         [Parameter]
-        public Dictionary<string, object> TableHeadAttributes { get; set; }
+        public string TableHeadClass
+        {
+            get => _TableHeadClass;
+            set => SetProperty(ref _TableHeadClass, value);
+        }
+
+        #endregion TableHeadClass
+
+        #region TableHeadAttributes
+
+        private Dictionary<string, object> _TableHeadAttributes;
+
+        [Parameter]
+        public Dictionary<string, object> TableHeadAttributes
+        {
+            get => _TableHeadAttributes;
+            set => SetProperty(ref _TableHeadAttributes, value);
+        }
+
+        #endregion TableHeadAttributes
+
+
 
         protected virtual IEnumerable<KeyValuePair<string, object>> GetTableHeadAttributes()
             => TableHeadAttributes.MergeAttributes(Theme?.TableHeadAttributes)
@@ -117,13 +259,34 @@
 
         #region Body
 
-        [Parameter]
-        public string TableBodyClass { get; set; }
+        #region TableBodyClass
+
+        private string _TableBodyClass;
 
         [Parameter]
-        public Dictionary<string, object> TableBodyAttributes { get; set; }
+        public string TableBodyClass
+        {
+            get => _TableBodyClass;
+            set => SetProperty(ref _TableBodyClass, value);
+        }
+
+        #endregion TableBodyClass
+
+        #region TableBodyAttributes
+
+        private Dictionary<string, object> _TableBodyAttributes;
+
+        [Parameter]
+        public Dictionary<string, object> TableBodyAttributes
+        {
+            get => _TableBodyAttributes;
+            set => SetProperty(ref _TableBodyAttributes, value);
+        }
+
+        #endregion TableBodyAttributes
 
         protected virtual IEnumerable<KeyValuePair<string, object>> GetTableBodyAttributes()
+
             => TableBodyAttributes.MergeAttributes(Theme?.TableBodyAttributes)
                 .AppendClass(TableBodyClass ?? Theme?.TableBodyClass)
                 .PrependStyle("overflow-anchor:none");

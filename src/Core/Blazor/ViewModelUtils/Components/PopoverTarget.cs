@@ -7,17 +7,57 @@ public abstract class PopoverTarget<T> : BindableComponentBase<T>
 {
     protected ElementReference TargetElement { get; set; }
 
-    [CascadingParameter]
-    public IHasPopoverPresenter PopoverPresenterProvider { get; set; }
+    #region PopoverPresenterProvider
+
+    private IHasPopoverPresenter _PopoverPresenterProvider;
 
     [CascadingParameter]
-    public IContainerElementProvider ContainerElementProvider { get; set; }
+    public IHasPopoverPresenter PopoverPresenterProvider
+    {
+        get => _PopoverPresenterProvider;
+        set => SetProperty(ref _PopoverPresenterProvider, value);
+    }
+
+    #endregion PopoverPresenterProvider
+
+    #region ContainerElementProvider
+
+    private IContainerElementProvider _ContainerElementProvider;
+
+    [CascadingParameter]
+    public IContainerElementProvider ContainerElementProvider
+    {
+        get => _ContainerElementProvider;
+        set => SetProperty(ref _ContainerElementProvider, value);
+    }
+
+    #endregion ContainerElementProvider
+
+    #region Command
+
+    private ICommand _Command;
 
     [Parameter]
-    public ICommand Command { get; set; }
+    public ICommand Command
+    {
+        get => _Command;
+        set => SetProperty(ref _Command, value);
+    }
+
+    #endregion Command
+
+    #region CommandMode
+
+    private PopoverTargetCommandMode _CommandMode = PopoverTargetCommandMode.Replace;
 
     [Parameter]
-    public PopoverTargetCommandMode CommandMode { get; set; } = PopoverTargetCommandMode.Replace;
+    public PopoverTargetCommandMode CommandMode
+    {
+        get => _CommandMode;
+        set => SetProperty(ref _CommandMode, value);
+    }
+
+    #endregion CommandMode
 
     protected ElementReference ContainerElement => ContainerElementProvider?.Container ?? default;
 
