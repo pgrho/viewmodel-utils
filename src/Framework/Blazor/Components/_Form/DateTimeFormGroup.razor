@@ -1,0 +1,36 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits FormGroupBase
+<form id="@FormGroupId"
+      class="@Theme?.FormGroupClass @AdditionalClass"
+      @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+      @onsubmit:preventDefault>
+    <label for="@DateTimePickerId"
+           class="@Theme?.LabelClass @AdditionalLabelClass"
+           title="@Description">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Title
+        }
+    </label>
+    <DateTimePicker @ref="_DateTimePicker"
+                    Id="@DateTimePickerId"
+                    ClassName="@(Theme?.ControlClass + " datetimepicker-input " + AdditionalInputClass)"
+                    IsEnabled="@IsEnabled"
+                    IsReadOnly="@IsReadOnly"
+                    Placeholder="@Placeholder"
+                    Mode="@Mode"
+                    UseCurrent="@UseCurrent"
+                    OnFocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
+                    @bind-Value="InternalValue" />
+</form>
+@code
+{
+    private DateTimePicker _DateTimePicker;
+
+    public ValueTask FocusAsync(bool selectAll = false)
+        => _DateTimePicker.FocusAsync(selectAll);
+}

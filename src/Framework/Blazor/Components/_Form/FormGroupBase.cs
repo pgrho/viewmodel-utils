@@ -120,6 +120,19 @@ public abstract class FormGroupBase : BindableComponentBase
 
     #endregion IsEnabled
 
+    #region Placeholder
+
+    private string _Placeholder;
+
+    [Parameter]
+    public string Placeholder
+    {
+        get => _Placeholder;
+        set => SetProperty(ref _Placeholder, value);
+    }
+
+    #endregion Placeholder
+
     [Parameter]
     public ICommand OnFocusCommand { get; set; }
 

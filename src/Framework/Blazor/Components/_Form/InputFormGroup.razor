@@ -21,6 +21,8 @@
            class="@Theme?.ControlClass @AdditionalInputClass"
            @ref="_Input"
            @bind="@InternalValue"
+           placeholder="@Placeholder"
+           autocomplete="@AutoComplete"
            disabled="@(!IsEnabled ? "disabled" : null)"
            readonly="@(IsReadOnly ? "readonly" : null)"
            @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />

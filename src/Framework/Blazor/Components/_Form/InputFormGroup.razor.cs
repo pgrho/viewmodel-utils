@@ -59,6 +59,32 @@ public partial class InputFormGroup<T> : FormGroupBase
 
     #endregion Value
 
+    #region Type
+
+    private string _Type = "text";
+
+    [Parameter]
+    public string Type
+    {
+        get => _Type;
+        set => SetProperty(ref _Type, value);
+    }
+
+    #endregion Type
+
+    #region AutoComplete
+
+    private string _AutoComplete;
+
+    [Parameter]
+    public string AutoComplete
+    {
+        get => _AutoComplete;
+        set => SetProperty(ref _AutoComplete, value);
+    }
+
+    #endregion AutoComplete
+
     #region IsReadOnly
 
     private bool _IsReadOnly;
