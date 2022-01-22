@@ -43,7 +43,12 @@ public abstract class PopoverAnchor<T> : PopoverTarget<T>
     #endregion ChildContent
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes { get; set; }
+    public IDictionary<string, object> AdditionalAttributes
+    {
+        get => _AdditionalAttributes;
+        set => SetProperty(ref _AdditionalAttributes, value);
+    }
+    private IDictionary<string, object> _AdditionalAttributes;
 
     protected virtual int? GetTabIndex() => TabIndex;
 }

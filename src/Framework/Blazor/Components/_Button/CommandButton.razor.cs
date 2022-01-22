@@ -107,7 +107,12 @@
         #endregion IsActive
 
         [Parameter(CaptureUnmatchedValues = true)]
-        public Dictionary<string, object> AdditionalAttributes { get; set; }
+        public IDictionary<string, object> AdditionalAttributes
+        {
+            get => _Attributes;
+            set => SetProperty(ref _Attributes, value);
+        }
+        private IDictionary<string, object> _Attributes;
 
         #region ShowIcon
 

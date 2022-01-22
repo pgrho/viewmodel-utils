@@ -46,7 +46,12 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
     protected ElementReference Element { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes { get; set; }
+    public IDictionary<string, object> AdditionalAttributes
+    {
+        get => _AdditionalAttributes;
+        set => SetProperty(ref _AdditionalAttributes, value);
+    }
+    private IDictionary<string, object> _AdditionalAttributes;
 
     protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
     {

@@ -60,7 +60,12 @@ public partial class StickyTable<T> : ListComponentBase<T>
     #endregion SearchPage
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes { get; set; }
+    public IDictionary<string, object> AdditionalAttributes
+    {
+        get => _AdditionalAttributes;
+        set => SetProperty(ref _AdditionalAttributes, value);
+    }
+    private IDictionary<string, object> _AdditionalAttributes;
 
     #region TableClass
 

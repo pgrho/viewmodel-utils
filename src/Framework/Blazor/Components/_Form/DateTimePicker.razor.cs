@@ -97,7 +97,12 @@ public partial class DateTimePicker : BindableComponentBase
     #endregion OnBlur
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes { get; set; }
+    public IDictionary<string, object> AdditionalAttributes
+    {
+        get => _AdditionalAttributes;
+        set => SetProperty(ref _AdditionalAttributes, value);
+    }
+    private IDictionary<string, object> _AdditionalAttributes;
 
     #region Mode
 

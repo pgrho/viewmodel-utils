@@ -93,10 +93,10 @@
 
         #region HeaderBackgroundAttributes
 
-        private Dictionary<string, object> _HeaderBackgroundAttributes;
+        private IDictionary<string, object> _HeaderBackgroundAttributes;
 
         [Parameter]
-        public Dictionary<string, object> HeaderBackgroundAttributes
+        public IDictionary<string, object> HeaderBackgroundAttributes
         {
             get => _HeaderBackgroundAttributes;
             set => SetProperty(ref _HeaderBackgroundAttributes, value);
@@ -168,10 +168,10 @@
 
         #region ScrollerAttributes
 
-        private Dictionary<string, object> _ScrollerAttributes;
+        private IDictionary<string, object> _ScrollerAttributes;
 
         [Parameter]
-        public Dictionary<string, object> ScrollerAttributes
+        public IDictionary<string, object> ScrollerAttributes
         {
             get => _ScrollerAttributes;
             set => SetProperty(ref _ScrollerAttributes, value);
@@ -203,10 +203,10 @@
 
         #region TableAttributes
 
-        private Dictionary<string, object> _TableAttributes;
+        private IDictionary<string, object> _TableAttributes;
 
         [Parameter]
-        public Dictionary<string, object> TableAttributes
+        public IDictionary<string, object> TableAttributes
         {
             get => _TableAttributes;
             set => SetProperty(ref _TableAttributes, value);
@@ -238,10 +238,10 @@
 
         #region TableHeadAttributes
 
-        private Dictionary<string, object> _TableHeadAttributes;
+        private IDictionary<string, object> _TableHeadAttributes;
 
         [Parameter]
-        public Dictionary<string, object> TableHeadAttributes
+        public IDictionary<string, object> TableHeadAttributes
         {
             get => _TableHeadAttributes;
             set => SetProperty(ref _TableHeadAttributes, value);
@@ -274,10 +274,10 @@
 
         #region TableBodyAttributes
 
-        private Dictionary<string, object> _TableBodyAttributes;
+        private IDictionary<string, object> _TableBodyAttributes;
 
         [Parameter]
-        public Dictionary<string, object> TableBodyAttributes
+        public IDictionary<string, object> TableBodyAttributes
         {
             get => _TableBodyAttributes;
             set => SetProperty(ref _TableBodyAttributes, value);

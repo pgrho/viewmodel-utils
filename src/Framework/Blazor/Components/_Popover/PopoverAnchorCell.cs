@@ -64,5 +64,10 @@ public abstract class PopoverAnchorCell<T> : BindableComponentBase<T>
     #endregion CommandMode
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes { get; set; }
+    public IDictionary<string, object> AdditionalAttributes
+    {
+        get => _AdditionalAttributes;
+        set => SetProperty(ref _AdditionalAttributes, value);
+    }
+    private IDictionary<string, object> _AdditionalAttributes;
 }

@@ -14,7 +14,7 @@ public partial class FrameworkPageViewModel : IHasJSRuntime
         Page = page;
     }
 
-    public FrameworkPageBase Page { get; }
+    public FrameworkPageBase Page { get; set; }
 
     public IJSRuntime JS => Page.JS;
 
