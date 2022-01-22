@@ -9,6 +9,8 @@ public abstract partial class BindableComponentBase : ComponentBase, ComponentUp
 
     public static string HostParameterName => nameof(IBindableComponent);
 
+    protected virtual bool ImplicitRender => true;
+
     #region ShouldRenderCore
 
     private bool _ShouldRenderCore = true;
@@ -29,7 +31,7 @@ public abstract partial class BindableComponentBase : ComponentBase, ComponentUp
         }
     }
 
-    protected override bool ShouldRender() => _ShouldRenderCore;
+    protected override bool ShouldRender() => ImplicitRender || _ShouldRenderCore;
 
     #endregion ShouldRenderCore
 

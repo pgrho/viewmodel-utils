@@ -131,4 +131,6 @@ public abstract class FormGroupBase : BindableComponentBase
 
     [Parameter]
     public object EnterCommandParameter { get; set; }
+
+    protected override bool ImplicitRender => false;
 }

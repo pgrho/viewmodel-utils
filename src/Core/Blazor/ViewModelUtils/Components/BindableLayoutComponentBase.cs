@@ -7,6 +7,7 @@ public abstract partial class BindableLayoutComponentBase : LayoutComponentBase,
     #region ShouldRenderCore
 
     private bool _ShouldRenderCore = true;
+    protected virtual bool ImplicitRender => true;
 
     protected bool ShouldRenderCore
     {
@@ -24,7 +25,7 @@ public abstract partial class BindableLayoutComponentBase : LayoutComponentBase,
         }
     }
 
-    protected override bool ShouldRender() => _ShouldRenderCore;
+    protected override bool ShouldRender() => ImplicitRender || _ShouldRenderCore;
 
     #endregion ShouldRenderCore
 
