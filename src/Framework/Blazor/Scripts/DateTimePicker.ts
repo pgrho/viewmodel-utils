@@ -53,5 +53,4 @@
 
         dayViewHeaderFormat: /^ja$/i.test(locale) ? 'YYYY年 MMM' : 'MMMM YYYY'
     });
-    console.dir(_$.fn.datetimepicker.Constructor.Default);
 }());
