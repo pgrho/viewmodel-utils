@@ -3,24 +3,35 @@
 @{
     var col = LabelColumn ?? DefaultLabelColumn;
 }
-@if (IsVisible ?? (Value > DateTimeOffset.MinValue))
+@if (IsVisible ?? (Value != null))
 {
-    var v = Value?.LocalDateTime;
     <dt class="col-@col">
         <label title="@Description">@Title</label>
     </dt>
     <dd class="col-@(12 - col)">
-        <span title="@v?.ToString(ToolTipFormat)">@v?.ToString(DisplayFormat)</span>
+        @if (Command == null)
+        {
+            @Value?.ToString(DisplayFormat)
+        }
+        else
+        {
+            <a href="@(Command.Href ?? "javascript:void(0)")"
+       title="@Command.Description"
+       @onclick="@(() => Command.Execute())"
+       @onclick:preventDefault>
+                @Value?.ToString(DisplayFormat)
+            </a>
+        }
     </dd>
 }
 @code
 {
     #region Value
 
-    private DateTimeOffset? _Value;
+    private int? _Value;
 
     [Parameter]
-    public DateTimeOffset? Value
+    public int? Value
     {
         get => _Value;
         set => SetProperty(ref _Value, value);
@@ -30,7 +41,7 @@
 
     #region DisplayFormat
 
-    private string _DisplayFormat = "yyyy/MM/dd HH:mm.ss";
+    private string _DisplayFormat = "#,0";
 
     [Parameter]
     public string DisplayFormat
@@ -41,16 +52,6 @@
 
     #endregion
 
-    #region ToolTipFormat
-
-    private string _ToolTipFormat = "yyyy/MM/dd (ddd) HH:mm.ss.fff";
-
     [Parameter]
-    public string ToolTipFormat
-    {
-        get => _ToolTipFormat;
-        set => SetProperty(ref _ToolTipFormat, value);
-    }
-
-    #endregion
+    public ICommandViewModel Command { get; set; }
 }

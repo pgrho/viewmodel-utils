@@ -3,25 +3,15 @@
 @{
     var col = LabelColumn ?? DefaultLabelColumn;
 }
-@if (IsVisible ?? !string.IsNullOrEmpty(Value))
+@if (IsVisible != false)
 {
     <dt class="col-@col">
         <label title="@Description">@Title</label>
     </dt>
     <dd class="col-@(12 - col)">
-        @if (Command == null)
-        {
+        <span class="badge @Style.ToBadgeClass()">
             @Value
-        }
-        else
-        {
-            <a href="@(Command.Href ?? "javascript:void(0)")"
-       title="@Command.Description"
-       @onclick="@(() => Command.Execute())"
-       @onclick:preventDefault>
-                @Value
-            </a>
-        }
+        </span>
     </dd>
 }
 @code
@@ -39,6 +29,16 @@
 
     #endregion
 
+    #region Style
+
+    private BorderStyle _Style;
+
     [Parameter]
-    public ICommandViewModel Command { get; set; }
+    public BorderStyle Style
+    {
+        get => _Style;
+        set => SetProperty(ref _Style, value);
+    }
+
+    #endregion
 }

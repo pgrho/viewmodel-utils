@@ -1,0 +1,31 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits PopoverRowBase
+@{
+    var col = LabelColumn ?? DefaultLabelColumn;
+}
+@if (IsVisible != false)
+{
+    <dt class="col-@col">
+        <label title="@Description">@Title</label>
+    </dt>
+    <dd class="col-@(12 - col)">
+        @ChildContent
+    </dd>
+}
+@code
+{
+    public static string DefaultLabelColumnParameterName => DEFAULT_LABEL_COLUMN_NAME;
+
+    #region ChildContent
+
+    private RenderFragment _ChildContent;
+
+    [Parameter]
+    public RenderFragment ChildContent
+    {
+        get => _ChildContent;
+        set => SetProperty(ref _ChildContent, value);
+    }
+
+    #endregion
+}

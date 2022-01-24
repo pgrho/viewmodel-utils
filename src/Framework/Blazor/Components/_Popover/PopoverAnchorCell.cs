@@ -69,5 +69,6 @@ public abstract class PopoverAnchorCell<T> : BindableComponentBase<T>
         get => _AdditionalAttributes;
         set => SetProperty(ref _AdditionalAttributes, value);
     }
+
     private IDictionary<string, object> _AdditionalAttributes;
 }
