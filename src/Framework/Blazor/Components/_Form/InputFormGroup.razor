@@ -1,12 +1,15 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @typeparam T
 @inherits FormGroupBase
+@{
+    var theme = Theme ?? FormGroupTheme.Default;
+}
 <form id="@FormGroupId"
-      class="@Theme?.FormGroupClass @AdditionalClass"
+      class="@theme.FormGroupClass @AdditionalClass"
       @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
       @onsubmit:preventDefault>
     <label for="@InputId"
-           class="@Theme?.LabelClass @AdditionalLabelClass"
+           class="@theme.LabelClass @AdditionalLabelClass"
            title="@Description">
         @if (ChildContent != null)
         {
@@ -22,9 +25,9 @@
 
         if (shouldGroup)
         {
-            <div class="@Theme?.InputGroupClass">
+            <div class="@theme.InputGroupClass">
                 <input id="@InputId"
-               class="@Theme?.ControlClass @AdditionalInputClass"
+               class="@theme.ControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
                type="@(Type ?? (DataList?.Count> 0 ? "search" : "text"))"
                    @ref="_Input"
                    @bind="@InternalValue"
@@ -50,7 +53,7 @@
         else
         {
             <input id="@InputId"
-           class="@Theme?.ControlClass @AdditionalInputClass"
+           class="@theme.ControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
            type="@(Type ?? "text")"
                @ref="_Input"
                @bind="@InternalValue"

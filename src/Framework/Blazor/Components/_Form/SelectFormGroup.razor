@@ -1,10 +1,13 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @typeparam T
 @inherits FormGroupBase
+@{
+    var theme = Theme ?? FormGroupTheme.Default;
+}
 <div id="@FormGroupId"
-     class="@Theme?.FormGroupClass @AdditionalClass">
+     class="@theme.FormGroupClass @AdditionalClass">
     <label for="@SelectId"
-           class="@Theme?.LabelClass @AdditionalLabelClass"
+           class="@theme.LabelClass @AdditionalLabelClass"
            title="@Description">
         @if (ChildContent != null)
         {
@@ -17,7 +20,7 @@
     </label>
 
     <select id="@SelectId"
-            class="@Theme?.SelectControlClass @AdditionalInputClass"
+            class="@theme.SelectControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
             @ref="_Select"
             @bind="@InternalValue"
             disabled="@(!IsEnabled ? "disabled" : null)"

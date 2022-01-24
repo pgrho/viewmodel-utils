@@ -3,8 +3,9 @@
 @{
     var d = DataContext;
     var isEnabled = d != null && (IsEnabled ?? d.IsEnabled);
+    var theme = Theme ?? FormGroupTheme.Default;
 }
-<div class="input-group">
+<div class="@theme.InputGroupClass">
     @if (d.UseList)
     {
         // TODO: expose list
@@ -27,13 +28,15 @@
         }
 
         <select @ref="_Select"
-            class="custom-select"
-            @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")">
+            id="@ElementId"
+            class="@theme.SelectControlClass"
+            @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")"
+            @onkeydown="@OnSelectKeyDown">
             @if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
             {
                 foreach (var e in _ItemsTask.Result)
                 {
-                    var id = Id + "/" + d.GetId(e);
+                    var id = ElementId + "/" + d.GetId(e);
                     <option @key="@id"
                 value="@d.GetCode(e)"
                 selected="@(e == d.SelectedItem ? "selected" : null)">
@@ -55,15 +58,17 @@
     }
     else
     {
-        <div class="input-group-prepend">
+        <form class="input-group-prepend m-0"
+          @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+          @onsubmit:preventDefault>
             <EntityTypeahead @ref="_Typeahead"
-                         id="@Id"
-                         class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
+                         id="@ElementId"
+                         class="@($"{theme.ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
                          style="@CodeStyle"
                          IsEnabled="@isEnabled"
                          AppendToSelector="@AppendToSelector"
                          DataContext="@d" />
-        </div>
+        </form>
         @if (d.HasModal && isEnabled)
         {
             <div class="input-group-prepend">
@@ -74,7 +79,7 @@
                 </button>
             </div>
         }
-        <div class="@($"{(Theme?? FormGroupTheme.Default).ControlClass} {NameClass}")"
+        <div class="@($"{theme.ControlClass} {NameClass}")"
          style="@CodeStyle"
          readonly="readonly"
          tabindex="-1">

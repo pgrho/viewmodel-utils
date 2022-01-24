@@ -1,0 +1,34 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits FormGroupBase
+@{
+    var theme = Theme ?? FormGroupTheme.Default;
+}
+<div id="@FormGroupId"
+     class="@theme.FormGroupClass @AdditionalClass">
+    <label for="@EntitySelectorId"
+           class="@theme.LabelClass @AdditionalLabelClass"
+           title="@Description">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @Title
+        }
+    </label>
+    <EntitySelectorView ElementId="@EntitySelectorId"
+                        DataContext="@DataContext"
+                        IsEnabled="@IsEnabled"
+                        IsRequired="@IsRequired"
+                        AppendToSelector="@AppendToSelector"
+                        EnterCommand="@EnterCommand"
+                        EnterCommandParameter="@EnterCommandParameter" />
+</div>
+@code
+{
+    private EntitySelectorView _EntitySelectorView;
+
+    public ValueTask FocusAsync(bool selectAll = false)
+        => _EntitySelectorView?.FocusAsync(selectAll) ?? default;
+}

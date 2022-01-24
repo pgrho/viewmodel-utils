@@ -4,6 +4,8 @@ public partial class EntitySelectorView
 {
     private Task<System.Collections.IList> _ItemsTask;
 
+    protected override bool ImplicitRender => false;
+
     #region AppendToSelector
 
     private string _AppendToSelector = ".body-root";
@@ -17,15 +19,23 @@ public partial class EntitySelectorView
 
     #endregion AppendToSelector
 
-    #region Id
+    #region ElementId
 
     private static int _NewId;
 
-    public string _Id;
+    public string _ElementId;
 
-    public string Id => _Id ??= ($"entity--selector--view--{++_NewId}");
+    [Parameter]
+    public string ElementId
+    {
+        get => _ElementId ??= ($"entity--selector--view--{++_NewId}");
+        set => SetProperty(ref _ElementId, value);
+    }
 
-    #endregion Id
+    [Obsolete("Use ElementId")]
+    public string Id => ElementId;
+
+    #endregion ElementId
 
     #region Theme
 
@@ -143,6 +153,12 @@ public partial class EntitySelectorView
         }
     }
 
+    [Parameter]
+    public ICommand EnterCommand { get; set; }
+
+    [Parameter]
+    public object EnterCommandParameter { get; set; }
+
     private bool _IsUpdatingSelectedCode;
 
     protected override bool OnDataContextPropertyChanged(string propertyName)
@@ -158,5 +174,12 @@ public partial class EntitySelectorView
             }
         }
         return base.OnDataContextPropertyChanged(propertyName);
+    }
+    private void OnSelectKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            EnterCommand?.Execute(EnterCommandParameter);
+        }
     }
 }

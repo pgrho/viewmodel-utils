@@ -70,6 +70,19 @@ public partial class DateTimePicker : BindableComponentBase
 
     #endregion IsReadOnly
 
+    #region IsRequired
+
+    private bool _IsRequired;
+
+    [Parameter]
+    public bool IsRequired
+    {
+        get => _IsRequired;
+        set => SetProperty(ref _IsRequired, value);
+    }
+
+    #endregion IsRequired
+
     #region OnFocus
 
     private Action _OnFocus;

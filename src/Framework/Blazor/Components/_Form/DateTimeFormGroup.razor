@@ -1,11 +1,14 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits FormGroupBase
+@{
+    var theme = Theme ?? FormGroupTheme.Default;
+}
 <form id="@FormGroupId"
-      class="@Theme?.FormGroupClass @AdditionalClass"
+      class="@theme.FormGroupClass @AdditionalClass"
       @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
       @onsubmit:preventDefault>
     <label for="@DateTimePickerId"
-           class="@Theme?.LabelClass @AdditionalLabelClass"
+           class="@theme.LabelClass @AdditionalLabelClass"
            title="@Description">
         @if (ChildContent != null)
         {
@@ -21,6 +24,7 @@
                     ClassName="@(Theme?.ControlClass + " datetimepicker-input " + AdditionalInputClass)"
                     IsEnabled="@IsEnabled"
                     IsReadOnly="@IsReadOnly"
+                    IsRequired="@IsRequired"
                     Placeholder="@Placeholder"
                     Mode="@Mode"
                     UseCurrent="@UseCurrent"

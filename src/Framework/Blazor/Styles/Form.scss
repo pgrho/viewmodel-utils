@@ -1,0 +1,11 @@
+﻿input[type=text],
+input[type=number],
+input[type=password],
+input[type=search],
+select {
+    &:not([disabled]):not([readonly]) {
+        &[data-val-required], &.required {
+            background-color: #fcfcee;
+        }
+    }
+}

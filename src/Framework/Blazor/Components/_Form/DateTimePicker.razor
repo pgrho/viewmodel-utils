@@ -3,7 +3,7 @@
 <input @ref="@_Element"
        id="@_Id"
        type="text"
-       class="@ClassName"
+       class="@ClassName @(IsRequired ? "required" : null)"
        autocomplete="off"
        style="ime-mode: disabled"
        data-toggle="datetimepicker"
