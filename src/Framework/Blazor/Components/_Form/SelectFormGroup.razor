@@ -36,6 +36,6 @@
 {
     private ElementReference _Select;
 
-    public ValueTask FocusAsync(bool selectAll = false)
-        => _Select.FocusAsync();
+    public override ValueTask FocusAsync(bool selectAll = false)
+        => _Select.FocusAsyncWithWarning(nameof(SelectFormGroup<int>) + "#" + Title);
 }

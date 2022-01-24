@@ -17,7 +17,8 @@
             @Title
         }
     </label>
-    <EntitySelectorView ElementId="@EntitySelectorId"
+    <EntitySelectorView @ref="_EntitySelectorView"
+                        ElementId="@EntitySelectorId"
                         DataContext="@DataContext"
                         IsEnabled="@IsEnabled"
                         IsRequired="@IsRequired"
@@ -29,6 +30,6 @@
 {
     private EntitySelectorView _EntitySelectorView;
 
-    public ValueTask FocusAsync(bool selectAll = false)
+    public override ValueTask FocusAsync(bool selectAll = false)
         => _EntitySelectorView?.FocusAsync(selectAll) ?? default;
 }

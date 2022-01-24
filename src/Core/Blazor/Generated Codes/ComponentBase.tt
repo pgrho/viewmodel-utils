@@ -172,7 +172,7 @@ foreach (var t in new [] {
 
         protected virtual bool OnDataContextRequestedFocus(string propertyName)
         {
-            Console.WriteLine("Failed to focus element for property {0}", propertyName);
+            Console.WriteLine("Failed to focus element for property {0}. {1}#{2}", propertyName, GetType().FullName, GetHashCode());
             return false;
         }
     }

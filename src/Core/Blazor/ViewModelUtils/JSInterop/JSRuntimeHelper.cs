@@ -131,4 +131,22 @@ public static class JSRuntimeHelper
 
     public static ValueTask FocusAsync(this IJSRuntime js, ElementReference element, bool selectAll)
         => js.InvokeVoidAsync("Shipwreck.ViewModelUtils.focus", element, selectAll);
+
+    internal static ValueTask FocusAsyncWithWarning(this IJSRuntime js, ElementReference element, bool selectAll, string parentName)
+    {
+        if (element.Id == null)
+        {
+            Console.WriteLine("Warning! {0} passed default ElementReference to FocusAsync", parentName);
+        }
+        return js.FocusAsync(element, selectAll);
+    }
+
+    internal static ValueTask FocusAsyncWithWarning(this ElementReference element, string parentName)
+    {
+        if (element.Id == null)
+        {
+            Console.WriteLine("Warning! {0} passed default ElementReference to FocusAsync", parentName);
+        }
+        return element.FocusAsync();
+    }
 }

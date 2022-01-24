@@ -203,7 +203,7 @@ namespace Shipwreck.ViewModelUtils.Components
 
         protected virtual bool OnDataContextRequestedFocus(string propertyName)
         {
-            Console.WriteLine("Failed to focus element for property {0}", propertyName);
+            Console.WriteLine("Failed to focus element for property {0}. {1}#{2}", propertyName, GetType().FullName, GetHashCode());
             return false;
         }
     }
@@ -292,7 +292,7 @@ namespace Shipwreck.ViewModelUtils.Components
 
         protected virtual bool OnDataContextRequestedFocus(string propertyName)
         {
-            Console.WriteLine("Failed to focus element for property {0}", propertyName);
+            Console.WriteLine("Failed to focus element for property {0}. {1}#{2}", propertyName, GetType().FullName, GetHashCode());
             return false;
         }
     }
@@ -381,7 +381,7 @@ namespace Shipwreck.ViewModelUtils.Components
 
         protected virtual bool OnDataContextRequestedFocus(string propertyName)
         {
-            Console.WriteLine("Failed to focus element for property {0}", propertyName);
+            Console.WriteLine("Failed to focus element for property {0}. {1}#{2}", propertyName, GetType().FullName, GetHashCode());
             return false;
         }
     }

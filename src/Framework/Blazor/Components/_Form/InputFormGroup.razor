@@ -20,58 +20,57 @@
             @Title
         }
     </label>
-    @{
-        var shouldGroup = DataList?.Count > 0;
-
-        if (shouldGroup)
-        {
-            <div class="@theme.InputGroupClass">
-                <input id="@InputId"
+    @if (ShouldGroup)
+    {
+        <div class="@theme.InputGroupClass">
+            <input id="@InputId"
                class="@theme.ControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
                type="@(Type ?? (DataList?.Count> 0 ? "search" : "text"))"
-                   @ref="_Input"
-                   @bind="@InternalValue"
+               @ref="_GroupInput"
+               @bind="@InternalValue"
                placeholder="@Placeholder"
                autocomplete="@(AutoComplete ?? "on")"
                disabled="@(!IsEnabled ? "disabled" : null)"
                readonly="@(IsReadOnly ? "readonly" : null)"
                list="@(DataList?.Count>0 ? DataListId : null)"
-                   @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
-                @if (DataList?.Count > 0)
-                {
-                    <span class="fas fa-chevron-down text-muted"
-                  style="pointer-events: none; position: absolute; right: 0.5rem; top: 0.5rem"></span>
-                    <datalist id="@DataListId">
-                        @foreach (var t in DataList)
-                        {
-                            <option>@t</option>
-                        }
-                    </datalist>
-                }
-            </div>
-        }
-        else
-        {
-            <input id="@InputId"
+               @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
+            @if (DataList?.Count > 0)
+            {
+                <span class="fas fa-chevron-down text-muted"
+              style="pointer-events: none; position: absolute; right: 0.5rem; top: 0.5rem"></span>
+                <datalist id="@DataListId">
+                    @foreach (var t in DataList)
+                    {
+                        <option>@t</option>
+                    }
+                </datalist>
+            }
+        </div>
+    }
+    else
+    {
+        <input id="@InputId"
            class="@theme.ControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
            type="@(Type ?? "text")"
-               @ref="_Input"
-               @bind="@InternalValue"
+           @ref="_SingleInput"
+           @bind="@InternalValue"
            placeholder="@Placeholder"
            autocomplete="@AutoComplete"
            disabled="@(!IsEnabled ? "disabled" : null)"
            readonly="@(IsReadOnly ? "readonly" : null)"
-               @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
-        }
+           @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
     }
 </form>
 @code
 {
-    private ElementReference _Input;
+    private ElementReference _GroupInput;
+    private ElementReference _SingleInput;
 
     [Inject]
     public IJSRuntime JS { get; set; }
 
-    public ValueTask FocusAsync(bool selectAll = false)
-        => JS.FocusAsync(_Input, selectAll);
+    private bool ShouldGroup => DataList?.Count > 0;
+
+    public override ValueTask FocusAsync(bool selectAll = false)
+        => JS.FocusAsyncWithWarning(ShouldGroup ? _GroupInput : _SingleInput, selectAll, nameof(InputFormGroup<string>) + "#" + Title);
 }

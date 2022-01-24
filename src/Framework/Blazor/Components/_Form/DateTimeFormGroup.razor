@@ -35,6 +35,6 @@
 {
     private DateTimePicker _DateTimePicker;
 
-    public ValueTask FocusAsync(bool selectAll = false)
+    public override ValueTask FocusAsync(bool selectAll = false)
         => _DateTimePicker.FocusAsync(selectAll);
-}
+ }

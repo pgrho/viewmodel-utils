@@ -159,4 +159,6 @@ public abstract class FormGroupBase : BindableComponentBase
     public object EnterCommandParameter { get; set; }
 
     protected override bool ImplicitRender => false;
+
+    public abstract ValueTask FocusAsync(bool selectAll = false);
 }
