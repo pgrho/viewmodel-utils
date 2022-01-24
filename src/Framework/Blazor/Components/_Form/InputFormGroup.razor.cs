@@ -122,8 +122,10 @@ public partial class InputFormGroup<T> : FormGroupBase
         set
         {
             var vs = value?.Count > 0 ? Array.AsReadOnly(value.ToArray()) : null;
-            if (vs?.SequenceEqual(_DataList) != true
-                && (vs != null || _DataList != null))
+
+            if (vs == null
+                || _DataList == null
+                || !vs.SequenceEqual(_DataList))
             {
                 SetProperty(ref _DataList, vs);
             }
