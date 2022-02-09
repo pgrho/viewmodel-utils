@@ -2,7 +2,36 @@
 
 public partial class EntitySelectorView
 {
+    #region ItemsTask
+
     private Task<System.Collections.IList> _ItemsTask;
+
+    private Task<System.Collections.IList> ItemsTask
+    {
+        get
+        {
+            if (_ItemsTask == null && DataContext.UseList)
+            {
+                _ItemsTask = DataContext.GetItemsTask();
+                if (_ItemsTask.Status < TaskStatus.RanToCompletion)
+                {
+                    _ItemsTask.ContinueWith(_ => StateHasChanged());
+                }
+                _ItemsTask.ContinueWith(_ =>
+                {
+                    if (DataContext.SelectedId != null
+                        && DataContext.SelectedItem == null
+                        && DataContext.GetById(DataContext.SelectedId) is object sel)
+                    {
+                        DataContext.SelectedItem = sel;
+                    }
+                });
+            }
+            return _ItemsTask;
+        }
+    }
+
+    #endregion ItemsTask
 
     protected override bool ImplicitRender => false;
 
@@ -131,25 +160,28 @@ public partial class EntitySelectorView
     private string SelectedCode
     {
         get => DataContext?.SelectedItem != null ? DataContext.GetCode(DataContext.SelectedItem) : null;
-        set
+        set => SetSelectedCode(value);
+    }
+
+    private async void SetSelectedCode(string value)
+    {
+        try
         {
-            try
+            _IsUpdatingSelectedCode = true;
+            if (string.IsNullOrEmpty(value))
             {
-                _IsUpdatingSelectedCode = true;
-                if (string.IsNullOrEmpty(value))
-                {
-                    DataContext.SelectedItem = null;
-                }
-                else if (_ItemsTask?.Status == TaskStatus.RanToCompletion)
-                {
-                    DataContext.SelectedItem = _ItemsTask.Result.OfType<object>().FirstOrDefault(e => DataContext.GetCode(e) == value)
-                                            ?? DataContext.SelectedItem;
-                }
+                DataContext.SelectedItem = null;
             }
-            finally
+            else if (DataContext.UseList && ItemsTask is Task<System.Collections.IList> t)
             {
-                _IsUpdatingSelectedCode = false;
+                var items = await t;
+                DataContext.SelectedItem = items.OfType<object>().FirstOrDefault(e => DataContext.GetCode(e) == value)
+                                        ?? DataContext.SelectedItem;
             }
+        }
+        finally
+        {
+            _IsUpdatingSelectedCode = false;
         }
     }
 
@@ -175,6 +207,7 @@ public partial class EntitySelectorView
         }
         return base.OnDataContextPropertyChanged(propertyName);
     }
+
     private void OnSelectKeyDown(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
