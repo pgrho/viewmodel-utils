@@ -3,7 +3,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var del = require('del');
 var ts = require('gulp-typescript');
-var sass = require('gulp-sass')(require('node-sass'));
+var sass = require('gulp-sass')(require('sass'));
 var cleanCss = require('gulp-clean-css');
 var tsProject = ts.createProject('Scripts/tsconfig.json');
 
