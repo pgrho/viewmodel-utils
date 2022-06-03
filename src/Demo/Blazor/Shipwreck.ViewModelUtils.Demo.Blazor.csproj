@@ -8,21 +8,21 @@
         <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.min.css" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.min.css">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.bundle.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.bundle.js" >
+        <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.bundle.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.bundle.js">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.js" >
+        <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.js">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.min.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.min.js" >
+        <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.min.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.min.js">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.13" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.13" PrivateAssets="all" />
-        <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.17" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.17" PrivateAssets="all" />
+        <PackageReference Include="System.Net.Http.Json" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>

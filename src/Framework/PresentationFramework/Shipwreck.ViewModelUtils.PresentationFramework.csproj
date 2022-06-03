@@ -20,9 +20,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="MahApps.Metro" Version="2.4.7" />
+        <PackageReference Include="MahApps.Metro" Version="2.4.9" />
         <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
-        <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.1" />
+        <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
         <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.0.1-alpha5" />
         <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.1" />
     </ItemGroup>
@@ -31,7 +31,7 @@
         <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Remove="..\..\_GlobalUsings.cs"   />
+        <Compile Remove="..\..\_GlobalUsings.cs" />
         <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
     </ItemGroup>
     <ItemGroup>
