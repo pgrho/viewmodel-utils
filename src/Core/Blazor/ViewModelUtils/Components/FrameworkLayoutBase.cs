@@ -40,7 +40,7 @@ public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<Framewor
     public FrameworkPageViewModel PageContext
     {
         get => _PageContext;
-        internal set => SetProperty(ref _PageContext, value);
+        protected internal set => SetProperty(ref _PageContext, value);
     }
 
     #endregion PageContext
