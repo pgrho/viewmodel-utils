@@ -17,7 +17,7 @@ public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<Framewor
     public FrameworkPageBase Page
     {
         get => _Page;
-        internal set
+        protected internal set
         {
             SetProperty(ref _Page, value);
             OnPageChanged();
