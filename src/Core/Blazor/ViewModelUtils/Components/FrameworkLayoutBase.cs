@@ -2,8 +2,6 @@
 
 public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<FrameworkLayoutViewModel>, IHasJSRuntime, IHasInteractionService, IHasModalPresenter, IHasPopoverPresenter
 {
-    private WeakReference<FrameworkPageViewModel> _InitialPageContext;
-
     [Inject]
     public IJSRuntime JS { get; set; }
 
@@ -45,24 +43,49 @@ public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<Framewor
 
     #endregion PageContext
 
+    #region InitialPageContext
+
+    private WeakReference<FrameworkPageViewModel> _InitialPageContext;
+
+    protected FrameworkPageViewModel InitialPageContext
+    {
+        get => _InitialPageContext is var f && f != null && f.TryGetTarget(out var ipc) ? ipc : null;
+        set
+        {
+            if (value == null)
+            {
+                _InitialPageContext = null;
+            }
+            else if (_InitialPageContext == null)
+            {
+                _InitialPageContext = new WeakReference<FrameworkPageViewModel>(value);
+            }
+            else
+            {
+                _InitialPageContext.SetTarget(value);
+            }
+        }
+    }
+
+    #endregion InitialPageContext
+
     public abstract ModalPresenterBase ModalPresenter { get; }
 
     public abstract ModalPresenterBase PopoverPresenter { get; }
 
     protected override Task OnInitializedAsync()
     {
-        _InitialPageContext = _PageContext != null ? new WeakReference<FrameworkPageViewModel>(_PageContext) : null;
+        InitialPageContext = PageContext;
         return base.OnInitializedAsync();
     }
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        FrameworkPageViewModel ipc = null;
-        _InitialPageContext?.TryGetTarget(out ipc);
+        var ipc = InitialPageContext;
 
         var t = base.OnAfterRenderAsync(firstRender);
 
-        if (ipc != _PageContext)
+        if (ipc != _PageContext && _PageContext != null)
         {
             Task.Delay(1).ContinueWith(t => StateHasChanged());
         }
