@@ -307,11 +307,11 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
             }
             else
             {
-                SearchAsync("Id:" + id, 1).ContinueWith(t =>
+                GetByIdAsync(id, default).ContinueWith(t =>
                 {
                     if (Equals(id, _SelectedId) && t.Status == TaskStatus.RanToCompletion)
                     {
-                        SelectedItem = t.Result.FirstOrDefault(e => Equals(GetId(e), id));
+                        SelectedItem = t.Result;
                     }
                 });
             }
@@ -430,6 +430,12 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
             .ContinueWith(t => (IEnumerable)t.Result);
 
     public abstract Task<IEnumerable<TItem>> SearchAsync(string query, int maxCount, CancellationToken cancellationToken = default);
+
+    public virtual async Task<TItem> GetByIdAsync(TId id, CancellationToken cancellationToken)
+    {
+        var items = await SearchAsync("Id:" + id, 1, cancellationToken);
+        return items.FirstOrDefault();
+    }
 
     protected virtual Task<IReadOnlyList<TItem>> GetItemsAsync()
         => Task.FromResult<IReadOnlyList<TItem>>(Array.Empty<TItem>());
