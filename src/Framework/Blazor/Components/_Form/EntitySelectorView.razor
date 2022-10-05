@@ -8,64 +8,68 @@
 <div class="@theme.InputGroupClass">
     @if (d.UseList)
     {
-            <select @ref="_Select"
+        <select @ref="_Select"
             id="@ElementId"
             class="@theme.SelectControlClass"
             @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")"
             @onkeydown="@OnSelectKeyDown">
+            @if (!IsRequired)
+            {
+                <option value="" selected="@(d.SelectedItem == null ? "selected" : null)"></option>
+            }
             @if (ItemsTask.Status == TaskStatus.RanToCompletion)
             {
                 foreach (var e in ItemsTask.Result)
                 {
                     var id = ElementId + "/" + d.GetId(e);
-                                <option @key="@id"
+                    <option @key="@id"
                 value="@d.GetCode(e)"
                 selected="@(e == d.SelectedItem ? "selected" : null)">
                         @d.GetDisplayText(e)
-                                </option>
+                    </option>
                 }
             }
-            </select>
+        </select>
         @if (d.HasModal && isEnabled)
         {
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary"
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary"
                 tabindex="-1"
                 @onclick="@d.ShowModal">
-                            <span class="fas fa-ellipsis-h"></span>
-                        </button>
-                    </div>
+                    <span class="fas fa-ellipsis-h"></span>
+                </button>
+            </div>
         }
     }
     else
     {
-            <form class="input-group-prepend m-0"
+        <form class="input-group-prepend m-0"
           @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
           @onsubmit:preventDefault>
-                <EntityTypeahead @ref="_Typeahead"
+            <EntityTypeahead @ref="_Typeahead"
                          id="@ElementId"
                          class="@($"{theme.ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
                          style="@CodeStyle"
                          IsEnabled="@isEnabled"
                          AppendToSelector="@AppendToSelector"
                          DataContext="@d" />
-            </form>
+        </form>
         @if (d.HasModal && isEnabled)
         {
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary"
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary"
                 tabindex="-1"
                 @onclick="@d.ShowModal">
-                            <span class="fas fa-ellipsis-h"></span>
-                        </button>
-                    </div>
+                    <span class="fas fa-ellipsis-h"></span>
+                </button>
+            </div>
         }
-            <div class="@($"{theme.ControlClass} {NameClass}")"
+        <div class="@($"{theme.ControlClass} {NameClass}")"
          style="@CodeStyle"
          readonly="readonly"
          tabindex="-1">
             @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
-            </div>
+        </div>
     }
 </div>
 @code
