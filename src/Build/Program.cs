@@ -69,7 +69,7 @@ internal static class Program
                 using var p = await ExecuteAsync(
                     new ProcessStartInfo(Environment.ExpandEnvironmentVariables(@"%PROGRAMFILES(X86)%\Microsoft Visual Studio\Installer\vswhere.exe"))
                     {
-                        Arguments = "-latest -prerelease"
+                        Arguments = "-latest -version [17.0,18.0)"
                     }, stdout: e =>
                     {
                         var m = regex.Match(e);
