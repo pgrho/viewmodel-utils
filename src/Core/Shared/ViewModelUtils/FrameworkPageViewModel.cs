@@ -369,6 +369,16 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     protected virtual void Dispose(bool disposing)
     {
+        if (!IsDisposed)
+        {
+            try
+            {
+                _ConnectionTask = null;
+                _Connection?.Dispose();
+                _Connection = null;
+            }
+            catch { }
+        }
         IsDisposed = true;
     }
 
