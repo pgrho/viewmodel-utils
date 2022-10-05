@@ -118,6 +118,10 @@ public abstract class FormGroupBase : BindableComponentBase
         set => SetProperty(ref _IsEnabled, value);
     }
 
+
+    protected virtual bool GetIsDisabled()
+        => !IsEnabled;
+
     #endregion IsEnabled
 
     #region IsRequired
@@ -131,6 +135,8 @@ public abstract class FormGroupBase : BindableComponentBase
         set => SetProperty(ref _IsRequired, value);
     }
 
+    protected virtual bool GetIsRequired() => IsRequired;
+
     #endregion IsRequired
 
     #region Placeholder
@@ -143,6 +149,8 @@ public abstract class FormGroupBase : BindableComponentBase
         get => _Placeholder;
         set => SetProperty(ref _Placeholder, value);
     }
+
+    protected virtual string GetPlaceholder() => Placeholder;
 
     #endregion Placeholder
 

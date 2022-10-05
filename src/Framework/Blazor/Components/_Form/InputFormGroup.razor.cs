@@ -96,6 +96,8 @@ public partial class InputFormGroup<T> : FormGroupBase
         set => SetProperty(ref _AutoComplete, value);
     }
 
+    protected virtual string GetAutoComplete() => AutoComplete;
+
     #endregion AutoComplete
 
     #region IsReadOnly

@@ -20,10 +20,10 @@
     </label>
 
     <select id="@SelectId"
-            class="@theme.SelectControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
+            class="@theme.SelectControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
             @ref="_Select"
             @bind="@InternalValue"
-            disabled="@(!IsEnabled ? "disabled" : null)"
+            disabled="@(GetIsDisabled() ? "disabled" : null)"
             @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
             @onkeydown="@OnKeyDown">
         @foreach (var op in Options)

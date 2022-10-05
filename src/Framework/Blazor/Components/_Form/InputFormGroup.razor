@@ -24,13 +24,13 @@
     {
         <div class="@theme.InputGroupClass">
             <input id="@InputId"
-               class="@theme.ControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
+               class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
                type="@(Type ?? (DataList?.Count> 0 ? "search" : "text"))"
                @ref="_GroupInput"
                @bind="@InternalValue"
-               placeholder="@Placeholder"
-               autocomplete="@(AutoComplete ?? "on")"
-               disabled="@(!IsEnabled ? "disabled" : null)"
+               placeholder="@GetPlaceholder()"
+               autocomplete="@(GetAutoComplete() ?? "on")"
+               disabled="@(GetIsDisabled() ? "disabled" : null)"
                readonly="@(IsReadOnly ? "readonly" : null)"
                list="@(DataList?.Count>0 ? DataListId : null)"
                @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
@@ -50,13 +50,13 @@
     else
     {
         <input id="@InputId"
-           class="@theme.ControlClass @(IsRequired ? "required" : null) @AdditionalInputClass"
+           class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
            type="@(Type ?? "text")"
            @ref="_SingleInput"
            @bind="@InternalValue"
-           placeholder="@Placeholder"
-           autocomplete="@AutoComplete"
-           disabled="@(!IsEnabled ? "disabled" : null)"
+           placeholder="@GetPlaceholder()"
+           autocomplete="@GetAutoComplete()"
+           disabled="@(GetIsDisabled() ? "disabled" : null)"
            readonly="@(IsReadOnly ? "readonly" : null)"
            @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
     }

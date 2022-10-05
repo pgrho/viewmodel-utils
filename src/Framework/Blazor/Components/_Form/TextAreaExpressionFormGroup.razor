@@ -1,0 +1,45 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits StringExpressionFormGroupBase
+@{
+    var em = GetErrorMessage();
+    var theme = Theme ?? FormGroupTheme.Default;
+}
+<form id="@FormGroupId"
+      class="@theme.FormGroupClass @AdditionalClass"
+      @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+      @onsubmit:preventDefault>
+    <label class="@theme.LabelClass @AdditionalLabelClass"
+           for="@InputId"
+           title="@GetDescription()">
+        @if (ChildContent != null)
+        {
+            @ChildContent
+        }
+        else
+        {
+            @GetTitle()
+        }
+    </label>
+    <textarea @ref="@_Input"
+              id="@InputId"
+              class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
+              rows="@Rows"
+              cols="@Columns"
+              maxlength="@GetMaxLength()"
+              placeholder="@GetPlaceholder()"
+              readonly="@(GetIsReadOnly() ? "readonly" : null)"
+              disabled="@(GetIsDisabled() ? "disabled" : null)"
+              @bind="@InternalValue"
+              @onfocus="@OnFocus"
+              @onblur="@OnBlur"></textarea>
+    @if (!string.IsNullOrEmpty(em))
+    {
+        <span class="@GetErrorMessageClass()">
+            @em
+        </span>
+    }
+</form>
+@code
+{
+    ElementReference _Input;
+}
