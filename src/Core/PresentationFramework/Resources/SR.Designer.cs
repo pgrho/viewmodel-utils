@@ -19,7 +19,7 @@ namespace Shipwreck.ViewModelUtils {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class SR {
@@ -156,6 +156,15 @@ namespace Shipwreck.ViewModelUtils {
         internal static string Contains {
             get {
                 return ResourceManager.GetString("Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   yyyy/MM/dd に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string DateFormat {
+            get {
+                return ResourceManager.GetString("DateFormat", resourceCulture);
             }
         }
         
@@ -340,6 +349,24 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   yyyy/MM/dd (ddd) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LongDateFormat {
+            get {
+                return ResourceManager.GetString("LongDateFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   yyyy/MM/dd (ddd) HH:mm:ss に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string LongDateTimeFormat {
+            get {
+                return ResourceManager.GetString("LongDateTimeFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Minute に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string MinuteOperator {
@@ -363,6 +390,24 @@ namespace Shipwreck.ViewModelUtils {
         internal static string MinuteToken {
             get {
                 return ResourceManager.GetString("MinuteToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   MM/dd (ddd) HH:mm に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MonthDateTimeWithDayFormat {
+            get {
+                return ResourceManager.GetString("MonthDateTimeWithDayFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   MM/dd (ddd) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string MonthDateWithDayFormat {
+            get {
+                return ResourceManager.GetString("MonthDateWithDayFormat", resourceCulture);
             }
         }
         
@@ -511,11 +556,38 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   yy/MM/dd (ddd) HH:mm に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ShortDateTimeWithDayFormat {
+            get {
+                return ResourceManager.GetString("ShortDateTimeWithDayFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   yy/MM/dd (ddd) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ShortDateWithDayFormat {
+            get {
+                return ResourceManager.GetString("ShortDateWithDayFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Starts with に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string StartsWith {
             get {
                 return ResourceManager.GetString("StartsWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   HH:mm:ss に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string TimeFormat {
+            get {
+                return ResourceManager.GetString("TimeFormat", resourceCulture);
             }
         }
         

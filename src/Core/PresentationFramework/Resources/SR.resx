@@ -285,4 +285,28 @@
   <data name="SecondsTimeSpanFormat" xml:space="preserve">
     <value>s' secs'</value>
   </data>
+  <data name="DateFormat" xml:space="preserve">
+    <value>yyyy/MM/dd</value>
+  </data>
+  <data name="LongDateFormat" xml:space="preserve">
+    <value>yyyy/MM/dd (ddd)</value>
+  </data>
+  <data name="LongDateTimeFormat" xml:space="preserve">
+    <value>yyyy/MM/dd (ddd) HH:mm:ss</value>
+  </data>
+  <data name="MonthDateTimeWithDayFormat" xml:space="preserve">
+    <value>MM/dd (ddd) HH:mm</value>
+  </data>
+  <data name="MonthDateWithDayFormat" xml:space="preserve">
+    <value>MM/dd (ddd)</value>
+  </data>
+  <data name="ShortDateTimeWithDayFormat" xml:space="preserve">
+    <value>yy/MM/dd (ddd) HH:mm</value>
+  </data>
+  <data name="ShortDateWithDayFormat" xml:space="preserve">
+    <value>yy/MM/dd (ddd)</value>
+  </data>
+  <data name="TimeFormat" xml:space="preserve">
+    <value>HH:mm:ss</value>
+  </data>
 </root>
