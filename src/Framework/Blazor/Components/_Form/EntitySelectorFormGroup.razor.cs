@@ -15,6 +15,19 @@ public partial class EntitySelectorFormGroup
 
     #endregion EntitySelectorId
 
+    #region IsNameVisible
+
+    private bool _IsNameVisible = true;
+
+    [Parameter]
+    public bool IsNameVisible
+    {
+        get => _IsNameVisible;
+        set => SetProperty(ref _IsNameVisible, value);
+    }
+
+    #endregion IsNameVisible
+
     #region DataContext
 
     private IEntitySelector _DataContext;

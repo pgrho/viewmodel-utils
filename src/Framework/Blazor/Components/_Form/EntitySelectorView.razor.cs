@@ -144,18 +144,31 @@ public partial class EntitySelectorView
 
     #endregion NameClass
 
-    #region NameeStyle
+    #region NameStyle
 
-    private string _NameeStyle;
+    private string _NameStyle;
 
     [Parameter]
-    public string NameeStyle
+    public string NameStyle
     {
-        get => _NameeStyle;
-        set => SetProperty(ref _NameeStyle, value);
+        get => _NameStyle;
+        set => SetProperty(ref _NameStyle, value);
     }
 
-    #endregion NameeStyle
+    #endregion NameStyle
+
+    #region IsNameVisible
+
+    private bool _IsNameVisible = true;
+
+    [Parameter]
+    public bool IsNameVisible
+    {
+        get => _IsNameVisible;
+        set => SetProperty(ref _IsNameVisible, value);
+    }
+
+    #endregion IsNameVisible
 
     private string SelectedCode
     {
