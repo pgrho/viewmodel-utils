@@ -76,7 +76,7 @@ public abstract class ExpressionBoundFormGroup<T> : ExpressionBoundComponent<T>
 
     #endregion ChildContent
 
-    #endregion Label
+    #endregion Title
 
     #region ErrorMessageClass
 
@@ -131,10 +131,4 @@ public abstract class ExpressionBoundFormGroup<T> : ExpressionBoundComponent<T>
     }
 
     #endregion AdditionalInputClass
-
-    [Parameter]
-    public ICommand EnterCommand { get; set; }
-
-    [Parameter]
-    public object EnterCommandParameter { get; set; }
 }
