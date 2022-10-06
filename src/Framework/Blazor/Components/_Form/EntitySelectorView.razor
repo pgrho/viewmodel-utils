@@ -64,12 +64,15 @@
                 </button>
             </div>
         }
-        <div class="@($"{theme.ControlClass} {NameClass}")"
-         style="@CodeStyle"
+        @if (IsNameVisible)
+        {
+            <div class="@($"{theme.ControlClass} {NameClass}")"
+         style="@NameStyle"
          readonly="readonly"
          tabindex="-1">
-            @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
-        </div>
+                @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
+            </div>
+        }
     }
 </div>
 @code
