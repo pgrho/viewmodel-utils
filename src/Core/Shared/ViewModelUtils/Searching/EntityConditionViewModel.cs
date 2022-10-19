@@ -78,7 +78,7 @@ public abstract class EntityConditionViewModel : ConditionViewModel
             }
         }
 
-        if (int.TryParse(value, out var id) && id > 0)
+        if (Selector.TryParseId(value, out var id))
         {
             Selector.SelectedId = id;
         }

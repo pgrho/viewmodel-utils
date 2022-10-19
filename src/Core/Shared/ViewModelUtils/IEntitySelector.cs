@@ -34,6 +34,8 @@ public interface IEntitySelector : INotifyPropertyChanged, IRequestFocus
     int GetMatchDistance(string code, object item);
     object GetById(object id);
 
+    bool TryParseId(string s, out object result);
+
     void ShowModal();
 
     void Select(object item);

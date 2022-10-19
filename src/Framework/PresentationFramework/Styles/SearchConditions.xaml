@@ -421,6 +421,49 @@
         </Grid>
     </DataTemplate>
     <DataTemplate
+        DataType="{x:Type vmu:EntitiesConditionViewModel}">
+        <Grid
+            Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">
+            <TextBlock
+                Style="{StaticResource ViewModelUtils.Styles.Condition.Name}" />
+            <mah:DropDownButton
+                Style="{StaticResource ViewModelUtils.Styles.Condition.ExtraButtons}" />
+            <Button
+                Style="{StaticResource ViewModelUtils.Styles.Condition.RemoveButton}" />
+            <mah:DropDownButton
+                Style="{StaticResource CommandViewModel.DropDownButton.Medium}"
+                bs4:ColorScheme.Scheme="OutlineSecondary"
+                Grid.Row="1"
+                Grid.ColumnSpan="4"
+                ItemContainerStyleSelector="{StaticResource ViewModelUtils.Styles.Condition.OptionsItemContainerStyleSelector}">
+                <mah:DropDownButton.Resources>
+                    <CollectionViewSource
+                        x:Key="OptionsSource"
+                        Source="{Binding Options}" />
+                    <CollectionViewSource
+                        x:Key="SelectionCommandsSource"
+                        Source="{Binding SelectionCommands}" />
+                </mah:DropDownButton.Resources>
+                <mah:DropDownButton.ItemsSource>
+                    <CompositeCollection>
+                        <CollectionContainer
+                            Collection="{Binding Source={StaticResource OptionsSource}}" />
+                        <x:Null />
+                        <CollectionContainer
+                            Collection="{Binding Source={StaticResource SelectionCommandsSource}}" />
+                    </CompositeCollection>
+                </mah:DropDownButton.ItemsSource>
+                <mah:DropDownButton.Content>
+                    <StackPanel
+                        Orientation="Horizontal">
+                        <TextBlock
+                            Text="{Binding DisplayText}" />
+                    </StackPanel>
+                </mah:DropDownButton.Content>
+            </mah:DropDownButton>
+        </Grid>
+    </DataTemplate>
+    <DataTemplate
         DataType="{x:Type vmu:EntityConditionViewModel}">
         <Grid
             Style="{StaticResource ViewModelUtils.Styles.Condition.Grid}">

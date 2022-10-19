@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPopoverCommands.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPropertyChangedRaisable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\NavigationEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\EntitiesConditionViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IFrameworkSearchModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasFrameworkPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasInteractionService.cs" />

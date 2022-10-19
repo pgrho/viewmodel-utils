@@ -24,6 +24,19 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
 
     bool IEntitySelector.IsValid(object id) => id is TId v && IsValid(v);
 
+    public abstract bool TryParseId(string s, out TId id);
+
+    bool IEntitySelector.TryParseId(string s, out object result)
+    {
+        if (TryParseId(s, out var id))
+        {
+            result = id;
+            return true;
+        }
+        result = null;
+        return false;
+    }
+
     #endregion TId
 
     #region TItem

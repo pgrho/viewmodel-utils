@@ -160,6 +160,15 @@ namespace Shipwreck.ViewModelUtils {
         }
         
         /// <summary>
+        ///   {0} items に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CountArg0Items {
+            get {
+                return ResourceManager.GetString("CountArg0Items", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   yyyy/MM/dd に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string DateFormat {

@@ -309,4 +309,7 @@
   <data name="TimeFormat" xml:space="preserve">
     <value>HH:mm:ss</value>
   </data>
+  <data name="CountArg0Items" xml:space="preserve">
+    <value>{0} items</value>
+  </data>
 </root>

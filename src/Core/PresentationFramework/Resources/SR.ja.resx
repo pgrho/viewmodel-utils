@@ -261,4 +261,7 @@
   <data name="SecondsTimeSpanFormat" xml:space="preserve">
     <value>s'秒'</value>
   </data>
+  <data name="CountArg0Items" xml:space="preserve">
+    <value>{0}個の項目</value>
+  </data>
 </root>
