@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModelArgs.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IHasNavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IKeyDownHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPopoverCommands.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\ExtensionColumnCommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\FlagColumnCommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\HasColumnsHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\FrameworkPageCommandBuilder.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ICommandViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Commands\ParameteredCommand.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\_Columns\SelectionCommandViewModelBase.cs" />

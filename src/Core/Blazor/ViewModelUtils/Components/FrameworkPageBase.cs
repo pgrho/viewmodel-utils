@@ -5,6 +5,9 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
     [Inject]
     public IJSRuntime JS { get; set; }
 
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
     protected virtual IDisposable CreateInitializingScope() => null;
 
     #region DataContext

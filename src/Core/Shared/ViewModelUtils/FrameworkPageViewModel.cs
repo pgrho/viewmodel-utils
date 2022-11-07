@@ -46,6 +46,36 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     #endregion Interaction
 
+    #region Navigation
+
+    private INavigationService _Navigation;
+
+    public INavigationService Navigation => _Navigation ??= CreateNavigaionService();
+
+    protected virtual INavigationService CreateNavigaionService()
+    {
+        INavigationService s = null;
+        PlatformCreateNavigaionService(ref s);
+        return s;
+    }
+
+    partial void PlatformCreateNavigaionService(ref INavigationService s);
+
+    public bool IsSupported(NavigationEntry entry)
+        => Navigation?.IsSupported(this, entry) == true;
+
+    public bool NavigateTo(NavigationEntry entry)
+    {
+        if (IsSupported(entry))
+        {
+            Navigation.NavigateTo(this, entry);
+            return true;
+        }
+        return false;
+    }
+
+    #endregion Navigation
+
     #region Title
 
     private string _Title;

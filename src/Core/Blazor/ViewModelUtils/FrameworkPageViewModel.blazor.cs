@@ -20,4 +20,7 @@ public partial class FrameworkPageViewModel : IHasJSRuntime
 
     public ProcessingDisabled DisableProcessing()
         => default;
+
+    partial void PlatformCreateNavigaionService(ref INavigationService s)
+        => s = new NavigationService(Page.NavigationManager);
 }
