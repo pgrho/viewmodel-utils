@@ -17,9 +17,10 @@
             }
             else
             {
-                <span>@date?.ToString(DisplayFormatPrefix, CultureInfo.CurrentUICulture)</span>
-                <span class="@(dow == DayOfWeek.Sunday? "text-danger" : "text-primary")">@date?.ToString(DisplayFormatDayOfWeek, CultureInfo.CurrentUICulture)</span>
-                <span>@date?.ToString(DisplayFormatSuffix, CultureInfo.CurrentUICulture)</span>
+                <span
+                >@date?.ToString(DisplayFormatPrefix, CultureInfo.CurrentUICulture)</span><span
+                class="@(dow == DayOfWeek.Sunday? "text-danger" : "text-primary")">@date?.ToString(DisplayFormatDayOfWeek, CultureInfo.CurrentUICulture)</span><span
+                >@date?.ToString(DisplayFormatSuffix, CultureInfo.CurrentUICulture)</span>
             }
         }
     </span>
