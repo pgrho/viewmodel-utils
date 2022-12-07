@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
     <PropertyGroup>
-        <TargetFrameworks>net461;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net461;net6.0-windows</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RootNamespace>Shipwreck</RootNamespace>
         <UseWPF>true</UseWPF>
@@ -13,7 +13,7 @@
         <Reference Include="System.Xaml" />
         <PackageReference Include="Notifications.Wpf" Version="0.1.1" />
     </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' == 'net5.0-windows'">
+    <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
         <PackageReference Include="Notifications.Wpf.Core">
             <Version>1.3.2</Version>
         </PackageReference>
@@ -24,7 +24,7 @@
         <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
         <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
         <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.0.1-alpha5" />
-        <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.1" />
+        <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.2" />
     </ItemGroup>
 
     <ItemGroup>

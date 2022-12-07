@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.IO;
 
-#if NET5_0
+#if NET5_0_OR_GREATER
 using Notifications.Wpf.Core;
 using Notifications.Wpf.Core.Controls;
 #else
@@ -44,7 +44,7 @@ public class FrameworkInteractionService : InteractionService, IInteractionServi
                     Message = message
                 };
 
-#if NET5_0
+#if NET5_0_OR_GREATER
                 NotificationManager.ShowAsync(content, expirationTime: ToastExpirationTime, areaName: na.BindableName.EmptyToNull() ?? na.Name).GetHashCode();
 #else
                 NotificationManager.Show(content, expirationTime: ToastExpirationTime, areaName: na.Name);

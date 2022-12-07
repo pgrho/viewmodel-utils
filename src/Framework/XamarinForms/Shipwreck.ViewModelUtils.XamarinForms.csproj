@@ -13,7 +13,7 @@
         <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
         <Compile Remove="**\*.android.cs" />
         <Compile Remove="**\*.ios.cs" />
         <None Include="**\*.android.cs" />
@@ -34,7 +34,7 @@
     <ItemGroup>
         <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
         <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.1-alpha5" />
-        <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.1" />
+        <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.2" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net461;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net461;net6.0-windows</TargetFrameworks>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <RootNamespace>Shipwreck</RootNamespace>
         <UseWPF>true</UseWPF>
@@ -16,7 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+        <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
         <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     </ItemGroup>
 
@@ -24,7 +24,7 @@
         <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Remove="..\..\_GlobalUsings.cs"   />
+        <Compile Remove="..\..\_GlobalUsings.cs" />
         <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
     </ItemGroup>
     <ItemGroup>

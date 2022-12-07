@@ -1,4 +1,4 @@
-﻿#if NET5_0
+﻿#if NET5_0_OR_GREATER
 using Notifications.Wpf.Core.Controls;
 #else
 
@@ -12,7 +12,7 @@ public class FrameworkNotificationArea : NotificationArea
 {
     static FrameworkNotificationArea()
     {
-#if NET5_0
+#if NET5_0_OR_GREATER
         BindableNameProperty.OverrideMetadata(
             typeof(FrameworkNotificationArea),
             new FrameworkPropertyMetadata(FrameworkInteractionService.NotificationAreaName));
