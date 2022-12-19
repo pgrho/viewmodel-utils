@@ -5,6 +5,11 @@
 [*]
 indent_style = space
 # Code files
+
+[*.{csproj,xml,config,props}]
+indent_size = 2
+insert_final_newline = false
+
 [*.{cs,csx,razor}]
 indent_size = 4
 insert_final_newline = true

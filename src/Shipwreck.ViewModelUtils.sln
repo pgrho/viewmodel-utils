@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_common", "_common", "{4FC2
 		..\.gitignore = ..\.gitignore
 		..\build-projects.ps1 = ..\build-projects.ps1
 		Directory.build.props = Directory.build.props
+		..\global.json = ..\global.json
 		nuget.config = nuget.config
 		..\remove-nupkg.ps1 = ..\remove-nupkg.ps1
 	EndProjectSection
@@ -58,28 +59,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Cl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Build", "Build\Shipwreck.ViewModelUtils.Build.csproj", "{15D8A4BF-7F94-4707-BB6D-10407F494200}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.ViewModelUtils.Demo.Blazor", "Demo\Blazor\Shipwreck.ViewModelUtils.Demo.Blazor.csproj", "{198BBBC8-B31A-4C20-B288-272C7F9E96DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Demo.Blazor", "Demo\Blazor\Shipwreck.ViewModelUtils.Demo.Blazor.csproj", "{198BBBC8-B31A-4C20-B288-272C7F9E96DF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{9C106D03-1713-4B2E-AD83-4B99A0DD6F17} = {9C106D03-1713-4B2E-AD83-4B99A0DD6F17}
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{0c0c36c3-5a16-4e9e-b29a-b670c6ff53dd}*SharedItemsImports = 5
-		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{1be2b82e-497e-490e-bdcd-8c856077e5dd}*SharedItemsImports = 5
-		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{1be2b82e-497e-490e-bdcd-8c856077e5dd}*SharedItemsImports = 5
-		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{30b44099-dfd5-486c-a4fe-c9676791cbcd}*SharedItemsImports = 13
-		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
-		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
-		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{3d621ad2-9037-4fa9-bdd1-51c36ad2eb41}*SharedItemsImports = 13
-		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
-		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
-		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9c106d03-1713-4b2e-ad83-4b99a0dd6f17}*SharedItemsImports = 5
-		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9eaba68f-46bb-4e67-b740-1b8732d45bb0}*SharedItemsImports = 13
-		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{a9b5722f-dfc4-4a3e-ba20-8ce24ebed9c1}*SharedItemsImports = 13
-		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{e26ad196-1656-488e-ba36-8de042a0efb6}*SharedItemsImports = 5
-		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{e26ad196-1656-488e-ba36-8de042a0efb6}*SharedItemsImports = 5
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|iPhone = Debug|iPhone
@@ -444,5 +429,21 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFC9127-DF00-440C-BFE6-99D620181698}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{0c0c36c3-5a16-4e9e-b29a-b670c6ff53dd}*SharedItemsImports = 5
+		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{1be2b82e-497e-490e-bdcd-8c856077e5dd}*SharedItemsImports = 5
+		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{1be2b82e-497e-490e-bdcd-8c856077e5dd}*SharedItemsImports = 5
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{30b44099-dfd5-486c-a4fe-c9676791cbcd}*SharedItemsImports = 13
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
+		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
+		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{3d621ad2-9037-4fa9-bdd1-51c36ad2eb41}*SharedItemsImports = 13
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
+		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
+		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9c106d03-1713-4b2e-ad83-4b99a0dd6f17}*SharedItemsImports = 5
+		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9eaba68f-46bb-4e67-b740-1b8732d45bb0}*SharedItemsImports = 13
+		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{a9b5722f-dfc4-4a3e-ba20-8ce24ebed9c1}*SharedItemsImports = 13
+		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{e26ad196-1656-488e-ba36-8de042a0efb6}*SharedItemsImports = 5
+		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{e26ad196-1656-488e-ba36-8de042a0efb6}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

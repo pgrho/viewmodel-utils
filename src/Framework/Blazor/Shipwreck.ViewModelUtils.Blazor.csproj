@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -40,5 +40,9 @@
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="SET PkgBlazorJqueryToast=$(PkgShipwreck_BlazorJqueryToast)&#xD;&#xA;SET PkgBlazorTypeahead=$(PkgShipwreck_BlazorTypeahead)&#xD;&#xA;$(ProjectDir)node_modules\.bin\gulp.CMD" />
   </Target>
-  <ProjectExtensions><VisualStudio><UserProperties NpmRestoreOnProjectOpen="True" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties NpmRestoreOnProjectOpen="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
