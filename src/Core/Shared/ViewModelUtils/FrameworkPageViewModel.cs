@@ -108,6 +108,43 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     #region IsBusy
 
+    private int _IsBusyScopeId;
+    private readonly HashSet<IsBusyScope> _IsBusyScopes = new();
+
+    public struct IsBusyScope : IDisposable, IEquatable<IsBusyScope>
+    {
+        private readonly FrameworkPageViewModel _Page;
+        private readonly int _Id;
+        private readonly Action<bool> _Callback;
+
+        public IsBusyScope(FrameworkPageViewModel page, int id, Action<bool> callback)
+        {
+            _Page = page;
+            _Id = id;
+            _Callback = callback;
+
+            callback?.Invoke(true);
+        }
+
+        public override bool Equals(object obj)
+            => obj is IsBusyScope other && Equals(other);
+
+        public bool Equals(IsBusyScope other)
+            => _Page == other._Page && _Id == other._Id;
+
+        public override int GetHashCode()
+            => _Id;
+
+        public override string ToString()
+            => $"{_Page}#{_Page.GetHashCode()}/{_Id}";
+
+        void IDisposable.Dispose()
+        {
+            _Callback?.Invoke(false);
+            _Page.Dequeue(this);
+        }
+    }
+
     public bool IsBusy
     {
         get => (_Flags & IS_BUSY) != 0;
@@ -115,10 +152,39 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     }
 
     protected virtual bool ComputeIsBusy()
-        => IsInitializing;
+    {
+        lock (_IsBusyScopes)
+        {
+            return IsInitializing || _IsBusyScopes.Any();
+        }
+    }
 
     protected internal void SetIsBusy()
         => IsBusy = ComputeIsBusy();
+
+    public IsBusyScope EnterBusy(Action<bool> callback = null)
+    {
+        lock (_IsBusyScopes)
+        {
+            var r = new IsBusyScope(this, ++_IsBusyScopeId, callback);
+            _IsBusyScopes.Add(r);
+
+            SetIsBusy();
+
+            return r;
+        }
+    }
+
+    private void Dequeue(IsBusyScope scope)
+    {
+        lock (_IsBusyScopes)
+        {
+            if (_IsBusyScopes.Remove(scope))
+            {
+                SetIsBusy();
+            }
+        }
+    }
 
     #endregion IsBusy
 
@@ -131,7 +197,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
         {
             if (SetFlagProperty(ref _Flags, IS_INITIALIZING, value))
             {
-                ComputeIsBusy();
+                SetIsBusy();
             }
         }
     }
