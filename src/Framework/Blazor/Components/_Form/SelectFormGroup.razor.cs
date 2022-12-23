@@ -1,4 +1,5 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
+using KeyboardEventArgs = Microsoft.AspNetCore.Components.Web.KeyboardEventArgs;
 
 public partial class SelectFormGroup<T> : FormGroupBase
 {

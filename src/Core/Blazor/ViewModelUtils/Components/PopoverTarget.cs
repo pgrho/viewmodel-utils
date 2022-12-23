@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
+using KeyboardEventArgs = Microsoft.AspNetCore.Components.Web.KeyboardEventArgs;
+using MouseEventArgs = Microsoft.AspNetCore.Components.Web.MouseEventArgs;
 
 namespace Shipwreck.ViewModelUtils.Components;
 

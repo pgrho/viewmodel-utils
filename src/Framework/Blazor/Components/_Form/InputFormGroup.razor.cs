@@ -43,7 +43,7 @@ public partial class InputFormGroup<T> : FormGroupBase
                 _Value = value;
                 using (Host?.PushPropertyChangedExpectation(BindingPropertyName))
                 {
-                    ValueChanged?.Invoke(_Value);
+                    InvokeValueChanged();
                 }
                 if (!IsUpdatingSource)
                 {
@@ -52,6 +52,9 @@ public partial class InputFormGroup<T> : FormGroupBase
             }
         }
     }
+
+    protected virtual void InvokeValueChanged()
+        => ValueChanged?.Invoke(_Value);
 
     protected T InternalValue
     {
