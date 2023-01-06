@@ -1,7 +1,14 @@
-﻿namespace Shipwreck.ViewModelUtils;
+﻿using Xamarin.KeyboardHelper;
 
-public class SelectableEntry : Entry
+namespace Shipwreck.ViewModelUtils;
+
+public class SelectableEntry : Entry, IKeyDownHandler
 {
+    public SelectableEntry()
+    {
+        Effects.Add(new KeyboardEnableEffect());
+    }
+
     #region SelectAllOnFocus
 
     public static readonly BindableProperty SelectAllOnFocusProperty
@@ -17,20 +24,14 @@ public class SelectableEntry : Entry
 
     #endregion SelectAllOnFocus
 
-    #region IsKeyboardEnabled
-
-    public static readonly BindableProperty IsKeyboardEnabledProperty
-        = BindableProperty.Create(
-            nameof(IsKeyboardEnabled),
-            typeof(bool),
-            typeof(SelectableEntry),
-            defaultValue: true);
-
     public bool IsKeyboardEnabled
     {
-        get => (bool)GetValue(IsKeyboardEnabledProperty);
-        set => SetValue(IsKeyboardEnabledProperty, value);
+        get => KeyboardEffect.GetEnableKeyboard(this);
+        set => KeyboardEffect.SetEnableKeyboard(this, value);
     }
 
-    #endregion IsKeyboardEnabled
+    bool IKeyDownHandler.GetIsFocused() => IsFocused;
+
+    public bool HandleKeyDown(string keys, bool replaceText)
+        => SelectableEntryHelper.HandleKeyDown(this, keys, replaceText);
 }

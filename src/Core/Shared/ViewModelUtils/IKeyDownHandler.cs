@@ -1,7 +1,8 @@
-﻿namespace Shipwreck.ViewModelUtils
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface IKeyDownHandler
 {
-    public interface IKeyDownHandler
-    {
-        bool OnKeyDown(string keys);
-    }
+    bool GetIsFocused();
+
+    bool HandleKeyDown(string keys, bool replaceText);
 }

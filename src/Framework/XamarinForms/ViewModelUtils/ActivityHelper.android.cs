@@ -45,7 +45,7 @@ public static class ActivityHelper
 
                 if (s != null)
                 {
-                    kdh.OnKeyDown(s);
+                    kdh.HandleKeyDown(s, false);
                 }
 
                 break;

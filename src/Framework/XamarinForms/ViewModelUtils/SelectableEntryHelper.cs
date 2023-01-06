@@ -65,31 +65,6 @@ public static class SelectableEntryHelper
                 {
                     entry.CursorPosition = cursorPosition;
                     entry.SelectionLength = selectionLength;
-                    if (!entry.IsKeyboardEnabled)
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            DependencyService.Get<IKeyboardService>()?.Hide();
-                        });
-                    }
-                }
-                else
-                {
-                    var sa = entry.SelectAllOnFocus;
-                    entry.SelectAllOnFocus = false;
-                    if (entry.Focus())
-                    {
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            entry.CursorPosition = cursorPosition;
-                            entry.SelectionLength = selectionLength;
-                            entry.SelectAllOnFocus = sa;
-                            if (!entry.IsKeyboardEnabled)
-                            {
-                                DependencyService.Get<IKeyboardService>()?.Hide();
-                            }
-                        });
-                    }
                 }
             }
 

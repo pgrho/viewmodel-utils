@@ -3,7 +3,7 @@
 namespace Shipwreck.ViewModelUtils;
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class EntitySelectorView
+public partial class EntitySelectorView : IKeyDownHandler
 {
     public static readonly BindableProperty FontSizeProperty
                = BindableProperty.Create(
@@ -19,6 +19,10 @@ public partial class EntitySelectorView
         = BindableProperty.Create(
             nameof(TextColor), typeof(Color), typeof(EntitySelectorView),
             defaultValue: Color.Default);
+
+    public static readonly BindableProperty PlaceholderProperty
+        = BindableProperty.Create(
+            nameof(Placeholder), typeof(string), typeof(EntitySelectorView));
 
     public static readonly BindableProperty PlaceholderColorProperty
         = BindableProperty.Create(
@@ -49,6 +53,12 @@ public partial class EntitySelectorView
     {
         get => (Color)GetValue(TextColorProperty);
         set => SetValue(TextColorProperty, value);
+    }
+
+    public string Placeholder
+    {
+        get => (string)GetValue(PlaceholderProperty);
+        set => SetValue(PlaceholderProperty, value);
     }
 
     [TypeConverter(typeof(ColorTypeConverter))]
@@ -210,4 +220,8 @@ public partial class EntitySelectorView
     {
         OnSelectedItemChanged();
     }
+
+    bool IKeyDownHandler.GetIsFocused() => entry.IsFocused;
+    public bool HandleKeyDown(string keys, bool replaceText)
+        => entry.HandleKeyDown(keys, replaceText);
 }

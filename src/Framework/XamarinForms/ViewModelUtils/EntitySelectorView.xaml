@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.XamarinForms"
     xmlns:v="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.XamarinForms"
+    xmlns:kh="clr-namespace:Xamarin.KeyboardHelper;assembly=Xamarin.KeyboardHelper"
     x:Class="Shipwreck.ViewModelUtils.EntitySelectorView"
     x:DataType="vmu:IEntitySelector">
     <ContentView.Content>
@@ -25,6 +26,7 @@
                 VerticalOptions="Fill"
                 IsTabStop="False"
                 FontSize="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=FontSize}"
+                Placeholder="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Placeholder}"
                 PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}" />
             <v:SelectableEntry
                 x:Name="entry"
@@ -32,8 +34,9 @@
                 FontSize="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=FontSize}"
                 Keyboard="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Keyboard}"
                 TextColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}"
+                Placeholder="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Placeholder}"
                 PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=PlaceholderColor}"
-                IsKeyboardEnabled="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}"
+                kh:KeyboardEffect.EnableKeyboard="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}"
                 Text="{Binding Code}"
                 Opacity="0"
                 ReturnCommand="{Binding SelectCommand}"

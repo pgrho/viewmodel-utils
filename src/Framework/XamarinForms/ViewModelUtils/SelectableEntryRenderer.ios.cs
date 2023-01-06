@@ -5,7 +5,6 @@ namespace Shipwreck.ViewModelUtils;
 
 public class SelectableEntryRenderer : EntryRenderer
 {
-    // TODO: support IsKeyboardEnabled
     protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
         base.OnElementPropertyChanged(sender, e);
