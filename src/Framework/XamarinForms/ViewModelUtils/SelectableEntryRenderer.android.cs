@@ -38,4 +38,12 @@ public class SelectableEntryRenderer : EntryRenderer
             Control.ImeOptions = ImeAction.Done;
         }
     }
+
+    protected override void UpdateImeOptions()
+    {
+        if (EditText is EditText et)
+        {
+            et.ImeOptions = ImeAction.Done;
+        }
+    }
 }
