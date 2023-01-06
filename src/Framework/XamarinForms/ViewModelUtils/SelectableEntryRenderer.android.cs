@@ -32,18 +32,5 @@ public class SelectableEntryRenderer : EntryRenderer
         }
 
         base.OnElementPropertyChanged(sender, e);
-
-        if (Control != null && Element != null)
-        {
-            Control.ImeOptions = ImeAction.Done;
-        }
-    }
-
-    protected override void UpdateImeOptions()
-    {
-        if (EditText is EditText et)
-        {
-            et.ImeOptions = ImeAction.Done;
-        }
     }
 }

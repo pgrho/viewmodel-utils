@@ -7,6 +7,7 @@ public class SelectableEntry : Entry, IKeyDownHandler
     public SelectableEntry()
     {
         Effects.Add(new KeyboardEnableEffect());
+        ReturnType = ReturnType.Done;
     }
 
     #region SelectAllOnFocus
