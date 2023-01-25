@@ -1,52 +1,47 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>net48;net7.0-windows</TargetFrameworks>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <RootNamespace>Shipwreck</RootNamespace>
-        <UseWPF>true</UseWPF>
-        <DefineConstants>$(DefineConstants);IS_WPF</DefineConstants>
-        <LangVersion>10.0</LangVersion>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>net48;net7.0-windows</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Shipwreck</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <DefineConstants>$(DefineConstants);IS_WPF</DefineConstants>
+    <LangVersion>10.0</LangVersion>
+  </PropertyGroup>
 
-    <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
-      <Reference Include="System.Net.Http" />
-      <Reference Include="System.Xaml" />
-        <PackageReference Include="Notifications.Wpf" Version="0.1.1" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0-windows'">
-        <PackageReference Include="Notifications.Wpf.Core">
-            <Version>1.3.2</Version>
-        </PackageReference>
-    </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="MahApps.Metro" Version="2.4.9" />
-        <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
-        <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
-        <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.0.1-alpha5" />
-        <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.2" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Notification.Wpf" Version="6.1.0.5"/>
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
+    <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
+    <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.0.1-alpha5" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.2" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Remove="..\..\_GlobalUsings.cs" />
-        <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <Page Update="Styles\Controls.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
-        </Page>
-        <Page Update="Styles\Controls.Buttons.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
-        </Page>
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\PresentationFramework\Shipwreck.ViewModelUtils.Core.PresentationFramework.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="..\..\_GlobalUsings.cs" />
+    <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Controls.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls.Buttons.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 
 
-    <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
-    <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
 </Project>

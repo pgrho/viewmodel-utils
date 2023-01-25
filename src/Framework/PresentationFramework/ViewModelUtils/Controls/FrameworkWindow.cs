@@ -1,10 +1,5 @@
-﻿#if NET5_0_OR_GREATER
-using Notifications.Wpf.Core.Controls;
-#else
-
-using Notifications.Wpf.Controls;
-
-#endif
+﻿
+using Notification.Wpf.Controls;
 
 namespace Shipwreck.ViewModelUtils.Controls;
 
