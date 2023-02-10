@@ -305,7 +305,6 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
             UpdateVerticalTextAlignment();
         else if (e.PropertyName == Entry.CharacterSpacingProperty.PropertyName)
             UpdateCharacterSpacing();
-
         else if (e.PropertyName == Entry.PlaceholderColorProperty.PropertyName)
             UpdatePlaceholderColor();
         else if (e.PropertyName == VisualElement.FlowDirectionProperty.PropertyName)
@@ -592,7 +591,7 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
     {
         if (Control.IsFocused)
         {
-            // UpdateClearBtnOnTyping();
+            UpdateClearBtnOnTyping();
         }
     }
     void EditTextTouched(object sender, TouchEventArgs e)

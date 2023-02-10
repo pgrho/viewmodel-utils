@@ -24,6 +24,7 @@ public partial class MainPage : ContentPage
         private IEnumerable<CommandViewModelBase> CreateCommands()
         {
             yield return CommandViewModel.CreateAsync(() => NavigateAsync(new InteractionPage()), title: "InteractionPage", style: BorderStyle.OutlinePrimary);
+            yield return CommandViewModel.CreateAsync(() => NavigateAsync(new SelectableEntryPage()), title: "SelectableEntryPage", style: BorderStyle.OutlinePrimary);
         }
 
         private Task NavigateAsync(Page p) => Application.Current.MainPage.Navigation.PushAsync(p);
