@@ -33,6 +33,18 @@ public sealed class SelectableEntryPageViewModel : ObservableModel
     }
 
     #endregion
+
+    #region IsKeyboardEnabled
+
+    private bool _IsKeyboardEnabled =true;
+
+    public bool  IsKeyboardEnabled
+    {
+        get => _IsKeyboardEnabled;
+        set => SetProperty(ref _IsKeyboardEnabled, value);
+    }
+
+    #endregion
 }
 
 [XamlCompilation(XamlCompilationOptions.Compile)]

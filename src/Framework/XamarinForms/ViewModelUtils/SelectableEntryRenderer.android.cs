@@ -38,7 +38,9 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
         public void UpdateTextColor(TextView control, Color color, Action<ColorStateList> setColor = null)
         {
             if (color == _currentTextColor)
+            {
                 return;
+            }
 
             if (setColor == null)
             {
@@ -56,7 +58,7 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
                 if (_useLegacyColorManagement)
                 {
                     // Set the new enabled state color, preserving the default disabled state color
-                    int defaultDisabledColor = _defaultTextColors.GetColorForState(s_colorStates[1], color.ToAndroid());
+                    var defaultDisabledColor = _defaultTextColors.GetColorForState(s_colorStates[1], color.ToAndroid());
                     setColor(new ColorStateList(s_colorStates, new[] { color.ToAndroid().ToArgb(), defaultDisabledColor }));
                 }
                 else
@@ -77,7 +79,7 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
     protected override CustomEditText CreateNativeControl()
         => new CustomEditText(Context);
 
-    protected EditText EditText => Control;
+    protected CustomEditText EditText => Control;
     TextColorSwitcher _hintColorSwitcher;
     TextColorSwitcher _textColorSwitcher;
 
@@ -85,31 +87,6 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
 
 
 
-    protected virtual void UpdateIsReadOnly()
-    {
-        bool isReadOnly = !Element.IsReadOnly;
-
-        EditText.FocusableInTouchMode = isReadOnly;
-        EditText.Focusable = isReadOnly;
-        EditText.SetCursorVisible(isReadOnly);
-    }
-
-    protected virtual void UpdatePlaceholderColor()
-    {
-        _hintColorSwitcher = _hintColorSwitcher ?? new TextColorSwitcher(EditText.HintTextColors, ((Xamarin.Forms.Entry)Element).UseLegacyColorManagement());
-        _hintColorSwitcher.UpdateTextColor(EditText, Element.PlaceholderColor, EditText.SetHintTextColor);
-    }
-
-    protected virtual void UpdateColor()
-    {
-        UpdateTextColor(Element.TextColor);
-    }
-
-    protected virtual void UpdateTextColor(Color color)
-    {
-        _textColorSwitcher = _textColorSwitcher ?? new TextColorSwitcher(EditText.TextColors, ((Xamarin.Forms.Entry)Element).UseLegacyColorManagement());
-        _textColorSwitcher.UpdateTextColor(EditText, color);
-    }
 
     bool _disposed;
     ImeAction _currentInputImeFlag;
@@ -176,7 +153,11 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
             // Post this to the main looper queue so it doesn't happen until the other focus stuff has resolved
             // Otherwise, ShowKeyboard will be called before this control is truly focused, and we will potentially
             // be displaying the wrong keyboard
-            EditText?.PostShowKeyboard();
+
+            if (Element.IsKeyboardEnabled)
+            {
+                EditText?.PostShowKeyboard();
+            }
         }
     }
     protected override void OnElementChanged(ElementChangedEventArgs<SelectableEntry> e)
@@ -202,7 +183,8 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
         _cursorPositionChangePending = Element.IsSet(Entry.CursorPositionProperty);
         _selectionLengthChangePending = Element.IsSet(Entry.SelectionLengthProperty);
 
-        UpdatePlaceHolderText();
+        UpdateIsKeyboardEnabled();
+        UpdatePlaceholderText();
         UpdateText();
         UpdateInputType();
         UpdateColor();
@@ -217,10 +199,345 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
         UpdateIsReadOnly();
 
         if (_cursorPositionChangePending || _selectionLengthChangePending)
+        {
             UpdateCursorSelection();
+        }
 
         UpdateClearBtnOnElementChanged();
     }
+    protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (this.IsDisposed())
+        {
+            return;
+        }
+
+        Console.WriteLine("OnElementPropertyChanged: " + e.PropertyName);
+
+        switch (e.PropertyName)
+        {
+            case nameof(Element.Placeholder):
+                UpdatePlaceholderText();
+                break;
+
+            case nameof(Element.IsPassword):
+            case nameof(Element.IsSpellCheckEnabled):
+            case nameof(Element.Keyboard):
+            case nameof(Element.IsTextPredictionEnabled):
+                UpdateInputType();
+                break;
+
+            case nameof(Element.Text):
+            case nameof(Element.TextTransform):
+                UpdateText();
+                break;
+
+            case nameof(Element.TextColor):
+                UpdateColor();
+                break;
+
+            case nameof(Element.FontAttributes):
+            case nameof(Element.FontFamily):
+            case nameof(Element.FontSize):
+                UpdateFont();
+                break;
+
+            case nameof(Element.IsKeyboardEnabled):
+                UpdateIsKeyboardEnabled();
+                break;
+
+            case nameof(Element.IsFocused):
+                if (!Element.IsKeyboardEnabled)
+                {
+                    EditText.HideKeyboard();
+                }
+                break;
+        }
+
+        if (e.PropertyName == Entry.HorizontalTextAlignmentProperty.PropertyName)
+        {
+            UpdateHorizontalTextAlignment();
+        }
+        else if (e.PropertyName == Entry.VerticalTextAlignmentProperty.PropertyName)
+        {
+            UpdateVerticalTextAlignment();
+        }
+        else if (e.PropertyName == Entry.CharacterSpacingProperty.PropertyName)
+        {
+            UpdateCharacterSpacing();
+        }
+        else if (e.PropertyName == Entry.PlaceholderColorProperty.PropertyName)
+        {
+            UpdatePlaceholderColor();
+        }
+        else if (e.PropertyName == VisualElement.FlowDirectionProperty.PropertyName)
+        {
+            UpdateHorizontalTextAlignment();
+        }
+        else if (e.PropertyName == InputView.MaxLengthProperty.PropertyName)
+        {
+            UpdateMaxLength();
+        }
+        else if (e.PropertyName == Xamarin.Forms.PlatformConfiguration.AndroidSpecific.Entry.ImeOptionsProperty.PropertyName)
+        {
+            UpdateImeOptions();
+        }
+        else if (e.PropertyName == Entry.ReturnTypeProperty.PropertyName)
+        {
+            UpdateReturnType();
+        }
+        else if (e.PropertyName == Entry.SelectionLengthProperty.PropertyName)
+        {
+            UpdateCursorSelection();
+        }
+        else if (e.PropertyName == Entry.CursorPositionProperty.PropertyName)
+        {
+            UpdateCursorSelection();
+        }
+        else if (e.PropertyName == InputView.IsReadOnlyProperty.PropertyName)
+        {
+            UpdateIsReadOnly();
+        }
+
+        if (e.PropertyName == Entry.ClearButtonVisibilityProperty.PropertyName)
+        {
+            UpdateClearBtnOnPropertyChanged();
+        }
+
+        base.OnElementPropertyChanged(sender, e);
+    }
+
+    #region Apply element properties
+
+    protected virtual void UpdateIsReadOnly()
+    {
+        var isReadOnly = !Element.IsReadOnly;
+
+        EditText.FocusableInTouchMode = isReadOnly;
+        EditText.Focusable = isReadOnly;
+        EditText.SetCursorVisible(isReadOnly);
+    }
+    protected virtual void UpdatePlaceholderText()
+    {
+        if (EditText.Hint == Element.Placeholder)
+        {
+            return;
+        }
+
+        EditText.Hint = Element.Placeholder;
+        if (EditText.IsFocused && Element.IsKeyboardEnabled)
+        {
+            EditText.ShowKeyboard();
+        }
+    }
+    protected virtual void UpdatePlaceholderColor()
+    {
+        _hintColorSwitcher = _hintColorSwitcher ?? new TextColorSwitcher(EditText.HintTextColors, ((Xamarin.Forms.Entry)Element).UseLegacyColorManagement());
+        _hintColorSwitcher.UpdateTextColor(EditText, Element.PlaceholderColor, EditText.SetHintTextColor);
+    }
+
+    protected virtual void UpdateColor()
+        => UpdateTextColor(Element.TextColor);
+
+    protected virtual void UpdateTextColor(Color color)
+    {
+        _textColorSwitcher = _textColorSwitcher ?? new TextColorSwitcher(EditText.TextColors, ((Xamarin.Forms.Entry)Element).UseLegacyColorManagement());
+        _textColorSwitcher.UpdateTextColor(EditText, color);
+    }
+
+    protected virtual void UpdateImeOptions()
+    {
+        if (Element == null || Control == null)
+        {
+            return;
+        }
+
+        var imeOptions = ((Entry)Element).OnThisPlatform().ImeOptions();
+        _currentInputImeFlag = imeOptions.ToAndroidImeOptions();
+        EditText.ImeOptions = _currentInputImeFlag;
+    }
+
+
+    protected virtual void UpdateHorizontalTextAlignment()
+        => EditText.UpdateTextAlignment(Element.HorizontalTextAlignment, Element.VerticalTextAlignment);
+
+
+    protected virtual void UpdateVerticalTextAlignment()
+        => EditText.UpdateTextAlignment(Element.HorizontalTextAlignment, Element.VerticalTextAlignment);
+
+
+    protected virtual void UpdateFont()
+    {
+        EditText.Typeface = Element.ToTypeface();
+        EditText.SetTextSize(ComplexUnitType.Sp, (float)Element.FontSize);
+    }
+
+
+
+    protected virtual void UpdateInputType()
+    {
+        Entry model = Element;
+        var keyboard = model.Keyboard;
+
+        EditText.InputType = keyboard.ToInputType();
+        if (!(keyboard is CustomKeyboard))
+        {
+            if (model.IsSet(InputView.IsSpellCheckEnabledProperty))
+            {
+                if ((EditText.InputType & InputTypes.TextFlagNoSuggestions) != InputTypes.TextFlagNoSuggestions)
+                {
+                    if (!model.IsSpellCheckEnabled)
+                    {
+                        EditText.InputType = EditText.InputType | InputTypes.TextFlagNoSuggestions;
+                    }
+                }
+            }
+            if (model.IsSet(Entry.IsTextPredictionEnabledProperty))
+            {
+                if ((EditText.InputType & InputTypes.TextFlagNoSuggestions) != InputTypes.TextFlagNoSuggestions)
+                {
+                    if (!model.IsTextPredictionEnabled)
+                    {
+                        EditText.InputType = EditText.InputType | InputTypes.TextFlagNoSuggestions;
+                    }
+                }
+            }
+        }
+
+        if (keyboard == Keyboard.Numeric)
+        {
+            EditText.KeyListener = GetDigitsKeyListener(EditText.InputType);
+        }
+
+        if (model.IsPassword && ((EditText.InputType & InputTypes.ClassText) == InputTypes.ClassText))
+        {
+            EditText.InputType = EditText.InputType | InputTypes.TextVariationPassword;
+        }
+
+        if (model.IsPassword && ((EditText.InputType & InputTypes.ClassNumber) == InputTypes.ClassNumber))
+        {
+            EditText.InputType = EditText.InputType | InputTypes.NumberVariationPassword;
+        }
+
+        UpdateFont();
+    }
+
+
+
+    protected virtual void UpdateCharacterSpacing()
+    {
+        if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+        {
+            EditText.LetterSpacing = Element.CharacterSpacing.ToEm();
+        }
+    }
+
+
+    protected virtual void UpdateReturnType()
+    {
+        if (Control == null || Element == null)
+        {
+            return;
+        }
+
+        EditText.ImeOptions = Element.ReturnType.ToAndroidImeAction();
+        _currentInputImeFlag = EditText.ImeOptions;
+    }
+    protected virtual void UpdateCursorSelection()
+    {
+        if (_nativeSelectionIsUpdating || Control == null || Element == null || EditText == null)
+        {
+            return;
+        }
+
+        if (!Element.IsReadOnly && EditText.RequestFocus())
+        {
+            try
+            {
+                var start = GetSelectionStart();
+                var end = GetSelectionEnd(start);
+
+                EditText.SetSelection(start, end);
+            }
+            catch (System.Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to set Control.Selection from CursorPosition/SelectionLength: {ex}");
+            }
+            finally
+            {
+                _cursorPositionChangePending = _selectionLengthChangePending = false;
+            }
+        }
+    }
+
+    protected virtual void UpdateText()
+    {
+        var text = Element.UpdateFormsText(Element.Text, Element.TextTransform);
+
+        if (EditText.Text == text)
+        {
+            return;
+        }
+
+        EditText.Text = text;
+        if (EditText.IsFocused)
+        {
+            EditText.SetSelection(text.Length);
+
+            if (Element.IsKeyboardEnabled)
+            {
+                EditText.ShowKeyboard();
+            }
+        }
+    }
+
+    protected virtual void UpdateIsKeyboardEnabled()
+    {
+        if (Element is SelectableEntry e && Control is CustomEditText c)
+        {
+            c.ShowSoftInputOnFocus = e.IsKeyboardEnabled;
+
+            if (c.IsFocused)
+            {
+                if (e.IsKeyboardEnabled)
+                {
+                    c.ShowKeyboard();
+                }
+                else
+                {
+                    c.HideKeyboard();
+                }
+            }
+        }
+    }
+    protected virtual void UpdateMaxLength()
+    {
+        var currentFilters = new List<IInputFilter>(EditText?.GetFilters() ?? new IInputFilter[0]);
+
+        for (var i = 0; i < currentFilters.Count; i++)
+        {
+            if (currentFilters[i] is InputFilterLengthFilter)
+            {
+                currentFilters.RemoveAt(i);
+                break;
+            }
+        }
+
+        currentFilters.Add(new InputFilterLengthFilter(Element.MaxLength));
+
+        EditText?.SetFilters(currentFilters.ToArray());
+
+        var currentControlText = EditText?.Text;
+
+        if (currentControlText.Length > Element.MaxLength)
+        {
+            EditText.Text = currentControlText.Substring(0, Element.MaxLength);
+        }
+    }
+
+
+    #endregion
+
 
     protected override void Dispose(bool disposing)
     {
@@ -252,80 +569,7 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
 
         base.Dispose(disposing);
     }
-    protected virtual void UpdatePlaceHolderText()
-    {
-        if (EditText.Hint == Element.Placeholder)
-            return;
 
-        EditText.Hint = Element.Placeholder;
-        if (EditText.IsFocused)
-        {
-            EditText.ShowKeyboard();
-        }
-    }
-    protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-        if (this.IsDisposed())
-        {
-            return;
-        }
-
-        switch (e.PropertyName)
-        {
-            case nameof(Element.Placeholder):
-                UpdatePlaceHolderText();
-                break;
-
-            case nameof(Element.IsPassword):
-            case nameof(Element.IsSpellCheckEnabled):
-            case nameof(Element.Keyboard):
-            case nameof(Element.IsTextPredictionEnabled):
-                UpdateInputType();
-                break;
-
-            case nameof(Element.Text):
-            case nameof(Element.TextTransform):
-                UpdateText();
-                break;
-
-            case nameof(Element.TextColor):
-                UpdateColor();
-                break;
-
-            case nameof(Element.FontAttributes):
-            case nameof(Element.FontFamily):
-            case nameof(Element.FontSize):
-                UpdateFont();
-                break;
-        }
-
-        if (e.PropertyName == Entry.HorizontalTextAlignmentProperty.PropertyName)
-            UpdateHorizontalTextAlignment();
-        else if (e.PropertyName == Entry.VerticalTextAlignmentProperty.PropertyName)
-            UpdateVerticalTextAlignment();
-        else if (e.PropertyName == Entry.CharacterSpacingProperty.PropertyName)
-            UpdateCharacterSpacing();
-        else if (e.PropertyName == Entry.PlaceholderColorProperty.PropertyName)
-            UpdatePlaceholderColor();
-        else if (e.PropertyName == VisualElement.FlowDirectionProperty.PropertyName)
-            UpdateHorizontalTextAlignment();
-        else if (e.PropertyName == InputView.MaxLengthProperty.PropertyName)
-            UpdateMaxLength();
-        else if (e.PropertyName == Xamarin.Forms.PlatformConfiguration.AndroidSpecific.Entry.ImeOptionsProperty.PropertyName)
-            UpdateImeOptions();
-        else if (e.PropertyName == Entry.ReturnTypeProperty.PropertyName)
-            UpdateReturnType();
-        else if (e.PropertyName == Entry.SelectionLengthProperty.PropertyName)
-            UpdateCursorSelection();
-        else if (e.PropertyName == Entry.CursorPositionProperty.PropertyName)
-            UpdateCursorSelection();
-        else if (e.PropertyName == InputView.IsReadOnlyProperty.PropertyName)
-            UpdateIsReadOnly();
-        if (e.PropertyName == Entry.ClearButtonVisibilityProperty.PropertyName)
-            UpdateClearBtnOnPropertyChanged();
-
-        base.OnElementPropertyChanged(sender, e);
-    }
     protected virtual NumberKeyListener GetDigitsKeyListener(InputTypes inputTypes)
     {
         // Override this in a custom renderer to use a different NumberKeyListener
@@ -335,193 +579,80 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
     }
 
 
-    protected virtual void UpdateImeOptions()
-    {
-        if (Element == null || Control == null)
-            return;
-        var imeOptions = ((Entry)Element).OnThisPlatform().ImeOptions();
-        _currentInputImeFlag = imeOptions.ToAndroidImeOptions();
-        EditText.ImeOptions = _currentInputImeFlag;
-    }
-
-    void UpdateHorizontalTextAlignment()
-    {
-        EditText.UpdateTextAlignment(Element.HorizontalTextAlignment, Element.VerticalTextAlignment);
-    }
-
-    void UpdateVerticalTextAlignment()
-    {
-        EditText.UpdateTextAlignment(Element.HorizontalTextAlignment, Element.VerticalTextAlignment);
-    }
-
-
-
-    protected virtual void UpdateFont()
-    {
-        EditText.Typeface = Element.ToTypeface();
-        EditText.SetTextSize(ComplexUnitType.Sp, (float)Element.FontSize);
-    }
-
-    void UpdateInputType()
-    {
-        Entry model = Element;
-        var keyboard = model.Keyboard;
-
-        EditText.InputType = keyboard.ToInputType();
-        if (!(keyboard is CustomKeyboard))
-        {
-            if (model.IsSet(InputView.IsSpellCheckEnabledProperty))
-            {
-                if ((EditText.InputType & InputTypes.TextFlagNoSuggestions) != InputTypes.TextFlagNoSuggestions)
-                {
-                    if (!model.IsSpellCheckEnabled)
-                        EditText.InputType = EditText.InputType | InputTypes.TextFlagNoSuggestions;
-                }
-            }
-            if (model.IsSet(Entry.IsTextPredictionEnabledProperty))
-            {
-                if ((EditText.InputType & InputTypes.TextFlagNoSuggestions) != InputTypes.TextFlagNoSuggestions)
-                {
-                    if (!model.IsTextPredictionEnabled)
-                        EditText.InputType = EditText.InputType | InputTypes.TextFlagNoSuggestions;
-                }
-            }
-        }
-
-        if (keyboard == Keyboard.Numeric)
-        {
-            EditText.KeyListener = GetDigitsKeyListener(EditText.InputType);
-        }
-
-        if (model.IsPassword && ((EditText.InputType & InputTypes.ClassText) == InputTypes.ClassText))
-            EditText.InputType = EditText.InputType | InputTypes.TextVariationPassword;
-        if (model.IsPassword && ((EditText.InputType & InputTypes.ClassNumber) == InputTypes.ClassNumber))
-            EditText.InputType = EditText.InputType | InputTypes.NumberVariationPassword;
-
-        UpdateFont();
-    }
 
 
     void OnKeyboardBackPressed(object sender, EventArgs eventArgs)
     {
         Control?.ClearFocus();
     }
-    void UpdateMaxLength()
-    {
-        var currentFilters = new List<IInputFilter>(EditText?.GetFilters() ?? new IInputFilter[0]);
 
-        for (var i = 0; i < currentFilters.Count; i++)
-        {
-            if (currentFilters[i] is InputFilterLengthFilter)
-            {
-                currentFilters.RemoveAt(i);
-                break;
-            }
-        }
-
-        currentFilters.Add(new InputFilterLengthFilter(Element.MaxLength));
-
-        EditText?.SetFilters(currentFilters.ToArray());
-
-        var currentControlText = EditText?.Text;
-
-        if (currentControlText.Length > Element.MaxLength)
-            EditText.Text = currentControlText.Substring(0, Element.MaxLength);
-    }
-
-    void UpdateCharacterSpacing()
-    {
-        if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
-        {
-            EditText.LetterSpacing = Element.CharacterSpacing.ToEm();
-        }
-    }
-
-    void UpdateReturnType()
-    {
-        if (Control == null || Element == null)
-            return;
-
-        EditText.ImeOptions = Element.ReturnType.ToAndroidImeAction();
-        _currentInputImeFlag = EditText.ImeOptions;
-    }
     void SelectionChanged(object sender, Xamarin.Forms.Platform.Android.SelectionChangedEventArgs e)
     {
         if (_nativeSelectionIsUpdating || Control == null || Element == null)
+        {
             return;
+        }
 
-        int cursorPosition = Element.CursorPosition;
-        int selectionStart = EditText.SelectionStart;
+        var cursorPosition = Element.CursorPosition;
+        var selectionStart = EditText.SelectionStart;
 
         if (!_cursorPositionChangePending)
         {
             var start = cursorPosition;
 
             if (selectionStart != start)
+            {
                 SetCursorPositionFromRenderer(selectionStart);
+            }
         }
 
         if (!_selectionLengthChangePending)
         {
-            int elementSelectionLength = System.Math.Min(EditText.Text.Length - cursorPosition, Element.SelectionLength);
+            var elementSelectionLength = System.Math.Min(EditText.Text.Length - cursorPosition, Element.SelectionLength);
 
             var controlSelectionLength = EditText.SelectionEnd - selectionStart;
             if (controlSelectionLength != elementSelectionLength)
+            {
                 SetSelectionLengthFromRenderer(controlSelectionLength);
-        }
-    }
-
-
-    void UpdateCursorSelection()
-    {
-        if (_nativeSelectionIsUpdating || Control == null || Element == null || EditText == null)
-            return;
-
-        if (!Element.IsReadOnly && EditText.RequestFocus())
-        {
-            try
-            {
-                int start = GetSelectionStart();
-                int end = GetSelectionEnd(start);
-
-                EditText.SetSelection(start, end);
-            }
-            catch (System.Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Failed to set Control.Selection from CursorPosition/SelectionLength: {ex}");
-            }
-            finally
-            {
-                _cursorPositionChangePending = _selectionLengthChangePending = false;
             }
         }
     }
+
+
 
     int GetSelectionEnd(int start)
     {
-        int end = start;
-        int selectionLength = Element.SelectionLength;
+        var end = start;
+        var selectionLength = Element.SelectionLength;
 
         if (Element.IsSet(Entry.SelectionLengthProperty))
+        {
             end = System.Math.Max(start, System.Math.Min(EditText.Length(), start + selectionLength));
+        }
 
-        int newSelectionLength = System.Math.Max(0, end - start);
+        var newSelectionLength = System.Math.Max(0, end - start);
         if (newSelectionLength != selectionLength)
+        {
             SetSelectionLengthFromRenderer(newSelectionLength);
+        }
 
         return end;
     }
 
     int GetSelectionStart()
     {
-        int start = EditText.Length();
-        int cursorPosition = Element.CursorPosition;
+        var start = EditText.Length();
+        var cursorPosition = Element.CursorPosition;
 
         if (Element.IsSet(Entry.CursorPositionProperty))
+        {
             start = System.Math.Min(EditText.Text.Length, cursorPosition);
+        }
 
         if (start != cursorPosition)
+        {
             SetCursorPositionFromRenderer(start);
+        }
 
         return start;
     }
@@ -562,27 +693,16 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
 
 
 
-    void UpdateText()
-    {
-        var text = Element.UpdateFormsText(Element.Text, Element.TextTransform);
-
-        if (EditText.Text == text)
-        {
-            return;
-        }
-
-        EditText.Text = text;
-        if (EditText.IsFocused)
-        {
-            EditText.SetSelection(text.Length);
-            EditText.ShowKeyboard();
-        }
-    }
 
     Drawable _clearBtn;
 
     protected override void OnFocusChanged(bool gainFocus, [GeneratedEnum] FocusSearchDirection direction, Android.Graphics.Rect previouslyFocusedRect)
     {
+        if (!Element.IsKeyboardEnabled)
+        {
+            EditText.HideKeyboard();
+        }
+
         base.OnFocusChanged(gainFocus, direction, previouslyFocusedRect);
         UpdateClearBtnOnFocusChanged(gainFocus);
     }
@@ -625,7 +745,7 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
 
     void UpdateClearBtnOnElementChanged()
     {
-        bool showClearBtn = Element.ClearButtonVisibility == ClearButtonVisibility.WhileEditing;
+        var showClearBtn = Element.ClearButtonVisibility == ClearButtonVisibility.WhileEditing;
         if (showClearBtn && Element.IsFocused)
         {
             UpdateClearBtn(true);
@@ -635,14 +755,16 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
 
     void UpdateClearBtnOnPropertyChanged()
     {
-        bool isFocused = Element.IsFocused;
+        var isFocused = Element.IsFocused;
         if (isFocused)
         {
-            bool showClearBtn = Element.ClearButtonVisibility == ClearButtonVisibility.WhileEditing;
+            var showClearBtn = Element.ClearButtonVisibility == ClearButtonVisibility.WhileEditing;
             UpdateClearBtn(showClearBtn);
 
             if (!showClearBtn && isFocused)
+            {
                 ListenForCloseBtnTouch(false);
+            }
         }
     }
 
@@ -658,12 +780,14 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
     void UpdateClearBtnOnTyping()
     {
         if (Element.ClearButtonVisibility == ClearButtonVisibility.WhileEditing)
+        {
             UpdateClearBtn(true);
+        }
     }
 
     void UpdateClearBtn(bool showClearButton)
     {
-        Drawable d = showClearButton && (Element.Text?.Length > 0) ? GetCloseButtonDrawable() : null;
+        var d = showClearButton && (Element.Text?.Length > 0) ? GetCloseButtonDrawable() : null;
         if ((Element as IVisualElementController).EffectiveFlowDirection.IsRightToLeft())
         {
             EditText.SetCompoundDrawablesWithIntrinsicBounds(d, null, null, null);
@@ -678,9 +802,13 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
     void ListenForCloseBtnTouch(bool listen)
     {
         if (listen)
+        {
             EditText.Touch += EditTextTouched;
+        }
         else
+        {
             EditText.Touch -= EditTextTouched;
+        }
     }
 
     protected virtual Drawable GetCloseButtonDrawable()

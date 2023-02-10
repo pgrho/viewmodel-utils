@@ -9,8 +9,10 @@
     <ScrollView>
         <StackLayout>
             <vmuf:SelectableEntry
+                FontSize="Large"
                 Text="{Binding Text}"
-                Placeholder="{Binding Placeholder}" />
+                Placeholder="{Binding Placeholder}"
+                IsKeyboardEnabled="{Binding IsKeyboardEnabled}" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
@@ -33,6 +35,13 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     Text="{Binding Placeholder}" />
+                <Label
+                    Grid.Row="2"
+                    Text="IsKeyboardEnabled" />
+                <Switch
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    IsToggled="{Binding IsKeyboardEnabled}" />
             </Grid>
         </StackLayout>
     </ScrollView>

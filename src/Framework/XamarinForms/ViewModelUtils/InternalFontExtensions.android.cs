@@ -16,7 +16,9 @@ internal static class InternalFontExtensions
     internal static Typeface ToTypeface(this IFontElement self)
     {
         if (self.IsDefault())
+        {
             return s_defaultTypeface ?? (s_defaultTypeface = Typeface.Default);
+        }
 
         return ToTypeface(self.FontFamily, self.FontAttributes);
     }
@@ -53,11 +55,18 @@ internal static class InternalFontExtensions
     {
         var style = TypefaceStyle.Normal;
         if ((attrs & (FontAttributes.Bold | FontAttributes.Italic)) == (FontAttributes.Bold | FontAttributes.Italic))
+        {
             style = TypefaceStyle.BoldItalic;
+        }
         else if ((attrs & FontAttributes.Bold) != 0)
+        {
             style = TypefaceStyle.Bold;
+        }
         else if ((attrs & FontAttributes.Italic) != 0)
+        {
             style = TypefaceStyle.Italic;
+        }
+
         return style;
     }
     static bool IsAssetFontFamily(string name)
@@ -70,7 +79,9 @@ internal static class InternalFontExtensions
         fontFamily = fontFamily ?? string.Empty;
         int hashtagIndex = fontFamily.IndexOf('#');
         if (hashtagIndex >= 0)
+        {
             return fontFamily.Substring(0, hashtagIndex);
+        }
 
         throw new InvalidOperationException($"Can't parse the {nameof(fontFamily)} {fontFamily}");
     }
@@ -95,7 +106,9 @@ internal static class InternalFontExtensions
         //First check Alias
         var (hasFontAlias, fontPostScriptName) = FontRegistrar.HasFont(fontName);
         if (hasFontAlias)
+        {
             return (true, Typeface.CreateFromFile(fontPostScriptName));
+        }
 
         var isAssetFont = IsAssetFontFamily(fontName);
         if (isAssetFont)
@@ -137,7 +150,9 @@ internal static class InternalFontExtensions
                     formated = $"{folder}{fontFile.FileNameWithExtension()}#{fontFile.PostScriptName}";
                     var result = LoadTypefaceFromAsset(formated);
                     if (result.success)
+                    {
                         return result;
+                    }
                 }
 
             }
