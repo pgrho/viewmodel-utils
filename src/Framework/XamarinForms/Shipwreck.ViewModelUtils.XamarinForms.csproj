@@ -35,7 +35,6 @@
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
     <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.0.1-alpha5" />
     <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.2" />
-    <PackageReference Include="Xamarin.KeyboardHelper " Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\XamarinForms\Shipwreck.ViewModelUtils.Core.XamarinForms.csproj" />

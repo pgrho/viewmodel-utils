@@ -36,7 +36,7 @@
                 TextColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}"
                 Placeholder="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Placeholder}"
                 PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=PlaceholderColor}"
-                kh:KeyboardEffect.EnableKeyboard="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}"
+                IsKeyboardEnabled="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}"
                 Text="{Binding Code}"
                 Opacity="0"
                 ReturnCommand="{Binding SelectCommand}"
