@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<vmuc:FrameworkContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vmuc="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.XamarinForms"
     xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.XamarinForms"
     xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.XamarinForms"
     x:Class="Shipwreck.ViewModelUtils.Demo.XamarinForms.SelectableEntryPage"
@@ -9,10 +10,13 @@
     <ScrollView>
         <StackLayout>
             <vmuf:SelectableEntry
+                x:Name="target"
                 FontSize="Large"
                 Text="{Binding Text}"
                 Placeholder="{Binding Placeholder}"
-                IsKeyboardEnabled="{Binding IsKeyboardEnabled}" />
+                IsKeyboardEnabled="{Binding IsKeyboardEnabled}"
+                SelectAllOnFocus="{Binding SelectAllOnFocus}"
+                ReturnCommand="{Binding ExitCommand}" />
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
@@ -20,6 +24,8 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
@@ -42,7 +48,16 @@
                     Grid.Row="2"
                     Grid.Column="1"
                     IsToggled="{Binding IsKeyboardEnabled}" />
+                <Label
+                    Grid.Row="3"
+                    Text="SelectAllOnFocus" />
+                <Switch
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    IsToggled="{Binding SelectAllOnFocus}" />
             </Grid>
+            <vmuf:CommandButton
+                BindingContext="{Binding FocusCommand}" />
         </StackLayout>
     </ScrollView>
-</ContentPage>
+</vmuc:FrameworkContentPage>

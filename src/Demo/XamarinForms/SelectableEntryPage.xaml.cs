@@ -9,7 +9,7 @@ using Xamarin.Forms.Xaml;
 
 namespace Shipwreck.ViewModelUtils.Demo.XamarinForms;
 
-public sealed class SelectableEntryPageViewModel : ObservableModel
+public sealed class SelectableEntryPageViewModel : FrameworkPageViewModel
 {
     #region Text
 
@@ -36,23 +36,47 @@ public sealed class SelectableEntryPageViewModel : ObservableModel
 
     #region IsKeyboardEnabled
 
-    private bool _IsKeyboardEnabled =true;
+    private bool _IsKeyboardEnabled = true;
 
-    public bool  IsKeyboardEnabled
+    public bool IsKeyboardEnabled
     {
         get => _IsKeyboardEnabled;
         set => SetProperty(ref _IsKeyboardEnabled, value);
     }
 
     #endregion
+
+    #region SelectAllOnFocus
+
+    private bool _SelectAllOnFocus;
+
+    public bool SelectAllOnFocus
+    {
+        get => _SelectAllOnFocus;
+        set => SetProperty(ref _SelectAllOnFocus, value);
+    }
+
+    #endregion
+
+    private CommandViewModelBase _FocusCommand;
+    public CommandViewModelBase FocusCommand
+        => _FocusCommand ??= CommandViewModel.Create(() => Focus(nameof(Text)), title: "Focus");
+
+    private CommandViewModelBase _ExitCommand;
+    public CommandViewModelBase ExitCommand
+        => _ExitCommand ??= CommandViewModel.CreateAsync(() => Application.Current.MainPage.Navigation.PushAsync(new ContentPage()));
+
 }
 
 [XamlCompilation(XamlCompilationOptions.Compile)]
-public partial class SelectableEntryPage : ContentPage
+public partial class SelectableEntryPage : FrameworkContentPage
 {
     public SelectableEntryPage()
     {
         InitializeComponent();
         BindingContext = new SelectableEntryPageViewModel();
     }
+
+    protected override void OnFocusRequested(string propertyName)
+        => target.Focus();
 }

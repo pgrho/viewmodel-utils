@@ -184,6 +184,7 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
         _selectionLengthChangePending = Element.IsSet(Entry.SelectionLengthProperty);
 
         UpdateIsKeyboardEnabled();
+        UpdateSelectAllOnFocus();
         UpdatePlaceholderText();
         UpdateText();
         UpdateInputType();
@@ -246,10 +247,39 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
                 UpdateIsKeyboardEnabled();
                 break;
 
+            case nameof(Element.SelectAllOnFocus):
+                UpdateSelectAllOnFocus();
+                break;
+
             case nameof(Element.IsFocused):
-                if (!Element.IsKeyboardEnabled)
+                if (Element.IsFocused)
                 {
-                    EditText.HideKeyboard();
+                    //if (Element.SelectAllOnFocus)
+                    //{
+                    //    try
+                    //    {
+                    //        _nativeSelectionIsUpdating = true;
+                    //        _cursorPositionChangePending = _selectionLengthChangePending = false;
+
+                    //        var end = Element.Text?.Length ?? 0;
+                    //        EditText.SelectAll();
+
+                    //        SetCursorPositionFromRenderer(0);
+                    //        SetSelectionLengthFromRenderer(Element.Text?.Length ?? 0);
+                    //    }
+                    //    catch
+                    //    {
+
+                    //    }
+                    //    finally
+                    //    {
+                    //        _nativeSelectionIsUpdating = false;
+                    //    }
+                    //}
+                    if (!Element.IsKeyboardEnabled)
+                    {
+                        EditText.HideKeyboard();
+                    }
                 }
                 break;
         }
@@ -510,6 +540,15 @@ public class SelectableEntryRenderer : ViewRenderer<SelectableEntry, CustomEditT
             }
         }
     }
+
+    protected virtual void UpdateSelectAllOnFocus()
+    {
+        if (Element is SelectableEntry e && Control is CustomEditText c)
+        {
+            c.SetSelectAllOnFocus(e.SelectAllOnFocus);
+        }
+    }
+
     protected virtual void UpdateMaxLength()
     {
         var currentFilters = new List<IInputFilter>(EditText?.GetFilters() ?? new IInputFilter[0]);
