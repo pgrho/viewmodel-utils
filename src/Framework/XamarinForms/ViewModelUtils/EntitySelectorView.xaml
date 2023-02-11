@@ -20,13 +20,14 @@
                 IsVisible="{Binding UseList}"
                 Opacity="0"
                 IsTabStop="False" />
-            <Entry
+            <v:SelectableEntry
                 x:Name="dummyEntry"
                 VerticalOptions="Fill"
                 IsTabStop="False"
                 FontSize="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=FontSize}"
                 Placeholder="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Placeholder}"
-                PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}" />
+                PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}"
+                IsSoftwareKeyboardEnabled="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}" />
             <v:SelectableEntry
                 x:Name="entry"
                 VerticalOptions="Fill"
