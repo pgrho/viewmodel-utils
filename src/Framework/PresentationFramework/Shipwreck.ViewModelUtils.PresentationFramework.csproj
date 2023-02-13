@@ -15,11 +15,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Notification.Wpf" Version="6.1.0.5"/>
+    <PackageReference Include="Notification.Wpf" Version="7.0.0" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
-    <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.0.1-alpha5" />
+    <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.2.1-alpha001" />
     <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.2" />
   </ItemGroup>
 
