@@ -33,8 +33,8 @@
 
   <ItemGroup>
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
-    <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.2.1-alpha001" />
-    <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.2" />
+    <PackageReference Include="Shipwreck.BootstrapControls.XamarinForms" Version="4.2.1-alpha002" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.XamarinForms" Version="5.14.3" />
     <PackageReference Include="Shipwreck.XamarinFormsRenderers " Version="0.0.1-alpha002" />
   </ItemGroup>
   <ItemGroup>

@@ -16,9 +16,7 @@
             x:Name="frame"
             x:DataType="vmu:ICommandViewModel"
             Margin="0"
-            Padding="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=ButtonPadding}"
             IsOpaque="False"
-            HasBorder="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=HasBorder}"
             Scheme="{Binding Style, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
             IsEnabled="{Binding IsEnabled}">
             <bs4:ButtonFrame.Triggers>
@@ -36,9 +34,8 @@
                     Command="{Binding}" />
             </bs4:ButtonFrame.GestureRecognizers>
             <fa5:FontAwesomeLabel
+                x:Name="icon"
                 VerticalOptions="Center"
-                FontSize="{Binding Source={RelativeSource AncestorType={x:Type vmuf:IconButton}}, Path=FontSize}"
-                TextColor="{Binding Source={RelativeSource AncestorType={x:Type bs4:ButtonFrame}}, Path=TextColor}"
                 Icon="{Binding Icon}">
             </fa5:FontAwesomeLabel>
         </bs4:ButtonFrame>

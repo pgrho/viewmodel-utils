@@ -32,6 +32,14 @@ public partial class EntitySelectorView : IKeyDownHandler
     public EntitySelectorView()
     {
         InitializeComponent();
+
+        listButton.BindingContext = ShowListCommand;
+        OnFontSizeChanged();
+        OnKeyboardChanged();
+        OnPlaceholderChanged();
+        OnPlaceholderColorChanged();
+        OnTextColorChanged();
+        OnIsKeyboardEnabledChanged();
     }
 
     [TypeConverter(typeof(FontSizeConverter))]
@@ -222,6 +230,117 @@ public partial class EntitySelectorView : IKeyDownHandler
     }
 
     bool IKeyDownHandler.GetIsFocused() => entry.IsFocused;
+
     public bool HandleKeyDown(string keys, bool replaceText)
         => entry.HandleKeyDown(keys, replaceText);
+
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        switch (propertyName)
+        {
+            case nameof(FontSize):
+                OnFontSizeChanged();
+                break;
+
+            case nameof(Keyboard):
+                OnKeyboardChanged();
+                break;
+
+            case nameof(Placeholder):
+                OnPlaceholderChanged();
+                break;
+
+            case nameof(PlaceholderColor):
+                OnPlaceholderColorChanged();
+                break;
+
+            case nameof(TextColor):
+                OnTextColorChanged();
+                break;
+
+            case nameof(IsKeyboardEnabled):
+                OnIsKeyboardEnabledChanged();
+                break;
+        }
+    }
+
+    private void OnKeyboardChanged()
+    {
+        if (entry != null)
+        {
+            entry.Keyboard = Keyboard;
+        }
+    }
+
+    private void OnPlaceholderChanged()
+    {
+        if (dummyEntry != null)
+        {
+            dummyEntry.Placeholder = Placeholder;
+        }
+
+        if (entry != null)
+        {
+            entry.Placeholder = Placeholder;
+        }
+    }
+
+    private void OnPlaceholderColorChanged()
+    {
+        if (entry != null)
+        {
+            entry.PlaceholderColor = PlaceholderColor;
+        }
+    }
+
+    private void OnTextColorChanged()
+    {
+        if (dummyEntry != null)
+        {
+            dummyEntry.TextColor = TextColor;
+        }
+
+        if (entry != null)
+        {
+            entry.TextColor = TextColor;
+        }
+    }
+
+    private void OnIsKeyboardEnabledChanged()
+    {
+        if (dummyEntry != null)
+        {
+            dummyEntry.IsSoftwareKeyboardEnabled = IsKeyboardEnabled;
+        }
+
+        if (entry != null)
+        {
+            entry.IsSoftwareKeyboardEnabled = IsKeyboardEnabled;
+        }
+    }
+
+    private void OnFontSizeChanged()
+    {
+        if (dummyEntry != null)
+        {
+            dummyEntry.FontSize = FontSize;
+        }
+
+        if (entry != null)
+        {
+            entry.FontSize = FontSize;
+        }
+
+        if (clearButton != null)
+        {
+            clearButton.FontSize = FontSize;
+        }
+
+        if (listButton != null)
+        {
+            listButton.FontSize = FontSize;
+        }
+    }
 }

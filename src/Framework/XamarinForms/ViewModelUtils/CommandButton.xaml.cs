@@ -14,6 +14,20 @@ public partial class CommandButton : ContentView
     public CommandButton()
     {
         InitializeComponent();
+
+        OnButtonPaddingChanged();
+        OnFontSizeChanged();
+        OnFrameTextColorChanged();
+
+        frame.PropertyChanged += (s, e) =>
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(frame.TextColor):
+                    OnFrameTextColorChanged();
+                    break;
+            }
+        };
     }
 
     [Xamarin.Forms.TypeConverter(typeof(FontSizeConverter))]
@@ -27,5 +41,60 @@ public partial class CommandButton : ContentView
     {
         get => (Thickness)GetValue(ButtonPaddingProperty);
         set => SetValue(ButtonPaddingProperty, value);
+    }
+
+    protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        switch (propertyName)
+        {
+            case nameof(ButtonPadding):
+                OnButtonPaddingChanged();
+                break;
+
+            case nameof(FontSize):
+                OnFontSizeChanged();
+                break;
+        }
+    }
+
+    private void OnButtonPaddingChanged()
+    {
+        if (frame != null)
+        {
+            frame.Padding = ButtonPadding;
+        }
+    }
+
+    private void OnFontSizeChanged()
+    {
+        if (icon != null)
+        {
+            icon.FontSize = FontSize;
+        }
+
+        if (title != null)
+        {
+            title.FontSize = FontSize;
+        }
+
+        if (badgeCount != null)
+        {
+            badgeCount.FontSize = FontSize;
+        }
+    }
+
+    private void OnFrameTextColorChanged()
+    {
+        if (frame != null)
+        {
+            if (icon != null)
+            {
+                icon.TextColor = frame.TextColor;
+            }
+
+            title.TextColor = frame.TextColor;
+        }
     }
 }

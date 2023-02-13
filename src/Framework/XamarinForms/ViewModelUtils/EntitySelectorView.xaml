@@ -24,20 +24,10 @@
                 x:Name="dummyEntry"
                 VerticalOptions="Fill"
                 IsTabStop="False"
-                FontSize="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=FontSize}"
-                Placeholder="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Placeholder}"
-                PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}"
-                IsSoftwareKeyboardEnabled="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}"
                 ReturnType="Search" />
             <v:SelectableEntry
                 x:Name="entry"
                 VerticalOptions="Fill"
-                FontSize="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=FontSize}"
-                Keyboard="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Keyboard}"
-                TextColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=TextColor}"
-                Placeholder="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=Placeholder}"
-                PlaceholderColor="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=PlaceholderColor}"
-                IsSoftwareKeyboardEnabled="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=IsKeyboardEnabled}"
                 Text="{Binding Code}"
                 Opacity="0"
                 ReturnType="Search"
@@ -45,12 +35,12 @@
                 Focused="entry_Focused"
                 Unfocused="entry_Unfocused" />
             <v:IconButton
+                x:Name="clearButton"
                 Grid.Column="1"
                 HasBorder="False"
                 VerticalOptions="Fill"
                 Margin="0"
                 ButtonPadding="16,0"
-                FontSize="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=FontSize}"
                 BindingContext="{Binding SelectOrClearCommand}" />
             <v:IconButton
                 x:Name="listButton"
@@ -58,9 +48,7 @@
                 HasBorder="False"
                 VerticalOptions="Fill"
                 Margin="0"
-                ButtonPadding="16,0"
-                FontSize="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=FontSize}"
-                BindingContext="{Binding Source={RelativeSource AncestorType={x:Type v:EntitySelectorView}}, Path=ShowListCommand}" />
+                ButtonPadding="16,0" />
         </Grid>
     </ContentView.Content>
 </vmu:FrameworkContentView>

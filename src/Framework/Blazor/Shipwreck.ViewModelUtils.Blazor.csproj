@@ -35,7 +35,7 @@
     <PackageReference Include="Shipwreck.BlazorTypeahead" Version="0.2.0">
       <GeneratePathProperty>true</GeneratePathProperty>
     </PackageReference>
-    <PackageReference Include="Shipwreck.BootstrapControls.Blazor" Version="4.2.1-alpha001">
+    <PackageReference Include="Shipwreck.BootstrapControls.Blazor" Version="4.2.1-alpha002">
       <GeneratePathProperty>true</GeneratePathProperty>
     </PackageReference>
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.6" />
