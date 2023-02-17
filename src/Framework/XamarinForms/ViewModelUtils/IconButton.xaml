@@ -6,7 +6,9 @@
     xmlns:fa5="clr-namespace:Shipwreck.FontAwesomeControls;assembly=Shipwreck.FontAwesomeControls.XamarinForms"
     xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.XamarinForms"
     xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.XamarinForms"
-    x:Class="Shipwreck.ViewModelUtils.IconButton">
+    x:Class="Shipwreck.ViewModelUtils.IconButton"
+    x:DataType="vmu:ICommandViewModel"
+    IsVisible="{Binding IsVisible, TargetNullValue=False, FallbackValue=False}">
     <ContentView.Resources>
         <vmuf:BorderStyleToColorSchemeConverter
             x:Key="BorderStyleToColorSchemeConverter" />
