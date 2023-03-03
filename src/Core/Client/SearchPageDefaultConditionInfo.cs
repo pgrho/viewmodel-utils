@@ -5,6 +5,7 @@ namespace Shipwreck.ViewModelUtils.Client;
 [DataContract]
 public partial class SearchPageDefaultConditionInfo : FrameworkMessageObject
 {
+    [RequiresUnreferencedCode("Default Constructor")]
     public SearchPageDefaultConditionInfo()
         : base(null)
     {

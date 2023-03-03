@@ -1,8 +1,13 @@
-﻿namespace Shipwreck.ViewModelUtils.Client;
+﻿using System.Security.Permissions;
+
+namespace Shipwreck.ViewModelUtils.Client;
 
 [DataContract]
 public partial class DateTimeQueryPropertyInfo : QueryPropertyInfo
 {
+    [RequiresUnreferencedCode("Default Constructor")]
+    public DateTimeQueryPropertyInfo() { }
+
     [DataMember]
     public bool IsDate { get; set; }
 

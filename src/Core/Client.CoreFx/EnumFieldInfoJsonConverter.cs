@@ -2,6 +2,11 @@
 
 public sealed class EnumFieldInfoJsonConverter : JsonConverter<EnumFieldInfo>
 {
+    [RequiresUnreferencedCode("Default Constructor")]
+    public EnumFieldInfoJsonConverter()
+    {
+    }
+
     public override bool CanConvert(Type typeToConvert)
       => typeof(EnumFieldInfo).IsAssignableFrom(typeToConvert);
 

@@ -3,6 +3,7 @@
 [DataContract]
 public sealed partial class EnumFieldInfo
 {
+    [RequiresUnreferencedCode("Default Constructor")]
     public EnumFieldInfo()
     {
     }

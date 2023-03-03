@@ -1,22 +1,22 @@
 ﻿<Project>
-    <PropertyGroup>
-        <Version>0.2.8-alpha008</Version>
-        <Authors>shipwreck.jp</Authors>
-        <Copyright>Copyright © 2021-2023 shipwreck.jp</Copyright>
-        <LangVersion>10.0</LangVersion>
-        <IsDeterministic>true</IsDeterministic>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/pgrho/viewmodel-utils</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/pgrho/viewmodel-utils</RepositoryUrl>
-    </PropertyGroup>
-    <ItemGroup>
-        <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
-    </ItemGroup>
-    <Target Name="PostPack"
-            AfterTargets="Pack"
-            Condition="'$(GeneratePackageOnBuild)'=='true'">
-        <Exec Command="XCOPY &quot;$(MSBuildProjectDirectory)\bin\Release\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Release&quot; /D /C /I /Y /F
+  <PropertyGroup>
+    <Version>0.2.8-alpha009</Version>
+    <Authors>shipwreck.jp</Authors>
+    <Copyright>Copyright © 2021-2023 shipwreck.jp</Copyright>
+    <LangVersion>10.0</LangVersion>
+    <IsDeterministic>true</IsDeterministic>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/pgrho/viewmodel-utils</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pgrho/viewmodel-utils</RepositoryUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
+  </ItemGroup>
+  <Target Name="PostPack"
+          AfterTargets="Pack"
+          Condition="'$(GeneratePackageOnBuild)'=='true'">
+    <Exec Command="XCOPY &quot;$(MSBuildProjectDirectory)\bin\Release\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Release&quot; /D /C /I /Y /F
         &#xD;&#xA;XCOPY &quot;$(MSBuildProjectDirectory)\bin\Debug\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Debug&quot; /D /C /I /Y /F"
-              ContinueOnError="WarnAndContinue"/>
-    </Target>
+          ContinueOnError="WarnAndContinue" />
+  </Target>
 </Project>

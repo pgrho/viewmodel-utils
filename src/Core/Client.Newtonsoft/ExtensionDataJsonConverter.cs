@@ -2,6 +2,9 @@
 
 public sealed class ExtensionDataJsonConverter : JsonConverter<ExtensionData>
 {
+    [RequiresUnreferencedCode("Default Constructor")]
+    public ExtensionDataJsonConverter() { }
+
     public override ExtensionData ReadJson(JsonReader reader, Type objectType, ExtensionData existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
         if (reader.TokenType == JsonToken.Null)

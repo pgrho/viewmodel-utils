@@ -3,6 +3,10 @@
 [DataContract]
 public partial class BooleanQueryPropertyInfo : QueryPropertyInfo
 {
+    [RequiresUnreferencedCode("Default Constructor")]
+    public BooleanQueryPropertyInfo() { }
+
+
     [DataMember]
     public string TrueString { get; set; }
 

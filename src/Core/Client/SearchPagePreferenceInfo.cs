@@ -1,10 +1,9 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Shipwreck.ViewModelUtils.Client;
+﻿namespace Shipwreck.ViewModelUtils.Client;
 
 [DataContract]
 public partial class SearchPagePreferenceInfo : FrameworkMessageObject
 {
+    [RequiresUnreferencedCode("Default Constructor")]
     public SearchPagePreferenceInfo()
         : base(null)
     {
@@ -21,6 +20,7 @@ public partial class SearchPagePreferenceInfo : FrameworkMessageObject
         set => CollectionHelper.Set(ref _Conditions, value);
     }
 
+    [RequiresUnreferencedCode("ShouldSerialize")]
     public bool ShouldSerializeConditions() => !AreConditionsGenerated;
 
     #endregion Conditions
@@ -36,6 +36,7 @@ public partial class SearchPagePreferenceInfo : FrameworkMessageObject
         set => CollectionHelper.Set(ref _Orders, value);
     }
 
+    [RequiresUnreferencedCode("ShouldSerialize")]
     public bool ShouldSerializeOrders() => !AreOrdersGenerated;
 
     #endregion Orders

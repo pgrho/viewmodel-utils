@@ -5,6 +5,9 @@ namespace Shipwreck.ViewModelUtils.Client;
 [DataContract]
 public partial class EnumQueryPropertyInfo : QueryPropertyInfo
 {
+    [RequiresUnreferencedCode("Default Constructor")]
+    public EnumQueryPropertyInfo() { }
+
     [DataMember]
     public bool IsFlags { get; set; }
 

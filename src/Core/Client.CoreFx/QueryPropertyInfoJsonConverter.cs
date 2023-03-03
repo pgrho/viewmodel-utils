@@ -2,6 +2,9 @@
 
 public class QueryPropertyInfoJsonConverter : JsonConverter<QueryPropertyInfo>
 {
+    [RequiresUnreferencedCode("Default Constructor")]
+    public QueryPropertyInfoJsonConverter() { }
+
     private delegate bool TryReadPropertyHandler(ref Utf8JsonReader reader, JsonSerializerOptions options);
 
     public override bool CanConvert(Type typeToConvert)
