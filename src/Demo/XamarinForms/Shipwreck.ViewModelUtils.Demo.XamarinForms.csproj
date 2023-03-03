@@ -16,10 +16,13 @@
     <ProjectReference Include="..\..\Framework\XamarinForms\Shipwreck.ViewModelUtils.XamarinForms.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="..\..\_GlobalUsings.cs"   />
+    <Compile Remove="..\..\_GlobalUsings.cs" />
     <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="EntitySelectorPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="InteractionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

@@ -358,8 +358,7 @@ public partial class EntitySelectorView : IKeyDownHandler
 
     private void entry_Completed(object sender, EventArgs e)
     {
-        if (BindingContext is IEntitySelector c
-            && c.SelectedItem != null)
+        if (BindingContext is IEntitySelector c)
         {
             entry?.Unfocus();
         }

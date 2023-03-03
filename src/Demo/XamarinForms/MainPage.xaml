@@ -2,14 +2,16 @@
 <ContentPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.XamarinForms"
     xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.XamarinForms"
-    x:Class="Shipwreck.ViewModelUtils.Demo.XamarinForms.MainPage"> 
+    x:Class="Shipwreck.ViewModelUtils.Demo.XamarinForms.MainPage"
+    x:DataType="{x:Type local:MainPageViewModel}">
     <ScrollView>
         <StackLayout
             BindableLayout.ItemsSource="{Binding Commands}">
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <vmuf:CommandButton  />
+                    <vmuf:CommandButton />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </StackLayout>
