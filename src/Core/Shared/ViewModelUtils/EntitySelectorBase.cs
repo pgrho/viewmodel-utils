@@ -339,22 +339,35 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
         => _SelectCommand ??= CommandViewModel.CreateAsync(
             async () =>
             {
-                var c = Code.Trim();
-                if (string.IsNullOrEmpty(c))
+                try
                 {
-                    SelectedItem = null;
-                    Focus();
-                }
-                else if (SelectedItem != null && GetMatchDistance(c, SelectedItem) == 0)
-                {
-                    Select(SelectedItem);
-                }
-                else
-                {
-                    if (!await SelectByCodeAsync(c, true).ConfigureAwait())
+                    var c = Code.Trim();
+                    if (string.IsNullOrEmpty(c))
                     {
-                        await Page.ShowErrorToastAsync("{0}'{1}'が見つかりませんでした。", EntityDisplayName, c).ConfigureAwait();
+                        SelectedItem = null;
+                        Focus();
                     }
+                    else if (SelectedItem != null && GetMatchDistance(c, SelectedItem) == 0)
+                    {
+                        Select(SelectedItem);
+                    }
+                    else
+                    {
+                        if (!await SelectByCodeAsync(c, true).ConfigureAwait())
+                        {
+                            await Page.ShowErrorToastAsync("{0}'{1}'が見つかりませんでした。", EntityDisplayName, c).ConfigureAwait();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Page.LogError("{0}の検索中にエラーが発生しました。{1}", EntityDisplayName, ex);
+
+                    try
+                    {
+                        await Page.ShowErrorToastAsync("{0}の検索中にエラーが発生しました。{1}", EntityDisplayName, ex.Message);
+                    }
+                    catch { }
                 }
             },
             style: BorderStyle.Primary,

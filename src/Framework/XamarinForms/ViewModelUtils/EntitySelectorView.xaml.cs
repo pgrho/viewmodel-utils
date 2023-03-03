@@ -136,7 +136,19 @@ public partial class EntitySelectorView : IKeyDownHandler
 
                     picker.Focus();
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    if (BindingContext is IEntitySelector es)
+                    {
+                        es.Page.LogError("検索中にエラーが発生しました。{0}", ex);
+
+                        try
+                        {
+                            await es.Page.ShowErrorToastAsync("検索中にエラーが発生しました。{0}", ex.Message);
+                        }
+                        catch { }
+                    }
+                }
             }
         },
             icon: "fas fa-ellipsis-h",
