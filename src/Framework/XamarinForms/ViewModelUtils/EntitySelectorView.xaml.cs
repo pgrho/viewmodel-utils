@@ -343,4 +343,13 @@ public partial class EntitySelectorView : IKeyDownHandler
             listButton.FontSize = FontSize;
         }
     }
+
+    private void entry_Completed(object sender, EventArgs e)
+    {
+        if (BindingContext is IEntitySelector c
+            && c.SelectedItem != null)
+        {
+            entry?.Unfocus();
+        }
+    }
 }

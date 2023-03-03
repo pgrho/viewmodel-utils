@@ -32,6 +32,7 @@
                 Opacity="0"
                 ReturnType="Search"
                 ReturnCommand="{Binding SelectCommand}"
+                Completed="entry_Completed"
                 Focused="entry_Focused"
                 Unfocused="entry_Unfocused" />
             <v:IconButton
