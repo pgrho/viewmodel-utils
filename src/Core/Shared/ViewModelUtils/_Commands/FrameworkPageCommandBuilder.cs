@@ -45,20 +45,34 @@ public abstract class FrameworkPageCommandBuilder : CommandBuilderBase
         => Page.IsSupported(CreateEntry());
 
     public sealed override CommandViewModelBase Build()
-        => CommandViewModel.Create(
-            OnExecuted,
-            title: Title,
-            titleGetter: TitleGetter,
-            description: Description ?? ComputeDescription(),
-            descriptionGetter: DescriptionGetter,
-            isVisibleGetter: IsVisibleGetter != null ? () => ComputeIsVisible() && IsVisibleGetter() : (Func<bool>)ComputeIsVisible,
-            isEnabled: IsEnabled ?? true,
-            isEnabledGetter: IsEnabledGetter,
-            icon: Icon ?? ComputeIcon(),
-            iconGetter: IconGetter,
-            style: Style ?? default,
-            styleGetter: StyleGetter,
-            hrefGetter: ComputeHref,
-            badgeCount: BadgeCount ?? 0,
-            badgeCountGetter: BadgeCountGetter);
+    {
+        CommandViewModelBase c = null;
+        return c = CommandViewModel.Create(
+                    () =>
+                    {
+                        try
+                        {
+                            ExecutingCallback?.Invoke(c);
+                            OnExecuted();
+                        }
+                        finally
+                        {
+                            ExecutedCallback?.Invoke(c);
+                        }
+                    },
+                    title: Title,
+                    titleGetter: TitleGetter,
+                    description: Description ?? ComputeDescription(),
+                    descriptionGetter: DescriptionGetter,
+                    isVisibleGetter: IsVisibleGetter != null ? () => ComputeIsVisible() && IsVisibleGetter() : (Func<bool>)ComputeIsVisible,
+                    isEnabled: IsEnabled ?? true,
+                    isEnabledGetter: IsEnabledGetter,
+                    icon: Icon ?? ComputeIcon(),
+                    iconGetter: IconGetter,
+                    style: Style ?? default,
+                    styleGetter: StyleGetter,
+                    hrefGetter: ComputeHref,
+                    badgeCount: BadgeCount ?? 0,
+                    badgeCountGetter: BadgeCountGetter);
+    }
 }

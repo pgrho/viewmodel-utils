@@ -5,8 +5,21 @@ public class CommandBuilder : CommandBuilderBase
     public Action ExecutionHandler { get; set; }
 
     public override CommandViewModelBase Build()
-        => CommandViewModel.Create(
-            ExecutionHandler,
+    {
+        CommandViewModelBase c = null;
+        return c = CommandViewModel.Create(
+            async () =>
+            {
+                try
+                {
+                    ExecutingCallback?.Invoke(c);
+                    ExecutionHandler();
+                }
+                finally
+                {
+                    ExecutedCallback?.Invoke(c);
+                }
+            },
             title: Title,
             titleGetter: TitleGetter,
             mnemonic: Mnemonic,
@@ -25,4 +38,5 @@ public class CommandBuilder : CommandBuilderBase
             hrefGetter: HrefGetter,
             badgeCount: BadgeCount ?? 0,
             badgeCountGetter: BadgeCountGetter);
+    }
 }

@@ -20,6 +20,8 @@ public abstract class CommandBuilderBase
     public Func<int> BadgeCountGetter { get; set; }
     public string Href { get; set; }
     public Func<string> HrefGetter { get; set; }
+    public Action<CommandViewModelBase> ExecutingCallback { get; set; }
+    public Action<CommandViewModelBase> ExecutedCallback { get; set; }
 
     public abstract CommandViewModelBase Build();
 }

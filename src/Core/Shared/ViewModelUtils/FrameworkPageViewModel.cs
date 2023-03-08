@@ -155,7 +155,19 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     {
         lock (_IsBusyScopes)
         {
-            return IsInitializing || _IsBusyScopes.Any();
+            var busy = false;
+            for (var i = _ExecutingCommands.Count - 1; i >= 0; i--)
+            {
+                if (!_ExecutingCommands[i].TryGetTarget(out var c) || !c.IsExecuting)
+                {
+                    _ExecutingCommands.RemoveAt(i);
+                }
+                else
+                {
+                    busy = true;
+                }
+            }
+            return IsInitializing || _IsBusyScopes.Any() || busy;
         }
     }
 
@@ -458,6 +470,58 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     }
 
     #endregion Menu
+
+    #region ICommandViewModelHandler
+
+    private readonly List<WeakReference<CommandViewModelBase>> _ExecutingCommands = new();
+
+    void ICommandViewModelHandler.OnCommandExecuting(CommandViewModelBase command)
+        => OnCommandExecuting(command);
+
+    protected virtual void OnCommandExecuting(CommandViewModelBase command)
+    {
+        lock (_IsBusyScopes)
+        {
+            for (var i = _ExecutingCommands.Count - 1; i >= 0; i--)
+            {
+                if (!_ExecutingCommands[i].TryGetTarget(out var c) || !c.IsExecuting)
+                {
+                    _ExecutingCommands.RemoveAt(i);
+                }
+            }
+            _ExecutingCommands.Add(new WeakReference<CommandViewModelBase>(command));
+
+            SetIsBusy();
+        }
+    }
+
+    void ICommandViewModelHandler.OnCommandExecuted(CommandViewModelBase command)
+        => OnCommandExecuted(command);
+
+    protected virtual void OnCommandExecuted(CommandViewModelBase command)
+    {
+        lock (_IsBusyScopes)
+        {
+            var changed = false;
+            for (var i = _ExecutingCommands.Count - 1; i >= 0; i--)
+            {
+                if (!_ExecutingCommands[i].TryGetTarget(out var c)
+                    || !c.IsExecuting
+                    || c == command)
+                {
+                    changed = true;
+                    _ExecutingCommands.RemoveAt(i);
+                }
+            }
+
+            if (changed)
+            {
+                SetIsBusy();
+            }
+        }
+    }
+
+    #endregion ICommandViewModelHandler
 
     #region IDisposable
 

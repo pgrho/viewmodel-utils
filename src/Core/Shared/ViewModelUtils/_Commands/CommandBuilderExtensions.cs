@@ -195,6 +195,11 @@ public static class CommandBuilderExtensions
         }
         return builder;
     }
-
+    public static CommandViewModelBase Build(this CommandBuilderBase builder, ICommandViewModelHandler handler)
+    {
+        builder.ExecutingCallback = handler.OnCommandExecuting;
+        builder.ExecutedCallback = handler.OnCommandExecuted; 
+        return builder.Build();
+    }
     #endregion CommandBuilderBase
 }

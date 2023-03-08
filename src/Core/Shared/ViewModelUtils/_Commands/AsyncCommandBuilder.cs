@@ -10,8 +10,21 @@ public class AsyncCommandBuilder : CommandBuilderBase
     }
 
     public override CommandViewModelBase Build()
-        => CommandViewModel.CreateAsync(
-            _ExecutionHandler,
+    {
+        CommandViewModelBase c = null;
+        return c = CommandViewModel.CreateAsync(
+            async () =>
+            {
+                try
+                {
+                    ExecutingCallback?.Invoke(c);
+                    await _ExecutionHandler();
+                }
+                finally
+                {
+                    ExecutedCallback?.Invoke(c);
+                }
+            },
             title: Title,
             titleGetter: TitleGetter,
             mnemonic: Mnemonic,
@@ -30,4 +43,5 @@ public class AsyncCommandBuilder : CommandBuilderBase
             hrefGetter: HrefGetter,
             badgeCount: BadgeCount ?? 0,
             badgeCountGetter: BadgeCountGetter);
+    }
 }
