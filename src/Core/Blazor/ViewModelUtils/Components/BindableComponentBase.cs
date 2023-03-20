@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract partial class BindableComponentBase : ComponentBase, ComponentUpdateScope.IComponent
+public abstract partial class BindableComponentBase : ComponentBase, IBindableComponent,ComponentUpdateScope.IComponent
 {
     protected bool IsUpdatingSource { get; set; }
 
@@ -78,6 +78,7 @@ public abstract partial class BindableComponentBase : ComponentBase, ComponentUp
         ShouldRenderCore = false;
         return t;
     }
+    object IBindableComponent.DataContext => null;
 }
 
 public abstract partial class BindableComponentBase<T> : BindableComponentBase, IBindableComponent

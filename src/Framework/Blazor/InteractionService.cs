@@ -19,9 +19,25 @@ public class InteractionService : IInteractionService
 
     bool IInteractionService.InvokeRequired => false;
 
-    Task IInteractionService.InvokeAsync(object context, Action action) => Task.Run(action);
+    Task IInteractionService.InvokeAsync(object context, Action action)
+    {
+        if (context is IHasBindableComponent bc && bc.Component != null)
+        {
+            return bc.Component.InvokeAsync(action);
+        }
+        return Task.Run(action);
+    }
 
-    Task<T> IInteractionService.InvokeAsync<T>(object context, Func<T> func) => Task.Run(func);
+    Task<T> IInteractionService.InvokeAsync<T>(object context, Func<T> func)
+    {
+        if (context is IHasBindableComponent bc && bc.Component != null)
+        {
+            T result = default;
+            return bc.Component.InvokeAsync(() => result = func()).ContinueWith(t => result);
+        }
+
+        return Task.Run(func);
+    }
 
     #endregion InvokeAsync
 

@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
-public partial class FrameworkPageViewModel : IHasJSRuntime
+public partial class FrameworkPageViewModel : IHasJSRuntime, IHasBindableComponent
 {
     public struct ProcessingDisabled : IDisposable
     {
@@ -17,6 +17,8 @@ public partial class FrameworkPageViewModel : IHasJSRuntime
     public FrameworkPageBase Page { get; set; }
 
     public IJSRuntime JS => Page.JS;
+
+    IBindableComponent IHasBindableComponent.Component => Page;
 
     public ProcessingDisabled DisableProcessing()
         => default;

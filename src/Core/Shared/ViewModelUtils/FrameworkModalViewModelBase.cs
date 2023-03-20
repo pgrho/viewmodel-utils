@@ -12,6 +12,8 @@ public abstract partial class FrameworkModalViewModelBase : ObservableModel, IFr
     public IInteractionService Interaction => Page?.Interaction;
     public bool IsDisposed { get; protected set; }
 
+    IBindableComponent IHasBindableComponent.Component => Page?.Page;
+
     public Task OpenAsync()
     {
         if (Page.IsModalSupported(GetType()) == true)

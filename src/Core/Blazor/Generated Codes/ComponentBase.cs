@@ -7,6 +7,33 @@ namespace Shipwreck.ViewModelUtils.Components
 {
     partial class BindableComponentBase
     {
+        public new Task InvokeAsync(Action workItem)
+            => base.InvokeAsync(workItem);
+
+        public new Task InvokeAsync(Func<Task> workItem)
+            => base.InvokeAsync(workItem);
+
+        private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
+        
+        protected virtual bool OnDataContextPropertyChanged(string propertyName)
+        {
+            if (_PropertyChangedExpectations.TryPeek(out var top)
+                && top.ShouldIgnorePropertyChanged(propertyName))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
+        {
+            var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
+            _PropertyChangedExpectations.Push(s);
+            return s;
+        }
+
+        IBindableComponent IHasBindableComponent.Component => this;
+
         protected bool SetProperty(ref string field, string value, Action onChanged = null, [CallerMemberName]string propertyName = null, bool shouldNotify = true)
         {
             if (value != field)
@@ -62,6 +89,33 @@ namespace Shipwreck.ViewModelUtils.Components
     }
     partial class BindableLayoutComponentBase
     {
+        public new Task InvokeAsync(Action workItem)
+            => base.InvokeAsync(workItem);
+
+        public new Task InvokeAsync(Func<Task> workItem)
+            => base.InvokeAsync(workItem);
+
+        private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
+        
+        protected virtual bool OnDataContextPropertyChanged(string propertyName)
+        {
+            if (_PropertyChangedExpectations.TryPeek(out var top)
+                && top.ShouldIgnorePropertyChanged(propertyName))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
+        {
+            var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
+            _PropertyChangedExpectations.Push(s);
+            return s;
+        }
+
+        IBindableComponent IHasBindableComponent.Component => this;
+
         protected bool SetProperty(ref string field, string value, Action onChanged = null, [CallerMemberName]string propertyName = null, bool shouldNotify = true)
         {
             if (value != field)
@@ -121,7 +175,6 @@ namespace Shipwreck.ViewModelUtils.Components
     partial class BindableComponentBase<T>
     {
         private T _DataContext;
-    private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
 
 
         [Parameter]
@@ -143,12 +196,6 @@ namespace Shipwreck.ViewModelUtils.Components
          
 
 
-    public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
-    {
-        var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
-        _PropertyChangedExpectations.Push(s);
-        return s;
-    }
      
 
         protected virtual void OnDataContextRemoved(T dataContext)
@@ -183,15 +230,6 @@ namespace Shipwreck.ViewModelUtils.Components
             }
         }
         
-        protected virtual bool OnDataContextPropertyChanged(string propertyName)
-        {
-            if (_PropertyChangedExpectations.TryPeek(out var top)
-                && top.ShouldIgnorePropertyChanged(propertyName))
-            {
-                return false;
-            }
-            return true;
-        }
 
         private void DataContext_RequestFocus(object sender, PropertyChangedEventArgs e)
         {
@@ -210,7 +248,6 @@ namespace Shipwreck.ViewModelUtils.Components
     partial class BindableLayoutComponentBase<T>
     {
         private T _DataContext;
-    private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
 
 
         [Parameter]
@@ -232,12 +269,6 @@ namespace Shipwreck.ViewModelUtils.Components
          
 
 
-    public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
-    {
-        var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
-        _PropertyChangedExpectations.Push(s);
-        return s;
-    }
      
 
         protected virtual void OnDataContextRemoved(T dataContext)
@@ -272,15 +303,6 @@ namespace Shipwreck.ViewModelUtils.Components
             }
         }
         
-        protected virtual bool OnDataContextPropertyChanged(string propertyName)
-        {
-            if (_PropertyChangedExpectations.TryPeek(out var top)
-                && top.ShouldIgnorePropertyChanged(propertyName))
-            {
-                return false;
-            }
-            return true;
-        }
 
         private void DataContext_RequestFocus(object sender, PropertyChangedEventArgs e)
         {
@@ -299,7 +321,6 @@ namespace Shipwreck.ViewModelUtils.Components
     partial class ListComponentBase<TDataContext, TItem>
     {
         private TDataContext _DataContext;
-    private Stack<PropertyChangedExpectation> _PropertyChangedExpectations = new();
 
 
         [Parameter]
@@ -321,12 +342,6 @@ namespace Shipwreck.ViewModelUtils.Components
          
 
 
-    public IDisposable PushPropertyChangedExpectation(string expectedPropertyName = null)
-    {
-        var s = new PropertyChangedExpectation(_PropertyChangedExpectations, expectedPropertyName);
-        _PropertyChangedExpectations.Push(s);
-        return s;
-    }
      
 
         protected virtual void OnDataContextRemoved(TDataContext dataContext)
@@ -361,15 +376,6 @@ namespace Shipwreck.ViewModelUtils.Components
             }
         }
         
-        protected virtual bool OnDataContextPropertyChanged(string propertyName)
-        {
-            if (_PropertyChangedExpectations.TryPeek(out var top)
-                && top.ShouldIgnorePropertyChanged(propertyName))
-            {
-                return false;
-            }
-            return true;
-        }
 
         private void DataContext_RequestFocus(object sender, PropertyChangedEventArgs e)
         {
