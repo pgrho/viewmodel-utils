@@ -72,7 +72,7 @@ namespace Shipwreck.ViewModelUtils.Components
             var t = base.OnAfterRenderAsync(firstRender);
             if (t != null)
             {
-                await t.ConfigureAwait(false);
+                await t.ConfigureAwait();
             }
 
             if (firstRender)
@@ -87,7 +87,7 @@ namespace Shipwreck.ViewModelUtils.Components
                     {
                         if (DataContext != null)
                         {
-                            var r = await DataContext.SearchAsync("^=" + query, MaxCount).ConfigureAwait(false);
+                            var r = await DataContext.SearchAsync("^=" + query, MaxCount).ConfigureAwait();
                             return r.Cast<object>().ToList();
                         }
                         return Array.Empty<object>();
@@ -99,7 +99,7 @@ namespace Shipwreck.ViewModelUtils.Components
                         _Text = DataContext?.GetCode(DataContext.SelectedItem);
                         StateHasChanged();
                     }
-                }).ConfigureAwait(false);
+                }).ConfigureAwait();
             }
         }
 

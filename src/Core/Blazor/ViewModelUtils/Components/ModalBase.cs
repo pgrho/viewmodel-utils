@@ -51,7 +51,7 @@ public abstract class ModalBase<T> : BindableComponentBase<T>, IModal, IHasJSRun
         var t = base.OnAfterRenderAsync(firstRender);
         if (t != null)
         {
-            await t.ConfigureAwait(false);
+            await t.ConfigureAwait();
         }
 
         if (ModalElement.Id == null)
@@ -61,11 +61,11 @@ public abstract class ModalBase<T> : BindableComponentBase<T>, IModal, IHasJSRun
 
         if (_IsOpen)
         {
-            await ShowAsyncCore().ConfigureAwait(false);
+            await ShowAsyncCore().ConfigureAwait();
         }
         else if (_IsRendered)
         {
-            await HideAsyncCore().ConfigureAwait(false);
+            await HideAsyncCore().ConfigureAwait();
         }
 
         _IsRendered = true;

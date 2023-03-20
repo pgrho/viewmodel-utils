@@ -2,7 +2,7 @@
 
 public abstract partial class FrameworkPageViewModel : ValidatableModel, IFrameworkPageViewModel
 {
-    public static bool ShouldCaptureContext => TaskHelper.SHOULD_CAPTURE_CONTEXT;
+    public static bool ShouldCaptureContext { get; set; }= TaskHelper.SHOULD_CAPTURE_CONTEXT;
 
     #region Logger
 
@@ -335,7 +335,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
             try
             {
-                await c.StopAsync().ConfigureAwait(false);
+                await c.StopAsync().ConfigureAwait();
             }
             catch (Exception ex)
             {

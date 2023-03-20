@@ -266,7 +266,7 @@ public partial class DateTimePicker : BindableComponentBase
         var t = base.OnAfterRenderAsync(firstRender);
         if (t != null)
         {
-            await t.ConfigureAwait(false);
+            await t.ConfigureAwait();
         }
         if (firstRender || _ShouldInvoke)
         {
@@ -277,7 +277,7 @@ public partial class DateTimePicker : BindableComponentBase
                 DotNetObjectReference.Create(this),
                 FormattedValue,
                 ScriptFormat,
-                UseCurrent).ConfigureAwait(false);
+                UseCurrent).ConfigureAwait();
         }
     }
 
