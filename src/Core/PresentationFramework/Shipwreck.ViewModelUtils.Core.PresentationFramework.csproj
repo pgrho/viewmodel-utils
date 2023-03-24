@@ -9,7 +9,7 @@
         <LangVersion>10.0</LangVersion>
     </PropertyGroup>
 
-    <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+        <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
         <Reference Include="System.Configuration" />
         <Reference Include="System.Net.Http" />
         <Reference Include="System.Xaml" />
@@ -19,13 +19,12 @@
         <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
         <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
-    </ItemGroup>
     <ItemGroup>
         <Compile Remove="..\..\_GlobalUsings.cs" />
         <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Common\Shipwreck.ViewModelUtils.Common.csproj" />
     </ItemGroup>
     <ItemGroup>
         <None Update="Generated Codes\Interactions.tt">

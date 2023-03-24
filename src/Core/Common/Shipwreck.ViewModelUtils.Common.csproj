@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net48;net7</TargetFrameworks>
+    <RootNamespace>Shipwreck.ViewModels</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
+    <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
+    <ProjectReference Include="..\Models\Shipwreck.ViewModelUtils.Models.csproj" />
+  </ItemGroup>
+
+</Project>

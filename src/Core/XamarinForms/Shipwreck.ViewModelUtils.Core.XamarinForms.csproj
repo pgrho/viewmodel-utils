@@ -19,10 +19,10 @@
     <Compile Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="..\PresentationFramework\Resources\*.resx" Link="Resources\%(Filename).resx" />
     <Compile Include="..\PresentationFramework\Resources\*.cs" Link="Resources\%(Filename).cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Shipwreck.ViewModelUtils.Common.csproj" />
   </ItemGroup>
 </Project>
