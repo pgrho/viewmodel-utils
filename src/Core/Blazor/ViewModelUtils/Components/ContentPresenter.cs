@@ -2,26 +2,11 @@
 
 public sealed class ContentPresenter : BindableComponentBase
 {
-    #region ViewType
-
-    private Type _ViewType;
-
     [Parameter]
-    public Type ViewType
-    {
-        get => _ViewType;
-        set => SetProperty(ref _ViewType, value);
-    }
-
-    #endregion ViewType
+    public Type ViewType { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> Attributes
-    {
-        get => _Attributes;
-        set => SetProperty(ref _Attributes, value);
-    }
-    private IDictionary<string, object> _Attributes;
+    public IDictionary<string, object> Attributes { get; set; }
 
     private WeakReference<ComponentBase> _View;
 

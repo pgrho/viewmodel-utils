@@ -15,42 +15,12 @@ public partial class EntitySelectorFormGroup
 
     #endregion EntitySelectorId
 
-    #region IsNameVisible
-
-    private bool _IsNameVisible = true;
+    [Parameter]
+    public bool IsNameVisible { get; set; } = true;
 
     [Parameter]
-    public bool IsNameVisible
-    {
-        get => _IsNameVisible;
-        set => SetProperty(ref _IsNameVisible, value);
-    }
-
-    #endregion IsNameVisible
-
-    #region DataContext
-
-    private IEntitySelector _DataContext;
+    public IEntitySelector DataContext { get; set; }
 
     [Parameter]
-    public IEntitySelector DataContext
-    {
-        get => _DataContext;
-        set => SetProperty(ref _DataContext, value);
-    }
-
-    #endregion DataContext
-
-    #region AppendToSelector
-
-    private string _AppendToSelector = ".body-root";
-
-    [Parameter]
-    public string AppendToSelector
-    {
-        get => _AppendToSelector;
-        set => SetProperty(ref _AppendToSelector, value);
-    }
-
-    #endregion AppendToSelector
+    public string AppendToSelector { get; set; } = ".body-root";
 }

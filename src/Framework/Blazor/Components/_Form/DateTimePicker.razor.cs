@@ -3,119 +3,51 @@
 public partial class DateTimePicker : BindableComponentBase
 {
     private ElementReference _Element;
-    private static int _NewId;
-    private string _Id = "DateTimePicker-" + (++_NewId);
+    private static int _NewId; 
 
     [Parameter]
-    public string Id
-    {
-        get => _Id;
-        set => SetProperty(ref _Id, value);
-    }
+    public string Id { get; set; } = "DateTimePicker-" + (++_NewId);
 
     private bool _ShouldInvoke;
 
     [Inject]
     public IJSRuntime JS { get; set; }
 
-    #region ClassName
-
-    private string _ClassName = "form-control datetimepicker-input";
+    
 
     [Parameter]
-    public string ClassName
-    {
-        get => _ClassName;
-        set => SetProperty(ref _ClassName, value);
-    }
-
-    #endregion ClassName
-
-    #region Placeholder
-
-    private string _Placeholder;
+    public string ClassName { get; set; }= "form-control datetimepicker-input";
+     
+     
+    [Parameter]
+    public string Placeholder { get; set; }
+     
 
     [Parameter]
-    public string Placeholder
-    {
-        get => _Placeholder;
-        set => SetProperty(ref _Placeholder, value);
-    }
+    public bool IsEnabled { get; set; } = true;
 
-    #endregion Placeholder
-
-    #region IsEnabled
-
-    private bool _IsEnabled = true;
+ 
 
     [Parameter]
-    public bool IsEnabled
-    {
-        get => _IsEnabled;
-        set => SetProperty(ref _IsEnabled, value);
-    }
+    public bool IsReadOnly { get; set; }
 
-    #endregion IsEnabled
-
-    #region IsReadOnly
-
-    private bool _IsReadOnly;
+  
 
     [Parameter]
-    public bool IsReadOnly
-    {
-        get => _IsReadOnly;
-        set => SetProperty(ref _IsReadOnly, value);
-    }
+    public bool IsRequired { get; set; }
 
-    #endregion IsReadOnly
-
-    #region IsRequired
-
-    private bool _IsRequired;
+  
 
     [Parameter]
-    public bool IsRequired
-    {
-        get => _IsRequired;
-        set => SetProperty(ref _IsRequired, value);
-    }
+    public Action OnFocus { get; set; }
 
-    #endregion IsRequired
-
-    #region OnFocus
-
-    private Action _OnFocus;
+ 
 
     [Parameter]
-    public Action OnFocus
-    {
-        get => _OnFocus;
-        set => SetProperty(ref _OnFocus, value);
-    }
-
-    #endregion OnFocus
-
-    #region OnBlur
-
-    private Action _OnBlur;
-
-    [Parameter]
-    public Action OnBlur
-    {
-        get => _OnBlur;
-        set => SetProperty(ref _OnBlur, value);
-    }
-
-    #endregion OnBlur
+    public Action OnBlur { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes
-    {
-        get => _AdditionalAttributes;
-        set => SetProperty(ref _AdditionalAttributes, value);
-    }
-    private IDictionary<string, object> _AdditionalAttributes;
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
 
     #region Mode
 

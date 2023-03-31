@@ -5,18 +5,8 @@ public partial class DropdownButton : ListComponentBase<ICommandViewModel>
     private static int _NewId;
     private string _Id = "DropdownButton--" + (++_NewId);
 
-    #region BaseClass
-
-    private string _BaseClass = "btn";
-
     [Parameter]
-    public string BaseClass
-    {
-        get => _BaseClass;
-        set => SetProperty(ref _BaseClass, value);
-    }
-
-    #endregion BaseClass
+    public string BaseClass { get; set; } = "btn";
 
     [Parameter]
     [Obsolete]
@@ -26,42 +16,12 @@ public partial class DropdownButton : ListComponentBase<ICommandViewModel>
         set => Style = value;
     }
 
-    #region Style
-
-    private BorderStyle? _Style;
+    [Parameter]
+    public BorderStyle? Style { get; set; }
 
     [Parameter]
-    public BorderStyle? Style
-    {
-        get => _Style;
-        set => SetProperty(ref _Style, value);
-    }
-
-    #endregion Style
-
-    #region ChildContent
-
-    private RenderFragment _ChildContent;
+    public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public RenderFragment ChildContent
-    {
-        get => _ChildContent;
-        set => SetProperty(ref _ChildContent, value);
-    }
-
-    #endregion ChildContent
-
-    #region Description
-
-    private string _Description;
-
-    [Parameter]
-    public string Description
-    {
-        get => _Description;
-        set => SetProperty(ref _Description, value);
-    }
-
-    #endregion Description
+    public string Description { get; set; }
 }

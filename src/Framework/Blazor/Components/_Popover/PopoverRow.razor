@@ -16,16 +16,6 @@
 {
     public static string DefaultLabelColumnParameterName => DEFAULT_LABEL_COLUMN_NAME;
 
-    #region ChildContent
-
-    private RenderFragment _ChildContent;
-
     [Parameter]
-    public RenderFragment ChildContent
-    {
-        get => _ChildContent;
-        set => SetProperty(ref _ChildContent, value);
-    }
-
-    #endregion
+    public RenderFragment ChildContent { get; set; }
 }

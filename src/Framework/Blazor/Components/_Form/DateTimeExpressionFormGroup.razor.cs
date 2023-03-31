@@ -2,48 +2,22 @@
 
 public partial class DateTimeExpressionFormGroup : ExpressionBoundFormGroup<DateTime?>
 {
-    #region Placeholder
-
-    private string _Placeholder;
-
     [Parameter]
-    public string Placeholder
-    {
-        get => _Placeholder;
-        set => SetProperty(ref _Placeholder, value);
-    }
-
-    #endregion Placeholder
+    public string Placeholder { get; set; }
 
     #region IsReadOnly
 
-    private bool _IsReadOnly;
-
     [Parameter]
-    public bool IsReadOnly
-    {
-        get => _IsReadOnly;
-        set => SetProperty(ref _IsReadOnly, value);
-    }
+    public bool IsReadOnly { get; set; }
 
     protected virtual bool GetIsReadOnly()
-        => _IsReadOnly || (Validator?.IsEditable == false);
+        => IsReadOnly || (Validator?.IsEditable == false);
 
     protected override bool GetIsDisabled()
         => !IsEnabled;
 
     #endregion IsReadOnly
 
-    #region Mode
-
-    private DateTimePickerMode _Mode = DateTimePickerMode.Date;
-
     [Parameter]
-    public DateTimePickerMode Mode
-    {
-        get => _Mode;
-        set => SetProperty(ref _Mode, value);
-    }
-
-    #endregion Mode
+    public DateTimePickerMode Mode { get; set; } = DateTimePickerMode.Date;
 }

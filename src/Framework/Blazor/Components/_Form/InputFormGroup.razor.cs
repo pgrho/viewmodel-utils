@@ -75,67 +75,21 @@ public partial class InputFormGroup<T> : FormGroupBase
 
     #endregion Value
 
-    #region Type
-
-    private string _Type;
-
     [Parameter]
-    public string Type
-    {
-        get => _Type;
-        set => SetProperty(ref _Type, value);
-    }
-
-    #endregion Type
+    public string Type { get; set; }
 
     #region AutoComplete
 
-    private string _AutoComplete;
-
     [Parameter]
-    public string AutoComplete
-    {
-        get => _AutoComplete;
-        set => SetProperty(ref _AutoComplete, value);
-    }
+    public string AutoComplete { get; set; }
 
     protected virtual string GetAutoComplete() => AutoComplete;
 
     #endregion AutoComplete
 
-    #region IsReadOnly
-
-    private bool _IsReadOnly;
+    [Parameter]
+    public bool IsReadOnly { get; set; }
 
     [Parameter]
-    public bool IsReadOnly
-    {
-        get => _IsReadOnly;
-        set => SetProperty(ref _IsReadOnly, value);
-    }
-
-    #endregion IsReadOnly
-
-    #region DataList
-
-    private ReadOnlyCollection<string> _DataList;
-
-    [Parameter]
-    public IList<string> DataList
-    {
-        get => _DataList;
-        set
-        {
-            var vs = value?.Count > 0 ? Array.AsReadOnly(value.ToArray()) : null;
-
-            if (vs == null
-                || _DataList == null
-                || !vs.SequenceEqual(_DataList))
-            {
-                SetProperty(ref _DataList, vs);
-            }
-        }
-    }
-
-    #endregion DataList
+    public IList<string> DataList { get; set; }
 }

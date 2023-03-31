@@ -15,44 +15,14 @@ public partial class DateTimeFormGroup
 
     #endregion DateTimePickerId
 
-    #region IsReadOnly
-
-    private bool _IsReadOnly;
+    [Parameter]
+    public bool IsReadOnly { get; set; }
 
     [Parameter]
-    public bool IsReadOnly
-    {
-        get => _IsReadOnly;
-        set => SetProperty(ref _IsReadOnly, value);
-    }
-
-    #endregion IsReadOnly
-
-    #region Mode
-
-    private DateTimePickerMode _Mode = DateTimePickerMode.Date;
+    public DateTimePickerMode Mode { get; set; } = DateTimePickerMode.Date;
 
     [Parameter]
-    public DateTimePickerMode Mode
-    {
-        get => _Mode;
-        set => SetProperty(ref _Mode, value);
-    }
-
-    #endregion Mode
-
-    #region UseCurrent
-
-    private bool _UseCurrent;
-
-    [Parameter]
-    public bool UseCurrent
-    {
-        get => _UseCurrent;
-        set => SetProperty(ref _UseCurrent, value);
-    }
-
-    #endregion UseCurrent
+    public bool UseCurrent { get; set; }
 
     #region NullableDateTime
 

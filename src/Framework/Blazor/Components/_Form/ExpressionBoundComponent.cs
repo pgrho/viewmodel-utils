@@ -135,7 +135,7 @@ public abstract class ExpressionBoundComponent<T> : BindableComponentBase
     private void ValidationResults_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         if (ShowErrorMessage == true
-            && _ErrorMessage == null
+            && ErrorMessage == null
             && Member?.Name != null)
         {
             switch (e.Action)
@@ -184,15 +184,10 @@ public abstract class ExpressionBoundComponent<T> : BindableComponentBase
 
     #region ErrorMessage
 
-    private string _ErrorMessage;
     private string _ValidatorErrorMessage;
 
     [Parameter]
-    public string ErrorMessage
-    {
-        get => _ErrorMessage;
-        set => SetProperty(ref _ErrorMessage, value);
-    }
+    public string ErrorMessage { get; set; }
 
     protected virtual string GetValidatorErrorMessage()
         => Validator?.ValidationResults.FirstOrDefault(e => e.MemberNames.Contains(Member.Name))?.ErrorMessage;
@@ -210,9 +205,9 @@ public abstract class ExpressionBoundComponent<T> : BindableComponentBase
 
     protected virtual string GetErrorMessage()
     {
-        if (_ErrorMessage != null)
+        if (ErrorMessage != null)
         {
-            return _ErrorMessage;
+            return ErrorMessage;
         }
         else if (Member != null)
         {
@@ -271,46 +266,26 @@ public abstract class ExpressionBoundComponent<T> : BindableComponentBase
 
     #region Description
 
-    private string _Description;
-
     [Parameter]
-    public string Description
-    {
-        get => _Description;
-        set => SetProperty(ref _Description, value);
-    }
+    public string Description { get; set; }
 
     protected virtual string GetDescription()
-        => _Description;
+        => Description;
 
     #endregion Description
 
     #region IsRequired
 
-    private bool _IsRequired;
-
     [Parameter]
-    public bool IsRequired
-    {
-        get => _IsRequired;
-        set => SetProperty(ref _IsRequired, value);
-    }
+    public bool IsRequired { get; set; }
 
     protected virtual bool GetIsRequired()
         => IsRequired;
 
     #endregion IsRequired
 
-    #region IsEnabled
-
-    private bool _IsEnabled = true;
-
     [Parameter]
-    public bool IsEnabled
-    {
-        get => _IsEnabled;
-        set => SetProperty(ref _IsEnabled, value);
-    }
+    public bool IsEnabled { get; set; } = true;
 
     [Parameter]
     public Action Focused { get; set; }
@@ -321,20 +296,8 @@ public abstract class ExpressionBoundComponent<T> : BindableComponentBase
     protected virtual bool GetIsDisabled()
         => !IsEnabled || (Validator?.IsEditable == false);
 
-    #endregion IsEnabled
-
-    #region ShowErrorMessage
-
-    private bool? _ShowErrorMessage;
-
     [Parameter]
-    public bool? ShowErrorMessage
-    {
-        get => _ShowErrorMessage;
-        set => SetProperty(ref _ShowErrorMessage, value);
-    }
-
-    #endregion ShowErrorMessage
+    public bool? ShowErrorMessage { get; set; }
 
     protected override bool ImplicitRender => false;
 

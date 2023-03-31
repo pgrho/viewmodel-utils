@@ -4,14 +4,8 @@ public abstract class StringExpressionFormGroupBase : ExpressionBoundFormGroup<s
 {
     #region Placeholder
 
-    private string _Placeholder;
-
     [Parameter]
-    public string Placeholder
-    {
-        get => _Placeholder;
-        set => SetProperty(ref _Placeholder, value);
-    }
+    public string Placeholder { get; set; }
 
     protected virtual string GetPlaceholder()
         => Placeholder;
@@ -20,17 +14,11 @@ public abstract class StringExpressionFormGroupBase : ExpressionBoundFormGroup<s
 
     #region IsReadOnly
 
-    private bool? _IsReadOnly;
-
     [Parameter]
-    public bool? IsReadOnly
-    {
-        get => _IsReadOnly;
-        set => SetProperty(ref _IsReadOnly, value);
-    }
+    public bool? IsReadOnly { get; set; }
 
     protected virtual bool GetIsReadOnly()
-        => _IsReadOnly ?? (Validator?.IsEditable == false);
+        => IsReadOnly ?? (Validator?.IsEditable == false);
 
     protected override bool GetIsDisabled()
         => !IsEnabled;
@@ -39,21 +27,16 @@ public abstract class StringExpressionFormGroupBase : ExpressionBoundFormGroup<s
 
     #region MaxLength
 
-    private int _MaxLength;
     private int _ExpressionMaxLength;
 
     [Parameter]
-    public int MaxLength
-    {
-        get => _MaxLength;
-        set => SetProperty(ref _MaxLength, value);
-    }
+    public int MaxLength { get; set; }
 
     protected virtual int? GetMaxLength()
     {
-        if (_MaxLength > 0)
+        if (MaxLength > 0)
         {
-            return _MaxLength;
+            return MaxLength;
         }
         else if (Member != null)
         {

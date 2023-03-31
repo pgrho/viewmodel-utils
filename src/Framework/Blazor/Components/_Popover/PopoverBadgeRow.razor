@@ -16,29 +16,9 @@
 }
 @code
 {
-    #region Value
-
-    private string _Value;
+    [Parameter]
+    public string Value { get; set; }
 
     [Parameter]
-    public string Value
-    {
-        get => _Value;
-        set => SetProperty(ref _Value, value);
-    }
-
-    #endregion
-
-    #region Style
-
-    private BorderStyle _Style;
-
-    [Parameter]
-    public BorderStyle Style
-    {
-        get => _Style;
-        set => SetProperty(ref _Style, value);
-    }
-
-    #endregion
+    public BorderStyle Style { get; set; }
 }

@@ -7,15 +7,10 @@ public partial class StackPanel<T> : ItemsControl<T>
 
     #region ItemHeight
 
-    private float _DefaultItemHeight = 100;
     private float? _MinItemHeight;
 
     [Parameter]
-    public float DefaultItemHeight
-    {
-        get => _DefaultItemHeight;
-        set => SetProperty(ref _DefaultItemHeight, value);
-    }
+    public float DefaultItemHeight { get; set; } = 100;
 
     protected float ItemHeight => _MinItemHeight ?? DefaultItemHeight;
 
@@ -67,18 +62,8 @@ public partial class StackPanel<T> : ItemsControl<T>
 
     #region BuildRenderTree
 
-    #region TagName
-
-    private string _TagName;
-
     [Parameter]
-    public string TagName
-    {
-        get => _TagName;
-        set => SetProperty(ref _TagName, value);
-    }
-
-    #endregion TagName
+    public string TagName { get; set; }
 
     protected override string GetTagName() => TagName ?? base.GetTagName();
 

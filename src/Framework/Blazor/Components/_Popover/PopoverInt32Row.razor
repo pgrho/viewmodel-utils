@@ -26,31 +26,11 @@
 }
 @code
 {
-    #region Value
-
-    private int? _Value;
+    [Parameter]
+    public int? Value { get; set; }
 
     [Parameter]
-    public int? Value
-    {
-        get => _Value;
-        set => SetProperty(ref _Value, value);
-    }
-
-    #endregion
-
-    #region DisplayFormat
-
-    private string _DisplayFormat = "#,0";
-
-    [Parameter]
-    public string DisplayFormat
-    {
-        get => _DisplayFormat;
-        set => SetProperty(ref _DisplayFormat, value);
-    }
-
-    #endregion
+    public string DisplayFormat { get; set; } = "#,0";
 
     [Parameter]
     public ICommandViewModel Command { get; set; }

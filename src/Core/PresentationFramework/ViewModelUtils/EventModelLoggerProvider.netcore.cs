@@ -8,7 +8,7 @@ namespace Shipwreck.ViewModelUtils;
 [ProviderAlias("EventModel")]
 public sealed class EventModelLoggerProvider : ILoggerProvider
 {
-    private readonly IDisposable? _onChangeToken;
+    private readonly IDisposable _onChangeToken;
     private EventModelLoggerConfiguration _currentConfig;
     private readonly ConcurrentDictionary<string, EventModelLogger> _loggers;
 

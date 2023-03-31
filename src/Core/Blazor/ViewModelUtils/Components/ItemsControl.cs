@@ -17,41 +17,16 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
     [Inject]
     public IJSRuntime JS { get; set; }
 
-    #region ItemSelector
-
-    private string _ItemSelector = ":scope > *[data-itemindex]";
+    [Parameter]
+    public string ItemSelector { get; set; } = ":scope > *[data-itemindex]";
 
     [Parameter]
-    public string ItemSelector
-    {
-        get => _ItemSelector;
-        set => SetProperty(ref _ItemSelector, value);
-    }
-
-    #endregion ItemSelector
-
-    #region ItemTemplate
-
-    private RenderFragment<ItemTemplateContext<T>> _ItemTemplate;
-
-    [Parameter]
-    public RenderFragment<ItemTemplateContext<T>> ItemTemplate
-    {
-        get => _ItemTemplate;
-        set => SetProperty(ref _ItemTemplate, value);
-    }
-
-    #endregion ItemTemplate
+    public RenderFragment<ItemTemplateContext<T>> ItemTemplate { get; set; }
 
     protected ElementReference Element { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes
-    {
-        get => _AdditionalAttributes;
-        set => SetProperty(ref _AdditionalAttributes, value);
-    }
-    private IDictionary<string, object> _AdditionalAttributes;
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
 
     protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
     {

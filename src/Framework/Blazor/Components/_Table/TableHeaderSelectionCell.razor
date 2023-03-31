@@ -9,12 +9,7 @@
 @code
 {
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes
-    {
-        get => _AdditionalAttributes;
-        set => SetProperty(ref _AdditionalAttributes, value);
-    }
-    private IDictionary<string, object> _AdditionalAttributes;
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
 
     protected override bool OnDataContextPropertyChanged(string propertyName)
     {

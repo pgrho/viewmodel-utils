@@ -1,13 +1,13 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase
 <input @ref="@_Element"
-       id="@_Id"
+       id="@Id"
        type="text"
        class="@ClassName @(IsRequired ? "required" : null)"
        autocomplete="off"
        style="ime-mode: disabled"
        data-toggle="datetimepicker"
-       data-target="#@_Id"
+       data-target="#@Id"
        placeholder="@Placeholder"
        disabled="@(IsEnabled ? null : "disabled")"
        readonly="@(IsReadOnly ? "readonly" : null)"

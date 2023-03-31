@@ -15,42 +15,12 @@
 }
 @code
 {
-    #region Value
-
-    private DateTimeOffset? _Value;
+    [Parameter]
+    public DateTimeOffset? Value { get; set; }
 
     [Parameter]
-    public DateTimeOffset? Value
-    {
-        get => _Value;
-        set => SetProperty(ref _Value, value);
-    }
-
-    #endregion
-
-    #region DisplayFormat
-
-    private string _DisplayFormat = "yyyy/MM/dd HH:mm.ss";
+    public string DisplayFormat { get; set; } = "yyyy/MM/dd HH:mm.ss";
 
     [Parameter]
-    public string DisplayFormat
-    {
-        get => _DisplayFormat;
-        set => SetProperty(ref _DisplayFormat, value);
-    }
-
-    #endregion
-
-    #region ToolTipFormat
-
-    private string _ToolTipFormat = "yyyy/MM/dd (ddd) HH:mm.ss.fff";
-
-    [Parameter]
-    public string ToolTipFormat
-    {
-        get => _ToolTipFormat;
-        set => SetProperty(ref _ToolTipFormat, value);
-    }
-
-    #endregion
+    public string ToolTipFormat { get; set; } = "yyyy/MM/dd (ddd) HH:mm.ss.fff";
 }

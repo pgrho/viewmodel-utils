@@ -14,21 +14,16 @@ public partial class StringExpressionFormGroup : StringExpressionFormGroupBase
 
     #region Pattern
 
-    private string _Pattern;
     private string _ExpressionPattern;
 
     [Parameter]
-    public string Pattern
-    {
-        get => _Pattern;
-        set => SetProperty(ref _Pattern, value);
-    }
+    public string Pattern { get; set; }
 
     protected virtual string GetPattern()
     {
-        if (_Pattern != null)
+        if (Pattern != null)
         {
-            return _Pattern;
+            return Pattern;
         }
         else if (Member != null)
         {

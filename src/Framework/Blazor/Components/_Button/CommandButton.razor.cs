@@ -1,169 +1,43 @@
-﻿namespace Shipwreck.ViewModelUtils.Components
+﻿namespace Shipwreck.ViewModelUtils.Components;
+
+public partial class CommandButton : BindableComponentBase<ICommandViewModel>
 {
-    public partial class CommandButton : BindableComponentBase<ICommandViewModel>
-    {
-        #region BaseClass
+    [Parameter]
+    public string BaseClass { get; set; } = "btn";
 
-        private string _BaseClass = "btn";
+    [Parameter]
+    public BorderStyle? CommandStyle { get; set; }
 
-        [Parameter]
-        public string BaseClass
-        {
-            get => _BaseClass;
-            set => SetProperty(ref _BaseClass, value);
-        }
+    [Parameter]
+    public string Icon { get; set; }
 
-        #endregion BaseClass
+    [Parameter]
+    public string Title { get; set; }
 
-        #region CommandStyle
+    [Parameter]
+    public int? BadgeCount { get; set; }
 
-        private BorderStyle? _CommandStyle;
+    [Parameter]
+    public bool? IsVisible { get; set; }
 
-        [Parameter]
-        public BorderStyle? CommandStyle
-        {
-            get => _CommandStyle;
-            set => SetProperty(ref _CommandStyle, value);
-        }
+    [Parameter]
+    public bool? IsEnabled { get; set; }
 
-        #endregion CommandStyle
+    [Parameter]
+    public bool? IsActive { get; set; }
 
-        #region Icon
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
 
-        private string _Icon;
+    [Parameter]
+    public bool ShowIcon { get; set; } = true;
 
-        [Parameter]
-        public string Icon
-        {
-            get => _Icon;
-            set => SetProperty(ref _Icon, value);
-        }
+    [Parameter]
+    public bool ShowTitle { get; set; } = true;
 
-        #endregion Icon
+    [Parameter]
+    public bool ShowBadge { get; set; } = true;
 
-        #region Title
-
-        private string _Title;
-
-        [Parameter]
-        public string Title
-        {
-            get => _Title;
-            set => SetProperty(ref _Title, value);
-        }
-
-        #endregion Title
-
-        #region BadgeCount
-
-        private int? _BadgeCount;
-
-        [Parameter]
-        public int? BadgeCount
-        {
-            get => _BadgeCount;
-            set => SetProperty(ref _BadgeCount, value);
-        }
-
-        #endregion BadgeCount
-
-        #region IsVisible
-
-        private bool? _IsVisible;
-
-        [Parameter]
-        public bool? IsVisible
-        {
-            get => _IsVisible;
-            set => SetProperty(ref _IsVisible, value);
-        }
-
-        #endregion IsVisible
-
-        #region IsEnabled
-
-        private bool? _IsEnabled;
-
-        [Parameter]
-        public bool? IsEnabled
-        {
-            get => _IsEnabled;
-            set => SetProperty(ref _IsEnabled, value);
-        }
-
-        #endregion IsEnabled
-
-        #region IsActive
-
-        private bool? _IsActive;
-
-        [Parameter]
-        public bool? IsActive
-        {
-            get => _IsActive;
-            set => SetProperty(ref _IsActive, value);
-        }
-
-        #endregion IsActive
-
-        [Parameter(CaptureUnmatchedValues = true)]
-        public IDictionary<string, object> AdditionalAttributes
-        {
-            get => _Attributes;
-            set => SetProperty(ref _Attributes, value);
-        }
-        private IDictionary<string, object> _Attributes;
-
-        #region ShowIcon
-
-        private bool _ShowIcon = true;
-
-        [Parameter]
-        public bool ShowIcon
-        {
-            get => _ShowIcon;
-            set => SetProperty(ref _ShowIcon, value);
-        }
-
-        #endregion ShowIcon
-
-        #region ShowTitle
-
-        private bool _ShowTitle = true;
-
-        [Parameter]
-        public bool ShowTitle
-        {
-            get => _ShowTitle;
-            set => SetProperty(ref _ShowTitle, value);
-        }
-
-        #endregion ShowTitle
-
-        #region ShowBadge
-
-        private bool _ShowBadge = true;
-
-        [Parameter]
-        public bool ShowBadge
-        {
-            get => _ShowBadge;
-            set => SetProperty(ref _ShowBadge, value);
-        }
-
-        #endregion ShowBadge
-
-        #region BadgeStyle
-
-        private BorderStyle _BadgeStyle = BorderStyle.Danger;
-
-        [Parameter]
-        public BorderStyle BadgeStyle
-        {
-            get => _BadgeStyle;
-            set => SetProperty(ref _BadgeStyle, value);
-        }
-
-        #endregion BadgeStyle
-    }
+    [Parameter]
+    public BorderStyle BadgeStyle { get; set; } = BorderStyle.Danger;
 }

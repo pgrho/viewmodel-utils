@@ -3,18 +3,8 @@
 public partial class DateTimeSpan<T> : BindableComponentBase
     where T : struct, IFormattable
 {
-    #region Value
-
-    private T? _Value;
-
     [Parameter]
-    public T? Value
-    {
-        get => _Value;
-        set => SetProperty(ref _Value, value);
-    }
-
-    #endregion Value
+    public T? Value { get; set; }
 
     #region DisplayFormat
 
@@ -80,31 +70,11 @@ public partial class DateTimeSpan<T> : BindableComponentBase
 
     #endregion DisplayFormat
 
-    #region ToolTipFormat
-
-    private string _ToolTipFormat = SR.LongDateTimeFormat;
+    [Parameter]
+    public string ToolTipFormat { get; set; } = SR.LongDateTimeFormat;
 
     [Parameter]
-    public string ToolTipFormat
-    {
-        get => _ToolTipFormat;
-        set => SetProperty(ref _ToolTipFormat, value);
-    }
-
-    #endregion ToolTipFormat
-
-    #region AdditionalFormat
-
-    private string _AdditionalFormat;
-
-    [Parameter]
-    public string AdditionalFormat
-    {
-        get => _AdditionalFormat;
-        set => SetProperty(ref _AdditionalFormat, value);
-    }
-
-    #endregion AdditionalFormat
+    public string AdditionalFormat { get; set; }
 }
 
 public sealed class DateTimeSpan : DateTimeSpan<DateTime>

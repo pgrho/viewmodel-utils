@@ -67,109 +67,44 @@ public partial class EntitySelectorView
 
     #endregion ElementId
 
-    #region Theme
-
-    private FormGroupTheme _Theme;
+ 
 
     [CascadingParameter]
-    public FormGroupTheme Theme
-    {
-        get => _Theme;
-        set => SetProperty(ref _Theme, value);
-    }
+    public FormGroupTheme Theme { get; set; }
 
-    #endregion Theme
 
-    #region IsEnabled
-
-    private bool? _IsEnabled;
 
     [Parameter]
-    public bool? IsEnabled
-    {
-        get => _IsEnabled;
-        set => SetProperty(ref _IsEnabled, value);
-    }
+    public bool? IsEnabled { get; set; }
 
-    #endregion IsEnabled
 
-    #region IsRequired
-
-    private bool _IsRequired;
 
     [Parameter]
-    public bool IsRequired
-    {
-        get => _IsRequired;
-        set => SetProperty(ref _IsRequired, value);
-    }
+    public bool IsRequired { get; set; }
 
-    #endregion IsRequired
 
-    #region CodeClass
-
-    private string _CodeClass = "entity-selector-code";
 
     [Parameter]
-    public string CodeClass
-    {
-        get => _CodeClass;
-        set => SetProperty(ref _CodeClass, value);
-    }
+    public string CodeClass { get; set; } = "entity-selector-code";
 
-    #endregion CodeClass
 
-    #region CodeStyle
-
-    private string _CodeStyle = "border-top-right-radius:0;border-bottom-right-radius:0;";
 
     [Parameter]
-    public string CodeStyle
-    {
-        get => _CodeStyle;
-        set => SetProperty(ref _CodeStyle, value);
-    }
+    public string CodeStyle { get; set; } = "border-top-right-radius:0;border-bottom-right-radius:0;";
+     
 
-    #endregion CodeStyle
-
-    #region NameClass
-
-    private string _NameClass = "entity-selector-name";
+ 
 
     [Parameter]
-    public string NameClass
-    {
-        get => _NameClass;
-        set => SetProperty(ref _NameClass, value);
-    }
+    public string NameClass { get; set; } = "entity-selector-name";
 
-    #endregion NameClass
-
-    #region NameStyle
-
-    private string _NameStyle;
+ 
 
     [Parameter]
-    public string NameStyle
-    {
-        get => _NameStyle;
-        set => SetProperty(ref _NameStyle, value);
-    }
-
-    #endregion NameStyle
-
-    #region IsNameVisible
-
-    private bool _IsNameVisible = true;
-
+    public string NameStyle { get; set; }
+     
     [Parameter]
-    public bool IsNameVisible
-    {
-        get => _IsNameVisible;
-        set => SetProperty(ref _IsNameVisible, value);
-    }
-
-    #endregion IsNameVisible
+    public bool IsNameVisible { get; set; } = true;
 
     private string SelectedCode
     {

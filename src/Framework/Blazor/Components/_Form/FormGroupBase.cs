@@ -2,18 +2,8 @@
 
 public abstract class FormGroupBase : BindableComponentBase
 {
-    #region Theme
-
-    private FormGroupTheme _Theme;
-
     [CascadingParameter]
-    public FormGroupTheme Theme
-    {
-        get => _Theme;
-        set => SetProperty(ref _Theme, value);
-    }
-
-    #endregion Theme
+    public FormGroupTheme Theme { get; set; }
 
     #region FormGroupId
 
@@ -29,95 +19,28 @@ public abstract class FormGroupBase : BindableComponentBase
 
     #endregion FormGroupId
 
-    #region AdditionalClass
-
-    private string _AdditionalClass;
+    [Parameter]
+    public string AdditionalClass { get; set; }
 
     [Parameter]
-    public string AdditionalClass
-    {
-        get => _AdditionalClass;
-        set => SetProperty(ref _AdditionalClass, value);
-    }
-
-    #endregion AdditionalClass
-
-    #region AdditionalLabelClass
-
-    private string _AdditionalLabelClass;
+    public string AdditionalLabelClass { get; set; }
 
     [Parameter]
-    public string AdditionalLabelClass
-    {
-        get => _AdditionalLabelClass;
-        set => SetProperty(ref _AdditionalLabelClass, value);
-    }
-
-    #endregion AdditionalLabelClass
-
-    #region AdditionalInputClass
-
-    private string _AdditionalInputClass;
+    public string AdditionalInputClass { get; set; }
 
     [Parameter]
-    public string AdditionalInputClass
-    {
-        get => _AdditionalInputClass;
-        set => SetProperty(ref _AdditionalInputClass, value);
-    }
-
-    #endregion AdditionalInputClass
-
-    #region Title
-
-    private string _Title;
+    public string Title { get; set; }
 
     [Parameter]
-    public string Title
-    {
-        get => _Title;
-        set => SetProperty(ref _Title, value);
-    }
-
-    #endregion Title
-
-    #region Description
-
-    private string _Description;
+    public string Description { get; set; }
 
     [Parameter]
-    public string Description
-    {
-        get => _Description;
-        set => SetProperty(ref _Description, value);
-    }
-
-    #endregion Description
-
-    #region ChildContent
-
-    private RenderFragment _ChildContent;
-
-    [Parameter]
-    public RenderFragment ChildContent
-    {
-        get => _ChildContent;
-        set => SetProperty(ref _ChildContent, value);
-    }
-
-    #endregion ChildContent
+    public RenderFragment ChildContent { get; set; }
 
     #region IsEnabled
 
-    private bool _IsEnabled = true;
-
     [Parameter]
-    public bool IsEnabled
-    {
-        get => _IsEnabled;
-        set => SetProperty(ref _IsEnabled, value);
-    }
-
+    public bool IsEnabled { get; set; } = true;
 
     protected virtual bool GetIsDisabled()
         => !IsEnabled;
@@ -126,14 +49,8 @@ public abstract class FormGroupBase : BindableComponentBase
 
     #region IsRequired
 
-    private bool _IsRequired;
-
     [Parameter]
-    public bool IsRequired
-    {
-        get => _IsRequired;
-        set => SetProperty(ref _IsRequired, value);
-    }
+    public bool IsRequired { get; set; }
 
     protected virtual bool GetIsRequired() => IsRequired;
 
@@ -141,14 +58,8 @@ public abstract class FormGroupBase : BindableComponentBase
 
     #region Placeholder
 
-    private string _Placeholder;
-
     [Parameter]
-    public string Placeholder
-    {
-        get => _Placeholder;
-        set => SetProperty(ref _Placeholder, value);
-    }
+    public string Placeholder { get; set; }
 
     protected virtual string GetPlaceholder() => Placeholder;
 

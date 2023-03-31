@@ -3,52 +3,17 @@
 public abstract class PopoverAnchor<T> : PopoverTarget<T>
     where T : class
 {
-    #region IsPrimary
-
-    private bool _IsPrimary;
+    [Parameter]
+    public bool IsPrimary { get; set; }
 
     [Parameter]
-    public bool IsPrimary
-    {
-        get => _IsPrimary;
-        set => SetProperty(ref _IsPrimary, value);
-    }
-
-    #endregion IsPrimary
-
-    #region TabIndex
-
-    private int? _TabIndex;
+    public int? TabIndex { get; set; }
 
     [Parameter]
-    public int? TabIndex
-    {
-        get => _TabIndex;
-        set => SetProperty(ref _TabIndex, value);
-    }
-
-    #endregion TabIndex
-
-    #region ChildContent
-
-    private RenderFragment _ChildContent;
-
-    [Parameter]
-    public RenderFragment ChildContent
-    {
-        get => _ChildContent;
-        set => SetProperty(ref _ChildContent, value);
-    }
-
-    #endregion ChildContent
+    public RenderFragment ChildContent { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes
-    {
-        get => _AdditionalAttributes;
-        set => SetProperty(ref _AdditionalAttributes, value);
-    }
-    private IDictionary<string, object> _AdditionalAttributes;
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
 
     protected virtual int? GetTabIndex() => TabIndex;
 }

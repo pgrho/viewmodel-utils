@@ -15,7 +15,7 @@
                         aria-controls="@_CollapseId"
                         @onclick="@(() => _IsExpanded = !_IsExpanded)"
                         @onclick:preventDefault>
-                    @_Header
+                    @Header
                 </button>
             </h5>
         </div>
@@ -37,14 +37,8 @@
     private string _HeadingId = "expander--heading--" + _IdSeed;
     private string _CollapseId = "expander--collapse--" + _IdSeed;
 
-    private string _Header;
-
     [Parameter]
-    public string Header
-    {
-        get => _Header;
-        set => SetProperty(ref _Header, value);
-    }
+    public string Header { get; set; }
 
     private bool _IsExpanded = true;
 
@@ -71,10 +65,5 @@
     public RenderFragment ChildContent { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes
-    {
-        get => _Attributes;
-        set => SetProperty(ref _Attributes, value);
-    }
-    private IDictionary<string, object> _Attributes;
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
 }

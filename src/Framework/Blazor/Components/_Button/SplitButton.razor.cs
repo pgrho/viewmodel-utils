@@ -1,96 +1,25 @@
-﻿namespace Shipwreck.ViewModelUtils.Components
+﻿namespace Shipwreck.ViewModelUtils.Components;
+
+public partial class SplitButton : ListComponentBase<ICommandViewModel, ICommandViewModel>
 {
-    public partial class SplitButton : ListComponentBase<ICommandViewModel, ICommandViewModel>
-    {
-        #region BaseClass
+    [Parameter]
+    public string BaseClass { get; set; }
 
-        private string _BaseClass;
+    [Parameter]
+    public bool? IsVisible { get; set; }
 
-        [Parameter]
-        public string BaseClass
-        {
-            get => _BaseClass;
-            set => SetProperty(ref _BaseClass, value);
-        }
+    [Parameter]
+    public bool? IsEnabled { get; set; }
 
-        #endregion BaseClass
+    [Parameter]
+    public bool? IsActive { get; set; }
 
-        #region IsVisible
+    [Parameter]
+    public bool ShowIcon { get; set; } = true;
 
-        private bool? _IsVisible;
+    [Parameter]
+    public bool ShowTitle { get; set; } = true;
 
-        [Parameter]
-        public bool? IsVisible
-        {
-            get => _IsVisible;
-            set => SetProperty(ref _IsVisible, value);
-        }
-
-        #endregion IsVisible
-
-        #region IsEnabled
-
-        private bool? _IsEnabled;
-
-        [Parameter]
-        public bool? IsEnabled
-        {
-            get => _IsEnabled;
-            set => SetProperty(ref _IsEnabled, value);
-        }
-
-        #endregion IsEnabled
-
-        #region IsActive
-
-        private bool? _IsActive;
-
-        [Parameter]
-        public bool? IsActive
-        {
-            get => _IsActive;
-            set => SetProperty(ref _IsActive, value);
-        }
-
-        #endregion IsActive
-
-        #region ShowIcon
-
-        private bool _ShowIcon = true;
-
-        [Parameter]
-        public bool ShowIcon
-        {
-            get => _ShowIcon;
-            set => SetProperty(ref _ShowIcon, value);
-        }
-
-        #endregion ShowIcon
-
-        #region ShowTitle
-
-        private bool _ShowTitle = true;
-
-        [Parameter]
-        public bool ShowTitle
-        {
-            get => _ShowTitle;
-            set => SetProperty(ref _ShowTitle, value);
-        }
-
-        #endregion ShowTitle
-
-        #region ShowBadge
-
-        private bool _ShowBadge = true;
-
-        [Parameter]
-        public bool ShowBadge
-        {
-            get => _ShowBadge;
-            set => SetProperty(ref _ShowBadge, value);
-        }
-
-        #endregion ShowBadge
-    }
+    [Parameter]
+    public bool ShowBadge { get; set; } = true;
 }

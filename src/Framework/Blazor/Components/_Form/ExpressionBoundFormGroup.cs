@@ -11,50 +11,30 @@ public abstract class ExpressionBoundFormGroup<T> : ExpressionBoundComponent<T>
         _ExpressionTitle = null;
     }
 
-    #region Theme
-
-    private FormGroupTheme _Theme;
-
     [CascadingParameter]
-    public FormGroupTheme Theme
-    {
-        get => _Theme;
-        set => SetProperty(ref _Theme, value);
-    }
-
-    #endregion Theme
+    public FormGroupTheme Theme { get; set; }
 
     #region FormGroupId
 
     private static ulong _FormGroupNextId = 0;
-    private string _FormGroupId;
 
     [Parameter]
-    public string FormGroupId
-    {
-        get => _FormGroupId ??= ("form--group--" + Interlocked.Increment(ref _FormGroupNextId));
-        set => SetProperty(ref _FormGroupId, value);
-    }
+    public string FormGroupId { get; set; } = ("form--group--" + Interlocked.Increment(ref _FormGroupNextId));
 
     #endregion FormGroupId
 
     #region Title
 
-    private string _Title;
     private string _ExpressionTitle;
 
     [Parameter]
-    public string Title
-    {
-        get => _Title;
-        set => SetProperty(ref _Title, value);
-    }
+    public string Title { get; set; }
 
     protected virtual string GetTitle()
     {
-        if (_Title != null)
+        if (Title != null)
         {
-            return _Title;
+            return Title;
         }
         else if (Member != null)
         {
@@ -63,72 +43,22 @@ public abstract class ExpressionBoundFormGroup<T> : ExpressionBoundComponent<T>
         return null;
     }
 
-    #region ChildContent
-
-    private RenderFragment _ChildContent;
-
     [Parameter]
-    public RenderFragment ChildContent
-    {
-        get => _ChildContent;
-        set => SetProperty(ref _ChildContent, value);
-    }
-
-    #endregion ChildContent
+    public RenderFragment ChildContent { get; set; }
 
     #endregion Title
 
-    #region ErrorMessageClass
+    [Parameter]
+    public string ErrorMessageClass { get; set; }
 
-    private string _ErrorMessageClass;
+    protected virtual string GetErrorMessageClass() => ErrorMessageClass ?? (Theme ?? FormGroupTheme.Default)?.ErrorMessageClass;
 
     [Parameter]
-    public string ErrorMessageClass
-    {
-        get => _ErrorMessageClass;
-        set => SetProperty(ref _ErrorMessageClass, value);
-    }
-
-    protected virtual string GetErrorMessageClass() => _ErrorMessageClass ?? (_Theme ?? FormGroupTheme.Default)?.ErrorMessageClass;
-
-    #endregion ErrorMessageClass
-
-    #region AdditionalClass
-
-    private string _AdditionalClass;
+    public string AdditionalClass { get; set; }
 
     [Parameter]
-    public string AdditionalClass
-    {
-        get => _AdditionalClass;
-        set => SetProperty(ref _AdditionalClass, value);
-    }
-
-    #endregion AdditionalClass
-
-    #region AdditionalLabelClass
-
-    private string _AdditionalLabelClass;
+    public string AdditionalLabelClass { get; set; }
 
     [Parameter]
-    public string AdditionalLabelClass
-    {
-        get => _AdditionalLabelClass;
-        set => SetProperty(ref _AdditionalLabelClass, value);
-    }
-
-    #endregion AdditionalLabelClass
-
-    #region AdditionalInputClass
-
-    private string _AdditionalInputClass;
-
-    [Parameter]
-    public string AdditionalInputClass
-    {
-        get => _AdditionalInputClass;
-        set => SetProperty(ref _AdditionalInputClass, value);
-    }
-
-    #endregion AdditionalInputClass
+    public string AdditionalInputClass { get; set; }
 }
