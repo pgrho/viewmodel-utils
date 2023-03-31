@@ -32,6 +32,9 @@
     <Reference Include="Shipwreck.ViewModelUtils.Client">
       <HintPath>..\..\Core\Client.Newtonsoft\bin\$(Configuration)\netstandard2.0\Shipwreck.ViewModelUtils.Client.dll</HintPath>
     </Reference>
+    <Reference Include="Shipwreck.ViewModelUtils.Common">
+      <HintPath>..\..\Core\Common\bin\$(Configuration)\net7.0\Shipwreck.ViewModelUtils.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Shipwreck.ViewModelUtils.Core.Blazor">
       <HintPath>..\..\Core\Blazor\bin\$(Configuration)\net7.0\Shipwreck.ViewModelUtils.Core.Blazor.dll</HintPath>
     </Reference>

@@ -13,7 +13,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConsolePageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\DirectoryPathValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EntitySelectorBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ExpressionHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\FrameworkModalViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IEntitySelector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkModalViewModel.cs" />

@@ -268,7 +268,7 @@ public abstract class VirtualizedCollection<T> : ObservableModel, IList<T>, IRea
 
         try
         {
-            var r = await p.Task.ConfigureAwait();
+            var r = await p.Task;
 
             if (r.TotalCount > 0 && r.TotalCount <= r.Offset)
             {
