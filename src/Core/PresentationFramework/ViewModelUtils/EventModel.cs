@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
-public sealed class EventModel
+public sealed partial class EventModel
 {
     #region static
 
@@ -95,6 +95,24 @@ public sealed class EventModel
     }
 
     #endregion static
+
+    internal EventModel(
+        int processId,
+        string threadId,
+        DateTime dateTime,
+        string source,
+        TraceEventType eventType,
+        int id,
+        string message)
+    {
+        ProcessId = processId;
+        ThreadId = threadId;
+        DateTime = dateTime;
+        Source = source;
+        EventType = eventType;
+        Id = id;
+        Message = message;
+    }
 
     internal EventModel(
         TraceEventCache eventCache,
