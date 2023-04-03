@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+  <PropertyGroup>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>Shipwreck.ViewModelUtils.Demo.Blazor</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Page Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blazor\Shipwreck.ViewModelUtils.Demo.Blazor.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="wwwroot\index.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup> 
+</Project>

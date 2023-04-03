@@ -1,46 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFrameworks>net7.0;net7.0-windows</TargetFrameworks>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
-
+  <ItemGroup Condition="'$(TargetFramework)'=='net7.0-windows'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="7.0.59" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net7.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.3" />
+  </ItemGroup>
+  <ItemGroup> 
+      <PackageReference Include="System.Net.Http.Json" Version="7.0.1" />
+  </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.min.css" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.min.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.bundle.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.bundle.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Framework\Blazor\wwwroot\Shipwreck.ViewModelUtils.Blazor.min.js" Link="wwwroot\Shipwreck.ViewModelUtils.Blazor.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\..\Core\Blazor\Shipwreck.ViewModelUtils.Core.Blazor.csproj" />
+    <ProjectReference Include="..\..\Framework\Blazor\Shipwreck.ViewModelUtils.Blazor.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.2" PrivateAssets="all" />
-    <PackageReference Include="System.Net.Http.Json" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Shipwreck.ViewModelUtils.Models">
-      <HintPath>..\..\Core\Client.Newtonsoft\bin\$(Configuration)\netstandard2.0\Shipwreck.ViewModelUtils.Models.dll</HintPath>
-    </Reference>
-    <Reference Include="Shipwreck.ViewModelUtils.Client">
-      <HintPath>..\..\Core\Client.Newtonsoft\bin\$(Configuration)\netstandard2.0\Shipwreck.ViewModelUtils.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Shipwreck.ViewModelUtils.Common">
-      <HintPath>..\..\Core\Common\bin\$(Configuration)\net7.0\Shipwreck.ViewModelUtils.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Shipwreck.ViewModelUtils.Core.Blazor">
-      <HintPath>..\..\Core\Blazor\bin\$(Configuration)\net7.0\Shipwreck.ViewModelUtils.Core.Blazor.dll</HintPath>
-    </Reference>
-    <Reference Include="Shipwreck.ViewModelUtils.Blazor">
-      <HintPath>..\..\Framework\Blazor\bin\$(Configuration)\net7.0\Shipwreck.ViewModelUtils.Blazor.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+ 
 
 </Project>

@@ -13,7 +13,7 @@
     <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2545" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2578" />
     <Compile Remove="**\*.android.cs" />
     <Compile Remove="**\*.ios.cs" />
     <None Include="**\*.android.cs" />
