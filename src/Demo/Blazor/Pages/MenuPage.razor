@@ -1,0 +1,21 @@
+﻿@inherits PageBase<MenuPageViewModel>
+@page "/"
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<button @onclick="@(() => DataContext?.OpenFile())">
+    OpenFile
+</button>
+<button @onclick="@(() => DataContext?.DownloadFile())">
+    DownloadFile
+</button>
+<button class="btn btn-block" @onclick="@(() => DataContext?.NavigateToListTest())">
+    ListTest
+</button>
+@code
+{
+    protected override FrameworkPageViewModel GetOrCreateDataContext()
+        => base.DataContext as MenuPageViewModel ?? new MenuPageViewModel(this);
+}

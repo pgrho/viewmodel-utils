@@ -1,0 +1,34 @@
+﻿@inherits PageBase<ListTestPageViewModel>
+@page "/listTest"
+
+
+@if (DataContext is ListTestPageViewModel d)
+{
+    <ListScope T="ListTestPageViewModel.Item" Source="@d.Items" DependsOnItemProperties="@(new string[0])">
+        @foreach(var e in d.Items)
+        {
+            <div @key="@e.GetHashCode()">
+                <DataContextScope DataContext="e">
+                                        @e.Name
+                </DataContextScope>
+            </div>
+        }
+        @($"{d.Items.Count} items")
+    </ListScope>
+    <button @onclick="@(() => d.Add())">
+        @if (d.IsLoading)
+        {
+            @("Adding..")
+        }
+        else
+        {
+            @("Add")
+        }
+    </button>
+}
+
+@code
+{
+    protected override FrameworkPageViewModel GetOrCreateDataContext()
+        => base.DataContext as ListTestPageViewModel ?? new ListTestPageViewModel(this);
+}
