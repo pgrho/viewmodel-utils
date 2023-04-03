@@ -13,7 +13,8 @@
     <blazor:BlazorWebView
         Name="webView"
         HostPage="wwwroot\index.html"
-        Services="{DynamicResource services}">
+        Services="{DynamicResource services}"
+        Loaded="webView_Loaded">
         <blazor:BlazorWebView.RootComponents>
             <blazor:RootComponent
                 Selector="#app"
