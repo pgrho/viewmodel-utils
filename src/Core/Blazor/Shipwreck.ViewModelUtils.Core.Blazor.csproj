@@ -7,6 +7,12 @@
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net7.0-windows'">
+    <DefineConstants>$(DefineConstants);IS_WEBVIEW</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net7.0'">
+    <DefineConstants>$(DefineConstants);IS_WASM</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net7.0-windows'">
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="7.0.59" />

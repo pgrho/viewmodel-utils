@@ -316,7 +316,11 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
                     {
                         SelectedItem = t.Result.FirstOrDefault(e => Equals(GetId(e), id));
                     }
-                });
+                }
+#if IS_WEBVIEW
+            , TaskScheduler.FromCurrentSynchronizationContext()
+#endif
+                );
             }
             else
             {
@@ -326,7 +330,11 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
                     {
                         SelectedItem = t.Result;
                     }
-                });
+                }
+#if IS_WEBVIEW
+            , TaskScheduler.FromCurrentSynchronizationContext()
+#endif
+                );
             }
         }
     }

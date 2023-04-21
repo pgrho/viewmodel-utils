@@ -110,7 +110,11 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
                 {
                     LogError("AlertAsync(\"{0}\") Exception={1}", message, t.Exception);
                 }
-            });
+            }
+#if IS_WEBVIEW
+            , TaskScheduler.FromCurrentSynchronizationContext()
+#endif
+            );
 
             return task;
         }
@@ -143,7 +147,11 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
                 {
                     LogError("ConfirmAsync(\"{0}\") Exception={1}", message, t.Exception);
                 }
-            });
+            }
+#if IS_WEBVIEW
+            , TaskScheduler.FromCurrentSynchronizationContext()
+#endif
+            );
 
             return task;
         }
