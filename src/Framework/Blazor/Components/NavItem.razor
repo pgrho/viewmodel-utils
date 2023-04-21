@@ -6,6 +6,7 @@
 @if (d.ContainsVisible)
 {
     var title = d.Title ?? d.CommandTitle;
+    var desc = d?.Description.TrimOrNull() ?? d?.Title.TrimOrNull();
     if (Source.Cast<MenuItemViewModel>().Any(c => c?.ContainsVisible == true))
     {
         var id = "nav--item--" + GetHashCode();
@@ -26,7 +27,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle"
                href="@(d?.Href ?? "javascript:void(0)")"
-               title="@d?.Description"
+               title="@desc"
                disabled="@(!d.IsEnabled ? "disabled" : null)"
                id="@id"
                role="button"
@@ -65,7 +66,7 @@
         <li class="nav-item">
             <a class="nav-link"
                href="@(d?.Href ?? "javascript:void(0)")"
-               title="@d?.Description"
+               title="@desc"
                disabled="@(!d.IsEnabled ? "disabled" : null)"
                @onclick="@(() => d?.Command?.Execute())"
                @onclick:preventDefault>

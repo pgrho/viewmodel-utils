@@ -16,12 +16,13 @@
     var hasTitle = ShowTitle && title?.Length > 0;
 
     var badgeCount = ShowBadge ? BadgeCount ?? d.BadgeCount : 0;
+    var desc = d.Description.TrimOrNull() ?? d.Title.TrimOrNull();
 
     if (d?.Href != null)
     {
         <a class="@cls @disabled"
            href="@d.Href"
-           title="@d.Description"
+           title="@desc"
            disabled="@disabled"
            @onclick="@((Action)d.Execute)"
            @onclick:preventDefault
@@ -45,7 +46,7 @@
         <button type="button"
                 class="@cls"
                 disabled="@disabled"
-                title="@d.Description"
+                title="@desc"
                 @onclick="@((Action)d.Execute)"
                 @attributes="AdditionalAttributes">
             @if (hasIcon)

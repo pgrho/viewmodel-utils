@@ -3,10 +3,11 @@
 @{
     var d = DataContext;
     var os = d.Style & ~(BorderStyle.OutlineSecondary);
+    var desc = d?.Description.TrimOrNull() ?? d?.Title.TrimOrNull();
 }
 <a class="dropdown-item @os.ToClassName("text-")"
    href="@(d.Href ?? "javascript:void(0)")"
-   title="@d.Description"
+   title="@desc"
    disabled="@(!d.IsEnabled ? "disabled" : null)"
    @onclick="@(() => DataContext.Execute())"
    @onclick:preventDefault>
