@@ -272,7 +272,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
                     content,
                     contentType,
                     openFile)
-                    .ConfigureAwait();
+                    ;
             }
             catch (Exception ex)
             {
@@ -281,7 +281,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
                 await ShowErrorToastAsync(
                     "{0}中にエラーが発生しました。{1}",
                     operationName,
-                    ex.Message).ConfigureAwait();
+                    ex.Message);
             }
             finally
             {
@@ -321,7 +321,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
             operationName ??= "ダウンロード";
             try
             {
-                await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter).ConfigureAwait();
+                await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter);
             }
             catch (Exception ex)
             {

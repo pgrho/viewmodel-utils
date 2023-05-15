@@ -32,7 +32,7 @@ public partial class EntityTypeahead : BindableComponentBase<IEntitySelector>, I
         var t = base.OnAfterRenderAsync(firstRender);
         if (t != null)
         {
-            await t.ConfigureAwait();
+            await t;
         }
 
         if (firstRender)
@@ -47,7 +47,7 @@ public partial class EntityTypeahead : BindableComponentBase<IEntitySelector>, I
                 {
                     if (DataContext != null)
                     {
-                        var r = await DataContext.SearchAsync("^=" + query, MaxCount).ConfigureAwait();
+                        var r = await DataContext.SearchAsync("^=" + query, MaxCount);
                         return r.Cast<object>().ToList();
                     }
                     return Array.Empty<object>();
@@ -59,7 +59,7 @@ public partial class EntityTypeahead : BindableComponentBase<IEntitySelector>, I
                     _Text = DataContext?.GetCode(DataContext.SelectedItem);
                     StateHasChanged();
                 }
-            }).ConfigureAwait();
+            });
         }
     }
 

@@ -41,7 +41,7 @@
         var t = base.OnAfterRenderAsync(firstRender);
         if (t != null)
         {
-            await t.ConfigureAwait();
+            await t;
         }
         if (firstRender)
         {
@@ -51,7 +51,7 @@
                 ReferenceElement,
                 _PopperElement,
                 Boundaries,
-                _ArrowElement).ConfigureAwait();
+                _ArrowElement);
         }
     }
 

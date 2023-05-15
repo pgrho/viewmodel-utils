@@ -141,7 +141,7 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
             {
                 try
                 {
-                    var core = await GetItemsAsync().ConfigureAwait();
+                    var core = await GetItemsAsync();
                     if (_ItemsTask == tcs.Task)
                     {
                         SetItems(core);
@@ -361,9 +361,9 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
                     }
                     else
                     {
-                        if (!await SelectByCodeAsync(c, true).ConfigureAwait())
+                        if (!await SelectByCodeAsync(c, true))
                         {
-                            await Page.ShowErrorToastAsync("{0}'{1}'が見つかりませんでした。", EntityDisplayName, c).ConfigureAwait();
+                            await Page.ShowErrorToastAsync("{0}'{1}'が見つかりませんでした。", EntityDisplayName, c);
                         }
                     }
                 }

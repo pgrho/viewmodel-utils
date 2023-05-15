@@ -127,7 +127,7 @@ public abstract class InteractionService : IInteractionService
                 req.Content = new StringContent(content, Encoding.UTF8, contentType);
             }
 
-            return await c.SendAsync(req).ConfigureAwait();
+            return await c.SendAsync(req);
         }
     }
 

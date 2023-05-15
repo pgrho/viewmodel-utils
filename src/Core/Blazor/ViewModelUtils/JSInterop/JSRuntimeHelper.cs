@@ -38,14 +38,14 @@ public static class JSRuntimeHelper
 
     public static async ValueTask<ScrollInfo> GetScrollInfoAsync(this IJSRuntime js, ElementReference element)
     {
-        var json = await js.InvokeAsync<string>("Shipwreck.ViewModelUtils.getScrollInfo", element).ConfigureAwait();
+        var json = await js.InvokeAsync<string>("Shipwreck.ViewModelUtils.getScrollInfo", element);
 
         return JsonSerializer.Deserialize<ScrollInfo>(json);
     }
 
     public static async ValueTask<ItemsControlScrollInfo> GetItemsControlScrollInfoAsync(this IJSRuntime js, ElementReference element, string itemSelector)
     {
-        var json = await js.InvokeAsync<string>("Shipwreck.ViewModelUtils.getItemsControlScrollInfo", element, itemSelector).ConfigureAwait();
+        var json = await js.InvokeAsync<string>("Shipwreck.ViewModelUtils.getItemsControlScrollInfo", element, itemSelector);
 
         return JsonSerializer.Deserialize<ItemsControlScrollInfo>(json);
     }
@@ -86,13 +86,13 @@ public static class JSRuntimeHelper
     #region Int32
 
     public static async ValueTask<int?> ReadLocalStorageAsInt32Async(this IJSRuntime js, string name)
-        => int.TryParse(await js.ReadLocalStorageAsync(name).ConfigureAwait(), out var i) ? i : (int?)null;
+        => int.TryParse(await js.ReadLocalStorageAsync(name), out var i) ? i : (int?)null;
 
     public static ValueTask WriteLocalStorageAsync(this IJSRuntime js, string name, int? value)
         => js.WriteLocalStorageAsync(name, value?.ToString() ?? string.Empty);
 
     public static async ValueTask<int?> ReadSessionStorageAsInt32Async(this IJSRuntime js, string name)
-        => int.TryParse(await js.ReadSessionStorageAsync(name).ConfigureAwait(), out var i) ? i : (int?)null;
+        => int.TryParse(await js.ReadSessionStorageAsync(name), out var i) ? i : (int?)null;
 
     public static ValueTask WriteSessionStorageAsync(this IJSRuntime js, string name, int? value)
         => js.WriteSessionStorageAsync(name, value?.ToString() ?? string.Empty);
@@ -120,7 +120,7 @@ public static class JSRuntimeHelper
             method,
             url,
             headers != null ? JsonSerializer.Serialize(new Dictionary<string, string>(headers)) : null,
-            input).ConfigureAwait();
+            input);
         return JsonSerializer.Deserialize<JsonHttpResponse>(json);
     }
 

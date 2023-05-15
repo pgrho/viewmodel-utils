@@ -48,7 +48,7 @@ public abstract class EntitiesConditionViewModel : MultipleOptionConditionViewMo
         IsSearching = true;
         try
         {
-            var ops = await Selector.GetItemsTask().ConfigureAwait();
+            var ops = await Selector.GetItemsTask();
             Options.Set(
                 ops.Cast<object>()
                     .Select(e => new MultipleOptionViewModel<object>(

@@ -57,7 +57,7 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
 
         if (t != null)
         {
-            await t.ConfigureAwait();
+            await t;
         }
 
         using (CreateInitializingScope())
@@ -67,7 +67,7 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
             var dc = DataContext;
             if (dc != null)
             {
-                await dc.InitializeAsync().ConfigureAwait();
+                await dc.InitializeAsync();
             }
         }
     }
@@ -77,12 +77,12 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
         var t = base.OnAfterRenderAsync(firstRender);
         if (t != null)
         {
-            await t.ConfigureAwait();
+            await t;
         }
         var dc = DataContext;
         if (dc != null)
         {
-            await dc.OnAfterRenderAsync(firstRender).ConfigureAwait();
+            await dc.OnAfterRenderAsync(firstRender);
             dc.IsVisible = true;
         }
     }

@@ -267,9 +267,9 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
         {
             if (!IsInitializing && !IsInitialized)
             {
-                await InitializeAsync().ConfigureAwait();
+                await InitializeAsync();
             }
-            await ResumeConnectionAsync().ConfigureAwait();
+            await ResumeConnectionAsync();
         }
         catch (Exception ex)
         {
@@ -311,7 +311,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
             {
                 LogInformation("Connecting SignalR");
 
-                await c.StartAsync().ConfigureAwait();
+                await c.StartAsync();
             }
         }
         return c;
@@ -335,7 +335,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
             try
             {
-                await c.StopAsync().ConfigureAwait();
+                await c.StopAsync();
             }
             catch (Exception ex)
             {
@@ -379,8 +379,8 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
         try
         {
             IsInitializing = true;
-            await LoadConfigurationAsync().ConfigureAwait();
-            await InitializeDataAsync().ConfigureAwait();
+            await LoadConfigurationAsync();
+            await InitializeDataAsync();
         }
         finally
         {

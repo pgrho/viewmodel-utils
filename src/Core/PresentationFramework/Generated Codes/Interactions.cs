@@ -326,7 +326,7 @@
                     content,
                     contentType,
                     openFile)
-                    .ConfigureAwait();
+                    ;
             }
             catch (Exception ex)
             {
@@ -335,7 +335,7 @@
                 await ShowErrorToastAsync(
                     "{0}中にエラーが発生しました。{1}",
                     operationName,
-                    ex.Message).ConfigureAwait();
+                    ex.Message);
             }
             finally
             {
@@ -375,7 +375,7 @@
             operationName ??= "ダウンロード";
             try
             {
-                await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter).ConfigureAwait();
+                await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter);
             }
             catch (Exception ex)
             {
@@ -715,7 +715,7 @@ namespace Shipwreck.ViewModelUtils
                     content,
                     contentType,
                     openFile)
-                    .ConfigureAwait();
+                    ;
             }
             catch (Exception ex)
             {
@@ -724,7 +724,7 @@ namespace Shipwreck.ViewModelUtils
                 await ShowErrorToastAsync(
                     "{0}中にエラーが発生しました。{1}",
                     operationName,
-                    ex.Message).ConfigureAwait();
+                    ex.Message);
             }
             finally
             {
@@ -764,7 +764,7 @@ namespace Shipwreck.ViewModelUtils
             operationName ??= "ダウンロード";
             try
             {
-                await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter).ConfigureAwait();
+                await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter);
             }
             catch (Exception ex)
             {

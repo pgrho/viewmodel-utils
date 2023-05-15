@@ -81,7 +81,7 @@ public class InteractionService : IInteractionService
             {
                 try
                 {
-                    await operation().ConfigureAwait();
+                    await operation();
                     tcs.TrySetResult(null);
                 }
                 catch (Exception ex)
@@ -480,7 +480,7 @@ public class InteractionService : IInteractionService
         bool openFile,
         Action<string> opener)
     {
-        var file = await DownloadCore(context, method, url, content, contentType, openFile).ConfigureAwait();
+        var file = await DownloadCore(context, method, url, content, contentType, openFile);
 
         if (openFile)
         {
@@ -533,10 +533,10 @@ public class InteractionService : IInteractionService
                 }
             }
 
-            using (var cs = await res.Content.ReadAsStreamAsync().ConfigureAwait())
+            using (var cs = await res.Content.ReadAsStreamAsync())
             using (var fs = file.Open(FileMode.Create))
             {
-                await cs.CopyToAsync(fs).ConfigureAwait();
+                await cs.CopyToAsync(fs);
             }
             file.Refresh();
             if (lm != null)

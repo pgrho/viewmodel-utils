@@ -194,12 +194,12 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
             StateHasChanged();
             if (forceScroll && first >= 0)
             {
-                await ScrollAsync(first, localY).ConfigureAwait();
+                await ScrollAsync(first, localY);
             }
         }
         else if (forceScroll)
         {
-            await ScrollAsync(first, localY).ConfigureAwait();
+            await ScrollAsync(first, localY);
         }
     }
 
@@ -250,20 +250,20 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
         if ((firstRender || _ShouldDetach) && _IsVirtualized)
         {
             _ShouldDetach = false;
-            await JS.AttachWindowResize(this, Element).ConfigureAwait();
-            await JS.AttachElementScroll(this, Element, ItemSelector).ConfigureAwait();
+            await JS.AttachWindowResize(this, Element);
+            await JS.AttachElementScroll(this, Element, ItemSelector);
         }
         else if (!firstRender && _ShouldDetach && !_IsVirtualized)
         {
             _ShouldDetach = false;
-            await JS.DetachWindowResize(this, Element).ConfigureAwait();
-            await JS.DetachElementScroll(Element).ConfigureAwait();
+            await JS.DetachWindowResize(this, Element);
+            await JS.DetachElementScroll(Element);
         }
 
         if (CollectionChanged && _IsVirtualized)
         {
             _CollectionChanged = false;
-            var si = await JS.GetItemsControlScrollInfoAsync(Element, ItemSelector).ConfigureAwait();
+            var si = await JS.GetItemsControlScrollInfoAsync(Element, ItemSelector);
             SetLines(si.Lines);
             SetControlInfo(si, true, FirstIndex);
         }
@@ -276,7 +276,7 @@ public abstract class ItemsControl<T> : ListComponentBase<T>, IDisposable, IScro
         {
             try
             {
-                var si = await JS.GetScrollInfoAsync(Element).ConfigureAwait();
+                var si = await JS.GetScrollInfoAsync(Element);
 
                 UpdateRange(si, Math.Max(FirstIndex, 0), 0, true);
             }
