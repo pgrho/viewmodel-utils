@@ -1,12 +1,15 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits ListComponentBase<MenuItemViewModel>
-@if (Source?.Count > 0)
+@using (OnBeginRender())
 {
-    foreach (MenuItemViewModel e in Source)
+    if (Source?.Count > 0)
     {
-        <NavItem @key="@e.GetHashCode()"
-                 DataContext="@e"
-                 Source="@e.Children" />
+        foreach (MenuItemViewModel e in Source)
+        {
+            <NavItem @key="@e.GetHashCode()"
+                     DataContext="@e"
+                     Source="@e.Children" />
+        }
     }
 }
 @code

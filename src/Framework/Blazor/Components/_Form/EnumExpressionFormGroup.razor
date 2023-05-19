@@ -1,48 +1,50 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @typeparam T
 @inherits ExpressionBoundFormGroup<T?>
-@{
+@using (OnBeginRender())
+{
     var em = GetErrorMessage();
     var theme = Theme ?? FormGroupTheme.Default;
+
+    <form id="@FormGroupId"
+          class="@theme.FormGroupClass @AdditionalClass"
+          @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+          @onsubmit:preventDefault>
+        <label class="@theme.LabelClass @AdditionalLabelClass"
+               for="@InputId"
+               title="@GetDescription()">
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @GetTitle()
+            }
+        </label>
+        <select @ref="@_Select"
+                class="@theme.SelectControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
+                id="@InputId"
+                disabled="@(GetIsDisabled() ? "disabled" : null)"
+                @bind="@Int64Value"
+                @onfocus="@OnFocus"
+                @onblur="@OnBlur">
+            @foreach (var v in GetValues())
+            {
+                <option value="@v?.ToString("D")"
+                    selected="@(Equals(Value, v) ? "selected" : null)">
+                    @(v != null ? Shipwreck.ReflectionUtils.EnumMemberDisplayNames<T>.Default.GetValue(v.Value) : null)
+                </option>
+            }
+        </select>
+        @if (!string.IsNullOrEmpty(em))
+        {
+            <span class="@GetErrorMessageClass()">
+                @em
+            </span>
+        }
+    </form>
 }
-<form id="@FormGroupId"
-      class="@theme.FormGroupClass @AdditionalClass"
-      @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
-      @onsubmit:preventDefault>
-    <label class="@theme.LabelClass @AdditionalLabelClass"
-           for="@InputId"
-           title="@GetDescription()">
-        @if (ChildContent != null)
-        {
-            @ChildContent
-        }
-        else
-        {
-            @GetTitle()
-        }
-    </label>
-    <select @ref="@_Select"
-            class="@theme.SelectControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
-            id="@InputId"
-            disabled="@(GetIsDisabled() ? "disabled" : null)"
-            @bind="@Int64Value"
-            @onfocus="@OnFocus"
-            @onblur="@OnBlur">
-        @foreach (var v in GetValues())
-        {
-            <option value="@v?.ToString("D")"
-                selected="@(Equals(Value, v) ? "selected" : null)">
-                @(v != null ? Shipwreck.ReflectionUtils.EnumMemberDisplayNames<T>.Default.GetValue(v.Value) : null)
-            </option>
-        }
-    </select>
-    @if (!string.IsNullOrEmpty(em))
-    {
-        <span class="@GetErrorMessageClass()">
-            @em
-        </span>
-    }
-</form>
 @code
 {
     private ElementReference _Select;

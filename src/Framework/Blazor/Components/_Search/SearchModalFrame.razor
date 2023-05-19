@@ -1,38 +1,40 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @using Shipwreck.ViewModelUtils.Searching
 @inherits BindableComponentBase<IFrameworkSearchPageViewModel>
-@{
+@using (OnBeginRender())
+{
     var d = DataContext;
-}
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">@(TypeName)検索</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body d-flex flex-row" style="height: 75vh">
-            <div style="width: 200px;position: relative">
-                <div class="content-flex">
-                    <div class="content-flex-scroller px-0">
-                        <SearchConditionList DataContext="@d"
-                                             Source="@d.Conditions" />
-                    </div>
-                    <div class="content-flex-footer px-0">
-                        <CommandButton BaseClass="btn btn-block btn-lg"
-                                       DataContext="@d.SearchCommand" />
+
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@(TypeName)検索</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex flex-row" style="height: 75vh">
+                <div style="width: 200px;position: relative">
+                    <div class="content-flex">
+                        <div class="content-flex-scroller px-0">
+                            <SearchConditionList DataContext="@d"
+                                                 Source="@d.Conditions" />
+                        </div>
+                        <div class="content-flex-footer px-0">
+                            <CommandButton BaseClass="btn btn-block btn-lg"
+                                           DataContext="@d.SearchCommand" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex flex-column flex-grow-1 flex-shrink-1">
-                <div class="flex-grow-1 flex-shrink-1 position-relative">
-                    @ChildContent
+                <div class="d-flex flex-column flex-grow-1 flex-shrink-1">
+                    <div class="flex-grow-1 flex-shrink-1 position-relative">
+                        @ChildContent
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+}
 @code
 {
     [Parameter]

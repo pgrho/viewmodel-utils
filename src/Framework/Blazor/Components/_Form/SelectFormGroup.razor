@@ -1,37 +1,39 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @typeparam T
 @inherits FormGroupBase
-@{
+@using (OnBeginRender())
+{
     var theme = Theme ?? FormGroupTheme.Default;
-}
-<div id="@FormGroupId"
-     class="@theme.FormGroupClass @AdditionalClass">
-    <label for="@SelectId"
-           class="@theme.LabelClass @AdditionalLabelClass"
-           title="@Description">
-        @if (ChildContent != null)
-        {
-            @ChildContent
-        }
-        else
-        {
-            @Title
-        }
-    </label>
 
-    <select id="@SelectId"
-            class="@theme.SelectControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
-            @ref="_Select"
-            @bind="@InternalValue"
-            disabled="@(GetIsDisabled() ? "disabled" : null)"
-            @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
-            @onkeydown="@OnKeyDown">
-        @foreach (var op in Options)
-        {
-            <option value="@op.Key">@op.Value</option>
-        }
-    </select>
-</div>
+    <div id="@FormGroupId"
+         class="@theme.FormGroupClass @AdditionalClass">
+        <label for="@SelectId"
+               class="@theme.LabelClass @AdditionalLabelClass"
+               title="@Description">
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Title
+            }
+        </label>
+
+        <select id="@SelectId"
+                class="@theme.SelectControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
+                @ref="_Select"
+                @bind="@InternalValue"
+                disabled="@(GetIsDisabled() ? "disabled" : null)"
+                @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
+                @onkeydown="@OnKeyDown">
+            @foreach (var op in Options)
+            {
+                <option value="@op.Key">@op.Value</option>
+            }
+        </select>
+    </div>
+}
 @code
 {
     private ElementReference _Select;

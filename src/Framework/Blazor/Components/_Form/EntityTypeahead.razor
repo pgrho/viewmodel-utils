@@ -1,14 +1,17 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase<IEntitySelector>
-<input @ref="@_Input"
-       type="text"
-       autocomplete="off"
-       disabled="@((IsEnabled ?? DataContext.IsEnabled) ? null : "disabled")"
-       @bind="@_Text"
-       @attributes="AdditionalAttributes"
-       @onclick:stopPropagation
-       @onblur="@OnBlur"
-       @onblur:stopPropagation />
+@using (OnBeginRender())
+{
+    <input @ref="@_Input"
+           type="text"
+           autocomplete="off"
+           disabled="@((IsEnabled ?? DataContext.IsEnabled) ? null : "disabled")"
+           @bind="@_Text"
+           @attributes="AdditionalAttributes"
+           @onclick:stopPropagation
+           @onblur="@OnBlur"
+           @onblur:stopPropagation />
+}
 @code
 {
     private void OnBlur()

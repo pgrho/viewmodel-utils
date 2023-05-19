@@ -1,21 +1,24 @@
 ﻿@inherits BindableComponentBase<MenuPageItemViewModel>
-@if (DataContext?.Command?.IsVisible == true)
+@using (OnBeginRender())
 {
-    if (DataContext.SubCommands.Count == 0)
+    if (DataContext?.Command?.IsVisible == true)
     {
-        <CommandButton BaseClass="btn btn-block" DataContext="@DataContext.Command" />
-    }
-    else
-    {
-        <div class="btn-group btn-block" role="group">
-            <CommandButton BaseClass="btn"
-                           DataContext="@DataContext.Command" />
-            @foreach (var c in DataContext.SubCommands)
-            {
-                <CommandButton @key="@c.GetHashCode()"
-                               BaseClass="btn"
-                               DataContext="@c" />
-            }
-        </div>
+        if (DataContext.SubCommands.Count == 0)
+        {
+            <CommandButton BaseClass="btn btn-block" DataContext="@DataContext.Command" />
+        }
+        else
+        {
+            <div class="btn-group btn-block" role="group">
+                <CommandButton BaseClass="btn"
+                               DataContext="@DataContext.Command" />
+                @foreach (var c in DataContext.SubCommands)
+                {
+                    <CommandButton @key="@c.GetHashCode()"
+                                   BaseClass="btn"
+                                   DataContext="@c" />
+                }
+            </div>
+        }
     }
 }

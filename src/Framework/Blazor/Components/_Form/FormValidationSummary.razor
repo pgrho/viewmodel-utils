@@ -1,31 +1,34 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @using System.ComponentModel.DataAnnotations
 @inherits ListComponentBase<FrameworkPageViewModel, ValidationResult>
-@if (IsVisible)
+@using (OnBeginRender())
 {
-    <div class="alert alert-danger">
-        <div>
-            <div>入力値が無効です。</div>
-            <ul>
-                @foreach (ValidationResult r in Source)
-                {
-                    <li>
-                        <a href="#"
-                   @onclick="@(() => DataContext?.Focus(r.MemberNames.FirstOrDefault()))"
-                   @onclick:preventDefault>
-                            @r.ErrorMessage
-                        </a>
-                    </li>
-                }
-            </ul>
+    if (IsVisible)
+    {
+        <div class="alert alert-danger">
+            <div>
+                <div>入力値が無効です。</div>
+                <ul>
+                    @foreach (ValidationResult r in Source)
+                    {
+                        <li>
+                            <a href="#"
+                       @onclick="@(() => DataContext?.Focus(r.MemberNames.FirstOrDefault()))"
+                       @onclick:preventDefault>
+                                @r.ErrorMessage
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        <button type="button"
-            class="close"
-            data-dismiss="alert"
-            aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    }
 }
 @code
 {

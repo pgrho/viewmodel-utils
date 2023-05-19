@@ -1,79 +1,82 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase
 @using System.Collections
-<nav class="form-inline" aria-label="...">
-    <ListScope T="CommandViewModelBase"
-               Source="@((IList)Commands)"
-               DependsOnItemProperties="Array.Empty<string>()">
-        @foreach (var c in (Commands ?? Enumerable.Empty<ICommandViewModel>()))
-        {
-            <CommandButton @key="@c.GetHashCode()"
-                       BaseClass="btn btn-sm mr-2 mb-3"
-                       DataContext="c" />
-        }
-    </ListScope>
-    <span class="form-control mb-3 border-0">
-        @if (0 <= FilteredCount && FilteredCount != TotalCount)
-        {
-            @FilteredCount.Value.ToString("#,0")
-            @(" /")
-        }
-        @TotalCount.ToString("#,0")
-        件
-    </span>
-    @if (PageSize > 0 && Count > PageSize)
-    {
-        var pMax = (Count - 1) / PageSize;
-        const int R = 5;
-
-        <ul class="pagination">
-            <li class="page-item @(PageIndex > 0 ? null : "disabled")">
-                <a href="javascript:void(0)"
-               class="page-link"
-               @onclick="@(() => PageIndex--)"
-               @onclick:preventDefault>前へ</a>
-            </li>
-
-            @for (var d = -R; d <= R; d++)
+@using (OnBeginRender())
+{
+    <nav class="form-inline" aria-label="...">
+        <ListScope T="CommandViewModelBase"
+                   Source="@((IList)Commands)"
+                   DependsOnItemProperties="Array.Empty<string>()">
+            @foreach (var c in (Commands ?? Enumerable.Empty<ICommandViewModel>()))
             {
-                var i = PageIndex + d;
-                if (0 <= i && i <= pMax)
-                {
-                    <li class="page-item @(i == PageIndex ? "active" : null)">
-                        <a href="javascript:void(0)"
-               class="page-link"
-               @onclick="@(() => PageIndex = i)"
-               @onclick:preventDefault>@(i + 1)</a>
-                    </li>
-                }
+                <CommandButton @key="@c.GetHashCode()"
+                           BaseClass="btn btn-sm mr-2 mb-3"
+                           DataContext="c" />
             }
-
-            <li class="page-item @(PageIndex < pMax ? null : "disabled")">
-                <a href="javascript:void(0)"
-               class="page-link"
-               @onclick="@(() => PageIndex++)"
-               @onclick:preventDefault>次へ</a>
-            </li>
-        </ul>
-    }
-
-    @if (ShowPageSize && Count > 50 && 0 < PageSize && PageSize < int.MaxValue)
-    {
+        </ListScope>
         <span class="form-control mb-3 border-0">
-            表示件数:
-            <select class="form-control form-control-sm custom-select custom-select-sm"
-                @bind="@PageSize">
-                @foreach (var e in new[] { 50, 100, 250, 500, 1000 })
-                {
-                    <option value="@e"
-                    selected="@(e == PageSize ? "selected" : null)">
-                        @(e)件
-                    </option>
-                }
-            </select>
+            @if (0 <= FilteredCount && FilteredCount != TotalCount)
+            {
+                @FilteredCount.Value.ToString("#,0")
+                @(" /")
+            }
+            @TotalCount.ToString("#,0")
+            件
         </span>
-    }
-</nav>
+        @if (PageSize > 0 && Count > PageSize)
+        {
+            var pMax = (Count - 1) / PageSize;
+            const int R = 5;
+
+            <ul class="pagination">
+                <li class="page-item @(PageIndex > 0 ? null : "disabled")">
+                    <a href="javascript:void(0)"
+                   class="page-link"
+                   @onclick="@(() => PageIndex--)"
+                   @onclick:preventDefault>前へ</a>
+                </li>
+
+                @for (var d = -R; d <= R; d++)
+                {
+                    var i = PageIndex + d;
+                    if (0 <= i && i <= pMax)
+                    {
+                        <li class="page-item @(i == PageIndex ? "active" : null)">
+                            <a href="javascript:void(0)"
+                   class="page-link"
+                   @onclick="@(() => PageIndex = i)"
+                   @onclick:preventDefault>@(i + 1)</a>
+                        </li>
+                    }
+                }
+
+                <li class="page-item @(PageIndex < pMax ? null : "disabled")">
+                    <a href="javascript:void(0)"
+                   class="page-link"
+                   @onclick="@(() => PageIndex++)"
+                   @onclick:preventDefault>次へ</a>
+                </li>
+            </ul>
+        }
+
+        @if (ShowPageSize && Count > 50 && 0 < PageSize && PageSize < int.MaxValue)
+        {
+            <span class="form-control mb-3 border-0">
+                表示件数:
+                <select class="form-control form-control-sm custom-select custom-select-sm"
+                    @bind="@PageSize">
+                    @foreach (var e in new[] { 50, 100, 250, 500, 1000 })
+                    {
+                        <option value="@e"
+                        selected="@(e == PageSize ? "selected" : null)">
+                            @(e)件
+                        </option>
+                    }
+                </select>
+            </span>
+        }
+    </nav>
+}
 @code
 {
     private int Count => FilteredCount ?? TotalCount;

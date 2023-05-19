@@ -1,27 +1,29 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @using Shipwreck.ViewModelUtils.Searching
 @inherits BindableComponentBase<NumberConditionViewModel>
-@{
-    var d = DataContext;
-}
-@if (d != null)
+@using (OnBeginRender())
 {
-    <SearchConditionHeader DataContext="@d" />
-    <dd>
-        <form class="input-group"
-              @onsubmit="@d.Page.BeginSearch">
-            <SearchOperatorButton @bind-Operator="@d.Operator"
-                                  Operators="@NumberConditionViewModel.Operators"
-                                  OnSelected="@(() => _Input.FocusAsync())" />
-            <input @ref="@_Input"
-                   class="form-control"
-                   type="number"
-                   step="@(d.IsFloat ? "0.01" : "1")"
-                   style="-webkit-appearance:textfield;-moz-appearance:textfield"
-                   @bind="@d.Value" />
-            <SearchRemoveButton DataContext="@d" />
-        </form>
-    </dd>
+    var d = DataContext;
+
+    if (d != null)
+    {
+        <SearchConditionHeader DataContext="@d" />
+        <dd>
+            <form class="input-group"
+                  @onsubmit="@d.Page.BeginSearch">
+                <SearchOperatorButton @bind-Operator="@d.Operator"
+                                      Operators="@NumberConditionViewModel.Operators"
+                                      OnSelected="@(() => _Input.FocusAsync())" />
+                <input @ref="@_Input"
+                       class="form-control"
+                       type="number"
+                       step="@(d.IsFloat ? "0.01" : "1")"
+                       style="-webkit-appearance:textfield;-moz-appearance:textfield"
+                       @bind="@d.Value" />
+                <SearchRemoveButton DataContext="@d" />
+            </form>
+        </dd>
+    }
 }
 @code
 {

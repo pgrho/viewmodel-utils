@@ -1,19 +1,20 @@
 ﻿@inherits BindableComponentBase<MenuPageGroupViewModel>
-@{
-    var d = DataContext;
-}
-@if (d?.Items.Any(e => e.Command.IsVisible) == true)
+@using (OnBeginRender())
 {
-    <div class="col-sm-6 col-md-4 col-lg-3 px-1 py-2">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">
-                    @d.Title
-                </h4>
-                <div class="card-text">
-                    <MenuItemList Source="@d.Items" />
+    var d = DataContext;
+    if (d?.Items.Any(e => e.Command.IsVisible) == true)
+    {
+        <div class="col-sm-6 col-md-4 col-lg-3 px-1 py-2">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        @d.Title
+                    </h4>
+                    <div class="card-text">
+                        <MenuItemList Source="@d.Items" />
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    }
 }

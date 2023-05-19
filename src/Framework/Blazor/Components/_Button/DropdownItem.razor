@@ -1,23 +1,25 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase<ICommandViewModel>
-@{
+@using (OnBeginRender())
+{
     var d = DataContext;
     var os = d.Style & ~(BorderStyle.OutlineSecondary);
     var desc = d?.Description.TrimOrNull() ?? d?.Title.TrimOrNull();
+
+    <a class="dropdown-item @os.ToClassName("text-")"
+       href="@(d.Href ?? "javascript:void(0)")"
+       title="@desc"
+       disabled="@(!d.IsEnabled ? "disabled" : null)"
+       @onclick="@(() => DataContext.Execute())"
+       @onclick:preventDefault>
+        @if (!string.IsNullOrEmpty(d.Icon))
+        {
+            <span class="@d.Icon"></span>
+        }
+        @d?.Title
+        @if (d.BadgeCount > 0)
+        {
+            <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+        }
+    </a>
 }
-<a class="dropdown-item @os.ToClassName("text-")"
-   href="@(d.Href ?? "javascript:void(0)")"
-   title="@desc"
-   disabled="@(!d.IsEnabled ? "disabled" : null)"
-   @onclick="@(() => DataContext.Execute())"
-   @onclick:preventDefault>
-    @if (!string.IsNullOrEmpty(d.Icon))
-    {
-        <span class="@d.Icon"></span>
-    }
-    @d?.Title
-    @if (d.BadgeCount > 0)
-    {
-        <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
-    }
-</a>

@@ -1,17 +1,21 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
-<div @ref="@_PopperElement"
-     class="popover bs-popover-@(_Placement ?? "never")"
-     role="tooltip">
-    <div @ref="@_ArrowElement"
-         class="arrow"></div>
-    @if (!string.IsNullOrEmpty(Header))
-    {
-        <h3 class="popover-header">@Header</h3>
-    }
-    <div class="popover-body">
-        @ChildContent
+@inherits BindableComponentBase
+@using (OnBeginRender())
+{
+    <div @ref="@_PopperElement"
+         class="popover bs-popover-@(_Placement ?? "never")"
+         role="tooltip">
+        <div @ref="@_ArrowElement"
+             class="arrow"></div>
+        @if (!string.IsNullOrEmpty(Header))
+        {
+            <h3 class="popover-header">@Header</h3>
+        }
+        <div class="popover-body">
+            @ChildContent
+        </div>
     </div>
-</div>
+}
 @code
 {
     private ElementReference _PopperElement;

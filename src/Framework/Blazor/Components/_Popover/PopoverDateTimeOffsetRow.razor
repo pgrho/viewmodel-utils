@@ -1,17 +1,18 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits PopoverRowBase
-@{
-    var col = LabelColumn ?? DefaultLabelColumn;
-}
-@if (IsVisible ?? (Value > DateTimeOffset.MinValue))
+@using (OnBeginRender())
 {
-    var v = Value?.LocalDateTime;
-    <dt class="col-@col">
-        <label title="@Description">@Title</label>
-    </dt>
-    <dd class="col-@(12 - col)">
-        <span title="@v?.ToString(ToolTipFormat)">@v?.ToString(DisplayFormat)</span>
-    </dd>
+    var col = LabelColumn ?? DefaultLabelColumn;
+    if (IsVisible ?? (Value > DateTimeOffset.MinValue))
+    {
+        var v = Value?.LocalDateTime;
+        <dt class="col-@col">
+            <label title="@Description">@Title</label>
+        </dt>
+        <dd class="col-@(12 - col)">
+            <span title="@v?.ToString(ToolTipFormat)">@v?.ToString(DisplayFormat)</span>
+        </dd>
+    }
 }
 @code
 {

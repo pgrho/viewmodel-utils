@@ -1,10 +1,12 @@
 ﻿@inherits BindableComponentBase
-
-<th @attributes="@GetTableCellAttributes()">
-    <div @attributes="@GetTableCellInnerAttributes()">
-        @ChildContent
-    </div>
-</th>
+@using (OnBeginRender())
+{
+    <th @attributes="@GetTableCellAttributes()">
+        <div @attributes="@GetTableCellInnerAttributes()">
+            @ChildContent
+        </div>
+    </th>
+}
 @code
 {
     [CascadingParameter]

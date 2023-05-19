@@ -1,36 +1,39 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @using Shipwreck.ViewModelUtils.Searching
 @inherits BindableComponentBase
-@if (Operators != null)
+@using (OnBeginRender())
 {
-    <div class="input-group-prepend">
-        <button type="button"
-            class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-no-caret"
-            title="@Operators?.FirstOrDefault(e => e.Token == Operator)?.DisplayName"
-            data-toggle="dropdown"
-            tabindex="-1"
-            aria-haspopup="true"
-            aria-expanded="false">
-            @Operator
-        </button>
-        <div class="dropdown-menu">
-            @foreach (var op in Operators)
-            {
-                <button type="button"
-                @key="@op.Token"
-                class="dropdown-item"
-                @onclick="@(() => { Operator = op.Token; OnSelected?.Invoke(); })">
-                    @if (!op.DisplayName.Contains(op.Token))
-                    {
-                        <code>@op.Token</code>
+    if (Operators != null)
+    {
+        <div class="input-group-prepend">
+            <button type="button"
+                class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-no-caret"
+                title="@Operators?.FirstOrDefault(e => e.Token == Operator)?.DisplayName"
+                data-toggle="dropdown"
+                tabindex="-1"
+                aria-haspopup="true"
+                aria-expanded="false">
+                @Operator
+            </button>
+            <div class="dropdown-menu">
+                @foreach (var op in Operators)
+                {
+                    <button type="button"
+                    @key="@op.Token"
+                    class="dropdown-item"
+                    @onclick="@(() => { Operator = op.Token; OnSelected?.Invoke(); })">
+                        @if (!op.DisplayName.Contains(op.Token))
+                        {
+                            <code>@op.Token</code>
 
-                        @(":")
-                    }
-                    @op.DisplayName
-                </button>
-            }
+                            @(":")
+                        }
+                        @op.DisplayName
+                    </button>
+                }
+            </div>
         </div>
-    </div>
+    }
 }
 @code
 {

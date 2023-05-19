@@ -1,40 +1,41 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits ExpressionBoundFormGroup<DateTime?>
-@{
+@using (OnBeginRender())
+{
     var em = GetErrorMessage();
-    var theme = Theme ?? FormGroupTheme.Default;
+    var theme = Theme ?? FormGroupTheme.Default; 
+    <form id="@FormGroupId"
+          class="@theme.FormGroupClass @AdditionalClass"
+          @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+          @onsubmit:preventDefault>
+        <label class="@theme.LabelClass @AdditionalLabelClass"
+               for="@InputId"
+               title="@GetDescription()">
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @GetTitle()
+            }
+        </label>
+        <DateTimePicker @ref="@_Input"
+                        Id="@InputId"
+                        Mode="@Mode"
+                        ClassName="@(theme.ControlClass + " datetimepicker-input" + (GetIsRequired() ? " required" : null) + " " + AdditionalInputClass)"
+                        Placeholder="@Placeholder"
+                        IsEnabled="@(!GetIsDisabled())"
+                        IsReadOnly="@GetIsReadOnly()"
+                        @bind-Value="@InternalValue" />
+        @if (!string.IsNullOrEmpty(em))
+        {
+            <span class="@GetErrorMessageClass()">
+                @em
+            </span>
+        }
+    </form>
 }
-<form id="@FormGroupId"
-      class="@theme.FormGroupClass @AdditionalClass"
-      @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
-      @onsubmit:preventDefault>
-    <label class="@theme.LabelClass @AdditionalLabelClass"
-           for="@InputId"
-           title="@GetDescription()">
-        @if (ChildContent != null)
-        {
-            @ChildContent
-        }
-        else
-        {
-            @GetTitle()
-        }
-    </label>
-    <DateTimePicker @ref="@_Input"
-                    Id="@InputId"
-                    Mode="@Mode"
-                    ClassName="@(theme.ControlClass + " datetimepicker-input" + (GetIsRequired() ? " required" : null) + " " + AdditionalInputClass)"
-                    Placeholder="@Placeholder"
-                    IsEnabled="@(!GetIsDisabled())"
-                    IsReadOnly="@GetIsReadOnly()"
-                    @bind-Value="@InternalValue" />
-    @if (!string.IsNullOrEmpty(em))
-    {
-        <span class="@GetErrorMessageClass()">
-            @em
-        </span>
-    }
-</form>
 @code
 {
     private DateTimePicker _Input;

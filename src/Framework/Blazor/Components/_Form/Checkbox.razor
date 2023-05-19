@@ -1,18 +1,21 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase
-<div class="custom-control custom-checkbox">
-    <input @ref="_Input"
-           type="checkbox"
-           class="custom-control-input"
-           id="@_Id"
-           disabled="@(IsEnabled ? null : "disabled")"
-           @bind="@IsChecked"
-           @attributes="@AdditionalAttributes" />
-    <label class="custom-control-label"
-           for="@_Id">
-        @ChildContent
-    </label>
-</div>
+@using (OnBeginRender())
+{
+    <div class="custom-control custom-checkbox">
+        <input @ref="_Input"
+               type="checkbox"
+               class="custom-control-input"
+               id="@_Id"
+               disabled="@(IsEnabled ? null : "disabled")"
+               @bind="@IsChecked"
+               @attributes="@AdditionalAttributes" />
+        <label class="custom-control-label"
+               for="@_Id">
+            @ChildContent
+        </label>
+    </div>
+}
 @code
 {
     private ElementReference _Input;

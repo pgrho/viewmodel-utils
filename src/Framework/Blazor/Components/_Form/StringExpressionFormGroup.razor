@@ -1,45 +1,47 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits StringExpressionFormGroupBase
-@{
+@using (OnBeginRender())
+{
     var em = GetErrorMessage();
     var theme = Theme ?? FormGroupTheme.Default;
+
+    <form id="@FormGroupId"
+          class="@theme.FormGroupClass @AdditionalClass"
+          @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+          @onsubmit:preventDefault>
+        <label class="@theme.LabelClass @AdditionalLabelClass"
+               for="@InputId"
+               title="@GetDescription()">
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @GetTitle()
+            }
+        </label>
+        <input @ref="@_Input"
+               class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
+               id="@InputId"
+               type="@GetInputType()"
+               autocomplete="@GetAutoComplete()"
+               maxlength="@GetMaxLength()"
+               placeholder="@GetPlaceholder()"
+               pattern="@GetPattern()"
+               readonly="@(GetIsReadOnly() ? "readonly" : null)"
+               disabled="@(GetIsDisabled() ? "disabled" : null)"
+               @bind="@InternalValue"
+               @onfocus="@OnFocus"
+               @onblur="@OnBlur" />
+        @if (!string.IsNullOrEmpty(em))
+        {
+            <span class="@GetErrorMessageClass()">
+                @em
+            </span>
+        }
+    </form>
 }
-<form id="@FormGroupId"
-      class="@theme.FormGroupClass @AdditionalClass"
-      @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
-      @onsubmit:preventDefault>
-    <label class="@theme.LabelClass @AdditionalLabelClass"
-           for="@InputId"
-           title="@GetDescription()">
-        @if (ChildContent != null)
-        {
-            @ChildContent
-        }
-        else
-        {
-            @GetTitle()
-        }
-    </label>
-    <input @ref="@_Input"
-           class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
-           id="@InputId"
-           type="@GetInputType()"
-           autocomplete="@GetAutoComplete()"
-           maxlength="@GetMaxLength()"
-           placeholder="@GetPlaceholder()"
-           pattern="@GetPattern()"
-           readonly="@(GetIsReadOnly() ? "readonly" : null)"
-           disabled="@(GetIsDisabled() ? "disabled" : null)"
-           @bind="@InternalValue"
-           @onfocus="@OnFocus"
-           @onblur="@OnBlur" />
-    @if (!string.IsNullOrEmpty(em))
-    {
-        <span class="@GetErrorMessageClass()">
-            @em
-        </span>
-    }
-</form>
 @code
 {
     ElementReference _Input;

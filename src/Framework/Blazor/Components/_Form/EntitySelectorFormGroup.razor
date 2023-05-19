@@ -1,32 +1,33 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits FormGroupBase
-@{
-    var theme = Theme ?? FormGroupTheme.Default;
+@using (OnBeginRender())
+{
+    var theme = Theme ?? FormGroupTheme.Default; 
+    <div id="@FormGroupId"
+         class="@theme.FormGroupClass @AdditionalClass">
+        <label for="@EntitySelectorId"
+               class="@theme.LabelClass @AdditionalLabelClass"
+               title="@Description">
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Title
+            }
+        </label>
+        <EntitySelectorView @ref="_EntitySelectorView"
+                            ElementId="@EntitySelectorId"
+                            DataContext="@DataContext"
+                            IsEnabled="@(!GetIsDisabled())"
+                            IsRequired="@GetIsRequired()"
+                            IsNameVisible="@IsNameVisible"
+                            AppendToSelector="@AppendToSelector"
+                            EnterCommand="@EnterCommand"
+                            EnterCommandParameter="@EnterCommandParameter" />
+    </div>
 }
-<div id="@FormGroupId"
-     class="@theme.FormGroupClass @AdditionalClass">
-    <label for="@EntitySelectorId"
-           class="@theme.LabelClass @AdditionalLabelClass"
-           title="@Description">
-        @if (ChildContent != null)
-        {
-            @ChildContent
-        }
-        else
-        {
-            @Title
-        }
-    </label>
-    <EntitySelectorView @ref="_EntitySelectorView"
-                        ElementId="@EntitySelectorId"
-                        DataContext="@DataContext"
-                        IsEnabled="@(!GetIsDisabled())"
-                        IsRequired="@GetIsRequired()"
-                        IsNameVisible="@IsNameVisible"
-                        AppendToSelector="@AppendToSelector"
-                        EnterCommand="@EnterCommand"
-                        EnterCommandParameter="@EnterCommandParameter" />
-</div>
 @code
 {
     private EntitySelectorView _EntitySelectorView;

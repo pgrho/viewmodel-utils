@@ -1,18 +1,20 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits PopoverRowBase
-@{
-    var col = LabelColumn ?? DefaultLabelColumn;
-}
-@if (IsVisible != false)
+@using (OnBeginRender())
 {
-    <dt class="col-@col">
-        <label title="@Description">@Title</label>
-    </dt>
-    <dd class="col-@(12 - col)">
-        <span class="badge @Style.ToBadgeClass()">
-            @Value
-        </span>
-    </dd>
+    var col = LabelColumn ?? DefaultLabelColumn;
+
+    if (IsVisible != false)
+    {
+        <dt class="col-@col">
+            <label title="@Description">@Title</label>
+        </dt>
+        <dd class="col-@(12 - col)">
+            <span class="badge @Style.ToBadgeClass()">
+                @Value
+            </span>
+        </dd>
+    }
 }
 @code
 {

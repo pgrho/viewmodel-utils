@@ -1,36 +1,37 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits FormGroupBase
-@{
-    var theme = Theme ?? FormGroupTheme.Default;
+@using (OnBeginRender())
+{
+    var theme = Theme ?? FormGroupTheme.Default; 
+    <form id="@FormGroupId"
+          class="@theme.FormGroupClass @AdditionalClass"
+          @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+          @onsubmit:preventDefault>
+        <label for="@DateTimePickerId"
+               class="@theme.LabelClass @AdditionalLabelClass"
+               title="@Description">
+            @if (ChildContent != null)
+            {
+                @ChildContent
+            }
+            else
+            {
+                @Title
+            }
+        </label>
+        <DateTimePicker @ref="_DateTimePicker"
+                        Id="@DateTimePickerId"
+                        ClassName="@(Theme?.ControlClass + " datetimepicker-input " + AdditionalInputClass)"
+                        IsEnabled="@(!GetIsDisabled())"
+                        IsReadOnly="@IsReadOnly"
+                        IsRequired="@GetIsRequired()"
+                        Placeholder="@GetPlaceholder()"
+                        Mode="@Mode"
+                        UseCurrent="@UseCurrent"
+                        OnFocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
+                        @bind-Value="InternalValue" />
+    </form>
 }
-<form id="@FormGroupId"
-      class="@theme.FormGroupClass @AdditionalClass"
-      @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
-      @onsubmit:preventDefault>
-    <label for="@DateTimePickerId"
-           class="@theme.LabelClass @AdditionalLabelClass"
-           title="@Description">
-        @if (ChildContent != null)
-        {
-            @ChildContent
-        }
-        else
-        {
-            @Title
-        }
-    </label>
-    <DateTimePicker @ref="_DateTimePicker"
-                    Id="@DateTimePickerId"
-                    ClassName="@(Theme?.ControlClass + " datetimepicker-input " + AdditionalInputClass)"
-                    IsEnabled="@(!GetIsDisabled())"
-                    IsReadOnly="@IsReadOnly"
-                    IsRequired="@GetIsRequired()"
-                    Placeholder="@GetPlaceholder()"
-                    Mode="@Mode"
-                    UseCurrent="@UseCurrent"
-                    OnFocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
-                    @bind-Value="InternalValue" />
-</form>
 @code
 {
     private DateTimePicker _DateTimePicker;

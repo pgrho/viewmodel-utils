@@ -19,15 +19,23 @@ public sealed class ListTestPageViewModel : PageViewModel
     public bool IsLoading
     {
         get => _IsLoading;
-        private set => SetProperty(ref _IsLoading, value);
+        private set
+        {
+            if (SetProperty(ref _IsLoading, value))
+            {
+                _AddBulkCommand?.Invalidate();
+            }
+        }
     }
 
-    public async void Add()
+    private CommandViewModelBase _AddBulkCommand;
+
+    public CommandViewModelBase AddBulkCommand => _AddBulkCommand ??= CommandViewModel.CreateAsync(async () =>
     {
         IsLoading = true;
 
         for (var i = 0; i < 5; i++)
-        { 
+        {
             await Task.Delay(200);
             var item = new Item() { Name = Random.Shared.Next().ToString() };
 
@@ -35,5 +43,5 @@ public sealed class ListTestPageViewModel : PageViewModel
         }
 
         IsLoading = false;
-    }
+    }, titleGetter: () => IsLoading ? "Adding" : "Add items", iconGetter: () => IsLoading ? "fas fa-spinner fa-pulse" : " fas fa-plus"); 
 }

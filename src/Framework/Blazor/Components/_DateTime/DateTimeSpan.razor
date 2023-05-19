@@ -2,36 +2,38 @@
 @using System.Globalization
 @typeparam T
 @inherits BindableComponentBase
-@{
+@using (OnBeginRender())
+{
     var date = Value is DateTime dt ? dt : Value is DateTimeOffset dto ? dto.LocalDateTime : (DateTime?)null;
-}
-<abbr title="@Value?.ToString(ToolTipFormat, CultureInfo.CurrentUICulture)"
-      style="white-space: normal">
-    <span style="white-space: nowrap">
-        @{
-            var dow = date?.DayOfWeek ?? DayOfWeek.Monday;
-            if ((dow != DayOfWeek.Sunday && dow != DayOfWeek.Saturday)
-            || DisplayFormatDayOfWeek == null)
-            {
-                @date?.ToString(DisplayFormat, CultureInfo.CurrentUICulture)
-            }
-            else
-            {
-                <span
-                >@date?.ToString(DisplayFormatPrefix, CultureInfo.CurrentUICulture)</span><span
-                class="@(dow == DayOfWeek.Sunday? "text-danger" : "text-primary")">@date?.ToString(DisplayFormatDayOfWeek, CultureInfo.CurrentUICulture)</span><span
-                >@date?.ToString(DisplayFormatSuffix, CultureInfo.CurrentUICulture)</span>
-            }
-        }
-    </span>
-    @if (AdditionalFormat != null)
-    {
-        @((MarkupString)"&nbsp;")
+
+    <abbr title="@Value?.ToString(ToolTipFormat, CultureInfo.CurrentUICulture)"
+          style="white-space: normal">
         <span style="white-space: nowrap">
-            @date?.ToString(AdditionalFormat, CultureInfo.CurrentUICulture)
+            @{
+                var dow = date?.DayOfWeek ?? DayOfWeek.Monday;
+                if ((dow != DayOfWeek.Sunday && dow != DayOfWeek.Saturday)
+                || DisplayFormatDayOfWeek == null)
+                {
+                    @date?.ToString(DisplayFormat, CultureInfo.CurrentUICulture)
+                }
+                else
+                {
+                    <span
+                    >@date?.ToString(DisplayFormatPrefix, CultureInfo.CurrentUICulture)</span><span
+                    class="@(dow == DayOfWeek.Sunday? "text-danger" : "text-primary")">@date?.ToString(DisplayFormatDayOfWeek, CultureInfo.CurrentUICulture)</span><span
+                    >@date?.ToString(DisplayFormatSuffix, CultureInfo.CurrentUICulture)</span>
+                }
+            }
         </span>
-    }
-</abbr>
+        @if (AdditionalFormat != null)
+        {
+            @((MarkupString)"&nbsp;")
+            <span style="white-space: nowrap">
+                @date?.ToString(AdditionalFormat, CultureInfo.CurrentUICulture)
+            </span>
+        }
+    </abbr>
+}
 @code
 {
 }

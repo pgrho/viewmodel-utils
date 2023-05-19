@@ -1,25 +1,26 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase<ISortablePageViewModel>
-@{
-    var d = DataContext;
-}
-<th @attributes="@AdditionalAttributes">
-    @if (string.IsNullOrEmpty(SortKey))
+@using (OnBeginRender())
 {
-        <span title="@Description">@Header</span>
+    var d = DataContext; 
+    <th @attributes="@AdditionalAttributes">
+        @if (string.IsNullOrEmpty(SortKey))
+        {
+             <span title="@Description">@Header</span>
+        }
+        else
+        {
+            <a class="text-light"
+                href="javascript:void(0)"
+                title="@Description"
+                @onclick="@(() => d?.ToggleSortKey(SortKey))"
+                @onclick:preventDefault>
+                @Header
+                <span class="fas @(d?.Order?.FirstOrDefault().Member != SortKey ? null : d.Order[0].IsDescending ? "fas fa-caret-down" : "fas fa-caret-up")"></span>
+            </a>
+        }
+    </th>
 }
-else
-{
-        <a class="text-light"
-           href="javascript:void(0)"
-           title="@Description"
-           @onclick="@(() => d?.ToggleSortKey(SortKey))"
-           @onclick:preventDefault>
-            @Header
-            <span class="fas @(d?.Order?.FirstOrDefault().Member != SortKey ? null : d.Order[0].IsDescending ? "fas fa-caret-down" : "fas fa-caret-up")"></span>
-        </a>
-}
-</th>
 @code
 {
     [CascadingParameter]

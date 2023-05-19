@@ -1,53 +1,54 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @using Shipwreck.ViewModelUtils.Searching
 @inherits BindableComponentBase<EntityConditionViewModel>
-@{
-    var d = DataContext;
-}
-@if (d != null)
+@using (OnBeginRender())
 {
-    <SearchConditionHeader DataContext="@d" />
-    <dd>
-        <div class="input-group">
-            @if (d.SelectedId != null)
-            {
-                var text = d.SelectedItem != null ? d.Selector.GetDisplayText(d.SelectedItem) : $"#{d.SelectedId}";
-                <input type="text"
-                       class="form-control"
-                       readonly="readonly"
-                       value="@text"
-                       title="@text"
-                       @onkeydown="@Clear"
-                       @onkeydown:preventDefault />
-                <div class="input-group-append">
-                    <CommandButton BaseClass="btn btn-sm"
-                                   DataContext="d.Selector.ShowModalCommand" />
-                    <button type="button"
-                            class="btn btn-sm btn-outline-secondary"
-                            tabindex="-1"
-                            @onclick="@Clear">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            }
-            else
-            {
-                <EntityTypeahead @ref="@_Typeahead"
-                                 DataContext="@d.Selector"
-                                 class="form-control" />
-                <div class="input-group-append">
-                    <CommandButton BaseClass="btn btn-sm"
-                                   DataContext="d.Selector.ShowModalCommand" />
-                    <button type="button"
-                            class="btn btn-sm btn-outline-secondary"
-                            tabindex="-1"
-                            @onclick="@d.Remove">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </div>
-            }
-        </div>
-    </dd>
+    var d = DataContext;
+    if (d != null)
+    {
+        <SearchConditionHeader DataContext="@d" />
+        <dd>
+            <div class="input-group">
+                @if (d.SelectedId != null)
+                {
+                    var text = d.SelectedItem != null ? d.Selector.GetDisplayText(d.SelectedItem) : $"#{d.SelectedId}";
+                    <input type="text"
+                           class="form-control"
+                           readonly="readonly"
+                           value="@text"
+                           title="@text"
+                           @onkeydown="@Clear"
+                           @onkeydown:preventDefault />
+                    <div class="input-group-append">
+                        <CommandButton BaseClass="btn btn-sm"
+                                       DataContext="d.Selector.ShowModalCommand" />
+                        <button type="button"
+                                class="btn btn-sm btn-outline-secondary"
+                                tabindex="-1"
+                                @onclick="@Clear">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <EntityTypeahead @ref="@_Typeahead"
+                                     DataContext="@d.Selector"
+                                     class="form-control" />
+                    <div class="input-group-append">
+                        <CommandButton BaseClass="btn btn-sm"
+                                       DataContext="d.Selector.ShowModalCommand" />
+                        <button type="button"
+                                class="btn btn-sm btn-outline-secondary"
+                                tabindex="-1"
+                                @onclick="@d.Remove">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </div>
+                }
+            </div>
+        </dd>
+    }
 }
 @code
 {

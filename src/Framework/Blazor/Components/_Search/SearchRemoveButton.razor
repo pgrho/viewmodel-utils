@@ -1,16 +1,19 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @using Shipwreck.ViewModelUtils.Searching
 @inherits BindableComponentBase<ConditionViewModel>
-@if (DataContext != null)
+@using (OnBeginRender())
 {
-    <div class="input-group-append">
-        <button type="button"
-                class="btn btn-sm btn-outline-secondary"
-                tabindex="-1"
-                @onclick="@DataContext.Remove">
-            <i class="fas fa-minus"></i>
-        </button>
-    </div>
+    if (DataContext != null)
+    {
+        <div class="input-group-append">
+            <button type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    tabindex="-1"
+                    @onclick="@DataContext.Remove">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    }
 }
 @code
 {

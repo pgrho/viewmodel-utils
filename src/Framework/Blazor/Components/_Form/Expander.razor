@@ -1,34 +1,37 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase
-<div class="accordion"
-     id="@_ParentId"
-     @attributes="AdditionalAttributes">
-    <div class="card">
-        <div class="card-header p-0" id="@_HeadingId">
-            <h5 class="mb-0">
-                <button class="btn btn-block btn-primary py-2"
-                        type="button"
-                        style="border-radius:0; box-shadow:none"
-                        data-toggle="@_CollapseId"
-                        data-target="#@_CollapseId"
-                        aria-expanded="true"
-                        aria-controls="@_CollapseId"
-                        @onclick="@(() => _IsExpanded = !_IsExpanded)"
-                        @onclick:preventDefault>
-                    @Header
-                </button>
-            </h5>
-        </div>
-        <div id="@_CollapseId"
-             class="collapse @(_IsExpanded ? "show" : null)"
-             aria-labelledby="@_HeadingId"
-             data-parent="#@_ParentId">
-            <div class="card-body py-2">
-                @ChildContent
+@using (OnBeginRender())
+{
+    <div class="accordion"
+         id="@_ParentId"
+         @attributes="AdditionalAttributes">
+        <div class="card">
+            <div class="card-header p-0" id="@_HeadingId">
+                <h5 class="mb-0">
+                    <button class="btn btn-block btn-primary py-2"
+                            type="button"
+                            style="border-radius:0; box-shadow:none"
+                            data-toggle="@_CollapseId"
+                            data-target="#@_CollapseId"
+                            aria-expanded="true"
+                            aria-controls="@_CollapseId"
+                            @onclick="@(() => _IsExpanded = !_IsExpanded)"
+                            @onclick:preventDefault>
+                        @Header
+                    </button>
+                </h5>
+            </div>
+            <div id="@_CollapseId"
+                 class="collapse @(_IsExpanded ? "show" : null)"
+                 aria-labelledby="@_HeadingId"
+                 data-parent="#@_ParentId">
+                <div class="card-body py-2">
+                    @ChildContent
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
 @code
 {
     private static int _IdSeed;

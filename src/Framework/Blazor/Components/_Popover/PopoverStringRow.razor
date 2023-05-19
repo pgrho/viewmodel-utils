@@ -1,28 +1,30 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits PopoverRowBase
-@{
-    var col = LabelColumn ?? DefaultLabelColumn;
-}
-@if (IsVisible ?? !string.IsNullOrEmpty(Value))
+@using (OnBeginRender())
 {
-    <dt class="col-@col">
-        <label title="@Description">@Title</label>
-    </dt>
-    <dd class="col-@(12 - col)">
-        @if (Command == null)
-        {
-            @Value
-        }
-        else
-        {
-            <a href="@(Command.Href ?? "javascript:void(0)")"
-       title="@Command.Description"
-       @onclick="@(() => Command.Execute())"
-       @onclick:preventDefault>
+    var col = LabelColumn ?? DefaultLabelColumn;
+ 
+     if (IsVisible ?? !string.IsNullOrEmpty(Value))
+    {
+        <dt class="col-@col">
+            <label title="@Description">@Title</label>
+        </dt>
+        <dd class="col-@(12 - col)">
+            @if (Command == null)
+            {
                 @Value
-            </a>
-        }
-    </dd>
+            }
+            else
+            {
+                <a href="@(Command.Href ?? "javascript:void(0)")"
+           title="@Command.Description"
+           @onclick="@(() => Command.Execute())"
+           @onclick:preventDefault>
+                    @Value
+                </a>
+            }
+        </dd>
+    }
 }
 @code
 {

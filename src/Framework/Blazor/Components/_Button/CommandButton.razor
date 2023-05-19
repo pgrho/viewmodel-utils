@@ -1,67 +1,68 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase<ICommandViewModel>
-@{
-    var d = DataContext;
-}
-@if (IsVisible != false && d.IsVisible)
+@using (OnBeginRender())
 {
-    var cls = BaseClass
-        + " " + (CommandStyle ?? d?.Style)?.ToButtonClass(BorderStyle.OutlineSecondary)
-        + (IsActive == true ? " active" : null);
-    var disabled = IsEnabled == false ? "disabled" : null;
-
-    var icon = Icon ?? d.Icon;
-    var hasIcon = icon != null && ShowIcon;
-    var title = Title ?? d.Title;
-    var hasTitle = ShowTitle && title?.Length > 0;
-
-    var badgeCount = ShowBadge ? BadgeCount ?? d.BadgeCount : 0;
-    var desc = d.Description.TrimOrNull() ?? d.Title.TrimOrNull();
-
-    if (d?.Href != null)
+    var d = DataContext; 
+    if (IsVisible != false && d.IsVisible)
     {
-        <a class="@cls @disabled"
-           href="@d.Href"
-           title="@desc"
-           disabled="@disabled"
-           @onclick="@((Action)d.Execute)"
-           @onclick:preventDefault
-           @attributes="AdditionalAttributes">
-            @if (hasIcon)
-            {
-                <span class="@icon @(hasTitle ? null : "mt-1")"></span>
-            }
-            @if (hasTitle)
-            {
-                @title
-            }
-            @if (badgeCount > 0)
-            {
-                <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
-            }
-        </a>
-    }
-    else
-    {
-        <button type="button"
-                class="@cls"
-                disabled="@disabled"
-                title="@desc"
-                @onclick="@((Action)d.Execute)"
-                @attributes="AdditionalAttributes">
-            @if (hasIcon)
-            {
-                <span class="@icon @(hasTitle ? null : "mt-1")"></span>
-            }
-            @if (hasTitle)
-            {
-                @title
-            }
-            @if (badgeCount > 0)
-            {
-                <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
-            }
-        </button>
+        var cls = BaseClass
+            + " " + (CommandStyle ?? d?.Style)?.ToButtonClass(BorderStyle.OutlineSecondary)
+            + (IsActive == true ? " active" : null);
+        var disabled = IsEnabled == false ? "disabled" : null;
+
+        var icon = Icon ?? d.Icon;
+        var hasIcon = icon != null && ShowIcon;
+        var title = Title ?? d.Title;
+        var hasTitle = ShowTitle && title?.Length > 0;
+
+        var badgeCount = ShowBadge ? BadgeCount ?? d.BadgeCount : 0;
+        var desc = d.Description.TrimOrNull() ?? d.Title.TrimOrNull();
+
+        if (d?.Href != null)
+        {
+            <a class="@cls @disabled"
+               href="@d.Href"
+               title="@desc"
+               disabled="@disabled"
+               @onclick="@((Action)d.Execute)"
+               @onclick:preventDefault
+               @attributes="AdditionalAttributes">
+                @if (hasIcon)
+                {
+                    <span class="@icon @(hasTitle ? null : "mt-1")"></span>
+                }
+                @if (hasTitle)
+                {
+                    @title
+                }
+                @if (badgeCount > 0)
+                {
+                    <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
+                }
+            </a>
+        }
+        else
+        {
+            <button type="button"
+                    class="@cls"
+                    disabled="@disabled"
+                    title="@desc"
+                    @onclick="@((Action)d.Execute)"
+                    @attributes="AdditionalAttributes">
+                @if (hasIcon)
+                {
+                    <span class="@icon @(hasTitle ? null : "mt-1")"></span>
+                }
+                @if (hasTitle)
+                {
+                    @title
+                }
+                @if (badgeCount > 0)
+                {
+                    <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
+                }
+            </button>
+        }
     }
 }
 @code

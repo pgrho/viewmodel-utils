@@ -1,86 +1,87 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits ListComponentBase<MenuItemViewModel, MenuItemViewModel>
-@{
-    var d = DataContext;
-}
-@if (d.ContainsVisible)
+@using (OnBeginRender())
 {
-    var title = d.Title ?? d.CommandTitle;
-    var desc = d?.Description.TrimOrNull() ?? d?.Title.TrimOrNull();
-    if (Source.Cast<MenuItemViewModel>().Any(c => c?.ContainsVisible == true))
+    var d = DataContext; 
+    if (d.ContainsVisible)
     {
-        var id = "nav--item--" + GetHashCode();
-        var cs = Source.Cast<MenuItemViewModel>().Where(c => c?.Command?.IsVisible != false).ToList();
-        for (var i = cs.Count - 1; i >= 0; i--)
+        var title = d.Title ?? d.CommandTitle;
+        var desc = d?.Description.TrimOrNull() ?? d?.Title.TrimOrNull();
+        if (Source.Cast<MenuItemViewModel>().Any(c => c?.ContainsVisible == true))
         {
-            if (cs[i]?.Command == null)
+            var id = "nav--item--" + GetHashCode();
+            var cs = Source.Cast<MenuItemViewModel>().Where(c => c?.Command?.IsVisible != false).ToList();
+            for (var i = cs.Count - 1; i >= 0; i--)
             {
-                if (i <= 0
-                    || i + 1 >= cs.Count
-                    || cs[i - 1]?.Command == null
-                    || cs[i + 1]?.Command == null)
+                if (cs[i]?.Command == null)
                 {
-                    cs.RemoveAt(i);
+                    if (i <= 0
+                        || i + 1 >= cs.Count
+                        || cs[i - 1]?.Command == null
+                        || cs[i + 1]?.Command == null)
+                    {
+                        cs.RemoveAt(i);
+                    }
                 }
             }
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"
+                   href="@(d?.Href ?? "javascript:void(0)")"
+                   title="@desc"
+                   disabled="@(!d.IsEnabled ? "disabled" : null)"
+                   id="@id"
+                   role="button"
+                   data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                    @if (!string.IsNullOrEmpty(d?.Icon))
+                    {
+                        <span class="@d?.Icon"></span>
+                    }
+                    @title
+                    @if (d.BadgeCount > 0)
+                    {
+                        <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+                    }
+                </a>
+                <div class="dropdown-menu"
+                     style="max-height: 90vh; overflow-y:auto;"
+                     aria-labelledby="@id">
+                    @foreach (var c in cs)
+                    {
+                        if (c?.Command == null)
+                        {
+                            <div class="dropdown-divider"></div>
+                        }
+                        else
+                        {
+                            <DropdownItem @key="@c.GetHashCode()" DataContext="@c" />
+                        }
+                    }
+                </div>
+            </li>
         }
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"
-               href="@(d?.Href ?? "javascript:void(0)")"
-               title="@desc"
-               disabled="@(!d.IsEnabled ? "disabled" : null)"
-               id="@id"
-               role="button"
-               data-toggle="dropdown"
-               aria-haspopup="true"
-               aria-expanded="false">
-                @if (!string.IsNullOrEmpty(d?.Icon))
-                {
-                    <span class="@d?.Icon"></span>
-                }
-                @title
-                @if (d.BadgeCount > 0)
-                {
-                    <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
-                }
-            </a>
-            <div class="dropdown-menu"
-                 style="max-height: 90vh; overflow-y:auto;"
-                 aria-labelledby="@id">
-                @foreach (var c in cs)
-                {
-                    if (c?.Command == null)
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link"
+                   href="@(d?.Href ?? "javascript:void(0)")"
+                   title="@desc"
+                   disabled="@(!d.IsEnabled ? "disabled" : null)"
+                   @onclick="@(() => d?.Command?.Execute())"
+                   @onclick:preventDefault>
+                    @if (!string.IsNullOrEmpty(d?.Icon))
                     {
-                        <div class="dropdown-divider"></div>
+                        <span class="@d?.Icon"></span>
                     }
-                    else
+                    @title
+                    @if (d.BadgeCount > 0)
                     {
-                        <DropdownItem @key="@c.GetHashCode()" DataContext="@c" />
+                        <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
                     }
-                }
-            </div>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link"
-               href="@(d?.Href ?? "javascript:void(0)")"
-               title="@desc"
-               disabled="@(!d.IsEnabled ? "disabled" : null)"
-               @onclick="@(() => d?.Command?.Execute())"
-               @onclick:preventDefault>
-                @if (!string.IsNullOrEmpty(d?.Icon))
-                {
-                    <span class="@d?.Icon"></span>
-                }
-                @title
-                @if (d.BadgeCount > 0)
-                {
-                    <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
-                }
-            </a>
-        </li>
+                </a>
+            </li>
+        }
     }
 }
 @code

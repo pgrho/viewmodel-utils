@@ -1,16 +1,19 @@
 ﻿@inherits BindableComponentBase
-<div class="text-center text-muted my-4">
-    <div>
-        @Message
-        @if (TotalCount > 0)
-        {
-            @($" ({Progress:#,0}/{TotalCount:#,0})")
-        }
+@using (OnBeginRender())
+{
+    <div class="text-center text-muted my-4">
+        <div>
+            @Message
+            @if (TotalCount > 0)
+            {
+                @($" ({Progress:#,0}/{TotalCount:#,0})")
+            }
+        </div>
+        <div class="mt-2">
+            <span class="fas fa-pulse fa-spinner fa-6x"></span>
+        </div>
     </div>
-    <div class="mt-2">
-        <span class="fas fa-pulse fa-spinner fa-6x"></span>
-    </div>
-</div>
+}
 @code
 {
     [Parameter]

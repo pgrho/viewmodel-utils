@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract partial class BindableComponentBase : ComponentBase, IBindableComponent,ComponentUpdateScope.IComponent
+public abstract partial class BindableComponentBase : ComponentBase, IBindableComponent, ComponentUpdateScope.IComponent
 {
     protected bool IsUpdatingSource { get; set; }
 
@@ -34,6 +34,12 @@ public abstract partial class BindableComponentBase : ComponentBase, IBindableCo
     protected override bool ShouldRender() => ImplicitRender || _ShouldRenderCore;
 
     #endregion ShouldRenderCore
+
+    protected IDisposable OnBeginRender()
+    {
+        ShouldRenderCore = false;
+        return null;
+    }
 
     #region BindableComponentBase
 
@@ -71,13 +77,13 @@ public abstract partial class BindableComponentBase : ComponentBase, IBindableCo
 
     #endregion BindableComponentBase
 
-
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
         var t = base.OnAfterRenderAsync(firstRender);
         ShouldRenderCore = false;
         return t;
     }
+
     object IBindableComponent.DataContext => null;
 }
 
