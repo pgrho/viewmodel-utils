@@ -11,6 +11,8 @@ select {
 }
 
 .entity-selector {
+    flex-wrap: nowrap;
+
     .entity-selector-code, .entity-selector-name {
         white-space: nowrap;
         -ms-overflow-style: none;
