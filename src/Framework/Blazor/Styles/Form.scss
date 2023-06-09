@@ -15,6 +15,7 @@ select {
         white-space: nowrap;
         -ms-overflow-style: none;
         scrollbar-width: none;
+        overflow-x: scroll;
 
         ::-webkit-scrollbar {
             display: none;
