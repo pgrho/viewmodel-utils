@@ -9,3 +9,15 @@ select {
         }
     }
 }
+
+.entity-selector {
+    .entity-selector-code, .entity-selector-name {
+        white-space: nowrap;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}

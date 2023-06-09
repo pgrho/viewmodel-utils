@@ -5,7 +5,7 @@
     var d = DataContext;
     var isEnabled = d != null && (IsEnabled ?? d.IsEnabled);
     var theme = Theme ?? FormGroupTheme.Default;
-    <div class="@theme.InputGroupClass">
+    <div class="@theme.InputGroupClass @GroupClass">
         @if (d.UseList)
         {
             <select @ref="_Select"

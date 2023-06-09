@@ -1,4 +1,5 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
+
 using KeyboardEventArgs = Microsoft.AspNetCore.Components.Web.KeyboardEventArgs;
 
 public partial class EntitySelectorView
@@ -75,42 +76,30 @@ public partial class EntitySelectorView
 
     #endregion ElementId
 
- 
-
     [CascadingParameter]
     public FormGroupTheme Theme { get; set; }
-
-
 
     [Parameter]
     public bool? IsEnabled { get; set; }
 
-
-
     [Parameter]
     public bool IsRequired { get; set; }
 
-
+    [Parameter]
+    public string GroupClass { get; set; } = "entity-selector";
 
     [Parameter]
     public string CodeClass { get; set; } = "entity-selector-code";
 
-
-
     [Parameter]
     public string CodeStyle { get; set; } = "border-top-right-radius:0;border-bottom-right-radius:0;";
-     
-
- 
 
     [Parameter]
     public string NameClass { get; set; } = "entity-selector-name";
 
- 
-
     [Parameter]
     public string NameStyle { get; set; }
-     
+
     [Parameter]
     public bool IsNameVisible { get; set; } = true;
 
