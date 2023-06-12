@@ -12,7 +12,7 @@
             var typeClass = d?.Style.ToButtonClass(BorderStyle.OutlineSecondary);
             var disabled = IsEnabled == false ? "disabled" : null;
 
-            <div class="btn-group @BaseClass p-0">
+            <div class="btn-group @BaseClass p-0 dropdown">
                 <CommandButton BaseClass="@("btn " + BaseClass)"
                        IsVisible="@IsVisible"
                        IsEnabled="@IsEnabled"
