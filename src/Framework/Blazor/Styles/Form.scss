@@ -19,7 +19,7 @@ select {
         scrollbar-width: none;
         overflow-x: scroll;
 
-        ::-webkit-scrollbar {
+         &::-webkit-scrollbar {
             display: none;
         }
     }
