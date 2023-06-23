@@ -10,7 +10,7 @@ public class NavigationService : INavigationService
     protected NavigationManager NavigationManager { get; }
 
     public virtual bool IsSupported(object context, NavigationEntry entry)
-    => entry?.IsSupported == true;
+        => entry?.IsSupported == true;
 
     public virtual void NavigateTo(object context, NavigationEntry entry)
     {
@@ -25,5 +25,11 @@ public class NavigationService : INavigationService
             Console.WriteLine("NavigationService.NavigateTo: {0}", url);
             NavigationManager.NavigateTo(url);
         }
+    }
+
+    public virtual bool CanNavigateBack(object context) => false;
+
+    public virtual void NavigateBack(object context)
+    {
     }
 }

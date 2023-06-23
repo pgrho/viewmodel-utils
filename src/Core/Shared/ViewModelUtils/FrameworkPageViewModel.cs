@@ -2,7 +2,7 @@
 
 public abstract partial class FrameworkPageViewModel : ValidatableModel, IFrameworkPageViewModel
 {
-    public static bool ShouldCaptureContext { get; set; }= TaskHelper.SHOULD_CAPTURE_CONTEXT;
+    public static bool ShouldCaptureContext { get; set; } = TaskHelper.SHOULD_CAPTURE_CONTEXT;
 
     #region Logger
 
@@ -69,6 +69,19 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
         if (IsSupported(entry))
         {
             Navigation.NavigateTo(this, entry);
+            return true;
+        }
+        return false;
+    }
+
+    public bool CanNavigateBack()
+        => Navigation?.CanNavigateBack(this) == true;
+
+    public bool NavigateBack()
+    {
+        if (CanNavigateBack())
+        {
+            Navigation.NavigateBack(this);
             return true;
         }
         return false;
