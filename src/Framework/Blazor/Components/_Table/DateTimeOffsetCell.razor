@@ -1,0 +1,7 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+<td><ShortDateTimeSpan Value="(Value?.LocalDateTime is var d && d>DateTime.MinValue ? d: null)" /></td>
+@code
+{
+    [Parameter]
+    public DateTimeOffset? Value { get; set; }
+}

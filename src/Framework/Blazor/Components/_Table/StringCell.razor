@@ -1,0 +1,29 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits InputCell<string>
+<td class="@(IsChanged ? "table-danger" : null)">
+    @if (IsEnabled)
+    {
+        <input class="form-control form-control-sm"
+               placeholder="@Placeholder"
+               maxlength="@MaxLength"
+        @bind="InternalValue" @attributes="@InputAttributes" />
+    }
+    else
+    {
+        @Value
+    }
+</td>
+@code
+{
+    [Parameter]
+    public int? MaxLength { get; set; }
+
+    protected override string ToString(string value)
+        => value;
+
+    protected override bool TryParse(string s, out string result)
+    {
+        result = s;
+        return true;
+    }
+}

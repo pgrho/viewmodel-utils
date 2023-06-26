@@ -1,0 +1,31 @@
+﻿@using Shipwreck.ReflectionUtils
+@namespace Shipwreck.ViewModelUtils.Components
+@typeparam T
+@inherits InputCell<T>
+<td class="@(IsChanged ? "table-danger" : null)">
+    @if (IsEnabled)
+    {
+        <select class="form-control form-control-sm"
+        @bind="@InternalValue" @attributes="@InputAttributes">
+            @foreach (var t in Options)
+            {
+                <option value="@t.ToString("D")">@(EnumMemberDisplayNames<T>.Default.GetValue(t))</option>
+            }
+        </select>
+    }
+    else
+    {
+        @(EnumMemberDisplayNames<T>.Default.GetValue(Value))
+    }
+</td>
+@code
+{
+    [Parameter]
+    public IEnumerable<T> Options { get; set; }
+
+    protected override string ToString(T value)
+        => value.ToString("D");
+
+    protected override bool TryParse(string s, out T result)
+        => Enum.TryParse(s, out result);
+}

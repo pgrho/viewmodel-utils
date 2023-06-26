@@ -1,0 +1,10 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase<IEntitySelector>
+<td class="@(IsChanged ? "table-danger" : null)">
+    <EntitySelectorView DataContext="DataContext" />
+</td>
+@code
+{
+    [Parameter]
+    public bool IsChanged { get; set; }
+}

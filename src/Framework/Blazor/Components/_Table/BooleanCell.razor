@@ -1,0 +1,33 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+<td class="@(IsChanged ? "table-danger" : null)">
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="@InputId"
+               disabled="@(IsEnabled ? null : "disabled")" @bind="@InternalValue" />
+        <label class="custom-control-label" for="@InputId"></label>
+    </div>
+</td>
+@code
+{
+    private static int _IdSource;
+
+    [Parameter]
+    public string InputId { get; set; } = "booleancell--input--" + Interlocked.Increment(ref _IdSource);
+
+    [Parameter]
+    public bool IsEnabled { get; set; } = true;
+
+    [Parameter]
+    public bool IsChanged { get; set; }
+
+    [Parameter]
+    public bool IsChecked { get; set; }
+
+    [Parameter]
+    public Action<bool> IsCheckedChanged { get; set; }
+
+    private bool InternalValue
+    {
+        get => IsChecked;
+        set => IsCheckedChanged?.Invoke(value);
+    }
+}
