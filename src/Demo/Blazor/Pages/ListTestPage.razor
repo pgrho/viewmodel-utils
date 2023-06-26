@@ -4,15 +4,39 @@
 {
     if (DataContext is ListTestPageViewModel d)
     {
+        if(_Table==null){
+        var tb = new TableBuilder<ListTestPageViewModel.Item>();
+            tb.AddProperty(e => e.Name);
+            tb.AddEnum(e => e.Enum);
+            tb.AddProperty(e => e.Byte);
+            tb.AddProperty(e => e.NullableByte);
+            tb.AddProperty(e => e.Int16);
+            tb.AddProperty(e => e.NullableInt16);
+            tb.AddProperty(e => e.Int32);
+            tb.AddProperty(e => e.NullableInt32);
+            tb.AddProperty(e => e.Int64);
+            tb.AddProperty(e => e.NullableInt64);
+            tb.AddProperty(e => e.Timestamp);
+            _Table = tb.Build();
+        }
+
         <ListScope T="ListTestPageViewModel.Item" Source="@d.Items" DependsOnItemProperties="@(new string[0])">
-            @foreach(var e in d.Items)
-            {
-                <div @key="@e.GetHashCode()">
-                    <DataContextScope DataContext="e">
-                                            @e.Name
-                    </DataContextScope>
-                </div>
-            }
+            <table>
+                <thead class="thead-dark">
+                    <tr>
+                        @_Table.RenderHeader(d)
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var e in d.Items)
+                    {
+                        <tr>
+                            @_Table.RenderCell(e)
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
             @($"{d.Items.Count} items")
         </ListScope>
         <CommandButton DataContext="d.AddBulkCommand" />
@@ -20,6 +44,8 @@
 }
 @code
 {
+    private static Table _Table;
+
     protected override FrameworkPageViewModel GetOrCreateDataContext()
         => base.DataContext as ListTestPageViewModel ?? new ListTestPageViewModel(this);
 }

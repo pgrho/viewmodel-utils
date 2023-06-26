@@ -10,6 +10,17 @@ public sealed class ListTestPageViewModel : PageViewModel
     public sealed class Item : ObservableModel
     {
         public string Name { get; set; }
+
+        public TypeCode Enum { get; set; }
+        public byte Byte { get; set; }
+        public byte? NullableByte { get; set; }
+        public short Int16 { get; set; }
+        public short? NullableInt16 { get; set; }
+        public int Int32 { get; set; }
+        public int? NullableInt32 { get; set; }
+        public long Int64 { get; set; }
+        public long? NullableInt64 { get; set; }
+        public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.Now;
     }
 
     public BulkUpdateableCollection<Item> Items { get; } = new BulkUpdateableCollection<Item>();
@@ -43,5 +54,5 @@ public sealed class ListTestPageViewModel : PageViewModel
         }
 
         IsLoading = false;
-    }, titleGetter: () => IsLoading ? "Adding" : "Add items", iconGetter: () => IsLoading ? "fas fa-spinner fa-pulse" : " fas fa-plus"); 
+    }, titleGetter: () => IsLoading ? "Adding" : "Add items", iconGetter: () => IsLoading ? "fas fa-spinner fa-pulse" : " fas fa-plus");
 }
