@@ -1,4 +1,5 @@
 ﻿using Shipwreck.BootstrapControls;
+using static Android.Icu.Text.CaseMap;
 
 namespace Shipwreck.ViewModelUtils;
 
@@ -9,19 +10,30 @@ public class AndroidInteractionService : InteractionService
     public override bool SupportsToasts => true;
 
     public override Task ShowSuccessToastAsync(object context, string message, string title)
-        => ShowToast(message, ColorScheme.Success);
+        => ShowToast(context, message, title, BorderStyle.Success, ColorScheme.Success);
 
     public override Task ShowErrorToastAsync(object context, string message, string title)
-        => ShowToast(message, ColorScheme.Danger);
+        => ShowToast(context, message, title, BorderStyle.Danger, ColorScheme.Danger);
 
     public override Task ShowWarningToastAsync(object context, string message, string title)
-        => ShowToast(message, ColorScheme.Warning);
+        => ShowToast(context, message, title, BorderStyle.Warning, ColorScheme.Warning);
 
     public override Task ShowInformationToastAsync(object context, string message, string title)
-        => ShowToast(message, ColorScheme.Info);
+        => ShowToast(context, message, title, BorderStyle.Info, ColorScheme.Info);
 
-    protected virtual Task ShowToast(string message, ColorScheme scheme)
+    protected virtual Task ShowToast(object context, string message, string title, BorderStyle style, ColorScheme scheme)
     {
+        if (context is IHasFrameworkPageViewModel hp
+                && hp.Page is FrameworkPageViewModel pvm)
+        {
+            pvm.EnqueueToastLog(style, message, title);
+
+            if (pvm.OverridesToast(message, title, style))
+            {
+                return Task.CompletedTask;
+            }
+        }
+
         var t = Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
         t.SetGravity(GravityFlags.Top | GravityFlags.Center, 0, 30);
         t.View?.SetBackgroundColor(scheme.BackgroundColor.ToAndroid());
