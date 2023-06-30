@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
-public class FrameworkContentPage : ContentPage
+public class FrameworkContentPage : ContentPage, IHasFrameworkPageViewModel
 {
     private WeakReference<object> _ViewModel;
 
@@ -67,4 +67,14 @@ public class FrameworkContentPage : ContentPage
             vm.IsVisible = false;
         }
     }
+
+    #region IHasFrameworkPageViewModel
+
+    FrameworkPageViewModel IHasFrameworkPageViewModel.Page => BindingContext as FrameworkPageViewModel;
+
+    IPageLogger IHasPageLogger.Logger => (BindingContext as FrameworkPageViewModel)?.Logger;
+
+    IInteractionService IHasInteractionService.Interaction => (BindingContext as FrameworkPageViewModel)?.Interaction;
+
+    #endregion IHasFrameworkPageViewModel
 }

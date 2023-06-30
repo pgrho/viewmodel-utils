@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
-public interface IFrameworkModalViewModel : INotifyPropertyChanged, IDisposable, IHasInteractionService, IHasPageLogger
+public partial interface IFrameworkModalViewModel : INotifyPropertyChanged, IDisposable, IHasInteractionService, IHasPageLogger
 {
     CommandViewModelBase CancelCommand { get; }
 

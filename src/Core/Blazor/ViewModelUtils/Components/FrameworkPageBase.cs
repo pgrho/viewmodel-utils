@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>, IHasJSRuntime
+public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>, IHasJSRuntime, IHasFrameworkPageViewModel
 {
     [Inject]
     public IJSRuntime JS { get; set; }
@@ -86,4 +86,12 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
             dc.IsVisible = true;
         }
     }
+
+    #region IHasFrameworkPageViewModel
+
+    FrameworkPageViewModel IHasFrameworkPageViewModel.Page => DataContext;
+
+    IInteractionService IHasInteractionService.Interaction => DataContext?.Interaction; 
+
+    #endregion
 }

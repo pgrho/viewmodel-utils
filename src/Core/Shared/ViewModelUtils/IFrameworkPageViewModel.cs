@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
-public interface IFrameworkPageViewModel : IHasInteraction, IRequestFocus, IDisposable, INotifyDataErrorInfo, INotifyPropertyChanged, IHasInteractionService, IHasPageLogger, IHasNavigationService, ICommandViewModelHandler
+public interface IFrameworkPageViewModel : IHasInteraction, IRequestFocus, IDisposable, INotifyDataErrorInfo, INotifyPropertyChanged, IHasPageLogger, IHasNavigationService, ICommandViewModelHandler, IHasFrameworkPageViewModel
 {
     string Title { get; }
     bool IsBusy { get; }

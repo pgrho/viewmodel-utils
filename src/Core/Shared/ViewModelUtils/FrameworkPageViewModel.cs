@@ -536,6 +536,12 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     #endregion Menu
 
+    #region IHasFrameworkPageViewModel
+
+    FrameworkPageViewModel IHasFrameworkPageViewModel.Page => this;
+
+    #endregion IHasFrameworkPageViewModel
+
     #region ICommandViewModelHandler
 
     private readonly List<WeakReference<CommandViewModelBase>> _ExecutingCommands = new();
