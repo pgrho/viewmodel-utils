@@ -1,5 +1,5 @@
-﻿using System.Net.Http;
-using System.IO;
+﻿using System.IO;
+using System.Net.Http;
 using Notification.Wpf;
 using Notification.Wpf.Controls;
 
@@ -18,6 +18,17 @@ public class FrameworkInteractionService : InteractionService, IInteractionServi
 
     protected override void ShowToast(object context, string message, string title, BorderStyle style)
     {
+        if (context is IHasFrameworkPageViewModel hp
+            && hp.Page is FrameworkPageViewModel pvm)
+        {
+            pvm.EnqueueToastLog(style, message, title);
+
+            if (pvm.OverridesToast(message, title, style))
+            {
+                return;
+            }
+        }
+
         var w = GetWindow(context);
         if (w != null)
         {

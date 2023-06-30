@@ -89,6 +89,58 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     #endregion Navigation
 
+    #region Toast
+
+    protected virtual int MaxToastLogCount => 0;
+
+    protected virtual int MaxRecentToastLogCount => 0;
+
+    private ObservableCollection<ToastLogViewModel> _ToastLogs;
+
+    public ObservableCollection<ToastLogViewModel> ToastLogs
+        => _ToastLogs ??= new();
+
+    private ObservableCollection<ToastLogViewModel> _RecentToastLogs;
+
+    public ObservableCollection<ToastLogViewModel> RecentToastLogs
+        => _RecentToastLogs ??= new();
+
+    public virtual void EnqueueToastLog(BorderStyle style, string message, string title)
+    {
+        if (MaxToastLogCount is var toastCount && toastCount > 0)
+        {
+            if (InvokeRequired)
+            {
+                InvokeAsync(() => EnqueueToastLog(style, message, title)).ContinueWith(_ => { });
+            }
+            else
+            {
+                var vm = new ToastLogViewModel(this, style, message, title);
+
+                while (ToastLogs.Count - toastCount is var diff && diff >= 0)
+                {
+                    ToastLogs.RemoveAt(diff);
+                }
+
+                ToastLogs.Add(vm);
+
+                if (MaxRecentToastLogCount is var rc && rc > 0)
+                {
+                    RecentToastLogs.Insert(0, vm);
+
+                    while (RecentToastLogs.Count > rc)
+                    {
+                        RecentToastLogs.RemoveAt(RecentToastLogs.Count - 1);
+                    }
+                }
+            }
+        }
+    }
+
+    public virtual bool OverridesToast(string message, string title, BorderStyle style) => false;
+
+    #endregion Toast
+
     #region Title
 
     private string _Title;

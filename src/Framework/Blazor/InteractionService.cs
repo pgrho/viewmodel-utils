@@ -46,21 +46,32 @@ public class InteractionService : IInteractionService
     bool IInteractionService.SupportsToasts => true;
 
     public Task ShowErrorToastAsync(object context, string message, string title)
-        => ShowToastAsync(context, ToastIcon.Error, message, title);
+        => ShowToastAsync(context, BorderStyle.Danger, ToastIcon.Error, message, title);
 
     public Task ShowInformationToastAsync(object context, string message, string title)
-        => ShowToastAsync(context, ToastIcon.Information, message, title);
+        => ShowToastAsync(context, BorderStyle.Info, ToastIcon.Information, message, title);
 
     public Task ShowSuccessToastAsync(object context, string message, string title)
-        => ShowToastAsync(context, ToastIcon.Success, message, title);
+        => ShowToastAsync(context, BorderStyle.Success, ToastIcon.Success, message, title);
 
     public Task ShowWarningToastAsync(object context, string message, string title)
-        => ShowToastAsync(context, ToastIcon.Warning, message, title);
+        => ShowToastAsync(context, BorderStyle.Warning, ToastIcon.Warning, message, title);
 
-    protected virtual Task ShowToastAsync(object context, ToastIcon icon, string message, string title)
+    protected virtual Task ShowToastAsync(object context, BorderStyle style, ToastIcon icon, string message, string title)
     {
         try
         {
+            if (context is IHasFrameworkPageViewModel hp
+                && hp.Page is FrameworkPageViewModel pvm)
+            {
+                pvm.EnqueueToastLog(style, message, title);
+
+                if (pvm.OverridesToast(message, title, style))
+                {
+                    return Task.CompletedTask;
+                }
+            }
+
             var js = (context as IHasJSRuntime)?.JS;
 
             return js?.ShowToastAsync(new ToastOptions

@@ -120,7 +120,20 @@ public class InteractionService : IInteractionService
         => InvokeAsync(context, () => ShowToast(context, message, title, style));
 
     protected virtual void ShowToast(object context, string message, string title, BorderStyle style)
-        => MessageBox.Show(GetWindow(context), message, title);
+    {
+        if (context is IHasFrameworkPageViewModel hp
+            && hp.Page is FrameworkPageViewModel pvm)
+        {
+            pvm.EnqueueToastLog(style, message, title);
+
+            if (pvm.OverridesToast(message, title, style))
+            {
+                return;
+            }
+        }
+
+        MessageBox.Show(GetWindow(context), message, title);
+    }
 
     #endregion Toast
 
