@@ -15,7 +15,7 @@ public sealed class EnumConditionViewModel : MultipleOptionConditionViewModel<En
             Model.Fields
                 .Where(e => !Model.IsFlags || e.Value != 0)
                 .Select(e => new EnumOptionViewModel(
-                    this, e, e.DisplayName ?? e.Name)));
+                    this, e, e.DisplayName ?? e.Name, isSelected: true)));
         IsSearching = false;
     }
 
@@ -25,7 +25,7 @@ public sealed class EnumConditionViewModel : MultipleOptionConditionViewModel<En
         {
             foreach (var op in Options)
             {
-                op.IsSelected = false;
+                op.IsSelected = true;
             }
             return;
         }
