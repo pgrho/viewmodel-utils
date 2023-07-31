@@ -62,27 +62,21 @@ public class SearchPropertyViewModel : ObservableModel
         {
             _IsParentLoaded = true;
 
-            var li = Name.LastIndexOf('.');
-            if (li >= 0)
+            _Parent = Page.ResolveParent(this);
+
+            StringBuilder sb = null;
+            for (var p = _Parent; p != null; p = p.Parent)
             {
-                var pn = Name.Substring(0, li);
-
-                _Parent = Page.Properties.FirstOrDefault(e => e.Name == pn);
-
-                StringBuilder sb = null;
-                for (var p = _Parent; p != null; p = p.Parent)
+                if (sb == null)
                 {
-                    if (sb == null)
-                    {
-                        sb = new StringBuilder(p.DisplayName);
-                    }
-                    else
-                    {
-                        sb.Insert(0, "/").Insert(0, p.DisplayName);
-                    }
+                    sb = new StringBuilder(p.DisplayName);
                 }
-                _AncestorPath = sb?.ToString();
+                else
+                {
+                    sb.Insert(0, "/").Insert(0, p.DisplayName);
+                }
             }
+            _AncestorPath = sb?.ToString();
         }
         return this;
     }

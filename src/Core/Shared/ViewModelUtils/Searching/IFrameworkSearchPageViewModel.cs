@@ -4,6 +4,21 @@ public interface IFrameworkSearchPageViewModel : ISortablePageViewModel, ISelect
 {
     BulkUpdateableCollection<SearchPropertyViewModel> Properties { get; }
 
+    SearchPropertyViewModel ResolveParent(SearchPropertyViewModel property)
+#if NET7_0_OR_GREATER
+    {
+        var li = property.Name?.LastIndexOf('.');
+        if (li >= 0)
+        {
+            var pn = property.Name.Substring(0, li.Value);
+            return Properties.FirstOrDefault(e => e.Name == pn);
+        }
+        return null;
+    }
+#else
+    ;
+#endif
+
     BulkUpdateableCollection<ConditionViewModel> Conditions { get; }
 
     string GetPropertyDisplayName(string property);
