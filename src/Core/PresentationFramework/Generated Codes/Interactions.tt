@@ -208,7 +208,7 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
 
         public Task<string> SaveDirectoryAsync(
             string directoryName = null)
-            => Interaction.OpenDirectoryAsync(
+            => Interaction.SaveDirectoryAsync(
             this,
             directoryName: directoryName);
 

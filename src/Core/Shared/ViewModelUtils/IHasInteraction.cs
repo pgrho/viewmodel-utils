@@ -1,10 +1,7 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
-public interface IHasInteraction
+public interface IHasInteraction : IHasInteractionService, IHasPageLogger
 {
-    IPageLogger Logger { get; }
-    IInteractionService Interaction { get; }
-
     #region InvokeAsync
 
     bool InvokeRequired { get; }

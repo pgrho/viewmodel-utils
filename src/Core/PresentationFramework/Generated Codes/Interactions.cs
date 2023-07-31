@@ -262,7 +262,7 @@
 
         public Task<string> SaveDirectoryAsync(
             string directoryName = null)
-            => Interaction.OpenDirectoryAsync(
+            => Interaction.SaveDirectoryAsync(
             this,
             directoryName: directoryName);
 
@@ -651,7 +651,7 @@ namespace Shipwreck.ViewModelUtils
 
         public Task<string> SaveDirectoryAsync(
             string directoryName = null)
-            => Interaction.OpenDirectoryAsync(
+            => Interaction.SaveDirectoryAsync(
             this,
             directoryName: directoryName);
 
