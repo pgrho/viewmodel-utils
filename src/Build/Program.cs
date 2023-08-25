@@ -104,7 +104,7 @@ internal static class Program
                 var pc = await ExecuteAsync(new ProcessStartInfo(devenv.FullName)
                 {
                     ArgumentList = { Path.Combine(solDir, "Shipwreck.ViewModelUtils.sln"), "/Build", "Release", "/Project", proj }
-                });
+                }, encoding: Encoding.UTF8);
                 if (pc.ExitCode != 0
                     || !ValidatePackage(proj, version))
                 {
@@ -142,7 +142,7 @@ internal static class Program
     private static string GetSolutionDirectory([CallerFilePath] string fileName = null)
         => Path.GetDirectoryName(Path.GetDirectoryName(fileName));
 
-    private static Task<Process> ExecuteAsync(ProcessStartInfo info, Action<string> stdout = null, Action<string> stderr = null)
+    private static Task<Process> ExecuteAsync(ProcessStartInfo info, Action<string> stdout = null, Action<string> stderr = null, Encoding encoding = null)
     {
         var tcs = new TaskCompletionSource<Process>();
 
@@ -152,6 +152,12 @@ internal static class Program
             info.RedirectStandardOutput = true;
             info.RedirectStandardError = true;
             info.CreateNoWindow = true;
+
+            if (encoding != null)
+            {
+                info.StandardOutputEncoding = encoding;
+                info.StandardErrorEncoding = encoding;
+            }
 
             var p = new Process()
             {
