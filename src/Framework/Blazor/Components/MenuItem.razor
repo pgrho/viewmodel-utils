@@ -3,15 +3,77 @@
 {
     if (DataContext?.Command?.IsVisible == true)
     {
+        var icon = DataContext.Command?.Icon;
+        var title = DataContext.Command?.Title;
         if (DataContext.SubCommands.Count == 0)
         {
-            <CommandButton BaseClass="btn btn-block" DataContext="@DataContext.Command" />
+            <CommandButton BaseClass="btn btn-block" DataContext="@DataContext.Command">
+                @if (icon != null)
+                {
+                    <span class="@icon"></span>
+                }
+                @title
+                @foreach (var c in DataContext.BadgeCommands)
+                {
+                    <DataContextScope @key="c.GetHashCode()" DataContext="c">
+                        @if (c.IsVisible)
+                        {
+                            var style = (c.Style & BorderStyle.Warning).ToClassName("badge-") ?? "badge-danger";
+                            <span class="badge badge-pill @style"
+                                  style="cursor: pointer;"
+                                  title="@(c.Description ?? c.Title)"
+                                  href="@(c.Href ?? "javascript:void(0)")"
+                                  @onclick="@((Action)c.Execute)"
+                            @onclick:preventDefault>
+                                @if (c.Icon?.Length > 0)
+                                {
+                                    <span class="@c.Icon"></span>
+                                }
+                                @if (c.BadgeCount > 0)
+                                {
+                                    @c.BadgeCount
+                                }
+                            </span>
+                        }
+                    </DataContextScope>
+                }
+            </CommandButton>
         }
         else
         {
             <div class="btn-group btn-block" role="group">
                 <CommandButton BaseClass="btn"
-                               DataContext="@DataContext.Command" />
+                               DataContext="@DataContext.Command">
+                    @if (icon != null)
+                    {
+                        <span class="@icon"></span>
+                    }
+                    @title
+                    @foreach (var c in DataContext.BadgeCommands)
+                    {
+                        <DataContextScope @key="c.GetHashCode()" DataContext="c">
+                            @if (c.IsVisible)
+                            {
+                                var style = (c.Style & BorderStyle.Warning).ToClassName("badge-") ?? "badge-danger";
+                                <span class="badge badge-pill @style"
+                                      style="cursor: pointer;"
+                                      title="@(c.Description ?? c.Title)"
+                                      href="@(c.Href ?? "javascript:void(0)")"
+                                      @onclick="@((Action)c.Execute)"
+                                @onclick:preventDefault>
+                                    @if (c.Icon?.Length > 0)
+                                    {
+                                        <span class="@c.Icon"></span>
+                                    }
+                                    @if (c.BadgeCount > 0)
+                                    {
+                                        @c.BadgeCount
+                                    }
+                                </span>
+                            }
+                        </DataContextScope>
+                    }
+                </CommandButton>
                 @foreach (var c in DataContext.SubCommands)
                 {
                     <CommandButton @key="@c.GetHashCode()"

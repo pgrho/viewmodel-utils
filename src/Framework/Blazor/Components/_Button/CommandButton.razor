@@ -27,18 +27,25 @@
                @onclick="@((Action)d.Execute)"
                @onclick:preventDefault
                @attributes="AdditionalAttributes">
-                @if (hasIcon)
+                @if (ChildContent != null)
                 {
-                    <span class="@icon @(hasTitle ? null : "mt-1")"></span>
+                    @ChildContent
                 }
-                @if (hasTitle)
+                else
                 {
-                    @title
-                }
-                @if (badgeCount > 0)
-                {
-                    <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
-                }
+                    if (hasIcon)
+                    {
+                        <span class="@icon @(hasTitle ? null : "mt-1")"></span>
+                    }
+                    if (hasTitle)
+                    {
+                        @title
+                    }
+                    if (badgeCount > 0)
+                    {
+                        <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
+                    }
+                }       
             </a>
         }
         else
@@ -49,18 +56,25 @@
                     title="@desc"
                     @onclick="@((Action)d.Execute)"
                     @attributes="AdditionalAttributes">
-                @if (hasIcon)
+                @if (ChildContent != null)
                 {
-                    <span class="@icon @(hasTitle ? null : "mt-1")"></span>
+                    @ChildContent
                 }
-                @if (hasTitle)
+                else
                 {
-                    @title
-                }
-                @if (badgeCount > 0)
-                {
-                    <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
-                }
+                    if (hasIcon)
+                    {
+                        <span class="@icon @(hasTitle ? null : "mt-1")"></span>
+                    }
+                    if (hasTitle)
+                    {
+                        @title
+                    }
+                     if (badgeCount > 0)
+                    {
+                        <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
+                    }
+                } 
             </button>
         }
     }

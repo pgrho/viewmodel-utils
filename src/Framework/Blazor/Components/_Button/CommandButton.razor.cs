@@ -40,4 +40,7 @@ public partial class CommandButton : BindableComponentBase<ICommandViewModel>
 
     [Parameter]
     public BorderStyle BadgeStyle { get; set; } = BorderStyle.Danger;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 }

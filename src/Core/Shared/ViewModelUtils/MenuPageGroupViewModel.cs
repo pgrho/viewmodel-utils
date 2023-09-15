@@ -37,4 +37,15 @@ public partial class MenuPageGroupViewModel : ObservableModel
         IsVisible = Items.Any(e => e.Command.IsVisible);
         return this;
     }
+
+    public MenuPageGroupViewModel InvalidateAll()
+    {
+        foreach(var c in Items)
+        {
+            c.Invalidate();
+        }
+
+        IsVisible = Items.Any(e => e.Command.IsVisible);
+        return this;
+    }
 }
