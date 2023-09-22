@@ -8,6 +8,7 @@
         if (pcs.Count > 1 && DropDownTitle != null)
         {
             <DropdownButton BaseClass="@BaseClass"
+                            TabIndex="@TabIndex"
                             Style="@(DropDownStyle ?? pcs[0].Style)"
                             Source="@pcs">
                 @if (!string.IsNullOrEmpty(DropDownIcon))
@@ -20,6 +21,7 @@
         else
         {
             <SplitButton BaseClass="@BaseClass"
+                         TabIndex="@TabIndex"
                          DataContext="@pcs[0]"
                          Source="@pcs" />
         }
@@ -38,4 +40,7 @@
 
     [Parameter]
     public BorderStyle? DropDownStyle { get; set; }
+
+    [Parameter]
+    public int? TabIndex { get; set; }
 }

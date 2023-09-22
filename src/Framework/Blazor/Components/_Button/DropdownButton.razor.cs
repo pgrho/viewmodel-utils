@@ -24,4 +24,7 @@ public partial class DropdownButton : ListComponentBase<ICommandViewModel>
 
     [Parameter]
     public string Description { get; set; }
+
+    [Parameter]
+    public int? TabIndex { get; set; }
 }

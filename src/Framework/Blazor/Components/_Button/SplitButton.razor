@@ -14,19 +14,20 @@
 
             <div class="btn-group @BaseClass p-0 dropdown">
                 <CommandButton BaseClass="@("btn " + BaseClass)"
-                       IsVisible="@IsVisible"
-                       IsEnabled="@IsEnabled"
-                       IsActive="@IsActive"
-                       ShowIcon="@ShowIcon"
-                       ShowTitle="@ShowTitle"
-                       ShowBadge="@ShowBadge"
-                       DataContext="@d" />
+                               IsVisible="@IsVisible"
+                               IsEnabled="@IsEnabled"
+                               IsActive="@IsActive"
+                               ShowIcon="@ShowIcon"
+                               ShowTitle="@ShowTitle"
+                               ShowBadge="@ShowBadge"
+                               TabIndex="@TabIndex"
+                               DataContext="@d" />
                 <button type="button"
-                class="btn @typeClass @(IsActive == true ? " active" : null) dropdown-toggle dropdown-toggle-split"
-                disabled="@disabled"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false">
+                        class="btn @typeClass @(IsActive == true ? " active" : null) dropdown-toggle dropdown-toggle-split"
+                        disabled="@disabled"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false">
                     <span class="sr-only">Toggle Dropdown</span>
                 </button>
                 <div class="dropdown-menu w-100">
@@ -40,10 +41,11 @@
         else
         {
             <CommandButton BaseClass="@BaseClass"
-                   IsVisible="@IsVisible"
-                   IsEnabled="@IsEnabled"
-                   IsActive="@IsActive"
-                   DataContext="@d" />
+                           IsVisible="@IsVisible"
+                           IsEnabled="@IsEnabled"
+                           IsActive="@IsActive"
+                           TabIndex="@TabIndex"
+                           DataContext="@d" />
         }
     }
 }

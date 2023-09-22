@@ -18,6 +18,9 @@ public partial class CommandButton : BindableComponentBase<ICommandViewModel>
     public int? BadgeCount { get; set; }
 
     [Parameter]
+    public int? TabIndex { get; set; }
+
+    [Parameter]
     public bool? IsVisible { get; set; }
 
     [Parameter]

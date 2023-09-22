@@ -2,7 +2,7 @@
 @inherits BindableComponentBase<ICommandViewModel>
 @using (OnBeginRender())
 {
-    var d = DataContext; 
+    var d = DataContext;
     if (IsVisible != false && d.IsVisible)
     {
         var cls = BaseClass
@@ -24,8 +24,9 @@
                href="@d.Href"
                title="@desc"
                disabled="@disabled"
+               tabindex="@TabIndex"
                @onclick="@((Action)d.Execute)"
-               @onclick:preventDefault
+            @onclick:preventDefault
                @attributes="AdditionalAttributes">
                 @if (ChildContent != null)
                 {
@@ -45,7 +46,7 @@
                     {
                         <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
                     }
-                }       
+                }
             </a>
         }
         else
@@ -54,6 +55,7 @@
                     class="@cls"
                     disabled="@disabled"
                     title="@desc"
+                    tabindex="@TabIndex"
                     @onclick="@((Action)d.Execute)"
                     @attributes="AdditionalAttributes">
                 @if (ChildContent != null)
@@ -70,11 +72,11 @@
                     {
                         @title
                     }
-                     if (badgeCount > 0)
+                    if (badgeCount > 0)
                     {
                         <span class="badge badge-pill @BadgeStyle.ToClassName("badge-")">@(badgeCount.ToString("#,0"))</span>
                     }
-                } 
+                }
             </button>
         }
     }

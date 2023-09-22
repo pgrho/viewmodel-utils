@@ -22,4 +22,7 @@ public partial class SplitButton : ListComponentBase<ICommandViewModel, ICommand
 
     [Parameter]
     public bool ShowBadge { get; set; } = true;
+
+    [Parameter]
+    public int? TabIndex { get; set; }
 }
