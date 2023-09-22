@@ -213,7 +213,7 @@ public abstract class InteractionService : IInteractionService
     public Task CloseModalAsync(object context, object viewModel)
     {
         var p = ResolvePage(context);
-        var fm = p?.Navigation?.ModalStack?.FirstOrDefault();
+        var fm = p?.Navigation?.ModalStack?.LastOrDefault();
         if (fm?.BindingContext == viewModel)
         {
             return p.Navigation.PopModalAsync();
