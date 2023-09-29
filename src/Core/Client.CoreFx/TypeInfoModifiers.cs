@@ -5,7 +5,7 @@ namespace Shipwreck.ViewModelUtils.Client;
 
 public static class TypeInfoModifiers
 {
-    public static void SupportShouldSerialize(JsonTypeInfo typeInfo, Action<Exception> exceptionCallback = null)
+    public static void SupportShouldSerialize(JsonTypeInfo typeInfo, Action<JsonTypeInfo, JsonPropertyInfo, Exception> exceptionCallback = null)
     {
         bool? isDataContract = null;
         foreach (var p in typeInfo.Properties)
@@ -77,11 +77,11 @@ public static class TypeInfoModifiers
                 {
                     if (exceptionCallback != null)
                     {
-                        exceptionCallback(ex);
+                        exceptionCallback(typeInfo, p, ex);
                     }
                     else
                     {
-                        Console.Error?.WriteLine("An exception is caught while setting ShouldSerialize.");
+                        Console.Error?.WriteLine($"An exception is caught while setting ShouldSerialize of {typeInfo.Type.FullName}#{p.Name}.");
                         Console.Error?.WriteLine(ex);
                     }
                 }
