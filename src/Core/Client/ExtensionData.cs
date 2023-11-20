@@ -6,7 +6,6 @@ namespace Shipwreck.ViewModelUtils.Client;
 [TypeConverter(typeof(ExtensionDataConverter))]
 public sealed partial class ExtensionData : Dictionary<string, string>
 {
-    [RequiresUnreferencedCode("Default Constructor")]
     public ExtensionData()
     {
     }

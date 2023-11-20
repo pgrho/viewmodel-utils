@@ -3,7 +3,7 @@
 [DataContract]
 public partial class SearchPagePreferenceInfo : FrameworkMessageObject
 {
-    [RequiresUnreferencedCode("Default Constructor")]
+
     public SearchPagePreferenceInfo()
         : base(null)
     {
@@ -16,11 +16,13 @@ public partial class SearchPagePreferenceInfo : FrameworkMessageObject
     [DataMember]
     public IList<SearchPageDefaultConditionInfo> Conditions
     {
+        [DynamicDependency(nameof(ShouldSerializeConditions))]
         get => CollectionHelper.GetOrCreate(ref _Conditions);
+
+        [DynamicDependency(nameof(ShouldSerializeConditions))]
         set => CollectionHelper.Set(ref _Conditions, value);
     }
 
-    [RequiresUnreferencedCode("ShouldSerialize")]
     public bool ShouldSerializeConditions() => !AreConditionsGenerated;
 
     #endregion Conditions
@@ -32,11 +34,13 @@ public partial class SearchPagePreferenceInfo : FrameworkMessageObject
     [DataMember]
     public IList<string> Orders
     {
+        [DynamicDependency(nameof(ShouldSerializeOrders))]
         get => CollectionHelper.GetOrCreate(ref _Orders);
+
+        [DynamicDependency(nameof(ShouldSerializeOrders))]
         set => CollectionHelper.Set(ref _Orders, value);
     }
 
-    [RequiresUnreferencedCode("ShouldSerialize")]
     public bool ShouldSerializeOrders() => !AreOrdersGenerated;
 
     #endregion Orders

@@ -2,7 +2,7 @@
 
 public class SearchPageDefaultConditionInfoJsonConverter : MessageObjectJsonConverter<SearchPageDefaultConditionInfo>
 {
-    [RequiresUnreferencedCode("Default Constructor")]
+    
     public SearchPageDefaultConditionInfoJsonConverter() { }
 
     protected override SearchPageDefaultConditionInfo CreateInstance() => new SearchPageDefaultConditionInfo();

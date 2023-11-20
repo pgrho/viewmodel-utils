@@ -2,7 +2,7 @@
 
 public class QueryPropertyInfoJsonConverter : JsonConverter<QueryPropertyInfo>
 {
-    [RequiresUnreferencedCode("Default Constructor")]
+    
     public QueryPropertyInfoJsonConverter() { }
 
     public override QueryPropertyInfo ReadJson(JsonReader reader, Type objectType, QueryPropertyInfo existingValue, bool hasExistingValue, JsonSerializer serializer)

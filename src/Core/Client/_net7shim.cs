@@ -1,8 +1,9 @@
 ﻿#if !NET7_0_OR_GREATER
 namespace System.Diagnostics.CodeAnalysis;
 
-internal sealed class RequiresUnreferencedCodeAttribute : Attribute
+[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+internal sealed class DynamicDependencyAttribute : Attribute
 {
-    public RequiresUnreferencedCodeAttribute(string message) { }
+    public DynamicDependencyAttribute(string memberSignature) { }
 }
 #endif

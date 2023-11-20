@@ -2,7 +2,7 @@
 
 public sealed class EnumFieldInfoJsonConverter : JsonConverter<EnumFieldInfo>
 {
-    [RequiresUnreferencedCode("Default Constructor")]
+    
     public EnumFieldInfoJsonConverter()
     {
     }

@@ -2,7 +2,7 @@
 
 public sealed class ExtensionDataJsonConverter : JsonConverter<ExtensionData>
 {
-    [RequiresUnreferencedCode("Default Constructor")]
+    
     public ExtensionDataJsonConverter() { }
 
     public override bool CanConvert(Type typeToConvert)

@@ -5,8 +5,9 @@ namespace Shipwreck.ViewModelUtils.Client;
 [DataContract]
 public partial class DateTimeQueryPropertyInfo : QueryPropertyInfo
 {
-    [RequiresUnreferencedCode("Default Constructor")]
-    public DateTimeQueryPropertyInfo() { }
+    public DateTimeQueryPropertyInfo()
+    {
+    }
 
     [DataMember]
     public bool IsDate { get; set; }

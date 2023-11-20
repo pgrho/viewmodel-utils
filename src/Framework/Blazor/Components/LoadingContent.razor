@@ -19,29 +19,9 @@
     [Parameter]
     public string Message { get; set; } = "データを取得しています。";
 
-    #region TotalCount
-
-    private int _TotalCount;
+    [Parameter]
+    public int TotalCount { get; set; }
 
     [Parameter]
-    public int TotalCount
-    {
-        get => _TotalCount;
-        set => SetProperty(ref _TotalCount, value);
-    }
-
-    #endregion TotalCount
-
-    #region Progress
-
-    private int _Progress;
-
-    [Parameter]
-    public int Progress
-    {
-        get => _Progress;
-        set => SetProperty(ref _Progress, value);
-    }
-
-    #endregion Progress
+    public int Progress { get; set; }
 }

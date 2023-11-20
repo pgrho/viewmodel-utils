@@ -3,8 +3,9 @@
 [DataContract]
 public partial class QueryPropertyInfo : ICloneable
 {
-    [RequiresUnreferencedCode("Default Constructor")]
-    public QueryPropertyInfo() { }
+    public QueryPropertyInfo()
+    {
+    }
 
     [DataMember]
     public string Name { get; set; }

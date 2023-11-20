@@ -118,9 +118,10 @@ foreach (var t in new [] {
     {
         private <#= t.Property #> _DataContext;
 
-
         [Parameter]
+#pragma warning disable BL0007 // Component parameters should be auto properties
         public virtual <#= t.Property #> DataContext
+#pragma warning restore BL0007 // Component parameters should be auto properties
         {
             get => _DataContext;
             set
@@ -135,10 +136,6 @@ foreach (var t in new [] {
                 }
             }
         }
-         
-
-
-     
 
         protected virtual void OnDataContextRemoved(<#= t.Property #> dataContext)
         {

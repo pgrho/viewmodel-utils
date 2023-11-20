@@ -176,9 +176,10 @@ namespace Shipwreck.ViewModelUtils.Components
     {
         private T _DataContext;
 
-
         [Parameter]
+#pragma warning disable BL0007 // Component parameters should be auto properties
         public virtual T DataContext
+#pragma warning restore BL0007 // Component parameters should be auto properties
         {
             get => _DataContext;
             set
@@ -193,10 +194,6 @@ namespace Shipwreck.ViewModelUtils.Components
                 }
             }
         }
-         
-
-
-     
 
         protected virtual void OnDataContextRemoved(T dataContext)
         {
@@ -249,9 +246,10 @@ namespace Shipwreck.ViewModelUtils.Components
     {
         private T _DataContext;
 
-
         [Parameter]
+#pragma warning disable BL0007 // Component parameters should be auto properties
         public virtual T DataContext
+#pragma warning restore BL0007 // Component parameters should be auto properties
         {
             get => _DataContext;
             set
@@ -266,10 +264,6 @@ namespace Shipwreck.ViewModelUtils.Components
                 }
             }
         }
-         
-
-
-     
 
         protected virtual void OnDataContextRemoved(T dataContext)
         {
@@ -322,9 +316,10 @@ namespace Shipwreck.ViewModelUtils.Components
     {
         private TDataContext _DataContext;
 
-
         [Parameter]
+#pragma warning disable BL0007 // Component parameters should be auto properties
         public virtual TDataContext DataContext
+#pragma warning restore BL0007 // Component parameters should be auto properties
         {
             get => _DataContext;
             set
@@ -339,10 +334,6 @@ namespace Shipwreck.ViewModelUtils.Components
                 }
             }
         }
-         
-
-
-     
 
         protected virtual void OnDataContextRemoved(TDataContext dataContext)
         {

@@ -11,7 +11,9 @@ public abstract partial class ListComponentBase<T> : BindableComponentBase
     private IList _Source;
 
     [Parameter]
+#pragma warning disable BL0007 // Component parameters should be auto properties
     public IList Source
+#pragma warning restore BL0007 // Component parameters should be auto properties
     {
         get => _Source;
         set

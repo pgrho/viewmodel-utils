@@ -2,7 +2,7 @@
 
 public class SearchPagePreferenceInfoJsonConverter : MessageObjectJsonConverter<SearchPagePreferenceInfo>
 {
-    [RequiresUnreferencedCode("Default Constructor")]
+    
     public SearchPagePreferenceInfoJsonConverter() { }
 
     protected override SearchPagePreferenceInfo CreateInstance() => new SearchPagePreferenceInfo();
