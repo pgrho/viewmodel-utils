@@ -2,5 +2,5 @@
 
 public interface IFrameworkSearchPageViewModelHandler : IFrameworkPageViewModelHandler
 {
-    IEnumerable<SearchPropertyGroupViewModel> CreatePropertyGroups(IFrameworkSearchPageViewModel page);
+    IEnumerable<SearchPropertyGroupViewModel> CreatePropertyGroups(SearchPropertiesModalViewModel modal);
 }

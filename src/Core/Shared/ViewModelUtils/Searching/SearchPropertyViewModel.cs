@@ -10,7 +10,7 @@ public class SearchPropertyViewModel : ObservableModel
     }
 
     public IFrameworkSearchPageViewModel Page { get; }
-    protected internal QueryPropertyInfo Model { get; }
+    public QueryPropertyInfo Model { get; }
 
     public string Name => Model.Name;
     public string DisplayName { get; }

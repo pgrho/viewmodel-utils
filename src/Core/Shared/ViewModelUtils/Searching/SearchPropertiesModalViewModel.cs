@@ -19,7 +19,7 @@ public partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBas
         => _Groups ??= Array.AsReadOnly(GetGroups().ToArray());
 
     protected virtual IEnumerable<SearchPropertyGroupViewModel> GetGroups()
-        => (FrameworkPageViewModel.Handler as IFrameworkSearchPageViewModelHandler)?.CreatePropertyGroups(SearchPage)
+        => (FrameworkPageViewModel.Handler as IFrameworkSearchPageViewModelHandler)?.CreatePropertyGroups(this)
             ?? SearchPage.Properties
                     .GroupBy(e => e.AncestorPath)
                     .OrderBy(e => e.Key ?? string.Empty)
