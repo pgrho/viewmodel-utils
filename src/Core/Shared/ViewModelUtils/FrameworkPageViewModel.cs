@@ -2,6 +2,8 @@
 
 public abstract partial class FrameworkPageViewModel : ValidatableModel, IFrameworkPageViewModel
 {
+    public static IFrameworkPageViewModelHandler Handler { get; set; }
+
     public static bool ShouldCaptureContext { get; set; } = TaskHelper.SHOULD_CAPTURE_CONTEXT;
 
     #region Logger

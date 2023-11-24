@@ -1,8 +1,8 @@
 ﻿namespace Shipwreck.ViewModelUtils.Searching;
 
-public sealed class SearchPropertyGroupViewModel : ObservableModel
+public class SearchPropertyGroupViewModel : ObservableModel
 {
-    internal SearchPropertyGroupViewModel(SearchPropertiesModalViewModel modal, string ancestorPath, IEnumerable<SearchPropertyViewModel> properties)
+    protected internal SearchPropertyGroupViewModel(SearchPropertiesModalViewModel modal, string ancestorPath, IEnumerable<SearchPropertyViewModel> properties)
     {
         Modal = modal;
         AncestorPath = ancestorPath;

@@ -1,8 +1,6 @@
-﻿using System.Windows.Input;
+﻿namespace Shipwreck.ViewModelUtils.Searching;
 
-namespace Shipwreck.ViewModelUtils.Searching;
-
-public sealed partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBase
+public partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBase
 {
     public SearchPropertiesModalViewModel(FrameworkPageViewModel page)
         : base(page)
@@ -18,11 +16,14 @@ public sealed partial class SearchPropertiesModalViewModel : FrameworkModalViewM
     private ReadOnlyCollection<SearchPropertyGroupViewModel> _Groups;
 
     public ReadOnlyCollection<SearchPropertyGroupViewModel> Groups
-        => _Groups ??= Array.AsReadOnly(SearchPage.Properties
+        => _Groups ??= Array.AsReadOnly(GetGroups().ToArray());
+
+    protected virtual IEnumerable<SearchPropertyGroupViewModel> GetGroups()
+        => (FrameworkPageViewModel.Handler as IFrameworkSearchPageViewModelHandler)?.CreatePropertyGroups(SearchPage)
+            ?? SearchPage.Properties
                     .GroupBy(e => e.AncestorPath)
                     .OrderBy(e => e.Key ?? string.Empty)
-                    .Select(g => new SearchPropertyGroupViewModel(this, g.Key, g))
-                    .ToArray());
+                    .Select(g => new SearchPropertyGroupViewModel(this, g.Key, g));
 
     #endregion Groups
 

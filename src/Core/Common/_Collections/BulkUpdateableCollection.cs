@@ -226,6 +226,16 @@ public class BulkUpdateableCollection<T> : ObservableCollection<T>
     public void Set(IEnumerable<T> items)
         => _Updater.Set(this, items);
 
+    public bool SetIfNeeded(IReadOnlyList<T> items)
+    {
+        if (!items.SequenceEqual(this))
+        {
+            Set(items);
+            return true;
+        }
+        return false;
+    }
+
     public int RemoveAll(Func<T, bool> predicate)
     {
         var c = 0;

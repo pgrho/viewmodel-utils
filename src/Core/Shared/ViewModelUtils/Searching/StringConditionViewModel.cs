@@ -1,5 +1,4 @@
 ﻿namespace Shipwreck.ViewModelUtils.Searching;
-
 public sealed class StringConditionViewModel : ConditionViewModel
 {
     public static OperatorViewModel DefaultOperator { get; } = new OperatorViewModel("*=", SR.Contains);
