@@ -70,6 +70,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     {
         if (IsSupported(entry))
         {
+            OnNavigatingTo(entry);
             Navigation.NavigateTo(this, entry);
             return true;
         }
@@ -87,6 +88,10 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
             return true;
         }
         return false;
+    }
+
+    protected virtual void OnNavigatingTo(NavigationEntry entry)
+    { 
     }
 
     #endregion Navigation
