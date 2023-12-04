@@ -116,43 +116,50 @@ public partial class EntitySelectorView : IKeyDownHandler
     private CommandViewModelBase CreateShowListCommand()
         => CommandViewModel.CreateAsync(async () =>
         {
-            if (BindingContext is IEntitySelector s && s.UseList)
+            if (BindingContext is IEntitySelector s)
             {
-                try
+                if (s.UseList)
                 {
-                    if (picker.ItemsSource == null)
+                    try
                     {
-                        var items = await s.GetItemsTask();
-
-                        picker.ItemDisplayBinding = new Binding
+                        if (picker.ItemsSource == null)
                         {
-                            Converter = new ItemDisplayTextConverter(s)
-                        };
-                        picker.ItemsSource = items;
-                    }
-                    picker.SelectedIndexChanged -= Picker_SelectedIndexChanged;
-                    picker.SelectedItem = s.SelectedItem;
-                    picker.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                            var items = await s.GetItemsTask();
 
-                    picker.Focus();
-                }
-                catch (Exception ex)
-                {
-                    if (BindingContext is IEntitySelector es)
-                    {
-                        es.Page.LogError("検索中にエラーが発生しました。{0}", ex);
-
-                        try
-                        {
-                            await es.Page.ShowErrorToastAsync("検索中にエラーが発生しました。{0}", ex.Message);
+                            picker.ItemDisplayBinding = new Binding
+                            {
+                                Converter = new ItemDisplayTextConverter(s)
+                            };
+                            picker.ItemsSource = items;
                         }
-                        catch { }
+                        picker.SelectedIndexChanged -= Picker_SelectedIndexChanged;
+                        picker.SelectedItem = s.SelectedItem;
+                        picker.SelectedIndexChanged += Picker_SelectedIndexChanged;
+
+                        picker.Focus();
                     }
+                    catch (Exception ex)
+                    {
+                        if (BindingContext is IEntitySelector es)
+                        {
+                            es.Page.LogError("検索中にエラーが発生しました。{0}", ex);
+
+                            try
+                            {
+                                await es.Page.ShowErrorToastAsync("検索中にエラーが発生しました。{0}", ex.Message);
+                            }
+                            catch { }
+                        }
+                    }
+                }
+                else if (s.HasModal)
+                {
+                    s.ShowModal();
                 }
             }
         },
             icon: "fas fa-ellipsis-h",
-            isVisibleGetter: () => (BindingContext as IEntitySelector)?.UseList == true);
+            isVisibleGetter: () => BindingContext is IEntitySelector s && (s.UseList || s.HasModal));
 
     private void Picker_SelectedIndexChanged(object sender, System.EventArgs e)
     {
