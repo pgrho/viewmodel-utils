@@ -6,4 +6,10 @@ public interface IHasExtensionColumns : IHasColumns
     IReadOnlyList<string> SelectedExtensionColumns { get; set; }
 
     IEnumerable<string> GetDefaultExtensionColumns();
+
+    string GetColumnDisplayName(string columnName)
+#if NET7_0_OR_GREATER
+        => null
+#endif
+        ;
 }

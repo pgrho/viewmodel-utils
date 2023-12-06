@@ -3,8 +3,9 @@
 public sealed class ExtensionColumnCommandViewModel : SelectionCommandViewModelBase
 {
     private readonly IHasExtensionColumns _Page;
+
     public ExtensionColumnCommandViewModel(IHasExtensionColumns page, string value)
-        : base(title: value, isSelected: page.SelectedExtensionColumns.Contains(value))
+        : base(title: page.GetColumnDisplayName(value) ?? value, isSelected: page.SelectedExtensionColumns.Contains(value))
     {
         Value = value;
         _Page = page;
@@ -48,6 +49,13 @@ public sealed class ExtensionColumnCommandViewModel : SelectionCommandViewModelB
             IsSelected = _Page.SelectedExtensionColumns.Contains(Value);
         }
     }
+
+    public override void Invalidate()
+    {
+        base.Invalidate();
+        Title = _Page.GetColumnDisplayName(Value) ?? Value;
+    }
+
     protected override void Dispose(bool disposing)
     {
         base.Dispose(disposing);
