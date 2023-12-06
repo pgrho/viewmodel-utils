@@ -30,7 +30,7 @@ public static class HasColumnsHelper
         var ret = new List<ExtensionColumnCommandViewModel>();
         foreach (var c in page.ExtensionColumns)
         {
-            ret.Add(current?.FirstOrDefault(e => e.Title == c) ?? new ExtensionColumnCommandViewModel(page, c));
+            ret.Add(current?.FirstOrDefault(e => e.Value == c) ?? new ExtensionColumnCommandViewModel(page, c));
         }
 
         if (page is IHasColumnModes m)
