@@ -8,18 +8,7 @@ public class CommandBuilder : CommandBuilderBase
     {
         CommandViewModelBase c = null;
         return c = CommandViewModel.Create(
-            async () =>
-            {
-                try
-                {
-                    ExecutingCallback?.Invoke(c);
-                    ExecutionHandler();
-                }
-                finally
-                {
-                    ExecutedCallback?.Invoke(c);
-                }
-            },
+            ExecutionHandler,
             title: Title,
             titleGetter: TitleGetter,
             mnemonic: Mnemonic,
@@ -37,6 +26,7 @@ public class CommandBuilder : CommandBuilderBase
             href: Href,
             hrefGetter: HrefGetter,
             badgeCount: BadgeCount ?? 0,
-            badgeCountGetter: BadgeCountGetter);
+            badgeCountGetter: BadgeCountGetter,
+            handler: GetHandler());
     }
 }

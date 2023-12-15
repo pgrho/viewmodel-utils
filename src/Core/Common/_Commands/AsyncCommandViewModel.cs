@@ -14,6 +14,8 @@ internal sealed partial class AsyncCommandViewModel : CommandViewModelBase
     private readonly Func<BorderStyle> _TypeGetter = null;
     private readonly Func<int> _BadgeCountGetter = null;
 
+    private readonly ICommandViewModelHandler _Handler;
+
     public AsyncCommandViewModel(
         Func<Task> execute
         , string title = null, Func<string> titleGetter = null
@@ -24,6 +26,7 @@ internal sealed partial class AsyncCommandViewModel : CommandViewModelBase
         , string icon = null, Func<string> iconGetter = null
         , BorderStyle style = default, Func<BorderStyle> styleGetter = null
         , int badgeCount = 0, Func<int> badgeCountGetter = null
+        , ICommandViewModelHandler handler = null
         )
         : base(
               title: titleGetter?.Invoke() ?? title
@@ -44,6 +47,8 @@ internal sealed partial class AsyncCommandViewModel : CommandViewModelBase
         _IconGetter = iconGetter;
         _TypeGetter = styleGetter;
         _BadgeCountGetter = badgeCountGetter;
+
+        _Handler = handler;
     }
 
     protected override string ComputeTitle() => _TitleGetter?.Invoke();

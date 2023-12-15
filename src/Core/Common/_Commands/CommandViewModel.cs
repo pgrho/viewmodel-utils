@@ -15,6 +15,8 @@ public sealed partial class CommandViewModel : CommandViewModelBase
     private readonly Func<int> _BadgeCountGetter = null;
     private readonly Func<string> _HrefGetter = null;
 
+    private readonly ICommandViewModelHandler _Handler;
+
     private CommandViewModel(
         Action execute
         , string title = null, Func<string> titleGetter = null
@@ -26,6 +28,7 @@ public sealed partial class CommandViewModel : CommandViewModelBase
         , BorderStyle style = default, Func<BorderStyle> styleGetter = null
         , int badgeCount = 0, Func<int> badgeCountGetter = null
         , string href = null, Func<string> hrefGetter = null
+        , ICommandViewModelHandler handler = null
         )
         : base(
               title: titleGetter?.Invoke() ?? title
@@ -48,6 +51,8 @@ public sealed partial class CommandViewModel : CommandViewModelBase
         _IconGetter = iconGetter;
         _TypeGetter = styleGetter;
         _BadgeCountGetter = badgeCountGetter;
+
+        _Handler = handler;
     }
 
     protected override string ComputeTitle() => _TitleGetter?.Invoke();
@@ -93,7 +98,8 @@ public sealed partial class CommandViewModel : CommandViewModelBase
         string icon = null, Func<string> iconGetter = null,
         BorderStyle style = default, Func<BorderStyle> styleGetter = null,
         int badgeCount = 0, Func<int> badgeCountGetter = null,
-        string href = null, Func<string> hrefGetter = null)
+        string href = null, Func<string> hrefGetter = null,
+        ICommandViewModelHandler handler = null)
     {
         return new CommandViewModel(
             execute,
@@ -114,7 +120,8 @@ public sealed partial class CommandViewModel : CommandViewModelBase
             badgeCount: badgeCount,
             badgeCountGetter: badgeCountGetter,
             href: href,
-            hrefGetter: hrefGetter);
+            hrefGetter: hrefGetter,
+            handler: handler);
     }
 
     public static CommandViewModelBase CreateAsync(
@@ -127,7 +134,8 @@ public sealed partial class CommandViewModel : CommandViewModelBase
         string icon = null, Func<string> iconGetter = null,
         BorderStyle style = default, Func<BorderStyle> styleGetter = null,
         int badgeCount = 0, Func<int> badgeCountGetter = null,
-        string href = null, Func<string> hrefGetter = null)
+        string href = null, Func<string> hrefGetter = null,
+        ICommandViewModelHandler handler = null)
     {
         return new AsyncCommandViewModel(
             execute,
@@ -146,6 +154,7 @@ public sealed partial class CommandViewModel : CommandViewModelBase
             style: style,
             styleGetter: styleGetter,
             badgeCount: badgeCount,
-            badgeCountGetter: badgeCountGetter);
+            badgeCountGetter: badgeCountGetter,
+            handler: handler);
     }
 }
