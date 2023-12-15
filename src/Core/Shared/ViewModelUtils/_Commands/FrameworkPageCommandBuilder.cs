@@ -15,7 +15,7 @@ public abstract class FrameworkPageCommandBuilder : CommandBuilderBase
     }
 
     [Obsolete("", true)]
-    public new Func<string> HrefGetter
+    public new Func<CommandViewModelBase, string> HrefGetter
     {
         get => base.HrefGetter;
         set => base.HrefGetter = value;
@@ -45,34 +45,22 @@ public abstract class FrameworkPageCommandBuilder : CommandBuilderBase
         => Page.IsSupported(CreateEntry());
 
     public sealed override CommandViewModelBase Build()
-    {
-        CommandViewModelBase c = null;
-        return c = CommandViewModel.Create(
-                    () =>
-                    {
-                        try
-                        {
-                            ExecutingCallback?.Invoke(c);
-                            OnExecuted();
-                        }
-                        finally
-                        {
-                            ExecutedCallback?.Invoke(c);
-                        }
-                    },
-                    title: Title,
-                    titleGetter: TitleGetter,
-                    description: Description ?? ComputeDescription(),
-                    descriptionGetter: DescriptionGetter,
-                    isVisibleGetter: IsVisibleGetter != null ? () => ComputeIsVisible() && IsVisibleGetter() : (Func<bool>)ComputeIsVisible,
-                    isEnabled: IsEnabled ?? true,
-                    isEnabledGetter: IsEnabledGetter,
-                    icon: Icon ?? ComputeIcon(),
-                    iconGetter: IconGetter,
-                    style: Style ?? default,
-                    styleGetter: StyleGetter,
-                    hrefGetter: ComputeHref,
-                    badgeCount: BadgeCount ?? 0,
-                    badgeCountGetter: BadgeCountGetter);
-    }
+        => CommandViewModel.Create(
+            _ => OnExecuted()
+            , title: Title
+            , titleGetter: TitleGetter
+            , description: Description ?? ComputeDescription()
+            , descriptionGetter: DescriptionGetter
+            , isVisibleGetter: IsVisibleGetter != null
+                ? c => ComputeIsVisible() && IsVisibleGetter(c)
+                : (_ => ComputeIsVisible())
+            , isEnabled: IsEnabled ?? true
+            , isEnabledGetter: IsEnabledGetter
+            , icon: Icon ?? ComputeIcon()
+            , iconGetter: IconGetter
+            , style: Style ?? default
+            , styleGetter: StyleGetter
+            , hrefGetter: _ => ComputeHref()
+            , badgeCount: BadgeCount ?? 0
+            , badgeCountGetter: BadgeCountGetter);
 }

@@ -17,6 +17,10 @@ public static class CommandBuilderExtensions
 
     public static T SetTitle<T>(this T builder, Func<string> titleGetter, bool isOverride = true)
         where T : CommandBuilderBase
+        => builder.SetTitle(titleGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetTitle<T>(this T builder, Func<CommandViewModelBase, string> titleGetter, bool isOverride = true)
+        where T : CommandBuilderBase
     {
         builder.TitleGetter = titleGetter;
         if (isOverride)
@@ -38,6 +42,10 @@ public static class CommandBuilderExtensions
     }
 
     public static T SetMnemonic<T>(this T builder, Func<string> mnemonicGetter, bool isOverride = true)
+        where T : CommandBuilderBase
+        => builder.SetMnemonic(mnemonicGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetMnemonic<T>(this T builder, Func<CommandViewModelBase, string> mnemonicGetter, bool isOverride = true)
         where T : CommandBuilderBase
     {
         builder.MnemonicGetter = mnemonicGetter;
@@ -61,6 +69,10 @@ public static class CommandBuilderExtensions
 
     public static T SetDescription<T>(this T builder, Func<string> descriptionGetter, bool isOverride = true)
         where T : CommandBuilderBase
+        => builder.SetDescription(descriptionGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetDescription<T>(this T builder, Func<CommandViewModelBase, string> descriptionGetter, bool isOverride = true)
+        where T : CommandBuilderBase
     {
         builder.DescriptionGetter = descriptionGetter;
         if (isOverride)
@@ -82,6 +94,10 @@ public static class CommandBuilderExtensions
     }
 
     public static T SetIcon<T>(this T builder, Func<string> iconGetter, bool isOverride = true)
+        where T : CommandBuilderBase
+        => builder.SetIcon(iconGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetIcon<T>(this T builder, Func<CommandViewModelBase, string> iconGetter, bool isOverride = true)
         where T : CommandBuilderBase
     {
         builder.IconGetter = iconGetter;
@@ -105,6 +121,10 @@ public static class CommandBuilderExtensions
 
     public static T SetStyle<T>(this T builder, Func<BorderStyle> styleGetter, bool isOverride = true)
         where T : CommandBuilderBase
+        => builder.SetStyle(styleGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetStyle<T>(this T builder, Func<CommandViewModelBase, BorderStyle> styleGetter, bool isOverride = true)
+        where T : CommandBuilderBase
     {
         builder.StyleGetter = styleGetter;
         if (isOverride)
@@ -127,6 +147,10 @@ public static class CommandBuilderExtensions
 
     public static T SetIsEnabled<T>(this T builder, Func<bool> isEnabledGetter, bool isOverride = true)
         where T : CommandBuilderBase
+        => builder.SetIsEnabled(isEnabledGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetIsEnabled<T>(this T builder, Func<CommandViewModelBase, bool> isEnabledGetter, bool isOverride = true)
+        where T : CommandBuilderBase
     {
         if (isOverride)
         {
@@ -139,7 +163,7 @@ public static class CommandBuilderExtensions
         else
         {
             var baseGetter = builder.IsEnabledGetter;
-            builder.IsEnabledGetter = () => isEnabledGetter() && baseGetter();
+            builder.IsEnabledGetter = c => isEnabledGetter(c) && baseGetter(c);
         }
         return builder;
     }
@@ -157,6 +181,10 @@ public static class CommandBuilderExtensions
 
     public static T SetIsVisible<T>(this T builder, Func<bool> isVisibleGetter, bool isOverride = true)
         where T : CommandBuilderBase
+        => builder.SetIsVisible(isVisibleGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetIsVisible<T>(this T builder, Func<CommandViewModelBase, bool> isVisibleGetter, bool isOverride = true)
+        where T : CommandBuilderBase
     {
         if (isOverride)
         {
@@ -169,7 +197,7 @@ public static class CommandBuilderExtensions
         else
         {
             var baseGetter = builder.IsVisibleGetter;
-            builder.IsVisibleGetter = () => isVisibleGetter() && baseGetter();
+            builder.IsVisibleGetter = c => isVisibleGetter(c) && baseGetter(c);
         }
         return builder;
     }
@@ -186,6 +214,10 @@ public static class CommandBuilderExtensions
     }
 
     public static T SetBadgeCount<T>(this T builder, Func<int> badgeCountGetter, bool isOverride = true)
+        where T : CommandBuilderBase
+        => builder.SetBadgeCount(badgeCountGetter.AddCommandArgument(), isOverride: isOverride);
+
+    public static T SetBadgeCount<T>(this T builder, Func<CommandViewModelBase, int> badgeCountGetter, bool isOverride = true)
         where T : CommandBuilderBase
     {
         builder.BadgeCountGetter = badgeCountGetter;

@@ -2,7 +2,20 @@
 
 public class CommandBuilder : CommandBuilderBase
 {
-    public Action ExecutionHandler { get; set; }
+    [Obsolete]
+    public CommandBuilder() { }
+
+    public CommandBuilder(Action executionHandler)
+    {
+        ExecutionHandler = _ => executionHandler();
+    }
+
+    public CommandBuilder(Action<CommandViewModelBase> executionHandler)
+    {
+        ExecutionHandler = executionHandler;
+    }
+
+    public Action<CommandViewModelBase> ExecutionHandler { get; set; }
 
     public override CommandViewModelBase Build()
     {

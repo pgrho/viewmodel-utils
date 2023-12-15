@@ -2,9 +2,14 @@
 
 public class AsyncCommandBuilder : CommandBuilderBase
 {
-    private readonly Func<Task> _ExecutionHandler;
+    private readonly Func<CommandViewModelBase, Task> _ExecutionHandler;
 
     public AsyncCommandBuilder(Func<Task> executionHandler)
+    {
+        _ExecutionHandler = executionHandler.AddCommandArgument();
+    }
+
+    public AsyncCommandBuilder(Func<CommandViewModelBase, Task> executionHandler)
     {
         _ExecutionHandler = executionHandler;
     }

@@ -35,10 +35,7 @@ public abstract class DialogViewModel : WindowViewModel
         => _SaveAndCloseCommand ??= GetSaveAndCloseCommandBuilder().Build();
 
     protected virtual CommandBuilderBase GetSaveCommandBuilder()
-        => new CommandBuilder()
-        {
-            ExecutionHandler = () => BeginSave(false)
-        }
+        => new CommandBuilder(() => BeginSave(false))
         .SetTitle(SR.SaveTitle)
         .SetMnemonic(SR.SaveMnemonic)
         .SetDescription(SR.SaveDescription.EmptyToNull())
@@ -46,10 +43,7 @@ public abstract class DialogViewModel : WindowViewModel
         .SetIsEnabled(() => CanAccept);
 
     protected virtual CommandBuilderBase GetSaveAndCloseCommandBuilder()
-        => new CommandBuilder()
-        {
-            ExecutionHandler = () => BeginSave(true)
-        }
+        => new CommandBuilder(() => BeginSave(true))
         .SetTitle(SR.SaveAndCloseTitle)
         .SetMnemonic(SR.SaveAndCloseMnemonic)
         .SetDescription(SR.SaveAndCloseDescription.EmptyToNull())
