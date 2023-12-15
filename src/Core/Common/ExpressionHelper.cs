@@ -12,4 +12,7 @@ internal static class ExpressionHelper
         => ((MemberExpression)expression.Body).Member.GetCustomAttribute<DisplayAttribute>()?.GetName()
             ?? ((MemberExpression)expression.Body).Member.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName
             ?? ((MemberExpression)expression.Body).Member.Name;
+
+    public static Func<CommandViewModelBase, T> AddCommandArgument<T>(Func<T> func)
+        => func != null ? _ => func() : null;
 }
