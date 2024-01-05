@@ -1,0 +1,79 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase<DateTimePicker2.PopoverViewModel>
+@using (OnBeginRender())
+{
+    var d = DataContext;
+    var th = d.Theme;
+
+    var selected = d.Component.NonNullValue.Date;
+    var date = d.ViewDate.Date;
+    var month = date.AddDays(1 - date.Day);
+
+    var offset = (int)month.DayOfWeek;
+    var weeks = (DateTime.DaysInMonth(month.Year, month.Month) + offset + 6) / 7;
+
+    var btn = th.Button;
+
+
+    <PopoverFrame ReferenceElement="@ReferenceElement"
+                  Boundaries="@Boundaries"
+                  OnClosed="@(() => Presenter?.CloseModal())">
+        <div style="display:grid">
+            <div style="grid-column: 1">
+                <button class="@btn.Class"
+                        style="@btn.Style"
+                        @onclick="@(() => d.AddMonth(-1))">
+                    &lt;
+                </button>
+            </div>
+            <div style="grid-column-start: 2; grid-column-end: 7">
+                @date.ToString("yyyy-MM")
+            </div>
+            <div style="grid-column: 7">
+                <button class="@btn.Class"
+                        style="@btn.Style"
+                        @onclick="@(() => d.AddMonth(1))">
+                    &gt;
+                </button>
+            </div>
+            @for (var c = 0; c < 7; c++)
+            {
+                var t = th.DayOfWeeks[c];
+                <div style="grid-column: @(c + 1)">@t</div>
+            }
+            @for (var w = 0; w < weeks; w++)
+            {
+                for (var c = 0; c < 7; c++)
+                {
+                    var cellDate = month.AddDays(w * 7 + c - offset);
+                    var bth = cellDate == selected ? th.Selected
+                            : cellDate.Month != month.Month ? th.OtherMonth
+                            : cellDate.DayOfWeek switch
+                    {
+                        DayOfWeek.Sunday => th.Sunday,
+                        DayOfWeek.Saturday => th.Saturday,
+                        _ => btn
+                            };
+                    <div>
+                        <button class="@bth.Class"
+                        style="@bth.Style"
+                        @onclick="@(() => d.Select(cellDate))">
+                        @cellDate.Day
+                        </button>
+                        </div>
+                }
+            }
+        </div>
+    </PopoverFrame>
+}
+@code
+{ 
+    [Parameter]
+    public ElementReference ReferenceElement { get; set; }
+
+    [Parameter]
+    public ElementReference Boundaries { get; set; }
+
+    [Parameter]
+    public ModalPresenterBase Presenter { get; set; }
+}

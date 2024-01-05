@@ -1,17 +1,35 @@
 ﻿@inherits LayoutComponentBase
-
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+@implements IContainerElementProvider
+@implements IHasPopoverPresenter
+@implements IHasModalPresenter
+<CascadingValue Value="this" IsFixed="true">
+    <div @ref="_BodyContainerElement"
+         class="page">
+        <div class="sidebar">
+            <NavMenu />
         </div>
 
-        <div class="content px-4">
-            @Body
+        <div class="main">
+            <div class="top-row px-4">
+                <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            </div>
+
+            <div class="content px-4">
+                @Body
+            </div>
         </div>
     </div>
-</div>
+</CascadingValue>
+<BootstrapModalPresenter @ref="@_ModalPresenter" />
+<BootstrapModalPresenter @ref="@_PopoverPresenter" />
+@code
+{
+    private ElementReference _BodyContainerElement;
+
+    private BootstrapModalPresenter _ModalPresenter;
+    private BootstrapModalPresenter _PopoverPresenter;
+
+    public ElementReference Container => _BodyContainerElement;
+    public ModalPresenterBase ModalPresenter => _ModalPresenter;
+    public ModalPresenterBase PopoverPresenter => _PopoverPresenter;
+}

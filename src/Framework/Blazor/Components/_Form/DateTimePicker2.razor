@@ -1,0 +1,14 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits BindableComponentBase
+@using (OnBeginRender())
+{
+    <input @ref="@_Element"
+           type="text"
+           @bind="@ValueString"
+           @onfocus="@OnFocusCore"
+           @onblur="@OnBlurCore" />
+}
+@code
+{
+
+}

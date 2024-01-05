@@ -1,6 +1,8 @@
-﻿namespace Shipwreck.ViewModelUtils.Demo.Blazor.ViewModels;
+﻿using Shipwreck.ViewModelUtils.Components;
 
-public abstract class PageViewModel : FrameworkPageViewModel
+namespace Shipwreck.ViewModelUtils.Demo.Blazor.ViewModels;
+
+public abstract class PageViewModel : FrameworkPageViewModel, IHasPopoverPresenter, IHasModalPresenter
 {
     protected PageViewModel(PageBase page)
         : base(page)
@@ -11,4 +13,7 @@ public abstract class PageViewModel : FrameworkPageViewModel
 
     protected override IInteractionService GetInteractionService()
         => Page?.Interaction;
+
+    public ModalPresenterBase ModalPresenter => Page?.ModalPresenter;
+    public ModalPresenterBase PopoverPresenter => Page?.PopoverPresenter;
 }

@@ -1,0 +1,29 @@
+﻿@inherits PageBase<DateTimeTestPageViewModel>
+@page "/dateTimeTest"
+@using (OnBeginRender())
+{
+    if (DataContext is DateTimeTestPageViewModel d)
+    {
+        <DateTimePicker @bind-Value="Value" />
+        <DateTimePicker2 @bind-NonNullValue="d.Value" />
+    }
+}
+@code
+{
+    private DateTime? Value
+    {
+        get => DataContext?.Value;
+        set
+        {
+            if (DataContext is DateTimeTestPageViewModel d)
+            {
+                d.Value = value ?? DateTime.Today;
+            }
+        }
+    }
+
+    private static Table _Table;
+
+    protected override FrameworkPageViewModel GetOrCreateDataContext()
+        => base.DataContext as DateTimeTestPageViewModel ?? new DateTimeTestPageViewModel(this);
+}
