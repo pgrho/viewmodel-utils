@@ -57,6 +57,10 @@ public class FrameworkContentPage : ContentPage, IHasFrameworkPageViewModel
         {
             vm.IsVisible = true;
         }
+        else if (BindingContext is FrameworkModalViewModelBase vm2)
+        {
+            vm2.IsVisible = true;
+        }
     }
 
     protected override void OnDisappearing()
@@ -65,6 +69,10 @@ public class FrameworkContentPage : ContentPage, IHasFrameworkPageViewModel
         if (BindingContext is FrameworkPageViewModel vm)
         {
             vm.IsVisible = false;
+        }
+        else if (BindingContext is FrameworkModalViewModelBase vm2)
+        {
+            vm2.IsVisible = false;
         }
     }
 

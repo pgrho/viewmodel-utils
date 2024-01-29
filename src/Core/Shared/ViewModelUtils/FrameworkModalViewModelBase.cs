@@ -2,12 +2,17 @@
 
 public abstract partial class FrameworkModalViewModelBase : ObservableModel, IFrameworkModalViewModel, IHasFrameworkPageViewModel
 {
+    private TaskCompletionSource<object> _OpenTask;
+
     protected FrameworkModalViewModelBase(FrameworkPageViewModel page)
     {
         Page = page;
+        _OpenTask = new TaskCompletionSource<object>();
     }
 
     public FrameworkPageViewModel Page { get; }
+
+    protected internal Task OpenTask => _OpenTask.Task;
 
     #region IHasInteraction
 
@@ -450,12 +455,19 @@ public abstract partial class FrameworkModalViewModelBase : ObservableModel, IFr
     {
         if (Page.IsModalSupported(GetType()) == true)
         {
+            if (_OpenTask.Task.IsCompleted)
+            {
+                _OpenTask = new TaskCompletionSource<object>();
+            }
             return Page.OpenModalAsync(this);
         }
         return Task.FromException(new NotSupportedException());
     }
 
-    public virtual Task CloseAsync() => Page.CloseModalAsync(this);
+    public virtual Task CloseAsync()
+        => Page.CloseModalAsync(this)
+                .ContinueWith(t => _OpenTask.TrySetResult(null));
+
 
     #region CancelCommand
 
@@ -464,11 +476,14 @@ public abstract partial class FrameworkModalViewModelBase : ObservableModel, IFr
     public CommandViewModelBase CancelCommand
         => _CancelCommand ??= CreateCancelCommand();
 
+    protected virtual CommandBuilderBase CreateCancelCommandBuilder()
+        => new AsyncCommandBuilder(CloseAsync)
+                .SetTitle(SR.CancelTitle)
+                .SetIcon("fas fa-times")
+                .SetStyle(BorderStyle.OutlineSecondary);
+
     protected virtual CommandViewModelBase CreateCancelCommand()
-        => CommandViewModel.CreateAsync(
-            CloseAsync,
-            title: SR.CancelTitle,
-            style: BorderStyle.OutlineSecondary);
+        => CreateCancelCommandBuilder().Build();
 
     #endregion CancelCommand
 
@@ -476,9 +491,48 @@ public abstract partial class FrameworkModalViewModelBase : ObservableModel, IFr
     {
         if (!IsDisposed)
         {
+            _OpenTask.TrySetResult(null);
             IsDisposed = true;
         }
+        RequestFocus = null;
     }
 
     public void Dispose() => Dispose(disposing: true);
+
+    #region IsVisible
+
+    private bool _IsVisible;
+
+    public bool IsVisible
+    {
+        get => _IsVisible;
+        set
+        {
+            if (SetProperty(ref _IsVisible, value))
+            {
+                if (_IsVisible)
+                {
+                    OnAppearing().GetHashCode();
+                }
+                else
+                {
+                    OnDisappearing().GetHashCode();
+                }
+            }
+        }
+    }
+
+    protected virtual Task OnAppearing() => Task.CompletedTask;
+
+    protected virtual Task OnDisappearing() => Task.CompletedTask;
+
+    #endregion IsVisible
+
+    #region IRequestFocus
+
+
+    public event PropertyChangedEventHandler RequestFocus;
+    public void Focus(string propertyName)
+        => RequestFocus?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    #endregion
 }
