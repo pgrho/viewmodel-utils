@@ -93,4 +93,60 @@ public static class GridBehavior
     }
 
     #endregion RowDefinitions
+
+#if IS_XAMARIN_FORMS
+
+    #region WrapIndex
+
+    public static readonly BindableProperty WrapIndexProperty
+    = BindableProperty.CreateAttached(
+        "WrapIndex", typeof(int?), typeof(ViewHelper), null,
+        propertyChanged: OnWrapIndexChanged);
+
+    public static int? GetWrapIndex(View obj)
+    => (int?)obj.GetValue(WrapIndexProperty);
+
+    public static void SetWrapIndex(View obj, int? value)
+        => obj.SetValue(WrapIndexProperty, value);
+
+    private static void OnWrapIndexChanged(BindableObject g, object oldValue, object newValue)
+    {
+        var v = g as View;
+        if (v != null)
+        {
+            v.PropertyChanged -= V_PropertyChanged;
+            if (GetWrapIndex(v) is int i
+                && i >= 0)
+            {
+                v.PropertyChanged += V_PropertyChanged;
+
+                if (v.Parent is Grid p)
+                {
+                    if (p.ColumnDefinitions.Count is int c
+                        && c > 0)
+                    {
+                        Grid.SetColumn(g, i % c);
+                        Grid.SetRow(g, i / c);
+                        return;
+                    }
+                }
+            }
+            Grid.SetColumn(g, 0);
+            Grid.SetRow(g, 0);
+        }
+    }
+
+    private static void V_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(View.Parent):
+                OnWrapIndexChanged((BindableObject)sender, null, null);
+                break;
+        }
+    }
+
+    #endregion WrapIndex
+
+#endif
 }
