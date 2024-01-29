@@ -173,6 +173,13 @@ public abstract class InteractionService : IInteractionService
 
     public Task OpenModalAsync(object context, object viewModel)
     {
+        if (context is IHasPage hp
+            && hp.Page is IHasPseudoModal hpm
+            && hpm.TryOpen(viewModel))
+        {
+            return Task.CompletedTask;
+        }
+
         var nav = Application.Current?.MainPage.Navigation;
         if (nav != null)
         {
@@ -212,6 +219,13 @@ public abstract class InteractionService : IInteractionService
 
     public Task CloseModalAsync(object context, object viewModel)
     {
+        if (context is IHasPage hp
+            && hp.Page is IHasPseudoModal hpm
+            && hpm.TryClose(viewModel))
+        {
+            return Task.CompletedTask;
+        }
+
         var p = ResolvePage(context);
         var fm = p?.Navigation?.ModalStack?.LastOrDefault();
         if (fm?.BindingContext == viewModel)
