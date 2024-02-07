@@ -19,8 +19,9 @@
             <a class="text-light"
                href="javascript:void(0)"
                title="@Description"
-            @onclick="@(() => d?.ToggleSortKey(SortKey))"
-            @onclick:preventDefault>
+               @onclick="@(() => d?.ToggleSortKey(SortKey))"
+               @onclick:preventDefault="true"
+               data-enhance-nav="false">
                 @if (!string.IsNullOrEmpty(Icon))
                 {
                     <span class="@Icon"></span>

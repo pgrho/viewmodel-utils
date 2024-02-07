@@ -24,7 +24,8 @@
                                   title="@(c.Description ?? c.Title)"
                                   href="@(c.Href ?? "javascript:void(0)")"
                                   @onclick="@((Action)c.Execute)"
-                            @onclick:preventDefault>
+                                  @onclick:preventDefault="true"
+                                  data-enhance-nav="false">
                                 @if (c.Icon?.Length > 0)
                                 {
                                     <span class="@c.Icon"></span>
@@ -60,7 +61,8 @@
                                       title="@(c.Description ?? c.Title)"
                                       href="@(c.Href ?? "javascript:void(0)")"
                                       @onclick="@((Action)c.Execute)"
-                                @onclick:preventDefault>
+                                      @onclick:preventDefault="true"
+                                      data-enhance-nav="false">
                                     @if (c.Icon?.Length > 0)
                                     {
                                         <span class="@c.Icon"></span>

@@ -10,8 +10,8 @@
             @foreach (var c in (Commands ?? Enumerable.Empty<ICommandViewModel>()))
             {
                 <CommandButton @key="@c.GetHashCode()"
-                           BaseClass="btn btn-sm mr-2 mb-3"
-                           DataContext="c" />
+                               BaseClass="btn btn-sm mr-2 mb-3"
+                               DataContext="c" />
             }
         </ListScope>
         <span class="form-control mb-3 border-0">
@@ -31,9 +31,10 @@
             <ul class="pagination">
                 <li class="page-item @(PageIndex > 0 ? null : "disabled")">
                     <a href="javascript:void(0)"
-                   class="page-link"
-                   @onclick="@(() => PageIndex--)"
-                   @onclick:preventDefault>前へ</a>
+                       class="page-link"
+                       @onclick="@(() => PageIndex--)"
+                       @onclick:preventDefault="true"
+                       data-enhance-nav="false">前へ</a>
                 </li>
 
                 @for (var d = -R; d <= R; d++)
@@ -43,18 +44,20 @@
                     {
                         <li class="page-item @(i == PageIndex ? "active" : null)">
                             <a href="javascript:void(0)"
-                   class="page-link"
-                   @onclick="@(() => PageIndex = i)"
-                   @onclick:preventDefault>@(i + 1)</a>
+                               class="page-link"
+                               @onclick="@(() => PageIndex = i)"
+                               @onclick:preventDefault="true"
+                               data-enhance-nav="false">@(i + 1)</a>
                         </li>
                     }
                 }
 
                 <li class="page-item @(PageIndex < pMax ? null : "disabled")">
                     <a href="javascript:void(0)"
-                   class="page-link"
-                   @onclick="@(() => PageIndex++)"
-                   @onclick:preventDefault>次へ</a>
+                       class="page-link"
+                       @onclick="@(() => PageIndex++)"
+                       @onclick:preventDefault="true"
+                       data-enhance-nav="false">次へ</a>
                 </li>
             </ul>
         }
@@ -64,11 +67,11 @@
             <span class="form-control mb-3 border-0">
                 表示件数:
                 <select class="form-control form-control-sm custom-select custom-select-sm"
-                    @bind="@PageSize">
+                        @bind="@PageSize">
                     @foreach (var e in new[] { 50, 100, 250, 500, 1000 })
                     {
                         <option value="@e"
-                        selected="@(e == PageSize ? "selected" : null)">
+                                selected="@(e == PageSize ? "selected" : null)">
                             @(e)件
                         </option>
                     }

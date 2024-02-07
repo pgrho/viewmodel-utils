@@ -69,7 +69,8 @@
                    title="@desc"
                    disabled="@(!d.IsEnabled ? "disabled" : null)"
                    @onclick="@(() => d?.Command?.Execute())"
-                   @onclick:preventDefault>
+                   @onclick:preventDefault="true"
+                   data-enhance-nav="false">
                     @if (!string.IsNullOrEmpty(d?.Icon))
                     {
                         <span class="@d?.Icon"></span>

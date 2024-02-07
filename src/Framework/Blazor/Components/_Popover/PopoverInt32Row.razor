@@ -17,9 +17,10 @@
             else
             {
                 <a href="@(Command.Href ?? "javascript:void(0)")"
-           title="@Command.Description"
-           @onclick="@(() => Command.Execute())"
-           @onclick:preventDefault>
+                   title="@Command.Description"
+                   @onclick="@(() => Command.Execute())"
+                   @onclick:preventDefault="true"
+                   data-enhance-nav="false">
                     @Value?.ToString(DisplayFormat)
                 </a>
             }

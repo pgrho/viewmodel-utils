@@ -26,7 +26,8 @@
                disabled="@disabled"
                tabindex="@TabIndex"
                @onclick="@((Action)d.Execute)"
-            @onclick:preventDefault
+               @onclick:preventDefault="true"
+               data-enhance-nav="false"
                @attributes="AdditionalAttributes">
                 @if (ChildContent != null)
                 {

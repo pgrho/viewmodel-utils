@@ -3,8 +3,8 @@
 @using (OnBeginRender())
 {
     var col = LabelColumn ?? DefaultLabelColumn;
- 
-     if (IsVisible ?? !string.IsNullOrEmpty(Value))
+
+    if (IsVisible ?? !string.IsNullOrEmpty(Value))
     {
         <dt class="col-@col">
             <label title="@Description">@Title</label>
@@ -17,9 +17,10 @@
             else
             {
                 <a href="@(Command.Href ?? "javascript:void(0)")"
-           title="@Command.Description"
-           @onclick="@(() => Command.Execute())"
-           @onclick:preventDefault>
+                   title="@Command.Description"
+                   @onclick="@(() => Command.Execute())"
+                   @onclick:preventDefault="true"
+                   data-enhance-nav="false">
                     @Value
                 </a>
             }
