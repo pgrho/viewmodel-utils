@@ -53,6 +53,9 @@ public static class JSRuntimeHelper
     public static string GetUserAgent(this IJSRuntime js)
      => ((IJSInProcessRuntime)js).Invoke<string>("Shipwreck.ViewModelUtils.userAgent");
 
+    public static ValueTask<string> GetUserAgentAsync(this IJSRuntime js)
+     => js.InvokeAsync<string>("Shipwreck.ViewModelUtils.userAgent");
+
     #region localStorage
 
     #region string
