@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-android</TargetFramework>
+    <RootNamespace>Shipwreck</RootNamespace>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <DefineConstants>$(DefineConstants);IS_MAUI</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Maui\Shipwreck.ViewModelUtils.Core.Maui.csproj" />
+  </ItemGroup>
+
+</Project>
