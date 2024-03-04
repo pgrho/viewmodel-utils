@@ -11,5 +11,17 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
   </ItemGroup>
-
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems" Label="Shared" />
+  <ItemGroup>
+    <Compile Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Linked Code\Interactions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\PresentationFramework\Resources\*.resx" Link="Resources\%(Filename).resx" />
+    <Compile Include="..\PresentationFramework\Resources\*.cs" Link="Resources\%(Filename).cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Shipwreck.ViewModelUtils.Common.csproj" />
+  </ItemGroup>
+  
 </Project>

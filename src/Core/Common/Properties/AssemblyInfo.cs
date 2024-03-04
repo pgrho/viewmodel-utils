@@ -1,6 +1,8 @@
 ﻿[assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.Core.Blazor")]
+[assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.Core.Maui")]
 [assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.Core.PresentationFramework")]
 [assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.Core.XamarinForms")]
 [assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.Blazor")]
+[assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.Maui")]
 [assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.PresentationFramework")]
 [assembly: InternalsVisibleTo("Shipwreck.ViewModelUtils.XamarinForms")]

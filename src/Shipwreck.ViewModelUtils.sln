@@ -578,6 +578,8 @@ Global
 		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
 		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{3d621ad2-9037-4fa9-bdd1-51c36ad2eb41}*SharedItemsImports = 13
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{6775c720-6106-42d6-8f3f-062c419443d8}*SharedItemsImports = 5
+		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{6775c720-6106-42d6-8f3f-062c419443d8}*SharedItemsImports = 5
 		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9c106d03-1713-4b2e-ad83-4b99a0dd6f17}*SharedItemsImports = 5
