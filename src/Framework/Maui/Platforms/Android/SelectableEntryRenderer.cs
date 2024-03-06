@@ -10,7 +10,7 @@ namespace Shipwreck.ViewModelUtils;
 
 public sealed class SelectableEntryRenderer : EntryRenderer
 {
-    public SelectableEntryRenderer(Context context) 
+    public SelectableEntryRenderer(Context context)
         : base(context)
     {
     }
