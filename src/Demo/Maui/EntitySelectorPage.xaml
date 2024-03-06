@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
+    xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.Maui"
+    x:Class="Shipwreck.ViewModelUtils.Demo.Maui.EntitySelectorPage"
+    Title="EntitySelectorPage"
+    x:DataType="{x:Type local:EntitySelectorPageViewModel}">
+    <StackLayout>
+        <vmu:EntitySelectorView
+            BindingContext="{Binding CodeSelector}" />
+        <vmu:EntitySelectorView
+            BindingContext="{Binding ListSelector}" />
+    </StackLayout>
+</ContentPage>

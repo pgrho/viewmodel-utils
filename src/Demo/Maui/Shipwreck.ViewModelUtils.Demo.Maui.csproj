@@ -33,4 +33,13 @@
     <ProjectReference Include="..\..\Framework\Maui\Shipwreck.ViewModelUtils.Maui.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <MauiXaml Update="EntitySelectorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="InteractionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
 </Project>

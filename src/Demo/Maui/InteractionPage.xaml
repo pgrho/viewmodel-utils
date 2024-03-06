@@ -1,11 +1,12 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Shipwreck.ViewModelUtils.Demo.Maui.InteractionPage"
     xmlns:vmu="http://schema.shipwreck.jp/viewmodel-utils/"
     xmlns:local="clr-namespace:Shipwreck.ViewModelUtils.Demo.Maui"
-    x:Class="Shipwreck.ViewModelUtils.Demo.Maui.MainPage"
-    x:DataType="{x:Type local:MainPageViewModel}">
+    Title="InteractionPage"
+    x:DataType="{x:Type local:InteractionPageViewModel}">
     <ScrollView>
         <VerticalStackLayout
             BindableLayout.ItemsSource="{Binding Commands}">

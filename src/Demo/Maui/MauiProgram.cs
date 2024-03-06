@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
+using Shipwreck.BootstrapControls;
 
 namespace Shipwreck.ViewModelUtils.Demo.Maui;
 
@@ -13,7 +9,12 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder
-            .UseMauiApp<App>();
+            .UseMauiApp<App>()
+            .ConfigureMauiHandlers(h =>
+            {
+                h.AddBootstrapHandlers();
+                h.AddViewModelUtilsHandlers();
+            });
 
 #if DEBUG
         builder.Logging.AddDebug();

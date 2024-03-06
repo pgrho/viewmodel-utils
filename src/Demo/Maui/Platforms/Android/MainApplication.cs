@@ -11,5 +11,11 @@ public class MainApplication : MauiApplication
     {
     }
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override MauiApp CreateMauiApp()
+    {
+        DependencyService.Register<AndroidInteractionService>();
+        DependencyService.Register<AndroidKeyboardService>();
+
+        return MauiProgram.CreateMauiApp();
+    }
 }
