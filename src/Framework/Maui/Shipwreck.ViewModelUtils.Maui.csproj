@@ -25,6 +25,9 @@
     <MauiXaml Update="ViewModelUtils\CommandButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="ViewModelUtils\EntitySelectorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="ViewModelUtils\IconButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

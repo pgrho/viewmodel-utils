@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<vmu:FrameworkContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.Maui"
+    xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils"
+    x:Class="Shipwreck.ViewModelUtils.EntitySelectorView"
+    x:DataType="vmu:IEntitySelector">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition
+                Width="Auto" />
+            <ColumnDefinition
+                Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Picker
+            x:Name="picker"
+            IsVisible="{Binding UseList}"
+            Opacity="0" />
+        <vmuf:SelectableEntry
+            x:Name="dummyEntry"
+            VerticalOptions="Fill"
+            ReturnType="Search" />
+        <vmuf:SelectableEntry
+            x:Name="entry"
+            VerticalOptions="Fill"
+            Text="{Binding Code}"
+            Opacity="0"
+            ReturnType="Search"
+            ReturnCommand="{Binding SelectCommand}"
+            Completed="entry_Completed"
+            Focused="entry_Focused"
+            Unfocused="entry_Unfocused" />
+
+        <vmuf:IconButton
+            x:Name="clearButton"
+            Grid.Column="1"
+            HasBorder="False"
+            VerticalOptions="Fill"
+            Margin="0"
+            ButtonPadding="16,0"
+            BindingContext="{Binding SelectOrClearCommand}" />
+        <vmuf:IconButton
+            x:Name="listButton"
+            Grid.Column="2"
+            HasBorder="False"
+            VerticalOptions="Fill"
+            Margin="0"
+            ButtonPadding="16,0" />
+    </Grid>
+</vmu:FrameworkContentView>
