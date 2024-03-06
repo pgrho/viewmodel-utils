@@ -45,6 +45,12 @@ public sealed class EntitySelectorPageViewModel : PageViewModel
         public override string GetName(Item item)
             => item?.DisplayName;
 
+        protected override async Task<IReadOnlyList<Item>> GetItemsAsync()
+        {
+            await Task.Delay(1500);
+            return Item.Items;
+        }
+
         public override async Task<IEnumerable<Item>> SearchAsync(string query, int maxCount, CancellationToken cancellationToken = default)
         {
             await Task.Delay(1500);

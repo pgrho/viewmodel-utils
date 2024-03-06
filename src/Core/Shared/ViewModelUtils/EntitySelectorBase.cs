@@ -345,7 +345,7 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
 
     public CommandViewModelBase SelectCommand
         => _SelectCommand ??= CommandViewModel.CreateAsync(
-            async () =>
+            async _ =>
             {
                 try
                 {
@@ -379,7 +379,7 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
                 }
             },
             style: BorderStyle.Primary,
-            iconGetter: () => IsSearching ? "fas fa-pulse fa-spinner" : "fas fa-search");
+            iconGetter: _ => IsSearching ? "fas fa-pulse fa-spinner" : "fas fa-search");
 
     #endregion SelectCommand
 
@@ -389,7 +389,7 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
 
     public CommandViewModelBase SelectOrClearCommand
         => _SelectOrClearCommand ??= CommandViewModel.Create(
-            () =>
+            _ =>
             {
                 if (SelectedItem != null)
                 {
@@ -400,7 +400,7 @@ public abstract class EntitySelectorBase<TId, TItem> : ObservableModel, IEntityS
                     SelectCommand.Execute();
                 }
             },
-            iconGetter: () => SelectedItem != null ? "fas fa-times" : IsSearching ? "fas fa-pulse fa-spinner" : "fas fa-search");
+            iconGetter: _ => SelectedItem != null ? "fas fa-times" : IsSearching ? "fas fa-pulse fa-spinner" : "fas fa-search");
 
     #endregion SelectOrClearCommand
 
