@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.7" />
     <PackageReference Include="Shipwreck.BootstrapControls.Maui" Version="4.2.1-alpha002" />
-    <PackageReference Include="Shipwreck.FontAwesomeControls.Maui" Version="5.14.3" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.Maui" Version="5.14.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Maui\Shipwreck.ViewModelUtils.Core.Maui.csproj" />

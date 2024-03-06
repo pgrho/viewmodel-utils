@@ -23,6 +23,6 @@ public partial class FrameworkPageViewModel : IHasJSRuntime, IHasBindableCompone
     public ProcessingDisabled DisableProcessing()
         => default;
 
-    partial void PlatformCreateNavigaionService(ref INavigationService s)
+    partial void PlatformCreateNavigationService(ref INavigationService s)
         => s = new NavigationService(Page.NavigationManager);
 }

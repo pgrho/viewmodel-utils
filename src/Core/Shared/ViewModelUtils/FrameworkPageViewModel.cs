@@ -57,11 +57,11 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     protected virtual INavigationService CreateNavigaionService()
     {
         INavigationService s = null;
-        PlatformCreateNavigaionService(ref s);
+        PlatformCreateNavigationService(ref s);
         return s;
     }
 
-    partial void PlatformCreateNavigaionService(ref INavigationService s);
+    partial void PlatformCreateNavigationService(ref INavigationService s);
 
     public bool IsSupported(NavigationEntry entry)
         => Navigation?.IsSupported(this, entry) == true;
@@ -621,7 +621,6 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     }
 
 #pragma warning disable CA1063 // Implement IDisposable Correctly
-
     public void Dispose()
 #pragma warning restore CA1063 // Implement IDisposable Correctly
             => Dispose(true);

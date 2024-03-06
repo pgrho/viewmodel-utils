@@ -11,7 +11,7 @@ public static class ViewModelUtilsModule
     public static IMauiHandlersCollection AddViewModelUtilsHandlers(this IMauiHandlersCollection handlers)
     {
 #if ANDROID
-        handlers.AddHandler(typeof(SelectableEntry), typeof(SelectableEntryRenderer));
+        // handlers.AddHandler(typeof(SelectableEntry), typeof(SelectableEntryRenderer));
 #endif
         return handlers;
     }
