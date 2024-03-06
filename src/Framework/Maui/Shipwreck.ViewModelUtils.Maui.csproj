@@ -8,11 +8,26 @@
     <SingleProject>true</SingleProject>
     <DefineConstants>$(DefineConstants);IS_MAUI</DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Core\Converters\XMLNS.cs" Link="Linked Code\XMLNS.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+    <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.7" />
+    <PackageReference Include="Shipwreck.BootstrapControls.Maui" Version="4.2.1-alpha002" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.Maui" Version="5.14.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Maui\Shipwreck.ViewModelUtils.Core.Maui.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <MauiXaml Update="ViewModelUtils\IconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
 
 </Project>
