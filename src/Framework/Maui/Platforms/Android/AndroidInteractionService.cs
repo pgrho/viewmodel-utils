@@ -1,5 +1,7 @@
 ﻿using Android.Views;
 using Android.Widget;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Shipwreck.BootstrapControls;
 
@@ -36,15 +38,19 @@ public class AndroidInteractionService : InteractionService
             }
         }
 
-        var t = Toast.MakeText(Android.App.Application.Context, message, ToastLength.Short);
-        t.SetGravity(GravityFlags.Top | GravityFlags.Center, 0, 30);
-        t.View?.SetBackgroundColor(scheme.BackgroundColor.ToAndroid());
-        if (t.View?.FindViewById<TextView>(Android.Resource.Id.Message) is TextView tv)
+        var options = new SnackbarOptions()
         {
-            tv.SetTextColor(scheme.ForegroundColor.ToAndroid());
-        }
-        t.Show();
-        return Task.CompletedTask;
+            BackgroundColor = scheme.BackgroundColor,
+            TextColor = scheme.ForegroundColor,
+            ActionButtonTextColor = scheme.ForegroundColor
+        };
+
+        var sb = Snackbar.Make(
+            message,
+            // duration: TimeSpan.FromSeconds(5),
+            visualOptions: options);
+
+        return sb.Show();
     }
 
     #endregion Toasts

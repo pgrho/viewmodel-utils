@@ -52,9 +52,9 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     private INavigationService _Navigation;
 
-    public INavigationService Navigation => _Navigation ??= CreateNavigaionService();
+    public INavigationService Navigation => _Navigation ??= CreateNavigationService();
 
-    protected virtual INavigationService CreateNavigaionService()
+    protected virtual INavigationService CreateNavigationService()
     {
         INavigationService s = null;
         PlatformCreateNavigationService(ref s);

@@ -13,6 +13,7 @@
     <Compile Include="..\..\Core\Converters\XMLNS.cs" Link="Linked Code\XMLNS.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Maui" Version="7.0.1" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
     <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.7" />
     <PackageReference Include="Shipwreck.BootstrapControls.Maui" Version="4.2.1-alpha002" />
