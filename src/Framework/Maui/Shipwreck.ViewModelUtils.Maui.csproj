@@ -22,6 +22,9 @@
     <ProjectReference Include="..\..\Core\Maui\Shipwreck.ViewModelUtils.Core.Maui.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <MauiXaml Update="ViewModelUtils\CommandButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="ViewModelUtils\IconButton.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>

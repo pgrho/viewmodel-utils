@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:fa5="http://schema.shipwreck.jp/fontawesome5/"
+    xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
+    xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.Maui"
+    xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils"
+    x:Class="Shipwreck.ViewModelUtils.CommandButton"
+    IsVisible="{Binding IsVisible, TargetNullValue=False, FallbackValue=False}"
+    x:DataType="vmu:CommandViewModelBase">
+    <ContentView.Resources>
+        <vmuf:BorderStyleToColorSchemeConverter
+            x:Key="BorderStyleToColorSchemeConverter" />
+    </ContentView.Resources>
+    <ContentView.Content>
+        <bs4:ButtonFrame
+            x:Name="frame"
+            CornerRadius="4"
+            Scheme="{Binding Style, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
+            IsEnabled="{Binding IsEnabled}">
+            <bs4:ButtonFrame.Triggers>
+                <DataTrigger
+                    TargetType="bs4:ButtonFrame"
+                    Binding="{Binding IsEnabled}"
+                    Value="False">
+                    <Setter
+                        Property="Opacity"
+                        Value="0.65" />
+                </DataTrigger>
+            </bs4:ButtonFrame.Triggers>
+            <bs4:ButtonFrame.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding}" />
+            </bs4:ButtonFrame.GestureRecognizers>
+            <Grid
+                HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition
+                        Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <fa5:FontAwesomeLabel
+                    x:Name="icon"
+                    VerticalOptions="Center"
+                    Icon="{Binding Icon}" />
+                <Label
+                    x:Name="title"
+                    Grid.Column="1"
+                    VerticalOptions="Center"
+                    Text="{Binding Title}" />
+                <Frame
+                    Grid.Column="2"
+                    Padding="4,0"
+                    CornerRadius="8"
+                    VerticalOptions="Center"
+                    BackgroundColor="{Binding Source={x:Static bs4:ColorScheme.Danger}, Path=BackgroundColor}"
+                    HasShadow="False">
+                    <Frame.Triggers>
+                        <DataTrigger
+                            TargetType="Frame"
+                            Binding="{Binding BadgeCount}"
+                            Value="0">
+                            <Setter
+                                Property="IsVisible"
+                                Value="False" />
+                        </DataTrigger>
+                    </Frame.Triggers>
+                    <Label
+                        x:Name="badgeCount"
+                        TextColor="{Binding Source={x:Static bs4:ColorScheme.Danger}, Path=ForegroundColor}"
+                        Text="{Binding BadgeCount, StringFormat='{}{0:#,0}'}" />
+                </Frame>
+            </Grid>
+        </bs4:ButtonFrame>
+    </ContentView.Content>
+</ContentView>

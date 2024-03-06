@@ -6,7 +6,9 @@
     xmlns:bs4="http://schema.shipwreck.jp/bootstrap-controls/"
     xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.Maui"
     xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils"
-    x:Class="Shipwreck.ViewModelUtils.IconButton">
+    x:Class="Shipwreck.ViewModelUtils.IconButton"
+    x:DataType="vmu:ICommandViewModel"
+    IsVisible="{Binding IsVisible, TargetNullValue=False, FallbackValue=False}">
     <ContentView.Resources>
         <vmuf:BorderStyleToColorSchemeConverter
             x:Key="BorderStyleToColorSchemeConverter" />
