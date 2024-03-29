@@ -4,6 +4,7 @@
 @using (OnBeginRender())
 {
     <nav class="form-inline" aria-label="...">
+        @ChildContent
         <ListScope T="CommandViewModelBase"
                    Source="@((IList)Commands)"
                    DependsOnItemProperties="Array.Empty<string>()">
@@ -84,68 +85,20 @@
 {
     private int Count => FilteredCount ?? TotalCount;
 
-    #region TotalCount
-
-    private int _TotalCount;
 
     [Parameter]
-    public int TotalCount
-    {
-        get => _TotalCount;
-        set
-        {
-            if (value != _TotalCount)
-            {
-                _TotalCount = value;
-                StateHasChanged();
-            }
-        }
-    }
+    public int TotalCount { get; set; }
 
-    #endregion TotalCount
 
-    #region FilteredCount
-
-    private int? _FilteredCount;
 
     [Parameter]
-    public int? FilteredCount
-    {
-        get => _FilteredCount;
-        set
-        {
-            if (value != _FilteredCount)
-            {
-                _FilteredCount = value;
-                StateHasChanged();
-            }
-        }
-    }
-
-    #endregion FilteredCount
+    public int? FilteredCount { get; set; }
 
     #region PageSize
 
-    private int _PageSize;
 
     [Parameter]
-    public int PageSize
-    {
-        get => _PageSize;
-        set
-        {
-            if (value != _PageSize)
-            {
-                _PageSize = value;
-
-                using (Host?.PushPropertyChangedExpectation())
-                {
-                    PageSizeChanged?.Invoke(_PageSize);
-                }
-                StateHasChanged();
-            }
-        }
-    }
+    public int PageSize { get; set; }
 
     [Parameter]
     public Action<int> PageSizeChanged { get; set; }
@@ -154,26 +107,9 @@
 
     #region PageIndex
 
-    private int _PageIndex;
 
     [Parameter]
-    public int PageIndex
-    {
-        get => _PageIndex;
-        set
-        {
-            if (value != _PageIndex)
-            {
-                _PageIndex = value;
-
-                using (Host?.PushPropertyChangedExpectation())
-                {
-                    PageIndexChanged?.Invoke(_PageIndex);
-                }
-                StateHasChanged();
-            }
-        }
-    }
+    public int PageIndex { get; set; }
 
     [Parameter]
     public Action<int> PageIndexChanged { get; set; }
@@ -185,4 +121,7 @@
 
     [Parameter]
     public IReadOnlyList<CommandViewModelBase> Commands { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
 }
