@@ -25,4 +25,7 @@ public partial class FrameworkPageViewModel : IHasJSRuntime, IHasBindableCompone
 
     partial void PlatformCreateNavigaionService(ref INavigationService s)
         => s = new NavigationService(Page.NavigationManager);
+
+    partial void GetProcessType(ref ProcessType value)
+        => value = Page.JS is IJSInProcessRuntime ? ProcessType.BlazorWebAssembly : ProcessType.BlazorServer;
 }

@@ -61,13 +61,20 @@ public class InteractionService : IInteractionService
     {
         try
         {
-            if (context is IHasFrameworkPageViewModel hp
-                && hp.Page is FrameworkPageViewModel pvm)
-            {
-                pvm.EnqueueToastLog(style, message, title);
+            var page = (context as IHasFrameworkPageViewModel)?.Page;
 
-                if (pvm.OverridesToast(message, title, style))
+            if (page != null)
+            {
+                page.EnqueueToastLog(style, message, title);
+
+                if (page.OverridesToast(message, title, style))
                 {
+                    return Task.CompletedTask;
+                }
+
+                if (!page.IsWebAssembly)
+                {
+                    page.LogWarning("Toast is not supported in Blazor Server. {{ title: {0}, message: {1}, style: {2} }}", title, message, style);
                     return Task.CompletedTask;
                 }
             }

@@ -42,4 +42,7 @@ public partial class FrameworkPageViewModel
 
     static partial void PlatformGetInteractionService(ref IInteractionService service)
         => service = new InteractionService();
+
+    partial void GetProcessType(ref ProcessType value)
+        => value = ProcessType.Wpf;
 }

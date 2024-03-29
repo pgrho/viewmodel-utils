@@ -6,6 +6,33 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     public static bool ShouldCaptureContext { get; set; } = TaskHelper.SHOULD_CAPTURE_CONTEXT;
 
+    #region ProcessType
+
+    private ProcessType _ProcessType = ProcessType.Unknown;
+    public ProcessType ProcessType
+    {
+        get
+        {
+            if (_ProcessType == ProcessType.Unknown)
+            {
+                GetProcessType(ref _ProcessType);
+            }
+            return _ProcessType;
+        }
+    }
+
+    partial void GetProcessType(ref ProcessType value);
+
+    public bool IsWebAssembly => ProcessType == ProcessType.BlazorWebAssembly;
+    public bool IsWebServer => ProcessType == ProcessType.BlazorServer;
+
+    public bool IsBlazor => IsWebAssembly || IsWebServer;
+
+    public bool IsXamarinForms => ProcessType == ProcessType.XamarinForms;
+    public bool IsWpf => ProcessType == ProcessType.Wpf;
+
+    #endregion ProcessType
+
     #region Logger
 
     private IPageLogger _Logger;
@@ -91,7 +118,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     }
 
     protected virtual void OnNavigatingTo(NavigationEntry entry)
-    { 
+    {
     }
 
     #endregion Navigation
