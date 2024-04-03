@@ -138,7 +138,7 @@ public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFramewo
         throw new NotImplementedException();
     }
 
-    public void ToggleSortKey(string member)
+    public void ToggleSortKeys(IEnumerable<string> members)
     {
         throw new NotImplementedException();
     }

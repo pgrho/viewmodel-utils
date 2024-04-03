@@ -8,7 +8,7 @@ public interface IPaginatable : INotifyPropertyChanged
 
     ReadOnlyCollection<SortDescription> Order { get; }
 
-    void ToggleSortKey(string member);
+    void ToggleSortKeys(IEnumerable<string> members);
 
     void NavigateTo(int pageIndex);
 

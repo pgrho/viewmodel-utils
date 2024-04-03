@@ -3,7 +3,14 @@
 public abstract class TableColumn
 {
     public string Header { get; set; }
-    public string SortKey { get; set; }
+
+    public string SortKey
+    {
+        get => SortKeys?.FirstOrDefault();
+        set => SortKeys = string.IsNullOrWhiteSpace(value) ? null : new[] { value };
+    }
+
+    public IReadOnlyList<string> SortKeys { get; set; }
 
     public string Description { get; set; }
     public string Icon { get; set; }
@@ -20,9 +27,9 @@ public abstract class TableColumn
         {
             builder.AddAttribute(1, nameof(TableHeaderSortableCell.Header), Header);
         }
-        if (!string.IsNullOrEmpty(SortKey))
+        if (SortKeys?.Count > 0)
         {
-            builder.AddAttribute(2, nameof(TableHeaderSortableCell.SortKey), SortKey);
+            builder.AddAttribute(2, nameof(TableHeaderSortableCell.SortKeys), SortKeys);
         }
         if (!string.IsNullOrEmpty(Description))
         {
