@@ -17,7 +17,7 @@ public partial class StickyTable<T> : ListComponentBase<T>
     public RenderFragment<ItemTemplateContext<T>> ItemTemplate { get; set; }
 
     [Parameter]
-    public ISortablePageViewModel SearchPage { get; set; }
+    public IPaginatable SearchPage { get; set; }
 
     [Parameter(CaptureUnmatchedValues = true)]
     public IDictionary<string, object> AdditionalAttributes { get; set; }
