@@ -1,5 +1,5 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
-@inherits BindableComponentBase<ISortablePageViewModel>
+@inherits BindableComponentBase<IPaginatable>
 @using (OnBeginRender())
 {
     var d = DataContext;
@@ -35,7 +35,7 @@
 @code
 {
     [CascadingParameter]
-    public ISortablePageViewModel SearchPage
+    public IPaginatable SearchPage
     {
         get => DataContext;
         set => DataContext = value;

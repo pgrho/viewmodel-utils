@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConsolePageLogger.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IAuthenticationResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModelHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPaginatable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ProcessType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IFrameworkSearchPageViewModelHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)viewmodelutils\ToastLogViewModel.cs" />

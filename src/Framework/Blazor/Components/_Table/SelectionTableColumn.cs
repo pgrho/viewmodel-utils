@@ -10,7 +10,7 @@ public sealed class SelectionTableColumn : TableColumn
     public override void RenderHeader(RenderTreeBuilder builder, object dataContext)
     {
         builder.OpenComponent<TableHeaderSelectionCell>(0);
-        if (dataContext is ISortablePageViewModel p)
+        if (dataContext is ISelectablesHost p)
         {
             builder.AddAttribute(1, nameof(TableHeaderSelectionCell.DataContext), p);
         }
