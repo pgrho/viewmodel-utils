@@ -1,0 +1,14 @@
+﻿namespace Shipwreck.ViewModelUtils;
+
+public interface IFilterable : IPaginatable
+{
+    bool IsFilterSupported(string key);
+
+    bool HasFiltered();
+
+    string? GetFilter(string key);
+
+    void SetFilter(string key, string? value);
+
+    void ClearFilter();
+}

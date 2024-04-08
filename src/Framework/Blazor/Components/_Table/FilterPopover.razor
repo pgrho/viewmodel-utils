@@ -1,0 +1,10 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+
+<PopoverFrame ReferenceElement="@ReferenceElement"
+              Boundaries="@Boundaries"
+              OnClosed="@(() => Presenter?.CloseModal())">
+    <input @ref="_Input" class="form-control" @bind="@InternalValue" />
+</PopoverFrame>
+@code
+{
+}

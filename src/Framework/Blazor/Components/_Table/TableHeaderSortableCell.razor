@@ -10,6 +10,8 @@
             && d.Order.Take(SortKeys.Count).Select(e => e.IsDescending).Distinct().ToList() is var ds
             && ds.Count == 1 ? ds?[0] : null;
 
+            var fk = GetFilterKey();
+
             <a class="text-light"
                href="javascript:void(0)"
                title="@Description"
@@ -23,6 +25,17 @@
                 @Header
                 <span class="fas @(direction == null ? null : direction == true ? "fas fa-caret-down" : "fas fa-caret-up")"></span>
             </a>
+            @if (d is IFilterable filterable
+           && !string.IsNullOrEmpty(fk)
+           && filterable.IsFilterSupported(fk))
+            {
+                <a @ref="@_FilterButton"
+                   class="@(string.IsNullOrEmpty(filterable.GetFilter(fk)) ? "text-muted" : "text-light")"
+                   href="javascript:void(0)"
+                   @onclick="@(() => FilterPopover.Show(HasPopoverPresenter.PopoverPresenter, _FilterButton, this))"
+                   @onclick:preventDefault="true"
+                   data-enhance-nav="false"><span class="fas fa-filter"></span></a>
+            }
         }
         else
         {
@@ -38,42 +51,4 @@
 }
 @code
 {
-    [CascadingParameter]
-    public IPaginatable SearchPage
-    {
-        get => DataContext;
-        set => DataContext = value;
-    }
-
-    [Parameter]
-    public string Header { get; set; }
-
-    [Parameter]
-    public string Icon { get; set; }
-
-    [Parameter]
-    public string Description { get; set; }
-
-    [Parameter]
-    public string SortKey
-    {
-        get => SortKeys?.FirstOrDefault();
-        set => SortKeys = string.IsNullOrWhiteSpace(value) ? null : new[] { value };
-    }
-
-    [Parameter]
-    public IReadOnlyList<string> SortKeys { get; set; }
-
-    [Parameter(CaptureUnmatchedValues = true)]
-    public IDictionary<string, object> AdditionalAttributes { get; set; }
-
-    protected override bool OnDataContextPropertyChanged(string propertyName)
-    {
-        switch (propertyName)
-        {
-            case nameof(DataContext.Order):
-                return true;
-        }
-        return false;
-    }
 }
