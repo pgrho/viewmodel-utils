@@ -35,6 +35,7 @@ internal static class Program
 
         var csprojs = Directory.GetFiles(solDir, "*.csproj", SearchOption.AllDirectories)
                         .Where(e => e.IndexOf(".Demo.", StringComparison.InvariantCultureIgnoreCase) < 0
+                                    && e.IndexOf(".Tests.", StringComparison.InvariantCultureIgnoreCase) < 0
                                     && e.IndexOf(".Build.", StringComparison.InvariantCultureIgnoreCase) < 0)
                         .OrderBy(e => e.IndexOf(".Core.", StringComparison.InvariantCultureIgnoreCase) >= 0 ? 0 : 1)
                         .ThenBy(e => e.IndexOf(".Models.", StringComparison.InvariantCultureIgnoreCase) >= 0 ? 0

@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
-public interface IFilterable : IPaginatable
+public partial interface IFilterable : IPaginatable
 {
     bool IsFilterSupported(string key);
 
