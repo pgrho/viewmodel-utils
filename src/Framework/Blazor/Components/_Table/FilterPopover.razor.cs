@@ -1,6 +1,4 @@
-﻿using Shipwreck.ViewModelUtils.JSInterop;
-
-namespace Shipwreck.ViewModelUtils.Components;
+﻿namespace Shipwreck.ViewModelUtils.Components;
 
 public partial class FilterPopover : ComponentBase
 {
@@ -33,6 +31,12 @@ public partial class FilterPopover : ComponentBase
     [Parameter]
     public Action<string> ValueChanged { get; set; }
 
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Description { get; set; }
+
     [Inject]
     public IJSRuntime JS { get; set; }
 
@@ -50,6 +54,8 @@ public partial class FilterPopover : ComponentBase
     {
         [nameof(Value)] = dataContext.Filter,
         [nameof(ValueChanged)] = (Action<string>)(v => dataContext.Filter = v),
+        [nameof(Title)] = dataContext.FilterName ?? dataContext.Header,
+        [nameof(Description)] = dataContext.FilterDescription,
         [nameof(ReferenceElement)] = reference,
         [nameof(Presenter)] = presenter,
     });

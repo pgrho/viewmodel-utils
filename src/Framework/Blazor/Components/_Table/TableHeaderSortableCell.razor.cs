@@ -19,7 +19,9 @@ public partial class TableHeaderSortableCell : BindableComponentBase<IPaginatabl
     public string Description { get; set; }
 
     [Parameter]
+#pragma warning disable BL0007 // Component parameters should be auto properties
     public string SortKey
+#pragma warning restore BL0007 // Component parameters should be auto properties
     {
         get => SortKeys?.FirstOrDefault();
         set => SortKeys = string.IsNullOrWhiteSpace(value) ? null : new[] { value };
@@ -66,4 +68,14 @@ public partial class TableHeaderSortableCell : BindableComponentBase<IPaginatabl
             }
         }
     }
+
+    internal string FilterName
+        => DataContext is IFilterable f
+        && GetFilterKey() is string s
+        && f.IsFilterSupported(s) ? f.GetFilterName(s) : null;
+
+    internal string FilterDescription
+        => DataContext is IFilterable f
+        && GetFilterKey() is string s
+        && f.IsFilterSupported(s) ? f.GetFilterDescription(s) : null;
 }

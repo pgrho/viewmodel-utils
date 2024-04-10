@@ -6,11 +6,18 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
 
     private readonly Action<StringMemberFilter<T>> _OnChanged;
 
-    public StringMemberFilter(Func<T, string?> selector, Action<StringMemberFilter<T>> onChanged)
+    private const string DEFAULT_DESCRIPTION = null;
+
+    public StringMemberFilter(Func<T, string?> selector, Action<StringMemberFilter<T>> onChanged, string name = null, string description = null)
     {
         _Selector = selector;
         _OnChanged = onChanged;
+        Name = name;
+        Description = description ?? DEFAULT_DESCRIPTION;
     }
+
+    public string Name { get; }
+    public string Description { get; }
 
     #region Filter
 

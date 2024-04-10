@@ -2,8 +2,13 @@
 
 <PopoverFrame ReferenceElement="@ReferenceElement"
               Boundaries="@Boundaries"
+              Header="@Title"
               OnClosed="@(() => Presenter?.CloseModal())">
     <input @ref="_Input" class="form-control" @bind="@InternalValue" />
+    @if (!string.IsNullOrEmpty(Description))
+    {
+        <div>@Description</div>
+    }
 </PopoverFrame>
 @code
 {

@@ -5,12 +5,18 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
     private readonly Func<T, DateTime?> _Selector;
 
     private readonly Action<DateTimeMemberFilter<T>> _OnChanged;
+    private const string DEFAULT_DESCRIPTION = null;
 
-    public DateTimeMemberFilter(Func<T, DateTime?> selector, Action<DateTimeMemberFilter<T>> onChanged)
+    public DateTimeMemberFilter(Func<T, DateTime?> selector, Action<DateTimeMemberFilter<T>> onChanged, string name = null, string description = null)
     {
         _Selector = selector;
         _OnChanged = onChanged;
+        Name = name;
+        Description = description ?? DEFAULT_DESCRIPTION;
     }
+
+    public string Name { get; }
+    public string Description { get; }
 
     #region Filter
 

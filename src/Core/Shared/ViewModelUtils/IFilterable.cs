@@ -10,5 +10,9 @@ public interface IFilterable : IPaginatable
 
     void SetFilter(string key, string? value);
 
+    string? GetFilterName(string key);
+
+    string? GetFilterDescription(string key);
+
     void ClearFilter();
 }
