@@ -4,7 +4,6 @@
     <TargetFrameworks>netstandard2.1</TargetFrameworks>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <UserSecretsId>ead016b0-5fba-4f6c-b076-629463eb9bf2</UserSecretsId>
-    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

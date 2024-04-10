@@ -6,7 +6,6 @@
     <RootNamespace>Shipwreck</RootNamespace>
     <UseWPF>true</UseWPF>
     <DefineConstants>$(DefineConstants);IS_WPF</DefineConstants>
-    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">

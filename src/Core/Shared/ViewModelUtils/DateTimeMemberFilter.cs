@@ -5,7 +5,35 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
     private readonly Func<T, DateTime?> _Selector;
 
     private readonly Action<DateTimeMemberFilter<T>> _OnChanged;
-    private const string DEFAULT_DESCRIPTION = null;
+
+    private static readonly string[] _Operators =
+        {
+            EQ_OPERATOR,
+            NE_OPERATOR,
+
+            LTE_OPERATOR,
+            GTE_OPERATOR,
+            LT_OPERATOR,
+            GT_OPERATOR,
+        };
+
+    internal const string EQ_OPERATOR = "=";
+    internal const string NE_OPERATOR = "!=";
+
+    internal const string LT_OPERATOR = "<";
+    internal const string LTE_OPERATOR = "<=";
+    internal const string GT_OPERATOR = ">";
+    internal const string GTE_OPERATOR = ">=";
+
+    internal const string BETWEEN_OPERATOR = "..";
+    private readonly static string DEFAULT_DESCRIPTION = $@"日付を検索します。
+{EQ_OPERATOR}: 一致
+{NE_OPERATOR}: 不一致
+{LT_OPERATOR}: 未満
+{LTE_OPERATOR}: 以下
+{GT_OPERATOR}: 超過
+{GTE_OPERATOR}: 以上
+{BETWEEN_OPERATOR}: 範囲";
 
     public DateTimeMemberFilter(Func<T, DateTime?> selector, Action<DateTimeMemberFilter<T>> onChanged, string name = null, string description = null)
     {
@@ -22,8 +50,26 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
 
     private string _Filter = string.Empty;
 
+    private bool _IsInclude;
     private DateTime? _LowerBound;
     private DateTime? _UpperBound;
+
+    private const string DATE1_PATTERN = "(?<y>[0-9]{4})(?:(?<sep>/|-|)(?<m>[0-9]{1,2})(?:\\k<sep>(?<d>[0-9]{1,2}))?)?";
+    private const string DATE2_PATTERN = "(?<y2>[0-9]{4})(?:\\k<sep>(?<m2>[0-9]{1,2})(?:\\k<sep>(?<d3>[0-9]{1,2}))?)?";
+
+    private const string _SINGLE_PATTERN = $"^(?<op>|!?=|[<>]=?)" + DATE1_PATTERN + "$";
+    private const string _BETWEEN_PATTERN = "^" + DATE1_PATTERN + "\\.\\." + DATE2_PATTERN + "$";
+#if NET7_0_OR_GREATER
+    [GeneratedRegex(_SINGLE_PATTERN)]
+    private static partial Regex SinglePattern();
+    [GeneratedRegex(_BETWEEN_PATTERN)]
+    private static partial Regex BetweenPattern();
+#else
+    private static readonly Regex _SinglePattern = new(_SINGLE_PATTERN);
+    private static Regex SinglePattern() => _SinglePattern;
+    private static readonly Regex _BetweenPattern = new(_BETWEEN_PATTERN);
+    private static Regex BetweenPattern() => _BetweenPattern;
+#endif
 
     public string? Filter
     {
@@ -34,31 +80,114 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
             if (_Filter != value)
             {
                 _Filter = value;
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    static bool parse(string y, string m, string d, out DateTime? lower, out DateTime? upper)
+                    {
+                        lower = upper = null;
+                        if (!int.TryParse(y, out var year) || year < 1 || 9999 < year)
+                        {
+                            return false;
+                        }
 
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    _LowerBound = null;
-                    _UpperBound = null;
-                }
-                else if (int.TryParse(value, out var iv) && 1 <= iv && iv < 9999)
-                {
-                    _LowerBound = new DateTime(iv, 1, 1);
-                    _UpperBound = _LowerBound?.AddYears(1);
-                }
-                else if (DateTime.TryParseExact(
-                    value,
-                    new[] { "yyyy-MM", "yyyy/MM", "yy-MM", "yy/MM", "yyyyMM", "yyyy-M", "yyyy/M", "yy-M", "yy/M" },
-                    null,
-                    System.Globalization.DateTimeStyles.None,
-                    out var ym))
-                {
-                    _LowerBound = ym;
-                    _UpperBound = ym.AddMonths(1);
-                }
-                else if (DateTime.TryParse(value, out var dt))
-                {
-                    _LowerBound = dt.Date;
-                    _UpperBound = _LowerBound?.AddDays(1);
+                        if (string.IsNullOrEmpty(m))
+                        {
+                            if (year == 9999)
+                            {
+                                return false;
+                            }
+                            lower = new DateTime(year, 1, 1);
+                            upper = new DateTime(year, 12, 31);
+                            return true;
+                        }
+                        else
+                        {
+                            if (!int.TryParse(m, out var month) || month < 1 || 12 < month)
+                            {
+                                return false;
+                            }
+
+                            if (string.IsNullOrEmpty(d))
+                            {
+                                if (year == 9999 && month == 12)
+                                {
+                                    return false;
+                                }
+                                lower = new DateTime(year, month, 1);
+                                upper = new DateTime(year, month, 1).AddMonths(1);
+                                return true;
+                            }
+
+                            if (!int.TryParse(d, out var day) || day < 1 || DateTime.DaysInMonth(year, month) < day)
+                            {
+                                return false;
+                            }
+                            lower = new DateTime(year, month, day);
+                            upper = new DateTime(year, month, day).AddDays(1);
+                            return true;
+                        }
+                    }
+
+                    if (SinglePattern().Match(value) is var sm && sm.Success)
+                    {
+                        _IsInclude = true;
+                        if (parse(sm.Groups["y"].Value, sm.Groups["m"].Value, sm.Groups["d"].Value, out var lb, out var ub))
+                        {
+                            var op = sm.Groups["op"].Value;
+                            switch (op)
+                            {
+                                case EQ_OPERATOR:
+                                case NE_OPERATOR:
+                                default:
+                                    _IsInclude = op != NE_OPERATOR;
+                                    _LowerBound = lb;
+                                    _UpperBound = ub;
+                                    break;
+
+                                case LT_OPERATOR:
+                                    _IsInclude = true;
+                                    _LowerBound = DateTime.MinValue;
+                                    _UpperBound = lb;
+                                    break;
+
+                                case LTE_OPERATOR:
+                                    _IsInclude = true;
+                                    _LowerBound = DateTime.MinValue;
+                                    _UpperBound = ub;
+                                    break;
+
+                                case GT_OPERATOR:
+                                    _IsInclude = true;
+                                    _LowerBound = ub;
+                                    _UpperBound = DateTime.MaxValue;
+                                    break;
+
+                                case GTE_OPERATOR:
+                                    _IsInclude = true;
+                                    _LowerBound = lb;
+                                    _UpperBound = DateTime.MaxValue;
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            _LowerBound = null;
+                            _UpperBound = null;
+                        }
+                    }
+                    else if (BetweenPattern().Match(value) is var bm && bm.Success)
+                    {
+                        _IsInclude = true;
+                        if (parse(bm.Groups["y"].Value, bm.Groups["m"].Value, bm.Groups["d"].Value, out _LowerBound, out _))
+                        {
+                            parse(bm.Groups["y2"].Value, bm.Groups["m2"].Value, bm.Groups["d2"].Value, out _, out _UpperBound);
+                        }
+                    }
+                    else
+                    {
+                        _LowerBound = null;
+                        _UpperBound = null;
+                    }
                 }
                 _OnChanged(this);
             }
@@ -73,11 +202,11 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
         {
             return true;
         }
-        if (_LowerBound == null)
+        if (_LowerBound == null || _UpperBound == null)
         {
             return false;
         }
         var v = _Selector(item);
-        return _LowerBound <= v && v < _UpperBound;
+        return (_LowerBound <= v && v < _UpperBound) == _IsInclude;
     }
 }
