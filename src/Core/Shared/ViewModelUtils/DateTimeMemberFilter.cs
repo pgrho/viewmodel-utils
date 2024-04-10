@@ -55,7 +55,7 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
     private DateTime? _UpperBound;
 
     private const string DATE1_PATTERN = "(?<y>[0-9]{4})(?:(?<sep>/|-|)(?<m>[0-9]{1,2})(?:\\k<sep>(?<d>[0-9]{1,2}))?)?";
-    private const string DATE2_PATTERN = "(?<y2>[0-9]{4})(?:\\k<sep>(?<m2>[0-9]{1,2})(?:\\k<sep>(?<d3>[0-9]{1,2}))?)?";
+    private const string DATE2_PATTERN = "(?<y2>[0-9]{4})(?:\\k<sep>(?<m2>[0-9]{1,2})(?:\\k<sep>(?<d2>[0-9]{1,2}))?)?";
 
     private const string _SINGLE_PATTERN = $"^(?<op>|!?=|[<>]=?)" + DATE1_PATTERN + "$";
     private const string _BETWEEN_PATTERN = "^" + DATE1_PATTERN + "\\.\\." + DATE2_PATTERN + "$";
@@ -82,7 +82,7 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
                 _Filter = value;
                 if (!string.IsNullOrWhiteSpace(value))
                 {
-                    static bool parse(string y, string m, string d, out DateTime? lower, out DateTime? upper)
+                    static bool parse(bool hasSeparator, string y, string m, string d, out DateTime? lower, out DateTime? upper)
                     {
                         lower = upper = null;
                         if (!int.TryParse(y, out var year) || year < 1 || 9999 < year)
@@ -97,12 +97,13 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
                                 return false;
                             }
                             lower = new DateTime(year, 1, 1);
-                            upper = new DateTime(year, 12, 31);
+                            upper = new DateTime(year + 1, 1, 1);
                             return true;
                         }
                         else
                         {
-                            if (!int.TryParse(m, out var month) || month < 1 || 12 < month)
+                            if ((!hasSeparator && m.Length != 2)
+                                || !int.TryParse(m, out var month) || month < 1 || 12 < month)
                             {
                                 return false;
                             }
@@ -118,7 +119,8 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
                                 return true;
                             }
 
-                            if (!int.TryParse(d, out var day) || day < 1 || DateTime.DaysInMonth(year, month) < day)
+                            if ((!hasSeparator && d.Length != 2)
+                                || !int.TryParse(d, out var day) || day < 1 || DateTime.DaysInMonth(year, month) < day)
                             {
                                 return false;
                             }
@@ -131,7 +133,8 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
                     if (SinglePattern().Match(value) is var sm && sm.Success)
                     {
                         _IsInclude = true;
-                        if (parse(sm.Groups["y"].Value, sm.Groups["m"].Value, sm.Groups["d"].Value, out var lb, out var ub))
+                        var hasSeparator = sm.Groups["sep"]?.Length > 0;
+                        if (parse(hasSeparator, sm.Groups["y"].Value, sm.Groups["m"].Value, sm.Groups["d"].Value, out var lb, out var ub))
                         {
                             var op = sm.Groups["op"].Value;
                             switch (op)
@@ -178,9 +181,10 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
                     else if (BetweenPattern().Match(value) is var bm && bm.Success)
                     {
                         _IsInclude = true;
-                        if (parse(bm.Groups["y"].Value, bm.Groups["m"].Value, bm.Groups["d"].Value, out _LowerBound, out _))
+                        var hasSeparator = bm.Groups["sep"]?.Length > 0;
+                        if (parse(hasSeparator, bm.Groups["y"].Value, bm.Groups["m"].Value, bm.Groups["d"].Value, out _LowerBound, out _))
                         {
-                            parse(bm.Groups["y2"].Value, bm.Groups["m2"].Value, bm.Groups["d2"].Value, out _, out _UpperBound);
+                            parse(hasSeparator, bm.Groups["y2"].Value, bm.Groups["m2"].Value, bm.Groups["d2"].Value, out _, out _UpperBound);
                         }
                     }
                     else
