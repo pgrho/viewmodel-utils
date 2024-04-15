@@ -2,8 +2,6 @@
 
 public partial class EnumFilterPopover : ComponentBase
 {
-    private ElementReference _Input;
-
     [Parameter]
     public ElementReference ReferenceElement { get; set; }
 
@@ -27,18 +25,6 @@ public partial class EnumFilterPopover : ComponentBase
 
     [Parameter]
     public string Description { get; set; }
-
-    [Inject]
-    public IJSRuntime JS { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await (base.OnAfterRenderAsync(firstRender) ?? Task.CompletedTask);
-        if (firstRender)
-        {
-            await JS.FocusAsync(_Input, true);
-        }
-    }
 
     public static void Show(ModalPresenterBase presenter, ElementReference reference, TableHeaderSortableCell dataContext)
     => presenter.ShowModal(typeof(EnumFilterPopover), new Dictionary<string, object>
