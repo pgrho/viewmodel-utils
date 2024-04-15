@@ -174,4 +174,6 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
                 return false;
         }
     }
+
+    bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
 }

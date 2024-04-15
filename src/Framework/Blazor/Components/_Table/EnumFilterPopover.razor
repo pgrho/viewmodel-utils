@@ -1,0 +1,63 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+
+<PopoverFrame ReferenceElement="@ReferenceElement"
+              Boundaries="@Boundaries"
+              Header="@Title"
+              OnClosed="@(() => Presenter?.CloseModal())">
+    <table class="table table-sm">
+        <tbody>
+            @{
+                _Values ??= Options.Where(e => e.isSelected).Select(e => e.value).ToHashSet();
+            }
+            @foreach (var op in Options)
+            {
+                <tr @key="@op.value">
+                    <td>
+                        <Checkbox IsChecked="@(_Values.Contains(op.value))"
+                                  IsCheckedChanged="@(v => Toggle(op.value, v))" />
+                    </td>
+                    <td>
+                        <a href="javascript:void(0)"
+                           class="btn btn-block btn-link border-0 p-0 text-left"
+                           @onclick="@(() => Select(op.value))"
+                           data-enhance-nav="true">
+                            @op.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (!string.IsNullOrEmpty(Description))
+    {
+        <div>@Description</div>
+    }
+</PopoverFrame>
+@code
+{
+    private HashSet<string> _Values;
+
+    private void Toggle(string value, bool isSelected)
+    {
+        if (isSelected ? _Values.Add(value) : _Values.Remove(value))
+        {
+            OnChanged();
+        }
+    }
+
+    private void Select(string value)
+    {
+        if (_Values?.Count == 1 && _Values.First() == value)
+        {
+            return;
+        }
+        _Values = new() { value };
+        OnChanged();
+    }
+
+    private void OnChanged()
+        => ValueChanged?.Invoke(
+            _Values?.Count == Options.Count
+            ? string.Empty
+            : string.Join(",", _Values ?? []));
+}

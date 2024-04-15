@@ -25,9 +25,7 @@
                 @Header
                 <span class="fas @(direction == null ? null : direction == true ? "fas fa-caret-down" : "fas fa-caret-up")"></span>
             </a>
-            @if (d is IFilterable filterable
-           && !string.IsNullOrEmpty(fk)
-           && filterable.IsFilterSupported(fk))
+            @if (d is IFilterable filterable && !string.IsNullOrEmpty(fk) && filterable.IsFilterSupported(fk))
             {
                 <a @ref="@_FilterButton"
                    class="@(string.IsNullOrEmpty(filterable.GetFilter(fk)) ? "text-muted" : "text-light")"
@@ -36,7 +34,14 @@
                    {
                        if (!filterable.TryShowPopover(fk, this, _FilterButton))
                        {
-                           FilterPopover.Show(HasPopoverPresenter.PopoverPresenter, _FilterButton, this);
+                           if (DataContext is IEnumMemberFilter)
+                           {
+                               EnumFilterPopover.Show(HasPopoverPresenter.PopoverPresenter, _FilterButton, this);
+                           }
+                           else
+                           {
+                               FilterPopover.Show(HasPopoverPresenter.PopoverPresenter, _FilterButton, this);
+                           }
                        }
                    })"
                    @onclick:preventDefault="true"

@@ -165,4 +165,5 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
                 return _Operand <= v && v <= _Operand2;
         }
     }
+    bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
 }

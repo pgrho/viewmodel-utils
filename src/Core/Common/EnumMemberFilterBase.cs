@@ -2,7 +2,7 @@
 
 namespace Shipwreck.ViewModelUtils;
 
-public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
+public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>, IEnumMemberFilter
     where TValue : struct
 {
     private readonly Func<T, TValue?> _Selector;
@@ -97,4 +97,9 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
 
         return Array.IndexOf(a, v) >= 0;
     }
+
+    bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
+
+    IEnumerable<(string value, string name, bool isSelected)> IEnumMemberFilter.EnumerateOptions()
+        => EnumerateValues().Select(v => (GetValue(v), GetDisplayName(v), _Array == null || Array.IndexOf(_Array, v) >= 0));
 }

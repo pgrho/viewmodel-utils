@@ -213,4 +213,5 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
         var v = _Selector(item);
         return (_LowerBound <= v && v < _UpperBound) == _IsInclude;
     }
+    bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
 }
