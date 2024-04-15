@@ -14,5 +14,7 @@ public partial interface IFilterable : IPaginatable
 
     string? GetFilterDescription(string key);
 
+    IEnumerable<FilterOption>? GetFilterOptions(string key);
+
     void ClearFilter();
 }

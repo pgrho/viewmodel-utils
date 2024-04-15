@@ -1,6 +1,4 @@
-﻿using Shipwreck.ReflectionUtils;
-
-namespace Shipwreck.ViewModelUtils;
+﻿namespace Shipwreck.ViewModelUtils;
 
 public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>, IEnumMemberFilter
     where TValue : struct
@@ -100,6 +98,10 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
 
     bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
 
-    IEnumerable<(string value, string name, bool isSelected)> IEnumMemberFilter.EnumerateOptions()
-        => EnumerateValues().Select(v => (GetValue(v), GetDisplayName(v), _Array == null || Array.IndexOf(_Array, v) >= 0));
+    IEnumerable<FilterOption> IEnumMemberFilter.EnumerateOptions()
+        => EnumerateValues()
+            .Select(v => new FilterOption(
+                GetValue(v),
+                GetDisplayName(v),
+                _Array == null || Array.IndexOf(_Array, v) >= 0));
 }

@@ -18,7 +18,7 @@ public partial class EnumFilterPopover : ComponentBase
     public Action<string> ValueChanged { get; set; }
 
     [Parameter]
-    public IReadOnlyList<(string value, string name, bool isSelected)> Options { get; set; }
+    public IReadOnlyList<FilterOption> Options { get; set; }
 
     [Parameter]
     public string Title { get; set; }
@@ -26,15 +26,15 @@ public partial class EnumFilterPopover : ComponentBase
     [Parameter]
     public string Description { get; set; }
 
-    public static void Show(ModalPresenterBase presenter, ElementReference reference, TableHeaderSortableCell dataContext)
-    => presenter.ShowModal(typeof(EnumFilterPopover), new Dictionary<string, object>
-    {
-        [nameof(Value)] = dataContext.Filter,
-        [nameof(ValueChanged)] = (Action<string>)(v => dataContext.Filter = v),
-        [nameof(Options)] = (dataContext?.DataContext as IEnumMemberFilter)?.EnumerateOptions().ToArray() ?? [],
-        [nameof(Title)] = dataContext.FilterName ?? dataContext.Header,
-        [nameof(Description)] = dataContext.FilterDescription,
-        [nameof(ReferenceElement)] = reference,
-        [nameof(Presenter)] = presenter,
-    });
+    public static void Show(ModalPresenterBase presenter, ElementReference reference, string? value, Action<string?> valueChanged, string? title = null, string? description = null, IEnumerable<FilterOption> options = null)
+            => presenter.ShowModal(typeof(EnumFilterPopover), new Dictionary<string, object>
+            {
+                [nameof(Value)] = value,
+                [nameof(ValueChanged)] = valueChanged,
+                [nameof(Title)] = title,
+                [nameof(Description)] = description,
+                [nameof(Options)] = options?.ToArray() ?? [],
+                [nameof(ReferenceElement)] = reference,
+                [nameof(Presenter)] = presenter,
+            });
 }

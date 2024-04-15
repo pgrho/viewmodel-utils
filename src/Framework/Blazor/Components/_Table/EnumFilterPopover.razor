@@ -7,21 +7,26 @@
     <table class="table table-sm">
         <tbody>
             @{
-                _Values ??= Options.Where(e => e.isSelected).Select(e => e.value).ToHashSet();
+                _Values ??= Options.Where(e => e.IsSelected).Select(e => e.Value).ToHashSet();
             }
             @foreach (var op in Options)
             {
-                <tr @key="@op.value">
-                    <td>
-                        <Checkbox IsChecked="@(_Values.Contains(op.value))"
-                                  IsCheckedChanged="@(v => Toggle(op.value, v))" />
+                var selected = _Values.Contains(op.Value);
+                <tr @key="@op.Value">
+                    <td style="max-width: 1.5rem">
+                        <a href="javascript:void(0)"
+                           class="btn btn-block btn-link border-0 p-0"
+                           @onclick="@(() => Toggle(op.Value, !selected))"
+                           data-enhance-nav="true">
+                            <span class="@(selected ? "fas fa-check-square" : "far fa-square")"></span>
+                        </a>
                     </td>
                     <td>
                         <a href="javascript:void(0)"
                            class="btn btn-block btn-link border-0 p-0 text-left"
-                           @onclick="@(() => Select(op.value))"
+                           @onclick="@(() => Select(op.Value))"
                            data-enhance-nav="true">
-                            @op.name
+                            @(op.Name.TrimOrNull() ?? "(null)")
                         </a>
                     </td>
                 </tr>

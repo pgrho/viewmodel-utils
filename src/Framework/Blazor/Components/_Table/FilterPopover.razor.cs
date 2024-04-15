@@ -49,14 +49,14 @@ public partial class FilterPopover : ComponentBase
         }
     }
 
-    public static void Show(ModalPresenterBase presenter, ElementReference reference, TableHeaderSortableCell dataContext)
-    => presenter.ShowModal(typeof(FilterPopover), new Dictionary<string, object>
-    {
-        [nameof(Value)] = dataContext.Filter,
-        [nameof(ValueChanged)] = (Action<string>)(v => dataContext.Filter = v),
-        [nameof(Title)] = dataContext.FilterName ?? dataContext.Header,
-        [nameof(Description)] = dataContext.FilterDescription,
-        [nameof(ReferenceElement)] = reference,
-        [nameof(Presenter)] = presenter,
-    });
+    public static void Show(ModalPresenterBase presenter, ElementReference reference, string? value, Action<string?> valueChanged, string? title = null, string? description = null)
+        => presenter.ShowModal(typeof(FilterPopover), new Dictionary<string, object>
+        {
+            [nameof(Value)] = value,
+            [nameof(ValueChanged)] = valueChanged,
+            [nameof(Title)] = title,
+            [nameof(Description)] = description,
+            [nameof(ReferenceElement)] = reference,
+            [nameof(Presenter)] = presenter,
+        });
 }
