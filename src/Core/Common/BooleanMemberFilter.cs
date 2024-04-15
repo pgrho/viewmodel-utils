@@ -2,11 +2,11 @@
 
 public sealed partial class BooleanMemberFilter<T> : EnumMemberFilterBase<T, bool>
 {
-    private readonly Action<BooleanMemberFilter<T>> _OnChanged;
+    private readonly Action<BooleanMemberFilter<T>>? _OnChanged;
 
-    private readonly static string DEFAULT_DESCRIPTION = null;
+    private readonly static string? DEFAULT_DESCRIPTION = null;
 
-    public BooleanMemberFilter(Func<T, bool?> selector, Action<BooleanMemberFilter<T>> onChanged, string name = null, string description = null)
+    public BooleanMemberFilter(Func<T, bool?> selector, Action<BooleanMemberFilter<T>>? onChanged = null, string? name = null, string? description = null)
         : base(selector, name: name, description: description ?? DEFAULT_DESCRIPTION)
     {
         _OnChanged = onChanged;
@@ -70,5 +70,5 @@ public sealed partial class BooleanMemberFilter<T> : EnumMemberFilterBase<T, boo
         };
 
     protected override void OnChanged()
-        => _OnChanged(this);
+        => _OnChanged?.Invoke(this);
 }

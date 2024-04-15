@@ -4,7 +4,7 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
 {
     private readonly Func<T, DateTime?> _Selector;
 
-    private readonly Action<DateTimeMemberFilter<T>> _OnChanged;
+    private readonly Action<DateTimeMemberFilter<T>>? _OnChanged;
 
     private static readonly string[] _Operators =
         {
@@ -26,6 +26,15 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
     internal const string GTE_OPERATOR = ">=";
 
     internal const string BETWEEN_OPERATOR = "..";
+
+    public static string EqualOperator => EQ_OPERATOR;
+    public static string NotEqualOperator => NE_OPERATOR;
+    public static string LessThanOperator => LT_OPERATOR;
+    public static string LessThanOrEqualOperator => LTE_OPERATOR;
+    public static string GreaterThanOperator => GT_OPERATOR;
+    public static string GreaterThanOrEqualOperator => GTE_OPERATOR;
+    public static string BetweenOperator => BETWEEN_OPERATOR;
+
     private readonly static string DEFAULT_DESCRIPTION = $@"日付を検索します。
 {EQ_OPERATOR}: 一致
 {NE_OPERATOR}: 不一致
@@ -35,7 +44,7 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
 {GTE_OPERATOR}: 以上
 {BETWEEN_OPERATOR}: 範囲";
 
-    public DateTimeMemberFilter(Func<T, DateTime?> selector, Action<DateTimeMemberFilter<T>> onChanged, string name = null, string description = null)
+    public DateTimeMemberFilter(Func<T, DateTime?> selector, Action<DateTimeMemberFilter<T>>? onChanged = null, string? name = null, string? description = null)
     {
         _Selector = selector;
         _OnChanged = onChanged;
@@ -43,16 +52,16 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
         Description = description ?? DEFAULT_DESCRIPTION;
     }
 
-    public string Name { get; }
-    public string Description { get; }
+    public string? Name { get; }
+    public string? Description { get; }
 
     #region Filter
 
     private string _Filter = string.Empty;
 
-    private bool _IsInclude;
-    private DateTime? _LowerBound;
-    private DateTime? _UpperBound;
+    public bool IsInclude { get; private set; }
+    public DateTime? ParsedLowerBound { get; private set; }
+    public DateTime? ParsedUpperBound { get; private set; }
 
     private const string DATE1_PATTERN = "(?<y>[0-9]{4})(?:(?<sep>/|-|)(?<m>[0-9]{1,2})(?:\\k<sep>(?<d>[0-9]{1,2}))?)?";
     private const string DATE2_PATTERN = "(?<y2>[0-9]{4})(?:\\k<sep>(?<m2>[0-9]{1,2})(?:\\k<sep>(?<d2>[0-9]{1,2}))?)?";
@@ -132,7 +141,7 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
 
                     if (SinglePattern().Match(value) is var sm && sm.Success)
                     {
-                        _IsInclude = true;
+                        IsInclude = true;
                         var hasSeparator = sm.Groups["sep"]?.Length > 0;
                         if (parse(hasSeparator, sm.Groups["y"].Value, sm.Groups["m"].Value, sm.Groups["d"].Value, out var lb, out var ub))
                         {
@@ -142,58 +151,61 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
                                 case EQ_OPERATOR:
                                 case NE_OPERATOR:
                                 default:
-                                    _IsInclude = op != NE_OPERATOR;
-                                    _LowerBound = lb;
-                                    _UpperBound = ub;
+                                    IsInclude = op != NE_OPERATOR;
+                                    ParsedLowerBound = lb;
+                                    ParsedUpperBound = ub;
                                     break;
 
                                 case LT_OPERATOR:
-                                    _IsInclude = true;
-                                    _LowerBound = DateTime.MinValue;
-                                    _UpperBound = lb;
+                                    IsInclude = true;
+                                    ParsedLowerBound = DateTime.MinValue;
+                                    ParsedUpperBound = lb;
                                     break;
 
                                 case LTE_OPERATOR:
-                                    _IsInclude = true;
-                                    _LowerBound = DateTime.MinValue;
-                                    _UpperBound = ub;
+                                    IsInclude = true;
+                                    ParsedLowerBound = DateTime.MinValue;
+                                    ParsedUpperBound = ub;
                                     break;
 
                                 case GT_OPERATOR:
-                                    _IsInclude = true;
-                                    _LowerBound = ub;
-                                    _UpperBound = DateTime.MaxValue;
+                                    IsInclude = true;
+                                    ParsedLowerBound = ub;
+                                    ParsedUpperBound = DateTime.MaxValue;
                                     break;
 
                                 case GTE_OPERATOR:
-                                    _IsInclude = true;
-                                    _LowerBound = lb;
-                                    _UpperBound = DateTime.MaxValue;
+                                    IsInclude = true;
+                                    ParsedLowerBound = lb;
+                                    ParsedUpperBound = DateTime.MaxValue;
                                     break;
                             }
                         }
                         else
                         {
-                            _LowerBound = null;
-                            _UpperBound = null;
+                            ParsedLowerBound = null;
+                            ParsedUpperBound = null;
                         }
                     }
                     else if (BetweenPattern().Match(value) is var bm && bm.Success)
                     {
-                        _IsInclude = true;
+                        IsInclude = true;
                         var hasSeparator = bm.Groups["sep"]?.Length > 0;
-                        if (parse(hasSeparator, bm.Groups["y"].Value, bm.Groups["m"].Value, bm.Groups["d"].Value, out _LowerBound, out _))
+
+                        if (parse(hasSeparator, bm.Groups["y"].Value, bm.Groups["m"].Value, bm.Groups["d"].Value, out var lb, out _))
                         {
-                            parse(hasSeparator, bm.Groups["y2"].Value, bm.Groups["m2"].Value, bm.Groups["d2"].Value, out _, out _UpperBound);
+                            parse(hasSeparator, bm.Groups["y2"].Value, bm.Groups["m2"].Value, bm.Groups["d2"].Value, out _, out var ub);
+                            ParsedUpperBound = ub;
                         }
+                        ParsedLowerBound = lb;
                     }
                     else
                     {
-                        _LowerBound = null;
-                        _UpperBound = null;
+                        ParsedLowerBound = null;
+                        ParsedUpperBound = null;
                     }
                 }
-                _OnChanged(this);
+                _OnChanged?.Invoke(this);
             }
         }
     }
@@ -206,12 +218,12 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
         {
             return true;
         }
-        if (_LowerBound == null || _UpperBound == null)
+        if (ParsedLowerBound == null || ParsedUpperBound == null)
         {
             return false;
         }
         var v = _Selector(item);
-        return (_LowerBound <= v && v < _UpperBound) == _IsInclude;
+        return (ParsedLowerBound <= v && v < ParsedUpperBound) == IsInclude;
     }
     bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
 }

@@ -4,7 +4,7 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
 {
     private readonly Func<T, string?> _Selector;
 
-    private readonly Action<StringMemberFilter<T>> _OnChanged;
+    private readonly Action<StringMemberFilter<T>>? _OnChanged;
 
     private static readonly string[] _Operators =
         {
@@ -36,6 +36,18 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
     internal const string ENDS_WITH_OPERATOR = "$=";
 
     internal const string LIST_IN_OPERATOR = "|=";
+
+    public static string EqualOperator => EQ_OPERATOR;
+    public static string NotEqualOperator => NE_OPERATOR;
+    public static string LessThanOperator => LT_OPERATOR;
+    public static string LessThanOrEqualOperator => LTE_OPERATOR;
+    public static string GreaterThanOperator => GT_OPERATOR;
+    public static string GreaterThanOrEqualOperator => GTE_OPERATOR;
+    public static string ContainsOperator => STR_IN_OPERATOR;
+    public static string StartsWithOperator => STARTS_WITH_OPERATOR;
+    public static string EndsWithOperator => ENDS_WITH_OPERATOR;
+    public static string ListInOperator => LIST_IN_OPERATOR;
+
     private readonly static string DEFAULT_DESCRIPTION = $@"文字列を検索します。
 {EQ_OPERATOR}: 一致
 {NE_OPERATOR}: 不一致
@@ -48,7 +60,7 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
 {ENDS_WITH_OPERATOR}: 後方一致
 {LIST_IN_OPERATOR}: いずれかを含む";
 
-    public StringMemberFilter(Func<T, string?> selector, Action<StringMemberFilter<T>> onChanged, string name = null, string description = null)
+    public StringMemberFilter(Func<T, string?> selector, Action<StringMemberFilter<T>>? onChanged = null, string? name = null, string? description = null)
     {
         _Selector = selector;
         _OnChanged = onChanged;
@@ -56,8 +68,8 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
         Description = description ?? DEFAULT_DESCRIPTION;
     }
 
-    public string Name { get; }
-    public string Description { get; }
+    public string? Name { get; }
+    public string? Description { get; }
 
     #region Filter
 
@@ -73,51 +85,51 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
             {
                 _Filter = value;
 
-                _Operands = null;
+                ParsedOperands = null;
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    _Operator = null;
+                    ParsedOperator = null;
                 }
                 else if (value.StartsWith(LIST_IN_OPERATOR))
                 {
-                    _Operator = LIST_IN_OPERATOR;
-                    _Operand = value.Substring(LIST_IN_OPERATOR.Length);
-                    _Operands = _Operand.Split(',');
+                    ParsedOperator = LIST_IN_OPERATOR;
+                    ParsedOperand = value.Substring(LIST_IN_OPERATOR.Length);
+                    ParsedOperands = new(ParsedOperand.Split(','));
                 }
                 else
                 {
-                    _Operator = string.Empty;
-                    _Operand = value;
+                    ParsedOperator = string.Empty;
+                    ParsedOperand = value;
                     foreach (var op in _Operators)
                     {
                         if (value.StartsWith(op))
                         {
-                            _Operator = op;
-                            _Operand = value.Substring(op.Length);
+                            ParsedOperator = op;
+                            ParsedOperand = value.Substring(op.Length);
                             break;
                         }
                     }
                 }
-                _OnChanged(this);
+                _OnChanged?.Invoke(this);
             }
         }
     }
 
-    private string _Operator;
-    private string _Operand;
-    private string[] _Operands;
+    public string? ParsedOperator { get; private set; }
+    public string? ParsedOperand { get; private set; }
+    public ReadOnlyCollection<string>? ParsedOperands { get; private set; }
 
     #endregion Filter
 
     public bool IsMatch(T item)
     {
-        if (_Operator == null)
+        if (ParsedOperator == null)
         {
             return true;
         }
         var v = _Selector(item);
 
-        static int compare(string v, string op)
+        static int compare(string? v, string? op)
             => CultureInfo.InvariantCulture.CompareInfo.Compare(
                 v ?? string.Empty,
                 op ?? string.Empty,
@@ -125,7 +137,7 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
                 | CompareOptions.IgnoreKanaType
                 | CompareOptions.IgnoreNonSpace);
 
-        static int indexOf(string v, string op)
+        static int indexOf(string? v, string? op)
             => CultureInfo.InvariantCulture.CompareInfo.IndexOf(
                 v ?? string.Empty,
                 op ?? string.Empty,
@@ -133,38 +145,38 @@ public sealed class StringMemberFilter<T> : IMemberFilter<T>
                 | CompareOptions.IgnoreKanaType
                 | CompareOptions.IgnoreNonSpace);
 
-        switch (_Operator)
+        switch (ParsedOperator)
         {
             case EQ_OPERATOR:
-                return compare(v, _Operand) == 0;
+                return compare(v, ParsedOperand) == 0;
 
             case NE_OPERATOR:
-                return compare(v, _Operand) != 0;
+                return compare(v, ParsedOperand) != 0;
 
             case LTE_OPERATOR:
-                return compare(v, _Operand) <= 0;
+                return compare(v, ParsedOperand) <= 0;
 
             case GTE_OPERATOR:
-                return compare(v, _Operand) >= 0;
+                return compare(v, ParsedOperand) >= 0;
 
             case LT_OPERATOR:
-                return compare(v, _Operand) < 0;
+                return compare(v, ParsedOperand) < 0;
 
             case GT_OPERATOR:
-                return compare(v, _Operand) > 0;
+                return compare(v, ParsedOperand) > 0;
 
             case STR_IN_OPERATOR:
             default:
-                return indexOf(v, _Operand) >= 0;
+                return indexOf(v, ParsedOperand) >= 0;
 
             case STARTS_WITH_OPERATOR:
-                return indexOf(v, _Operand) == 0;
+                return indexOf(v, ParsedOperand) == 0;
 
             case ENDS_WITH_OPERATOR:
-                return indexOf(v, _Operand) == v?.Length - _Operand?.Length;
+                return indexOf(v, ParsedOperand) == v?.Length - ParsedOperand?.Length;
 
             case LIST_IN_OPERATOR:
-                foreach (var op in _Operands ?? Enumerable.Empty<string>())
+                foreach (var op in ParsedOperands ?? Enumerable.Empty<string>())
                 {
                     if (compare(v, op) == 0)
                     {

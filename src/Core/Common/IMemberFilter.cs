@@ -2,8 +2,8 @@
 
 public interface IMemberFilter
 {
-    string Name { get; }
-    string Description { get; }
+    string? Name { get; }
+    string? Description { get; }
 
     string? Filter { get; set; }
     bool IsMatch(object obj);

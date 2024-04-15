@@ -5,13 +5,13 @@ namespace Shipwreck.ViewModelUtils;
 public partial class EnumMemberFilter<T, TValue> : EnumMemberFilterBase<T, TValue>
     where TValue : struct, Enum
 {
-    private TValue?[] _AllValues;
+    private TValue?[]? _AllValues;
 
-    private readonly Action<EnumMemberFilter<T, TValue>> _OnChanged;
+    private readonly Action<EnumMemberFilter<T, TValue>>? _OnChanged;
 
-    private readonly static string DEFAULT_DESCRIPTION = null;
+    private readonly static string? DEFAULT_DESCRIPTION = null;
 
-    public EnumMemberFilter(Func<T, TValue?> selector, Action<EnumMemberFilter<T, TValue>> onChanged, string name = null, string description = null)
+    public EnumMemberFilter(Func<T, TValue?> selector, Action<EnumMemberFilter<T, TValue>>? onChanged = null, string? name = null, string? description = null)
         : base(selector, name: name, description: description ?? DEFAULT_DESCRIPTION)
     {
         _OnChanged = onChanged;
@@ -47,7 +47,7 @@ public partial class EnumMemberFilter<T, TValue> : EnumMemberFilterBase<T, TValu
             return true;
         }
 
-        if (Enum.TryParse(text, out TValue v) 
+        if (Enum.TryParse(text, out TValue v)
             || EnumMemberDisplayNames<TValue>.Default.TryParseValue(text, out v))
         {
             value = v;
@@ -58,5 +58,5 @@ public partial class EnumMemberFilter<T, TValue> : EnumMemberFilterBase<T, TValu
         return false;
     }
     protected override void OnChanged()
-        => _OnChanged(this);
+        => _OnChanged?.Invoke(this);
 }

@@ -7,15 +7,15 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
 
     public EnumMemberFilterBase(
         Func<T, TValue?> selector,
-        string name = null, string description = null)
+        string? name = null, string? description = null)
     {
         _Selector = selector;
         Name = name;
         Description = description;
     }
 
-    public string Name { get; }
-    public string Description { get; }
+    public string? Name { get; }
+    public string? Description { get; }
 
     protected abstract bool TryParse(string text, out TValue? value);
 
@@ -33,7 +33,7 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
     #region Filter
 
     private string _Filter = string.Empty;
-    private TValue?[]? _Array;
+    public ReadOnlyCollection<TValue?>? Values { get; private set; }
 
     public string? Filter
     {
@@ -47,7 +47,7 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
 
                 if (string.IsNullOrEmpty(value))
                 {
-                    _Array = null;
+                    Values = null;
                 }
                 else
                 {
@@ -63,7 +63,7 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
                         }
                     }
 
-                    _Array = vs.Count == comps.Length ? vs.Distinct().ToArray() : [];
+                    Values = new(vs.Count == comps.Length ? vs.Distinct().ToArray() : []);
                 }
 
                 OnChanged();
@@ -85,7 +85,7 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
 
     public bool IsMatch(T item)
     {
-        var a = _Array;
+        var a = Values;
         if (a == null)
         {
             return true;
@@ -93,7 +93,7 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
 
         var v = _Selector(item);
 
-        return Array.IndexOf(a, v) >= 0;
+        return a.Contains(v);
     }
 
     bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
@@ -103,5 +103,5 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
             .Select(v => new FilterOption(
                 GetValue(v),
                 GetDisplayName(v),
-                _Array == null || Array.IndexOf(_Array, v) >= 0));
+                Values?.Contains(v) != false));
 }
