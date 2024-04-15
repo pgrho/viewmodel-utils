@@ -34,14 +34,7 @@
                    {
                        if (!filterable.TryShowPopover(fk, this, _FilterButton))
                        {
-                           if (DataContext is IEnumMemberFilter)
-                           {
-                               EnumFilterPopover.Show(HasPopoverPresenter.PopoverPresenter, _FilterButton, this);
-                           }
-                           else
-                           {
-                               FilterPopover.Show(HasPopoverPresenter.PopoverPresenter, _FilterButton, this);
-                           }
+                           FilterPopover.Show(HasPopoverPresenter.PopoverPresenter, _FilterButton, this);
                        }
                    })"
                    @onclick:preventDefault="true"
