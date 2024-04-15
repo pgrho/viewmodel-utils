@@ -11,16 +11,12 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConditionViewModelExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ConsolePageLogger.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\DateTimeMemberFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IAuthenticationResult.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFilterable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IFrameworkPageViewModelHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IMemberFilter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Int64MemberFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\IPaginatable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\ProcessType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IFrameworkSearchPageViewModelHandler.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\StringMemberFilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)viewmodelutils\ToastLogViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\DirectoryPathValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EntitySelectorBase.cs" />
