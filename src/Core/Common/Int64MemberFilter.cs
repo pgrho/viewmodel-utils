@@ -25,6 +25,8 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
     internal const string GT_OPERATOR = ">";
     internal const string GTE_OPERATOR = ">=";
 
+    internal const string LIST_IN_OPERATOR = "|=";
+
     internal const string BETWEEN_OPERATOR = "..";
 
     public static string EqualOperator => EQ_OPERATOR;
@@ -34,6 +36,7 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
     public static string GreaterThanOperator => GT_OPERATOR;
     public static string GreaterThanOrEqualOperator => GTE_OPERATOR;
     public static string BetweenOperator => BETWEEN_OPERATOR;
+    public static string ListInOperator => LIST_IN_OPERATOR;
 
     private readonly static string DEFAULT_DESCRIPTION = $@"整数値を検索します。
 {EQ_OPERATOR}: 一致
@@ -42,6 +45,7 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
 {LTE_OPERATOR}: 以下
 {GT_OPERATOR}: 超過
 {GTE_OPERATOR}: 以上
+{LIST_IN_OPERATOR}: いずれかを含む
 {BETWEEN_OPERATOR}: 範囲";
 
     public Int64MemberFilter(Func<T, long?> selector, Action<Int64MemberFilter<T>>? onChanged = null, string? name = null, string? description = null)
@@ -59,8 +63,9 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
 
     private string _Filter = string.Empty;
     public string? ParsedOperator { get; private set; }
-    public long? ParsedOperand { get; private set; }
-    public long? ParsedOperand2 { get; private set; }
+    public long? ParsedOperand => ParsedOperands?.ElementAtOrDefault(0);
+    public long? ParsedOperand2 => ParsedOperands?.ElementAtOrDefault(1);
+    public ReadOnlyCollection<long?>? ParsedOperands { get; private set; }
 
     private const string _BETWEEN_PATTERN = "^([-+]?[0-9]+)\\.\\.([-+]?[0-9]+)$";
 #if NET7_0_OR_GREATER
@@ -84,7 +89,7 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
                 _Filter = value;
 
                 ParsedOperator = null;
-                ParsedOperand = null;
+                ParsedOperands = null;
                 if (!string.IsNullOrWhiteSpace(value))
                 {
                     if (BetweenPattern().Match(value) is var bm
@@ -93,8 +98,34 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
                         && long.TryParse(bm.Groups[2].Value, out var lv2))
                     {
                         ParsedOperator = BETWEEN_OPERATOR;
-                        ParsedOperand = lv1;
-                        ParsedOperand2 = lv2;
+                        ParsedOperands = new(new long?[] { lv1, lv2 });
+                    }
+                    else if (value.StartsWith(LIST_IN_OPERATOR))
+                    {
+                        ParsedOperator = LIST_IN_OPERATOR;
+                        var comps = value.Substring(2).Split(',');
+                        var ary = new long?[comps.Length];
+                        for (var i = 0; i < comps.Length; i++)
+                        {
+                            var c = comps[i];
+                            if (!string.IsNullOrEmpty(c))
+                            {
+                                if (long.TryParse(c, out var v))
+                                {
+                                    ary[i] = v;
+                                }
+                                else
+                                {
+                                    ParsedOperator = string.Empty;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (ParsedOperator.Length > 0)
+                        {
+                            ParsedOperands = new(ary);
+                        }
                     }
                     else
                     {
@@ -105,11 +136,10 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
                                 ParsedOperator = op;
                                 if (long.TryParse(value.Substring(op.Length), out var lv))
                                 {
-                                    ParsedOperand = lv;
+                                    ParsedOperands = new(new long?[] { lv });
                                 }
                                 else
                                 {
-                                    ParsedOperand = null;
                                     ParsedOperator = string.Empty;
                                 }
                                 break;
@@ -120,11 +150,10 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
                             if (long.TryParse(value, out var lv))
                             {
                                 ParsedOperator = EQ_OPERATOR;
-                                ParsedOperand = lv;
+                                ParsedOperands = new(new long?[] { lv });
                             }
                             else
                             {
-                                ParsedOperand = null;
                                 ParsedOperator = string.Empty;
                             }
                         }
@@ -143,7 +172,7 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
         {
             return true;
         }
-        if (ParsedOperand == null)
+        if (!(ParsedOperands?.Count > 0))
         {
             return false;
         }
@@ -171,6 +200,9 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
 
             case GT_OPERATOR:
                 return v > ParsedOperand;
+
+            case LIST_IN_OPERATOR:
+                return ParsedOperands.Contains(v);
 
             case BETWEEN_OPERATOR:
                 return ParsedOperand <= v && v <= ParsedOperand2;

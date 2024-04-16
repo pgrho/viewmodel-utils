@@ -13,6 +13,7 @@ public class Int64MemberFilterTest
     [D(0, ">=1", false), D(1, ">=1", true), D(2, ">=1", true), D(null, ">=1", false)]
     [D(0, ">1", false), D(1, ">1", false), D(2, ">1", true), D(null, ">1", false)]
     [D(0, "1..3", false), D(1, "1..3", true), D(2, "1..3", true), D(3, "1..3", true), D(4, "1..3", false)]
+    [D(0, "|=1,3", false), D(1, "|=1,3", true), D(2, "|=1,3", false), D(3, "|=1,3", true), D(4, "|=1,3", false)]
     public void Test(int? testValue, string filter, bool isMatch)
         => Assert.Equal(
             isMatch,
