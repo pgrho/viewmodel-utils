@@ -11,5 +11,8 @@ namespace Shipwreck.ViewModelUtils {
             show: !!isOpen,
             backdrop: false,
         }).modal(isOpen ? 'show' : 'hide');
+        if (!element && !isOpen) {
+            document.body.classList.remove("modal-open");
+        }
     }
 }

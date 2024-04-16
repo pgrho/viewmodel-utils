@@ -168,7 +168,8 @@ public class InteractionService : IInteractionService
         try
         {
             var mp = (viewModel as IHasModalPresenter)?.ModalPresenter
-                ?? (context as IHasModalPresenter)?.ModalPresenter;
+                ?? (context as IHasModalPresenter)?.ModalPresenter
+                ?? ((context as IHasFrameworkPageViewModel)?.Page as IHasModalPresenter)?.ModalPresenter;
 
             if (mp != null)
             {

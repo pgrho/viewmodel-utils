@@ -2,7 +2,7 @@
 
 public abstract class ModalPresenterBase : BindableComponentBase
 {
-    private Type _ModalType;
+    protected Type ModalType { get; private set; }
 
     public KeyValuePair<string, object>[] _Properties;
 
@@ -31,7 +31,7 @@ public abstract class ModalPresenterBase : BindableComponentBase
 
     public void ShowModal(Type modalType, IEnumerable<KeyValuePair<string, object>> properties)
     {
-        _ModalType = modalType;
+        ModalType = modalType;
         _Properties = properties?.ToArray();
 
         StateHasChanged();
@@ -66,12 +66,12 @@ public abstract class ModalPresenterBase : BindableComponentBase
 
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
-        if (_ModalType != null)
+        if (ModalType != null)
         {
-            var isModal = typeof(IModal).IsAssignableFrom(_ModalType);
+            var isModal = typeof(IModal).IsAssignableFrom(ModalType);
             var i = 0;
 
-            builder.OpenComponent(i++, _ModalType);
+            builder.OpenComponent(i++, ModalType);
 
             if (_Properties?.Length > 0)
             {
@@ -85,7 +85,7 @@ public abstract class ModalPresenterBase : BindableComponentBase
 
             builder.CloseComponent();
 
-            _ModalType = null;
+            ModalType = null;
             _Properties = null;
 
             if (isModal)
