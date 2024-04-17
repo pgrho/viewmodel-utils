@@ -3,11 +3,26 @@
 public partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBase
 {
     public SearchPropertiesModalViewModel(FrameworkPageViewModel page)
-        : base(page)
+        : this(page, (IFrameworkSearchPageViewModel)page)
     {
     }
 
-    public IFrameworkSearchPageViewModel SearchPage => (IFrameworkSearchPageViewModel)Page;
+    public SearchPropertiesModalViewModel(FrameworkPageViewModel page, IFrameworkSearchPageViewModel searchPage)
+        : base(page)
+    {
+        Properties = searchPage.Properties;
+        CreateOrGetCondition = searchPage.CreateOrGetCondition;
+    }
+
+    public SearchPropertiesModalViewModel(FrameworkPageViewModel page, BulkUpdateableCollection<SearchPropertyViewModel> properties, Func<string, ConditionViewModel> createOrGet)
+        : base(page)
+    {
+        Properties = properties;
+        CreateOrGetCondition = createOrGet;
+    }
+
+    public BulkUpdateableCollection<SearchPropertyViewModel> Properties { get; }
+    public Func<string, ConditionViewModel> CreateOrGetCondition { get; }
 
     public string Title => SR.AddSearchConditionTitle;
 
@@ -20,10 +35,10 @@ public partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBas
 
     protected virtual IEnumerable<SearchPropertyGroupViewModel> GetGroups()
         => (FrameworkPageViewModel.Handler as IFrameworkSearchPageViewModelHandler)?.CreatePropertyGroups(this)
-            ?? SearchPage.Properties
-                    .GroupBy(e => e.AncestorPath)
-                    .OrderBy(e => e.Key ?? string.Empty)
-                    .Select(g => new SearchPropertyGroupViewModel(this, g.Key, g));
+            ?? Properties
+                .GroupBy(e => e.AncestorPath)
+                .OrderBy(e => e.Key ?? string.Empty)
+                .Select(g => new SearchPropertyGroupViewModel(this, g.Key, g));
 
     #endregion Groups
 
@@ -50,7 +65,7 @@ public partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBas
         {
             if (parameter is SearchPropertyViewModel p)
             {
-                _Modal.SearchPage.CreateOrGetCondition(p.Name);
+                _Modal.CreateOrGetCondition(p.Name);
             }
         }
     }
