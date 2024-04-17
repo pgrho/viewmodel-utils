@@ -22,7 +22,7 @@ public class SearchPropertyGroupViewModel : ObservableModel
 
     protected virtual string GetDisplayName()
         => AncestorPath == null ? string.Empty
-        : (Modal.SearchPage.Properties.FirstOrDefault(e => e.Name == AncestorPath)?.DisplayName ?? AncestorPath);
+        : (Modal.Properties.FirstOrDefault(e => e.Name == AncestorPath)?.DisplayName ?? AncestorPath);
 
     #endregion DisplayName
 
