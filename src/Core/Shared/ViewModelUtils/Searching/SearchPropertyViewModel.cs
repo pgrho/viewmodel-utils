@@ -68,7 +68,9 @@ public class SearchPropertyViewModel : ObservableModel
 
     public ConditionViewModel CreateCondition()
     {
-        if (!Host.TryCreateCondition(this, out var c))
+        if (!Host.TryCreateCondition(this, out var c)
+            && !(FrameworkPageViewModel.Handler is IFrameworkSearchPageViewModelHandler h
+                && h.TryCreateCondition(this, out c)))
         {
             if (IsBoolean)
             {

@@ -2,5 +2,14 @@
 
 public interface IFrameworkSearchPageViewModelHandler : IFrameworkPageViewModelHandler
 {
-    IEnumerable<SearchPropertyGroupViewModel> CreatePropertyGroups(SearchPropertiesModalViewModel modal);
+    bool TryCreateCondition(SearchPropertyViewModel property, out ConditionViewModel condition)
+#if NET7_0_OR_GREATER
+    {
+        condition = null;
+        return false;
+    }
+
+#else
+    ;
+#endif
 }

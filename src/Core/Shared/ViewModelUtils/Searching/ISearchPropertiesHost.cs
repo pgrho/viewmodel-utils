@@ -2,6 +2,8 @@
 
 public interface ISearchPropertiesHost : IHasPageLogger
 {
+    Task<QuerySettingsResponse> GetQuerySettingsAsync(CancellationToken cancellationToken = default);
+
     QuerySettingsResponse QuerySettings { get; }
 
     SearchPropertyGroupViewModel RootGroup { get; }

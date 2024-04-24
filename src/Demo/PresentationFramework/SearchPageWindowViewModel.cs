@@ -1,12 +1,11 @@
-﻿using Shipwreck.ViewModelUtils.Client;
+﻿using System.Threading;
+using Shipwreck.ViewModelUtils.Client;
 using Shipwreck.ViewModelUtils.Searching;
 
 namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework;
 
 public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFrameworkSearchPageViewModel, ISearchPropertiesHost
 {
-    private BulkUpdateableCollection<SearchPropertyViewModel> _Properties;
-
     private BulkUpdateableCollection<ConditionViewModel> _Conditions;
 
     private IEnumerable<QueryPropertyInfo> CreateProperties()
@@ -17,7 +16,11 @@ public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFramewo
         yield return new BooleanQueryPropertyInfo { Name = "s", TypeName = nameof(Boolean), DisplayName = "B", TrueString = "T", FalseString = "F" };
     }
 
+    Task<QuerySettingsResponse> ISearchPropertiesHost.GetQuerySettingsAsync(CancellationToken cancellationToken)
+        => Task.FromResult(QuerySettings);
+
     private QuerySettingsResponse _QuerySettings;
+
     public QuerySettingsResponse QuerySettings
     {
         get
@@ -132,7 +135,7 @@ public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFramewo
 
     public ConditionViewModel GetOrCreateCondition(string property)
         => null;
-     
+
     public string GetQueryString()
     {
         throw new NotImplementedException();
