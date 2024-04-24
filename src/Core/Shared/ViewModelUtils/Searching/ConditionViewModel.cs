@@ -44,15 +44,33 @@ public abstract partial class ConditionViewModel : ObservableModel
     {
         Host.Conditions.Remove(this);
 
+        var sameNames = Host.Conditions.Where(e => e.DisplayName == DisplayName).ToList();
+        foreach (var oc in sameNames)
+        {
+            oc.ShouldShowPath = sameNames.Count > 1;
+        }
+
         Property.Invalidate();
     }
+
+    #region ShouldShowPath
+
+    private bool _ShouldShowPath;
+
+    public bool ShouldShowPath
+    {
+        get => _ShouldShowPath;
+        internal set => SetProperty(ref _ShouldShowPath, value);
+    }
+
+    #endregion ShouldShowPath
 
     #region ExtraCommands
 
     private CommandViewModelCollection _ExtraCommands;
 
     public CommandViewModelCollection ExtraCommands
-        => _ExtraCommands ??= new CommandViewModelCollection(Host.CreateConditionCommands(this) ?? Enumerable.Empty<CommandViewModelBase>());
+        => _ExtraCommands ??= new(Host.CreateConditionCommands(this) ?? Enumerable.Empty<CommandViewModelBase>());
 
     #endregion ExtraCommands
 

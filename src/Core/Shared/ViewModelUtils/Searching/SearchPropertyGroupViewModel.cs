@@ -175,6 +175,12 @@ public class SearchPropertyGroupViewModel : ObservableModel
         {
             Host.Conditions.Add(nc);
 
+            var sameNames = Host.Conditions.Where(e => e.DisplayName == nc.DisplayName).ToList();
+            foreach (var oc in sameNames)
+            {
+                oc.ShouldShowPath = sameNames.Count > 1;
+            }
+
             p.Invalidate();
 
             return nc;

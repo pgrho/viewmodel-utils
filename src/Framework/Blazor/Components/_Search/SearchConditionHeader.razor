@@ -8,7 +8,7 @@
         @if (d != null)
         {
             @d.DisplayName
-            if (!d.Property.Group.IsRoot)
+            if (!d.Property.Group.IsRoot && d.ShouldShowPath)
             {
                 @("(" + d.Property.Group.DisplayNamePath + ")")
             }
