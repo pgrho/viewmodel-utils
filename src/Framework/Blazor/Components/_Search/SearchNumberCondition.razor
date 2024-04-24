@@ -10,7 +10,7 @@
         <SearchConditionHeader DataContext="@d" />
         <dd>
             <form class="input-group"
-                  @onsubmit="@d.Page.BeginSearch">
+                  @onsubmit="@d.Host.BeginSearch">
                 <SearchOperatorButton @bind-Operator="@d.Operator"
                                       Operators="@NumberConditionViewModel.Operators"
                                       OnSelected="@(() => _Input.FocusAsync())" />

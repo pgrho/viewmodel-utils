@@ -10,7 +10,7 @@
     <SearchConditionHeader DataContext="@d" />
     <dd>
         <form class="input-group"
-              @onsubmit="@d.Page.BeginSearch">
+              @onsubmit="@d.Host.BeginSearch">
             <select class="form-control custom-select"
                     @bind="@d.StringValue">
                 @foreach (var op in d.Options)

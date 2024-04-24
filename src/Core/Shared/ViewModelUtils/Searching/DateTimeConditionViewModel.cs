@@ -3,13 +3,14 @@
 public sealed class DateTimeConditionViewModel : ConditionViewModel
 {
     private static readonly string[] _SupportedFormats
-        = new[] {
-                "yyyy-MM-dd HH:mm:ss",
-                "yyyy-MM-dd HH:mm",
-                "yyyy-MM-dd HH",
-                "yyyy-MM-dd",
-                "yyyy-MM",
-                "yyyy",
+        = new[]
+        {
+            "yyyy-MM-dd HH:mm:ss",
+            "yyyy-MM-dd HH:mm",
+            "yyyy-MM-dd HH",
+            "yyyy-MM-dd",
+            "yyyy-MM",
+            "yyyy",
         }
         .SelectMany(e => new[] { e, e.Replace('-', '/'), e.Replace("-", "") })
         .SelectMany(e => new[] { e, e.Replace(' ', 'T'), e.Replace(" ", "") })
@@ -144,7 +145,7 @@ public sealed class DateTimeConditionViewModel : ConditionViewModel
                 d = null;
                 if (value?.Length > 0)
                 {
-                    Page.LogWarning("Invalid DateTime: \"{0}\"", value);
+                    Host.Logger.Log(TraceEventType.Warning, 0, "Invalid DateTime: \"{0}\"", [value]);
                 }
             }
 

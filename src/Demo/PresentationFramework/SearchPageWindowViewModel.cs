@@ -3,7 +3,7 @@ using Shipwreck.ViewModelUtils.Searching;
 
 namespace Shipwreck.ViewModelUtils.Demo.PresentationFramework;
 
-public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFrameworkSearchPageViewModel
+public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFrameworkSearchPageViewModel, ISearchPropertiesHost
 {
     private BulkUpdateableCollection<SearchPropertyViewModel> _Properties;
 
@@ -17,10 +17,33 @@ public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFramewo
         yield return new BooleanQueryPropertyInfo { Name = "s", TypeName = nameof(Boolean), DisplayName = "B", TrueString = "T", FalseString = "F" };
     }
 
-    public BulkUpdateableCollection<SearchPropertyViewModel> Properties
-        => _Properties ??= new BulkUpdateableCollection<SearchPropertyViewModel>(CreateProperties().Select(e => new SearchPropertyViewModel(this, e)));
+    private QuerySettingsResponse _QuerySettings;
+    public QuerySettingsResponse QuerySettings
+    {
+        get
+        {
+            if (_QuerySettings == null)
+            {
+                var qs = new QuerySettingsResponse();
+                qs.Groups.Add(new() { Path = "1", TypeName = "1" });
+                qs.Types.Add(new()
+                {
+                    TypeName = "1",
+                    Properties = CreateProperties().ToArray()
+                });
+                _QuerySettings = qs;
+            }
+            return _QuerySettings;
+        }
+    }
 
-    public BulkUpdateableCollection<ConditionViewModel> Conditions => _Conditions ??= new BulkUpdateableCollection<ConditionViewModel>(Properties.Select(e => e.CreateCondition()));
+    private SearchPropertyGroupViewModel _RootGroup;
+    public SearchPropertyGroupViewModel RootGroup => _RootGroup ??= new(this);
+
+    public BulkUpdateableCollection<SearchPropertyViewModel> Properties => RootGroup.Properties;
+
+    public BulkUpdateableCollection<ConditionViewModel> Conditions
+        => _Conditions ??= new(RootGroup.Properties.Select(e => e.CreateCondition()));
 
     public int? PageCount => throw new NotImplementedException();
 
@@ -109,10 +132,7 @@ public sealed class SearchPageWindowViewModel : FrameworkPageViewModel, IFramewo
 
     public ConditionViewModel GetOrCreateCondition(string property)
         => null;
-
-    public string GetPropertyDisplayName(string property)
-        => null;
-
+     
     public string GetQueryString()
     {
         throw new NotImplementedException();

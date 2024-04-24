@@ -7,7 +7,7 @@ public abstract partial class ConditionViewModel : ObservableModel
         Property = property;
     }
 
-    public IFrameworkSearchPageViewModel Page => Property.Page;
+    public ISearchPropertiesHost Host => Property.Host;
 
     public SearchPropertyViewModel Property { get; }
 
@@ -40,14 +40,15 @@ public abstract partial class ConditionViewModel : ObservableModel
 
     public abstract void AppendValueTo(StringBuilder builder);
 
-    public void Remove() => Page.Conditions.Remove(this);
+    public void Remove()
+        => Host.Conditions.Remove(this);
 
     #region ExtraCommands
 
     private CommandViewModelCollection _ExtraCommands;
 
     public CommandViewModelCollection ExtraCommands
-        => _ExtraCommands ??= new CommandViewModelCollection(Page.CreateConditionCommands(this) ?? Enumerable.Empty<CommandViewModelBase>());
+        => _ExtraCommands ??= new CommandViewModelCollection(Host.CreateConditionCommands(this) ?? Enumerable.Empty<CommandViewModelBase>());
 
     #endregion ExtraCommands
 

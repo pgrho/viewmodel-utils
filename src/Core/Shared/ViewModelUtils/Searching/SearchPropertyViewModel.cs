@@ -2,14 +2,17 @@
 
 public class SearchPropertyViewModel : ObservableModel
 {
-    public SearchPropertyViewModel(IFrameworkSearchPageViewModel page, QueryPropertyInfo model)
+    public SearchPropertyViewModel(SearchPropertyGroupViewModel group, QueryPropertyInfo model)
     {
-        Page = page;
+        Group = group;
         Model = model;
-        DisplayName = page.GetPropertyDisplayName(model.Name) ?? model.DisplayName;
+        DisplayName = Host.GetDisplayName(model) ?? model.DisplayName;
     }
 
-    public IFrameworkSearchPageViewModel Page { get; }
+    public SearchPropertyGroupViewModel Group { get; }
+
+    public ISearchPropertiesHost Host => Group.Host;
+
     public QueryPropertyInfo Model { get; }
 
     public string Name => Model.Name;
@@ -38,50 +41,10 @@ public class SearchPropertyViewModel : ObservableModel
         }
     }
 
-    public bool HasUniqueLocalName
-        => _HasUniqueLocalName ??= Page.Properties.All(e => e != this || e.LocalName != LocalName);
+    //public bool HasUniqueLocalName
+    //    => _HasUniqueLocalName ??= Page.Properties.All(e => e != this || e.LocalName != LocalName);
 
     #endregion LocalName
-
-    #region Parent
-
-    private bool _IsParentLoaded;
-
-    private SearchPropertyViewModel _Parent;
-    private string _AncestorPath;
-
-    public SearchPropertyViewModel Parent
-        => ResolveParent()._Parent;
-
-    public string AncestorPath
-        => ResolveParent()._AncestorPath;
-
-    private SearchPropertyViewModel ResolveParent()
-    {
-        if (!_IsParentLoaded)
-        {
-            _IsParentLoaded = true;
-
-            _Parent = Page.ResolveParent(this);
-
-            StringBuilder sb = null;
-            for (var p = _Parent; p != null; p = p.Parent)
-            {
-                if (sb == null)
-                {
-                    sb = new StringBuilder(p.DisplayName);
-                }
-                else
-                {
-                    sb.Insert(0, "/").Insert(0, p.DisplayName);
-                }
-            }
-            _AncestorPath = sb?.ToString();
-        }
-        return this;
-    }
-
-    #endregion Parent
 
     public bool IsDate => Model is DateTimeQueryPropertyInfo p && p.IsDate;
     public bool IsFlags => Model is EnumQueryPropertyInfo p && p.IsFlags;
@@ -90,6 +53,53 @@ public class SearchPropertyViewModel : ObservableModel
         => !(Model is BooleanQueryPropertyInfo)
         && !(Model is EnumQueryPropertyInfo);
 
+    public ConditionViewModel CreateOrGetCondition()
+    {
+        var c = CreateCondition();
+        if (c != null)
+        {
+            Host.Conditions.Add(c);
+        }
+        return c ?? Host.Conditions.FirstOrDefault(e => e.Property == this);
+    }
+
     public ConditionViewModel CreateCondition()
-        => Page?.CreateCondition(this);
+    {
+        if (!Host.TryCreateCondition(this, out var c))
+        {
+            if (IsBoolean)
+            {
+                return new BooleanConditionViewModel(this);
+            }
+            if (IsDateTime)
+            {
+                return new DateTimeConditionViewModel(this);
+            }
+            if (IsEnum)
+            {
+                return new EnumConditionViewModel(this);
+            }
+
+            switch (TypeName)
+            {
+                case "Number":
+                case nameof(SByte):
+                case nameof(Byte):
+                case nameof(Int16):
+                case nameof(UInt16):
+                case nameof(Int32):
+                case nameof(UInt32):
+                case nameof(Int64):
+                case nameof(UInt64):
+                case nameof(Single):
+                case nameof(Double):
+                case nameof(Decimal):
+                    return new NumberConditionViewModel(this);
+            }
+
+            return new StringConditionViewModel(this);
+        }
+
+        return null;
+    }
 }

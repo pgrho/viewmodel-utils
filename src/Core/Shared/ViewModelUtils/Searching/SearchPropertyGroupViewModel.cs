@@ -2,31 +2,34 @@
 
 public class SearchPropertyGroupViewModel : ObservableModel
 {
-    protected internal SearchPropertyGroupViewModel(SearchPropertiesModalViewModel modal, string ancestorPath, IEnumerable<SearchPropertyViewModel> properties, string displayName = null)
+    public SearchPropertyGroupViewModel(ISearchPropertiesHost host)
+        : this(host, null, string.Empty, string.Empty, string.Empty)
     {
-        Modal = modal;
-        AncestorPath = ancestorPath;
-        _IsExpanded = string.IsNullOrEmpty(ancestorPath);
-        Items = Array.AsReadOnly(properties.ToArray());
-        _DisplayName = displayName;
+        _IsExpanded = true;
     }
 
-    SearchPropertiesModalViewModel Modal { get; }
+    private SearchPropertyGroupViewModel(ISearchPropertiesHost host, SearchPropertyGroupViewModel parent, string path, string displayName, string typeName)
+    {
+        Host = host;
+        Parent = parent;
+        Path = path;
+        DisplayName = displayName;
+        DisplayNamePath = (parent != null ? parent.DisplayNamePath + "/" : null) + displayName;
+        _TypeName = typeName;
+    }
 
-    #region DisplayName
+    public ISearchPropertiesHost Host { get; }
 
-    private string _DisplayName;
+    public bool IsRoot => Parent == null;
 
-    public string DisplayName
-        => (_DisplayName ??= GetDisplayName()).TrimOrNull();
+    public SearchPropertyGroupViewModel Parent { get; }
+    public string Path { get; }
 
-    protected virtual string GetDisplayName()
-        => AncestorPath == null ? string.Empty
-        : (Modal.Properties.FirstOrDefault(e => e.Name == AncestorPath)?.DisplayName ?? AncestorPath);
+    public string DisplayName { get; }
 
-    #endregion DisplayName
+    public string DisplayNamePath { get; }
 
-    public string AncestorPath { get; }
+    private readonly string _TypeName;
 
     #region IsExpanded
 
@@ -43,5 +46,104 @@ public class SearchPropertyGroupViewModel : ObservableModel
 
     #endregion IsExpanded
 
-    public ReadOnlyCollection<SearchPropertyViewModel> Items { get; }
+    #region Children
+
+    private BulkUpdateableCollection<SearchPropertyGroupViewModel> _Children;
+
+    public BulkUpdateableCollection<SearchPropertyGroupViewModel> Children
+    {
+        get
+        {
+            if (_Children == null)
+            {
+                _Children = new();
+                var qs = Host.QuerySettings;
+
+                var prefix = string.IsNullOrEmpty(Path) ? string.Empty : (Path + ".");
+
+                Func<QueryGroupInfo, bool> predicate = string.IsNullOrEmpty(Path)
+                    ? e => !e.Path.Contains('.')
+                    : e => e.Path.StartsWith(prefix) && e.Path.IndexOf('.', prefix.Length) < 0;
+
+                foreach (var g in qs?.Groups.Where(predicate) ?? [])
+                {
+                    if (!Host.ShouldInclude(g))
+                    {
+                        continue;
+                    }
+                    _Children.Add(new(Host, this, g.Path, Host.GetDisplayName(g) ?? g.DisplayName, g.TypeName));
+                }
+            }
+            return _Children;
+        }
+    }
+
+    #endregion Children
+
+    #region Properties
+
+    private BulkUpdateableCollection<SearchPropertyViewModel> _Properties;
+
+    public BulkUpdateableCollection<SearchPropertyViewModel> Properties
+    {
+        get
+        {
+            if (_Properties == null)
+            {
+                _Properties = new();
+                var qs = Host.QuerySettings;
+
+                var t = qs?.Types.FirstOrDefault(e => e.TypeName == _TypeName);
+
+                if (t?.Properties != null)
+                {
+                    foreach (var p in t.Properties)
+                    {
+                        if (!Host.ShouldInclude(p))
+                        {
+                            continue;
+                        }
+
+                        var sp = p;
+                        if (!string.IsNullOrEmpty(Path))
+                        {
+                            sp = sp.Clone();
+                            sp.Name = Path + "." + sp.Name;
+                        }
+
+                        _Properties.Add(new(this, sp));
+                    }
+                }
+            }
+            return _Properties;
+        }
+    }
+
+    #endregion Properties
+
+    // protected internal SearchPropertyGroupViewModel(SearchPropertiesModalViewModel modal, string ancestorPath, IEnumerable<SearchPropertyViewModel> properties, string displayName = null)
+    // {
+    //     Modal = modal;
+    //     AncestorPath = ancestorPath;
+    //     _IsExpanded = string.IsNullOrEmpty(ancestorPath);
+    //     Items = Array.AsReadOnly(properties.ToArray());
+    //     _DisplayName = displayName;
+    // }
+
+    // SearchPropertiesModalViewModel Modal { get; }
+
+    // #region DisplayName
+
+    // private string _DisplayName;
+
+    // public string DisplayName
+    //     => (_DisplayName ??= GetDisplayName()).TrimOrNull();
+
+    //    protected virtual string GetDisplayName()
+    //        => AncestorPath == null ? string.Empty
+    //        : (Modal.Properties.FirstOrDefault(e => e.Name == AncestorPath)?.DisplayName ?? AncestorPath);
+
+    //    #endregion DisplayName
+
+    //    public string AncestorPath { get; }
 }

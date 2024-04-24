@@ -3,44 +3,23 @@
 public partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBase
 {
     public SearchPropertiesModalViewModel(FrameworkPageViewModel page)
-        : this(page, (IFrameworkSearchPageViewModel)page)
+        : this(page, (ISearchPropertiesHost)page)
     {
     }
 
-    public SearchPropertiesModalViewModel(FrameworkPageViewModel page, IFrameworkSearchPageViewModel searchPage)
+    public SearchPropertiesModalViewModel(FrameworkPageViewModel page, ISearchPropertiesHost host)
         : base(page)
     {
-        Properties = searchPage.Properties;
-        CreateOrGetCondition = searchPage.CreateOrGetCondition;
+        Host = host;
     }
 
-    public SearchPropertiesModalViewModel(FrameworkPageViewModel page, BulkUpdateableCollection<SearchPropertyViewModel> properties, Func<string, ConditionViewModel> createOrGet)
-        : base(page)
-    {
-        Properties = properties;
-        CreateOrGetCondition = createOrGet;
-    }
+    public ISearchPropertiesHost Host { get; }
 
-    public BulkUpdateableCollection<SearchPropertyViewModel> Properties { get; }
-    public Func<string, ConditionViewModel> CreateOrGetCondition { get; }
+    public SearchPropertyGroupViewModel RootGroup => Host.RootGroup;
 
     public string Title => SR.AddSearchConditionTitle;
 
-    #region Groups
 
-    private ReadOnlyCollection<SearchPropertyGroupViewModel> _Groups;
-
-    public ReadOnlyCollection<SearchPropertyGroupViewModel> Groups
-        => _Groups ??= Array.AsReadOnly(GetGroups().ToArray());
-
-    protected virtual IEnumerable<SearchPropertyGroupViewModel> GetGroups()
-        => (FrameworkPageViewModel.Handler as IFrameworkSearchPageViewModelHandler)?.CreatePropertyGroups(this)
-            ?? Properties
-                .GroupBy(e => e.AncestorPath)
-                .OrderBy(e => e.Key ?? string.Empty)
-                .Select(g => new SearchPropertyGroupViewModel(this, g.Key, g));
-
-    #endregion Groups
 
     #region AddParameterCommand
 
@@ -65,7 +44,11 @@ public partial class SearchPropertiesModalViewModel : FrameworkModalViewModelBas
         {
             if (parameter is SearchPropertyViewModel p)
             {
-                _Modal.CreateOrGetCondition(p.Name);
+                var c = p.CreateCondition();
+                if (c != null)
+                {
+                    p.Host.Conditions.Add(c);
+                }
             }
         }
     }

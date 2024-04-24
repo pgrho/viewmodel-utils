@@ -1,0 +1,46 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@using Shipwreck.ViewModelUtils.Searching
+@inherits BindableComponentBase<SearchPropertyGroupViewModel>
+@using (OnBeginRender())
+{
+    var d = DataContext;
+
+    if (!d.IsRoot)
+    {
+        <h6>
+            <button type="button"
+                    class="btn btn-outline-primary border-0"
+                    @onclick="@d.ToggleIsExpanded">
+                <span class="fas @(d.IsExpanded ? "fa-chevron-down" : "fa-chevron-right")"></span>
+                @d.DisplayName
+            </button>
+        </h6>
+    }
+    if (d.IsExpanded)
+    {
+        <div class="ml-4">
+            <ListScope T="SearchPropertyViewModel"
+                       Source="d.Properties">
+
+                @foreach (var p in d.Properties)
+                {
+                    <DataContextScope @key="p.GetHashCode()"
+                                      DataContext="p">
+                        <button type="button"
+                                class="btn btn-sm btn-link"
+                                @onclick="@(() => p.CreateOrGetCondition())">
+                            @p.DisplayName
+                        </button>
+                    </DataContextScope>
+                }
+            </ListScope>
+        </div>
+        <div class="ml-4">
+            @foreach (var c in d.Children)
+            {
+                <SearchPropertiesModalGroup @key="c.GetHashCode()"
+                                            DataContext="c" />
+            }
+        </div>
+    }
+}

@@ -8,9 +8,9 @@
         @if (d != null)
         {
             @d.DisplayName
-            if (!d.Property.HasUniqueLocalName && d.Property.AncestorPath != null)
+            if (!d.Property.Group.IsRoot)
             {
-                @("(" + d.Property.AncestorPath + ")")
+                @("(" + d.Property.Group.DisplayNamePath + ")")
             }
             <ListScope T="CommandViewModelBase" Source="@d.ExtraCommands">
                 @if (d.ExtraCommands.IsVisible)

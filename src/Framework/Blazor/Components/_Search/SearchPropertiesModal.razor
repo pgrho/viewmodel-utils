@@ -16,36 +16,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    @foreach (var g in DataContext.Groups)
-                    {
-                        <DataContextScope @key="g.GetHashCode()"
-                                          DataContext="g">
-                            @if (g.AncestorPath != null)
-                            {
-                                <h6>
-                                    <button type="button"
-                                            class="btn btn-outline-primary border-0"
-                                    @onclick="@g.ToggleIsExpanded">
-                                        <span class="fas @(g.IsExpanded ? "fa-chevron-down" : "fa-chevron-right")"></span>
-                                        @g.DisplayName
-                                    </button>
-                                </h6>
-                            }
-                            @if (g.IsExpanded)
-                            {
-                                <div>
-                                    @foreach (var p in g.Items)
-                                    {
-                                        <button type="button"
-                                                class="btn btn-sm btn-link"
-                                        @onclick="@(() => DataContext.CreateOrGetCondition(p.Name))">
-                                            @p.DisplayName
-                                        </button>
-                                    }
-                                </div>
-                            }
-                        </DataContextScope>
-                    }
+                    <SearchPropertiesModalGroup DataContext="DataContext.RootGroup" />
                 </div>
             </div>
         </div>

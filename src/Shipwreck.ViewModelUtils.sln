@@ -1,4 +1,3 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
@@ -70,7 +69,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Demo.Blazor.Wpf", "Demo\Blazor.Wpf\Shipwreck.ViewModelUtils.Demo.Blazor.Wpf.csproj", "{33853870-24B8-4A32-9A1E-E709A8416D94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.ViewModelUtils.Core.PresentationFramework.Tests", "Core\PresentationFramework.Tests\Shipwreck.ViewModelUtils.Core.PresentationFramework.Tests.csproj", "{D6435B34-6DA9-4340-A440-410E1614902A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Core.PresentationFramework.Tests", "Core\PresentationFramework.Tests\Shipwreck.ViewModelUtils.Core.PresentationFramework.Tests.csproj", "{D6435B34-6DA9-4340-A440-410E1614902A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -539,3 +538,4 @@ Global
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{e26ad196-1656-488e-ba36-8de042a0efb6}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
+bal
