@@ -26,8 +26,6 @@ public class SearchPropertyViewModel : ObservableModel
 
     private string _LocalName;
 
-    private bool? _HasUniqueLocalName;
-
     public string LocalName
     {
         get
@@ -46,22 +44,27 @@ public class SearchPropertyViewModel : ObservableModel
 
     #endregion LocalName
 
+    #region ConditionCount
+
+    private int _ConditionCount;
+
+    public int ConditionCount
+    {
+        get => _ConditionCount;
+        private set => SetProperty(ref _ConditionCount, value);
+    }
+
+    internal void Invalidate()
+        => ConditionCount = Host.Conditions.Count(e => e.Property == this);
+
+    #endregion ConditionCount
+
     public bool IsDate => Model is DateTimeQueryPropertyInfo p && p.IsDate;
     public bool IsFlags => Model is EnumQueryPropertyInfo p && p.IsFlags;
 
     public bool AllowMultiple
         => !(Model is BooleanQueryPropertyInfo)
         && !(Model is EnumQueryPropertyInfo);
-
-    public ConditionViewModel CreateOrGetCondition()
-    {
-        var c = CreateCondition();
-        if (c != null)
-        {
-            Host.Conditions.Add(c);
-        }
-        return c ?? Host.Conditions.FirstOrDefault(e => e.Property == this);
-    }
 
     public ConditionViewModel CreateCondition()
     {

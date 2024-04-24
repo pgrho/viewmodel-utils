@@ -26,11 +26,17 @@
                 {
                     <DataContextScope @key="p.GetHashCode()"
                                       DataContext="p">
-                        <button type="button"
-                                class="btn btn-sm btn-link"
-                                @onclick="@(() => p.CreateOrGetCondition())">
-                            @p.DisplayName
-                        </button>
+                        <div style="white-space: nowrap">
+                            <button type="button"
+                                    class="btn btn-sm btn-link"
+                                    @onclick="@(() => d.GetOrCreateCondition(p, ConditionCreationBehavior.CreateNew | ConditionCreationBehavior.PreferNew))">
+                                @p.DisplayName
+                            </button>
+                            @if (p.ConditionCount > 0)
+                            {
+                                <span class="badge badge-danger ml-2">@p.ConditionCount</span>
+                            }
+                        </div>
                     </DataContextScope>
                 }
             </ListScope>

@@ -38,7 +38,7 @@ public class SearchPropertyGroupViewModel : ObservableModel
     public bool IsExpanded
     {
         get => _IsExpanded;
-        set => SetProperty(ref _IsExpanded, value);
+        set => SetProperty(ref _IsExpanded, value || IsRoot);
     }
 
     public void ToggleIsExpanded()
@@ -120,6 +120,68 @@ public class SearchPropertyGroupViewModel : ObservableModel
     }
 
     #endregion Properties
+
+    public SearchPropertyViewModel FindProperty(string path)
+        => FindProperty(path.Split('.'));
+
+    public SearchPropertyViewModel FindProperty(IReadOnlyList<string> path)
+    {
+        if (path.Count == 0)
+        {
+            return null;
+        }
+
+        var n = path[0];
+        if (path.Count == 1)
+        {
+            return Properties.FirstOrDefault(e => e.Name == n);
+        }
+        else
+        {
+            var p = !IsRoot ? Path + "." + n : n;
+            return Children.FirstOrDefault(e => e.Path == p).FindProperty(path.Skip(1).ToList());
+        }
+    }
+    public ConditionViewModel GetOrCreateCondition(string path, ConditionCreationBehavior behavior = ConditionCreationBehavior.CreateNew)
+    {
+        if (!IsRoot)
+        {
+            throw new InvalidOperationException();
+        }
+
+        return GetOrCreateCondition(FindProperty(path), behavior);
+    }
+
+    internal ConditionViewModel GetOrCreateCondition(SearchPropertyViewModel p, ConditionCreationBehavior behavior = ConditionCreationBehavior.CreateNew)
+    {
+        if (p == null)
+        {
+            return null;
+        }
+
+        var c = (behavior & ConditionCreationBehavior.PreferLast) != 0
+            ? Host.Conditions.LastOrDefault(e => e.Property == p)
+            : Host.Conditions.FirstOrDefault(e => e.Property == p);
+
+        if ((behavior & ConditionCreationBehavior.CreateNew) == 0
+            || ((!p.AllowMultiple || (behavior & ConditionCreationBehavior.PreferNew) == 0) && c != null))
+        {
+            return c;
+        }
+
+        var nc = p.CreateCondition();
+
+        if (nc != null)
+        {
+            Host.Conditions.Add(nc);
+
+            p.Invalidate();
+
+            return nc;
+        }
+
+        return c;
+    }
 
     // protected internal SearchPropertyGroupViewModel(SearchPropertiesModalViewModel modal, string ancestorPath, IEnumerable<SearchPropertyViewModel> properties, string displayName = null)
     // {

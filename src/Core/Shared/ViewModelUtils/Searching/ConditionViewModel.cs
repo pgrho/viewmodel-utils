@@ -41,7 +41,11 @@ public abstract partial class ConditionViewModel : ObservableModel
     public abstract void AppendValueTo(StringBuilder builder);
 
     public void Remove()
-        => Host.Conditions.Remove(this);
+    {
+        Host.Conditions.Remove(this);
+
+        Property.Invalidate();
+    }
 
     #region ExtraCommands
 
@@ -57,7 +61,11 @@ public abstract partial class ConditionViewModel : ObservableModel
     private CommandViewModelBase _RemoveCommand;
 
     public CommandViewModelBase RemoveCommand
-        => _RemoveCommand ??= CommandViewModel.Create(Remove, icon: "fas fa-times", style: BorderStyle.OutlineDanger);
+        => _RemoveCommand
+        ??= CommandViewModel.Create(
+            Remove,
+            icon: "fas fa-times",
+            style: BorderStyle.OutlineDanger);
 
     #endregion RemoveCommand
 
