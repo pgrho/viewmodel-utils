@@ -18,15 +18,14 @@
     }
     if (d.IsExpanded)
     {
-        <div class="ml-4">
+        <div>
             <ListScope T="SearchPropertyViewModel"
                        Source="d.Properties">
-
                 @foreach (var p in d.Properties)
                 {
                     <DataContextScope @key="p.GetHashCode()"
                                       DataContext="p">
-                        <div style="white-space: nowrap">
+                        <span style="white-space: nowrap">
                             <button type="button"
                                     class="btn btn-sm btn-link"
                                     @onclick="@(() => d.GetOrCreateCondition(p, ConditionCreationBehavior.CreateNew | ConditionCreationBehavior.PreferNew))">
@@ -36,7 +35,7 @@
                             {
                                 <span class="badge badge-danger ml-2">@p.ConditionCount</span>
                             }
-                        </div>
+                        </span>
                     </DataContextScope>
                 }
             </ListScope>
