@@ -14,7 +14,7 @@ public class SearchPropertyGroupViewModel : ObservableModel
         Parent = parent;
         Path = path;
         DisplayName = displayName;
-        DisplayNamePath = (!string.IsNullOrEmpty(parent.DisplayNamePath) ? parent.DisplayNamePath + "/" : null) + displayName;
+        DisplayNamePath = (!string.IsNullOrEmpty(parent?.DisplayNamePath) ? parent.DisplayNamePath + "/" : null) + displayName;
         _TypeName = host.QuerySettings?.Groups.FirstOrDefault(e => e.Path == path)?.TypeName ?? string.Empty;
     }
 
