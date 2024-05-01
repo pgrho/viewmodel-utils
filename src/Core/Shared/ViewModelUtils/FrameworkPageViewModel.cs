@@ -9,6 +9,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     #region ProcessType
 
     private ProcessType _ProcessType = ProcessType.Unknown;
+
     public ProcessType ProcessType
     {
         get
@@ -266,7 +267,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
                     busy = true;
                 }
             }
-            return IsInitializing || _IsBusyScopes.Any() || busy;
+            return IsInitializing || _IsBusyScopes.Any() || busy || _Downloads.Any();
         }
     }
 
@@ -576,6 +577,244 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     #endregion IHasFrameworkPageViewModel
 
+    #region コマンド
+
+    #region CreateCommand
+
+    public virtual CommandViewModelBase CreateCommand(Action execute, string title = null, Func<string> titleGetter = null, string mnemonic = null, Func<string> mnemonicGetter = null, string description = null, Func<string> descriptionGetter = null, bool isVisible = true, Func<bool> isVisibleGetter = null, bool isEnabled = true, Func<bool> isEnabledGetter = null, string icon = null, Func<string> iconGetter = null, BorderStyle style = BorderStyle.None, Func<BorderStyle> styleGetter = null, int badgeCount = 0, Func<int> badgeCountGetter = null, string href = null, Func<string> hrefGetter = null)
+        => CommandViewModel.Create(
+            execute,
+            title: title,
+            titleGetter: titleGetter,
+            mnemonic: mnemonic,
+            mnemonicGetter: mnemonicGetter,
+            description: description,
+            descriptionGetter: descriptionGetter,
+            isVisible: isVisible,
+            isVisibleGetter: isVisibleGetter,
+            isEnabled: isEnabled,
+            isEnabledGetter: isEnabledGetter,
+            icon: icon,
+            iconGetter: iconGetter,
+            style: style,
+            styleGetter: styleGetter,
+            badgeCount: badgeCount,
+            badgeCountGetter: badgeCountGetter,
+            href: href, hrefGetter: hrefGetter,
+            handler: this);
+
+    public virtual CommandViewModelBase CreateCommand(Action<CommandViewModelBase> execute, string title = null, Func<CommandViewModelBase, string> titleGetter = null, string mnemonic = null, Func<CommandViewModelBase, string> mnemonicGetter = null, string description = null, Func<CommandViewModelBase, string> descriptionGetter = null, bool isVisible = true, Func<CommandViewModelBase, bool> isVisibleGetter = null, bool isEnabled = true, Func<CommandViewModelBase, bool> isEnabledGetter = null, string icon = null, Func<CommandViewModelBase, string> iconGetter = null, BorderStyle style = BorderStyle.None, Func<CommandViewModelBase, BorderStyle> styleGetter = null, int badgeCount = 0, Func<CommandViewModelBase, int> badgeCountGetter = null, string href = null, Func<CommandViewModelBase, string> hrefGetter = null)
+        => CommandViewModel.Create(
+            execute,
+            title: title,
+            titleGetter: titleGetter,
+            mnemonic: mnemonic,
+            mnemonicGetter: mnemonicGetter,
+            description: description,
+            descriptionGetter: descriptionGetter,
+            isVisible: isVisible,
+            isVisibleGetter: isVisibleGetter,
+            isEnabled: isEnabled,
+            isEnabledGetter: isEnabledGetter,
+            icon: icon,
+            iconGetter: iconGetter,
+            style: style,
+            styleGetter: styleGetter,
+            badgeCount: badgeCount,
+            badgeCountGetter: badgeCountGetter,
+            href: href, hrefGetter: hrefGetter,
+            handler: this);
+
+    public virtual CommandViewModelBase CreateCommand(Func<Task> execute, string title = null, Func<string> titleGetter = null, string mnemonic = null, Func<string> mnemonicGetter = null, string description = null, Func<string> descriptionGetter = null, bool isVisible = true, Func<bool> isVisibleGetter = null, bool isEnabled = true, Func<bool> isEnabledGetter = null, string icon = null, Func<string> iconGetter = null, BorderStyle style = BorderStyle.None, Func<BorderStyle> styleGetter = null, int badgeCount = 0, Func<int> badgeCountGetter = null, string href = null, Func<string> hrefGetter = null)
+        => CommandViewModel.CreateAsync(
+            execute,
+            title: title,
+            titleGetter: titleGetter,
+            mnemonic: mnemonic,
+            mnemonicGetter: mnemonicGetter,
+            description: description,
+            descriptionGetter: descriptionGetter,
+            isVisible: isVisible,
+            isVisibleGetter: isVisibleGetter,
+            isEnabled: isEnabled,
+            isEnabledGetter: isEnabledGetter,
+            icon: icon,
+            iconGetter: iconGetter,
+            style: style,
+            styleGetter: styleGetter,
+            badgeCount: badgeCount,
+            badgeCountGetter: badgeCountGetter,
+            href: href, hrefGetter: hrefGetter,
+            handler: this);
+
+    public virtual CommandViewModelBase CreateCommand(Func<CommandViewModelBase, Task> execute, string title = null, Func<CommandViewModelBase, string> titleGetter = null, string mnemonic = null, Func<CommandViewModelBase, string> mnemonicGetter = null, string description = null, Func<CommandViewModelBase, string> descriptionGetter = null, bool isVisible = true, Func<CommandViewModelBase, bool> isVisibleGetter = null, bool isEnabled = true, Func<CommandViewModelBase, bool> isEnabledGetter = null, string icon = null, Func<CommandViewModelBase, string> iconGetter = null, BorderStyle style = BorderStyle.None, Func<CommandViewModelBase, BorderStyle> styleGetter = null, int badgeCount = 0, Func<CommandViewModelBase, int> badgeCountGetter = null, string href = null, Func<CommandViewModelBase, string> hrefGetter = null)
+        => CommandViewModel.CreateAsync(
+            execute,
+            title: title,
+            titleGetter: titleGetter,
+            mnemonic: mnemonic,
+            mnemonicGetter: mnemonicGetter,
+            description: description,
+            descriptionGetter: descriptionGetter,
+            isVisible: isVisible,
+            isVisibleGetter: isVisibleGetter,
+            isEnabled: isEnabled,
+            isEnabledGetter: isEnabledGetter,
+            icon: icon,
+            iconGetter: iconGetter,
+            style: style,
+            styleGetter: styleGetter,
+            badgeCount: badgeCount,
+            badgeCountGetter: badgeCountGetter,
+            href: href, hrefGetter: hrefGetter,
+            handler: this);
+
+    #endregion CreateCommand
+
+    #region ダウンロード
+
+    private sealed class DownloadState
+    {
+        private readonly FrameworkPageViewModel _Page;
+
+        public DownloadState(FrameworkPageViewModel page)
+        {
+            _Page = page;
+        }
+
+        private bool _IsBusy;
+
+        public bool IsBusy
+        {
+            get => _IsBusy;
+            set
+            {
+                if (value != _IsBusy)
+                {
+                    _IsBusy = value;
+                    if (_IsBusy)
+                    {
+                        _Page._Downloads.Add(this);
+                    }
+                    else
+                    {
+                        _Page._Downloads.Remove(this);
+                    }
+                    _Page.SetIsBusy();
+                }
+            }
+        }
+    }
+
+    private readonly HashSet<DownloadState> _Downloads = new();
+
+    public bool SupportsDownload => Interaction?.SupportsDownload ?? false;
+
+    public Task DownloadAsync(
+        string url,
+        bool openFile = true,
+        string operationName = null,
+        Action<bool> busySetter = null)
+        => DownloadAsync("GET", url, openFile: openFile, operationName: operationName, busySetter: busySetter);
+
+    public Task DownloadAsync(
+        string method,
+        string url,
+        bool openFile = true,
+        string operationName = null,
+        Action<bool> busySetter = null)
+        => DownloadAsync(method, url, null, null, openFile: openFile, operationName: operationName, busySetter: busySetter);
+
+    public virtual async Task DownloadAsync(
+        string method,
+        string url,
+        string content,
+        string contentType,
+        bool openFile = true,
+        string operationName = null,
+        Action<bool> busySetter = null)
+    {
+        if (busySetter == null)
+        {
+            var d = new DownloadState(this);
+            busySetter = v => d.IsBusy = v;
+        }
+        operationName ??= "ダウンロード";
+        try
+        {
+            LogInformation(
+                "{0}の開始: {1} {2}",
+                operationName,
+                method,
+                url);
+            busySetter?.Invoke(true);
+
+            await Interaction.DownloadAsync(
+                this,
+                method,
+                url,
+                content,
+                contentType,
+                openFile)
+                ;
+        }
+        catch (Exception ex)
+        {
+            LogError("{0}中にエラーが発生しました。{1}", operationName, ex);
+
+            await ShowErrorToastAsync(
+                "{0}中にエラーが発生しました。{1}",
+                operationName,
+                ex.Message);
+        }
+        finally
+        {
+            busySetter?.Invoke(false);
+            LogInformation(
+                "{0}の完了: {1} {2}",
+                operationName,
+                method,
+                url);
+        }
+    }
+
+    public void BeginDownload(
+        string url,
+        bool openFile = true,
+        string operationName = null,
+        Action<bool> busySetter = null)
+        => BeginDownload("GET", url, openFile: openFile, operationName: operationName, busySetter: busySetter);
+
+    public void BeginDownload(
+        string method,
+        string url,
+        bool openFile = true,
+        string operationName = null,
+        Action<bool> busySetter = null)
+        => BeginDownload(method, url, null, null, openFile: openFile, operationName: operationName, busySetter: busySetter);
+
+    public async void BeginDownload(
+        string method,
+        string url,
+        string content,
+        string contentType,
+        bool openFile = true,
+        string operationName = null,
+        Action<bool> busySetter = null)
+    {
+        operationName ??= "ダウンロード";
+        try
+        {
+            await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter);
+        }
+        catch (Exception ex)
+        {
+            LogError("{0}中にエラーが発生しました。{1}", operationName, ex);
+        }
+    }
+
+    #endregion ダウンロード
+
     #region ICommandViewModelHandler
 
     private readonly List<WeakReference<CommandViewModelBase>> _ExecutingCommands = new();
@@ -627,6 +866,8 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     }
 
     #endregion ICommandViewModelHandler
+
+    #endregion コマンド
 
     #region IDisposable
 

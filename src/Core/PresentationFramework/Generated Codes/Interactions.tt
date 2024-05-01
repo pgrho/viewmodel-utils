@@ -227,6 +227,11 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
             
         #endregion ファイル
 
+<#
+
+if (c.Name != "FrameworkPageViewModel")
+{
+#>
         #region ダウンロード
         
         public bool SupportsDownload => Interaction?.SupportsDownload ?? false;
@@ -330,6 +335,11 @@ foreach (var t in new [] { "Success", "Error", "Warning", "Information" })
         }
 
         #endregion ダウンロード
+<#
+}
+
+#>
+
     }
 }
 <#

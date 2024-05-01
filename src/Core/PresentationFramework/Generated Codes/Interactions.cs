@@ -281,109 +281,7 @@
             
         #endregion ファイル
 
-        #region ダウンロード
-        
-        public bool SupportsDownload => Interaction?.SupportsDownload ?? false;
-        
-        public Task DownloadAsync(
-            string url,
-            bool openFile = true,
-            string operationName = null,
-            Action<bool> busySetter = null)
-            => DownloadAsync("GET", url, openFile: openFile, operationName: operationName, busySetter: busySetter);
 
-        public Task DownloadAsync(
-            string method,
-            string url,
-            bool openFile = true,
-            string operationName = null,
-            Action<bool> busySetter = null)
-            => DownloadAsync(method, url, null, null, openFile: openFile, operationName: operationName, busySetter: busySetter);
-
-        public async Task DownloadAsync(
-            string method,
-            string url,
-            string content,
-            string contentType,
-            bool openFile = true,
-            string operationName = null,
-            Action<bool> busySetter = null)
-        {
-            operationName ??= "ダウンロード";
-            try
-            {
-                LogInformation(
-                    "{0}の開始: {1} {2}",
-                    operationName,
-                    method,
-                    url);
-                busySetter?.Invoke(true);
-
-                await Interaction.DownloadAsync(
-                    this,
-                    method,
-                    url,
-                    content,
-                    contentType,
-                    openFile)
-                    ;
-            }
-            catch (Exception ex)
-            {
-                LogError("{0}中にエラーが発生しました。{1}", operationName, ex);
-
-                await ShowErrorToastAsync(
-                    "{0}中にエラーが発生しました。{1}",
-                    operationName,
-                    ex.Message);
-            }
-            finally
-            {
-                busySetter?.Invoke(false);
-                LogInformation(
-                    "{0}の完了: {1} {2}",
-                    operationName,
-                    method,
-                    url);
-            }
-        }
-        
-        public void BeginDownload(
-            string url,
-            bool openFile = true,
-            string operationName = null,
-            Action<bool> busySetter = null)
-            => BeginDownload("GET", url, openFile: openFile, operationName: operationName, busySetter: busySetter);
-
-        public void BeginDownload(
-            string method,
-            string url,
-            bool openFile = true,
-            string operationName = null,
-            Action<bool> busySetter = null)
-            => BeginDownload(method, url, null, null, openFile: openFile, operationName: operationName, busySetter: busySetter);
-
-        public async void BeginDownload(
-            string method,
-            string url,
-            string content,
-            string contentType,
-            bool openFile = true,
-            string operationName = null,
-            Action<bool> busySetter = null)
-        {
-            operationName ??= "ダウンロード";
-            try
-            {
-                await DownloadAsync(method, url, content, contentType, openFile: openFile, operationName: operationName, busySetter: busySetter);
-            }
-            catch (Exception ex)
-            {
-                LogError("{0}中にエラーが発生しました。{1}", operationName, ex);
-            }
-        }
-
-        #endregion ダウンロード
     }
 }
 #if IS_WPF
@@ -773,6 +671,7 @@ namespace Shipwreck.ViewModelUtils
         }
 
         #endregion ダウンロード
+
     }
 }
 #endif
