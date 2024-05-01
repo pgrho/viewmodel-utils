@@ -18,7 +18,7 @@
     }
     if (d.IsExpanded)
     {
-        <div>
+        <div style="display:flex; flex-flow: row wrap">
             <ListScope T="SearchPropertyViewModel"
                        Source="d.Properties">
                 @foreach (var p in d.Properties)
@@ -40,7 +40,7 @@
                 }
             </ListScope>
         </div>
-        <div class="ml-4">
+        <div class="pl-2">
             @foreach (var c in d.Children)
             {
                 <SearchPropertiesModalGroup @key="c.GetHashCode()"
