@@ -3,19 +3,19 @@
 public class SearchPropertyGroupViewModel : ObservableModel
 {
     public SearchPropertyGroupViewModel(ISearchPropertiesHost host)
-        : this(host, null, string.Empty, string.Empty, string.Empty)
+        : this(host, null, string.Empty, string.Empty)
     {
         _IsExpanded = true;
     }
 
-    private SearchPropertyGroupViewModel(ISearchPropertiesHost host, SearchPropertyGroupViewModel parent, string path, string displayName, string typeName)
+    private SearchPropertyGroupViewModel(ISearchPropertiesHost host, SearchPropertyGroupViewModel parent, string path, string displayName)
     {
         Host = host;
         Parent = parent;
         Path = path;
         DisplayName = displayName;
         DisplayNamePath = (!string.IsNullOrEmpty(parent.DisplayNamePath) ? parent.DisplayNamePath + "/" : null) + displayName;
-        _TypeName = typeName;
+        _TypeName = host.QuerySettings?.Groups.FirstOrDefault(e => e.Path == path)?.TypeName ?? string.Empty;
     }
 
     public ISearchPropertiesHost Host { get; }
@@ -71,7 +71,7 @@ public class SearchPropertyGroupViewModel : ObservableModel
                     {
                         continue;
                     }
-                    _Children.Add(new(Host, this, g.Path, Host.GetDisplayName(g) ?? g.DisplayName, g.TypeName));
+                    _Children.Add(new(Host, this, g.Path, Host.GetDisplayName(g) ?? g.DisplayName));
                 }
             }
             return _Children;
