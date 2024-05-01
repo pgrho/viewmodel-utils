@@ -62,7 +62,7 @@ public class SearchPropertyGroupViewModel : ObservableModel
                 var prefix = string.IsNullOrEmpty(Path) ? string.Empty : (Path + ".");
 
                 Func<QueryGroupInfo, bool> predicate = string.IsNullOrEmpty(Path)
-                    ? e => !e.Path.Contains('.')
+                    ? e => !string.IsNullOrEmpty(e.Path) && !e.Path.Contains('.')
                     : e => e.Path.StartsWith(prefix) && e.Path.IndexOf('.', prefix.Length) < 0;
 
                 foreach (var g in qs?.Groups.Where(predicate) ?? [])
