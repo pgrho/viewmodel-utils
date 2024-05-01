@@ -17,6 +17,7 @@ internal static class Program
 
     public static async Task<int> Main(string[] args)
     {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         var param = new ConfigurationBuilder().AddCommandLine(args).Build().Get<Parameter>() ?? new Parameter();
 
         var solDir = GetSolutionDirectory();
@@ -52,7 +53,7 @@ internal static class Program
                 var pc = await ExecuteAsync(new ProcessStartInfo("dotnet.exe")
                 {
                     ArgumentList = { "clean", proj, "-c", "Release", "-v", "n" }
-                });
+                }, encoding: Encoding.UTF8);
                 if (pc.ExitCode != 0)
                 {
                     return 1;
@@ -105,7 +106,7 @@ internal static class Program
                 var pc = await ExecuteAsync(new ProcessStartInfo(devenv.FullName)
                 {
                     ArgumentList = { Path.Combine(solDir, "Shipwreck.ViewModelUtils.sln"), "/Build", "Release", "/Project", proj }
-                }, encoding: Encoding.UTF8);
+                }, encoding: Encoding.GetEncoding(932));
                 if (pc.ExitCode != 0
                     || !ValidatePackage(proj, version))
                 {
