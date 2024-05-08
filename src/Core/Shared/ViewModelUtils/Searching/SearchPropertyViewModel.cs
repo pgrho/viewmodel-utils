@@ -68,43 +68,43 @@ public class SearchPropertyViewModel : ObservableModel
 
     public ConditionViewModel CreateCondition()
     {
-        if (!Host.TryCreateCondition(this, out var c)
-            && !(FrameworkPageViewModel.Handler is IFrameworkSearchPageViewModelHandler h
+        if (Host.TryCreateCondition(this, out var c)
+            || (FrameworkPageViewModel.Handler is IFrameworkSearchPageViewModelHandler h
                 && h.TryCreateCondition(this, out c)))
         {
-            if (IsBoolean)
-            {
-                return new BooleanConditionViewModel(this);
-            }
-            if (IsDateTime)
-            {
-                return new DateTimeConditionViewModel(this);
-            }
-            if (IsEnum)
-            {
-                return new EnumConditionViewModel(this);
-            }
-
-            switch (TypeName)
-            {
-                case "Number":
-                case nameof(SByte):
-                case nameof(Byte):
-                case nameof(Int16):
-                case nameof(UInt16):
-                case nameof(Int32):
-                case nameof(UInt32):
-                case nameof(Int64):
-                case nameof(UInt64):
-                case nameof(Single):
-                case nameof(Double):
-                case nameof(Decimal):
-                    return new NumberConditionViewModel(this);
-            }
-
-            return new StringConditionViewModel(this);
+            return c;
         }
 
-        return null;
+        if (IsBoolean)
+        {
+            return new BooleanConditionViewModel(this);
+        }
+        if (IsDateTime)
+        {
+            return new DateTimeConditionViewModel(this);
+        }
+        if (IsEnum)
+        {
+            return new EnumConditionViewModel(this);
+        }
+
+        switch (TypeName)
+        {
+            case "Number":
+            case nameof(SByte):
+            case nameof(Byte):
+            case nameof(Int16):
+            case nameof(UInt16):
+            case nameof(Int32):
+            case nameof(UInt32):
+            case nameof(Int64):
+            case nameof(UInt64):
+            case nameof(Single):
+            case nameof(Double):
+            case nameof(Decimal):
+                return new NumberConditionViewModel(this);
+        }
+
+        return new StringConditionViewModel(this);
     }
 }
