@@ -13,6 +13,8 @@ public class SearchPropertyGroupViewModel : ObservableModel
         Host = host;
         Parent = parent;
         Path = path;
+        var li = path?.LastIndexOf('.');
+        LocalName = li >= 0 ? path.Substring(li.Value + 1) : path;
         DisplayName = displayName;
         DisplayNamePath = (!string.IsNullOrEmpty(parent?.DisplayNamePath) ? parent.DisplayNamePath + "/" : null) + displayName;
         _TypeName = host.QuerySettings?.Groups.FirstOrDefault(e => e.Path == path)?.TypeName ?? string.Empty;
@@ -24,6 +26,7 @@ public class SearchPropertyGroupViewModel : ObservableModel
 
     public SearchPropertyGroupViewModel Parent { get; }
     public string Path { get; }
+    public string LocalName { get; }
 
     public string DisplayName { get; }
 
@@ -134,12 +137,11 @@ public class SearchPropertyGroupViewModel : ObservableModel
         var n = path[0];
         if (path.Count == 1)
         {
-            return Properties.FirstOrDefault(e => e.Name == n);
+            return Properties.FirstOrDefault(e => e.LocalName == n);
         }
         else
         {
-            var p = !IsRoot ? Path + "." + n : n;
-            return Children.FirstOrDefault(e => e.Path == p).FindProperty(path.Skip(1).ToList());
+            return Children.FirstOrDefault(e => e.LocalName == n).FindProperty(path.Skip(1).ToList());
         }
     }
     public ConditionViewModel GetOrCreateCondition(string path, ConditionCreationBehavior behavior = ConditionCreationBehavior.CreateNew)
@@ -188,30 +190,4 @@ public class SearchPropertyGroupViewModel : ObservableModel
 
         return c;
     }
-
-    // protected internal SearchPropertyGroupViewModel(SearchPropertiesModalViewModel modal, string ancestorPath, IEnumerable<SearchPropertyViewModel> properties, string displayName = null)
-    // {
-    //     Modal = modal;
-    //     AncestorPath = ancestorPath;
-    //     _IsExpanded = string.IsNullOrEmpty(ancestorPath);
-    //     Items = Array.AsReadOnly(properties.ToArray());
-    //     _DisplayName = displayName;
-    // }
-
-    // SearchPropertiesModalViewModel Modal { get; }
-
-    // #region DisplayName
-
-    // private string _DisplayName;
-
-    // public string DisplayName
-    //     => (_DisplayName ??= GetDisplayName()).TrimOrNull();
-
-    //    protected virtual string GetDisplayName()
-    //        => AncestorPath == null ? string.Empty
-    //        : (Modal.Properties.FirstOrDefault(e => e.Name == AncestorPath)?.DisplayName ?? AncestorPath);
-
-    //    #endregion DisplayName
-
-    //    public string AncestorPath { get; }
 }
