@@ -9,7 +9,24 @@
         <SearchConditionHeader DataContext="@d" />
         <dd>
             <div class="input-group">
-                @if (d.SelectedId != null)
+                @if (d.IsNull)
+                {
+                    <input type="text"
+                           class="form-control"
+                           readonly="readonly"
+                           value="{未設定}"
+                           @onkeydown="@Clear"
+                           @onkeydown:preventDefault />
+                    <div class="input-group-append">
+                        <button type="button"
+                                class="btn btn-sm btn-outline-secondary"
+                                tabindex="-1"
+                                @onclick="@Clear">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                }
+                else if (d.SelectedId != null)
                 {
                     var text = d.SelectedItem != null ? d.Selector.GetDisplayText(d.SelectedItem) : $"#{d.SelectedId}";
                     <input type="text"
@@ -18,7 +35,7 @@
                            value="@text"
                            title="@text"
                            @onkeydown="@Clear"
-                    @onkeydown:preventDefault />
+                           @onkeydown:preventDefault />
                     <div class="input-group-append">
                         <CommandButton BaseClass="btn btn-sm"
                                        TabIndex="-1"
@@ -59,6 +76,7 @@
 
     private void Clear()
     {
+        DataContext.IsNull = false;
         DataContext.SelectedId = null;
         _ShouldFocus = true;
     }
@@ -67,7 +85,8 @@
     {
         var t = base.OnAfterRenderAsync(firstRender);
 
-        if (DataContext?.SelectedId != null && _Typeahead != null)
+        if ((DataContext?.IsNull == true
+            || DataContext?.SelectedId != null) && _Typeahead != null)
         {
             _Typeahead.Dispose();
             _Typeahead = null;

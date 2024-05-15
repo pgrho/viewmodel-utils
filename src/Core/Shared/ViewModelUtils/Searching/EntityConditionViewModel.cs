@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Searching;
 
-public abstract class EntityConditionViewModel : ConditionViewModel
+public abstract partial class EntityConditionViewModel : ConditionViewModel
 {
     protected EntityConditionViewModel(SearchPropertyViewModel property)
         : base(property)
@@ -61,6 +61,27 @@ public abstract class EntityConditionViewModel : ConditionViewModel
 
     #endregion Selector
 
+    #region IsNull
+
+    private bool _IsNull;
+
+    public bool IsNull
+    {
+        get => _IsNull;
+        set => SetProperty(ref _IsNull, value);
+    }
+
+    private const string NULL_PATTERN = @"^\{NULL\}$";
+#if NET7_0_OR_GREATER
+    [GeneratedRegex(NULL_PATTERN, RegexOptions.IgnoreCase)]
+    private static partial Regex NullRegex();
+#else
+    private static readonly Regex _NullRegex = new(NULL_PATTERN, RegexOptions.IgnoreCase);
+    private static Regex NullRegex() => _NullRegex;
+#endif
+
+    #endregion IsNull
+
     public override void SetValue(string @operator, string value)
     {
         if (string.IsNullOrWhiteSpace(value))
@@ -78,25 +99,47 @@ public abstract class EntityConditionViewModel : ConditionViewModel
             }
         }
 
-        if (Selector.TryParseId(value, out var id))
+        IsNull = value != null
+            && (string.IsNullOrEmpty(@operator) || @operator == "=")
+            && NullRegex().IsMatch(value);
+        if (!IsNull)
         {
-            Selector.SelectedId = id;
-        }
-        else
-        {
-            Selector.SelectedId = null;
+            if (Selector.TryParseId(value, out var id))
+            {
+                Selector.SelectedId = id;
+            }
+            else
+            {
+                Selector.SelectedId = null;
+            }
         }
     }
 
     public override bool HasValue
-        => Selector.IsValid(Selector.SelectedId);
+        => IsNull || Selector.IsValid(Selector.SelectedId);
 
     public override void AppendValueTo(StringBuilder builder)
-        => builder.Append(Selector.SelectedId);
+    {
+        if (IsNull)
+        {
+            builder.Append("{NULL}");
+        }
+        else
+        {
+            builder.Append(Selector.SelectedId);
+        }
+    }
 
     public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
     {
         @operator = null;
+
+        if (IsNull)
+        {
+            defaultValue = "{NULL}";
+            return true;
+        }
+
         defaultValue = Selector.SelectedId?.ToString();
 
         return defaultValue != null;
