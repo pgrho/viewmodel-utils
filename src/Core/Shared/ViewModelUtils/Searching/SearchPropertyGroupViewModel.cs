@@ -141,7 +141,7 @@ public class SearchPropertyGroupViewModel : ObservableModel
         }
         else
         {
-            return Children.FirstOrDefault(e => e.LocalName == n).FindProperty(path.Skip(1).ToList());
+            return Children.FirstOrDefault(e => e.LocalName == n)?.FindProperty(path.Skip(1).ToList());
         }
     }
     public ConditionViewModel GetOrCreateCondition(string path, ConditionCreationBehavior behavior = ConditionCreationBehavior.CreateNew)
