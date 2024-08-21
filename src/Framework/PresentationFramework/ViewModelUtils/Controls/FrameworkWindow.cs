@@ -1,5 +1,4 @@
-﻿
-using Notification.Wpf.Controls;
+﻿using Notification.Wpf.Controls;
 
 namespace Shipwreck.ViewModelUtils.Controls;
 
@@ -11,6 +10,29 @@ public class FrameworkWindow : MetroWindow
         DataContextChanged += FrameworkWindow_DataContextChanged;
     }
 
+    #region NotificationPosition
+
+    public static readonly DependencyProperty NotificationPositionProperty
+        = DependencyProperty.Register(
+            nameof(NotificationPosition),
+            typeof(NotificationPosition),
+            typeof(FrameworkWindow),
+            new FrameworkPropertyMetadata(NotificationPosition.BottomRight, (e, dp) =>
+            {
+                if (e is FrameworkWindow fw && fw._NotificationArea != null)
+                {
+                    fw._NotificationArea.Position = (NotificationPosition)dp.NewValue;
+                }
+            }));
+
+    public NotificationPosition NotificationPosition
+    {
+        get => (NotificationPosition)GetValue(NotificationPositionProperty);
+        set => SetValue(NotificationPositionProperty, value);
+    }
+
+    #endregion NotificationPosition
+
     public override void OnApplyTemplate()
     {
         base.OnApplyTemplate();
@@ -20,7 +42,7 @@ public class FrameworkWindow : MetroWindow
             _NotificationArea = new FrameworkNotificationArea()
             {
                 MaxItems = 3,
-                Position = NotificationPosition.BottomRight,
+                Position = NotificationPosition,
                 Name = "GeneratedNotificationArea_" + GetHashCode()
             };
             Grid.SetRow(_NotificationArea, Grid.GetRow(dg));
