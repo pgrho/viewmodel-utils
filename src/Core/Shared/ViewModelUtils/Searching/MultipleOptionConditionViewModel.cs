@@ -82,21 +82,28 @@ public abstract partial class MultipleOptionConditionViewModel<T> : ConditionVie
 
     #endregion DisplayText
 
-    public void SelectAll()
+    public void Select(Func<T, bool?> selector)
     {
+        var changed = false;
         foreach (var op in Options)
         {
-            op.IsSelected = true;
+            var nv = selector(op.Value) ?? op.IsSelected;
+            changed |= op.IsSelected != nv;
+            op.IsSelected = nv;
+        }
+
+        if (changed)
+        {
+            DisplayText = null;
+            Host.OnConditionChanged(this);
         }
     }
 
+    public void SelectAll()
+        => Select(_ => true);
+
     public void UnselectAll()
-    {
-        foreach (var op in Options)
-        {
-            op.IsSelected = false;
-        }
-    }
+        => Select(_ => false);
 
     #region SelectionCommands
 

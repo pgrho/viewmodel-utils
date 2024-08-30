@@ -22,6 +22,8 @@ public abstract class OptionsConditionViewModel<T> : ConditionViewModel, IOption
             {
                 RaisePropertyChanged(nameof(StringValue));
                 RaisePropertyChanged(nameof(SelectedOption));
+
+                Host.OnConditionChanged(this);
             }
         }
     }

@@ -42,6 +42,7 @@ public abstract partial class ConditionViewModel : ObservableModel
 
     public void Remove()
     {
+        var hasValue = HasValue;
         Host.Conditions.Remove(this);
 
         var sameNames = Host.Conditions.Where(e => e.DisplayName == DisplayName).ToList();
@@ -51,6 +52,11 @@ public abstract partial class ConditionViewModel : ObservableModel
         }
 
         Property.Invalidate();
+
+        if (hasValue)
+        {
+            Host.OnConditionChanged(this);
+        }
     }
 
     #region ShouldShowPath

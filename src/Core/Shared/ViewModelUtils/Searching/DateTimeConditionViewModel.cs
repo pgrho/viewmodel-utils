@@ -79,6 +79,10 @@ public sealed class DateTimeConditionViewModel : ConditionViewModel
                 {
                     RaisePropertyChanged(nameof(IsMinute));
                 }
+                if (HasValue)
+                {
+                    Host.OnConditionChanged(this);
+                }
             }
         }
     }
@@ -104,7 +108,13 @@ public sealed class DateTimeConditionViewModel : ConditionViewModel
     public DateTime? Value
     {
         get => _Value;
-        set => SetProperty(ref _Value, value);
+        set
+        {
+            if (SetProperty(ref _Value, value))
+            {
+                Host.OnConditionChanged(this);
+            }
+        }
     }
 
     #endregion Value

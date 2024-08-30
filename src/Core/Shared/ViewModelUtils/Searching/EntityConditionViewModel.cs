@@ -49,6 +49,7 @@ public abstract partial class EntityConditionViewModel : ConditionViewModel
 
             case nameof(Selector.SelectedItem):
                 RaisePropertyChanged(nameof(SelectedItem));
+                Host.OnConditionChanged(this);
                 break;
 
             case nameof(Selector.IsSearching):
@@ -73,8 +74,10 @@ public abstract partial class EntityConditionViewModel : ConditionViewModel
 
     private const string NULL_PATTERN = @"^\{NULL\}$";
 #if NET7_0_OR_GREATER
+
     [GeneratedRegex(NULL_PATTERN, RegexOptions.IgnoreCase)]
     private static partial Regex NullRegex();
+
 #else
     private static readonly Regex _NullRegex = new(NULL_PATTERN, RegexOptions.IgnoreCase);
     private static Regex NullRegex() => _NullRegex;

@@ -31,6 +31,11 @@ public sealed class NumberConditionViewModel : ConditionViewModel
             if (SetProperty(ref _Operator, value))
             {
                 RaisePropertyChanged(nameof(SelectedOperator));
+
+                if (HasValue)
+                {
+                    Host.OnConditionChanged(this);
+                }
             }
         }
     }
@@ -50,7 +55,13 @@ public sealed class NumberConditionViewModel : ConditionViewModel
     public double? Value
     {
         get => _Value;
-        set => SetProperty(ref _Value, value);
+        set
+        {
+            if (SetProperty(ref _Value, value))
+            {
+                Host.OnConditionChanged(this);
+            }
+        }
     }
 
     #endregion Value
@@ -106,6 +117,7 @@ public sealed class NumberConditionViewModel : ConditionViewModel
 
         builder.Append(Value.Value.ToString("r"));
     }
+
     public override bool TryCreateDefaultValueExpression(out string @operator, out string defaultValue)
     {
         if (Value != null)

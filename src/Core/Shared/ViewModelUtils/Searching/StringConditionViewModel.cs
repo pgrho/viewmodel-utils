@@ -37,6 +37,11 @@ public sealed class StringConditionViewModel : ConditionViewModel
             if (SetProperty(ref _Operator, value))
             {
                 RaisePropertyChanged(nameof(SelectedOperator));
+
+                if (HasValue)
+                {
+                    Host.OnConditionChanged(this);
+                }
             }
         }
     }
@@ -56,7 +61,13 @@ public sealed class StringConditionViewModel : ConditionViewModel
     public string Value
     {
         get => _Value;
-        set => SetProperty(ref _Value, value);
+        set
+        {
+            if (SetProperty(ref _Value, value))
+            {
+                Host.OnConditionChanged(this);
+            }
+        }
     }
 
     #endregion Value

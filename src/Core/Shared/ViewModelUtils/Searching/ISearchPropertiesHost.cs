@@ -64,4 +64,11 @@ public interface ISearchPropertiesHost : IHasPageLogger
     bool IsSearching { get; }
 
     void BeginSearch();
+
+    void OnConditionChanged(ConditionViewModel condition)
+#if NET7_0_OR_GREATER
+    { }
+#else
+    ;
+#endif
 }

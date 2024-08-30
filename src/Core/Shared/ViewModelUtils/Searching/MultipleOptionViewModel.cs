@@ -55,13 +55,13 @@ public partial class MultipleOptionViewModel<T> : MultipleOptionViewModel
 
     public T Value { get; }
 
-    protected override void OnSelectionChanged() => Condition.DisplayText = null;
+    protected override void OnSelectionChanged()
+    {
+        Condition.DisplayText = null;
+
+        Condition.Host.OnConditionChanged(Condition);
+    }
 
     public override void Select()
-    {
-        foreach (var op in Condition.Options)
-        {
-            op.IsSelected = op == this;
-        }
-    }
+        => Condition.Select(e => Equals(e, Value));
 }
