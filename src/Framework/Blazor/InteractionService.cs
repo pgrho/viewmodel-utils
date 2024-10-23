@@ -72,7 +72,7 @@ public class InteractionService : IInteractionService
                     return Task.CompletedTask;
                 }
 
-                if (!page.IsWebAssembly)
+                if (!SupportsJSToast(page))
                 {
                     page.LogWarning("Toast is not supported in Blazor Server. {{ title: {0}, message: {1}, style: {2} }}", title, message, style);
                     return Task.CompletedTask;
@@ -94,6 +94,9 @@ public class InteractionService : IInteractionService
         }
         return default;
     }
+
+    protected virtual bool SupportsJSToast(FrameworkPageViewModel page)
+        => page.IsWebAssembly;
 
     #endregion トースト
 
