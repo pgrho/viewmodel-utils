@@ -1,4 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils;
+﻿using System;
+
+namespace Shipwreck.ViewModelUtils;
 
 public sealed partial class EventModel
 {
@@ -107,7 +109,7 @@ public sealed partial class EventModel
     {
         ProcessId = processId;
         ThreadId = threadId;
-        DateTime = dateTime;
+        DateTime = dateTime.Kind == DateTimeKind.Utc ? dateTime.ToLocalTime() : dateTime;
         Source = source;
         EventType = eventType;
         Id = id;
@@ -124,10 +126,8 @@ public sealed partial class EventModel
     {
         ProcessId = eventCache.ProcessId;
         ThreadId = eventCache.ThreadId;
-        DateTime = eventCache.DateTime;
-
+        DateTime = eventCache.DateTime.Kind == DateTimeKind.Utc ? eventCache.DateTime.ToLocalTime() : eventCache.DateTime;
         Source = source;
-
         EventType = eventType;
         Id = id;
 
