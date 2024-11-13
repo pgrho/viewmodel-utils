@@ -34,7 +34,7 @@ namespace Shipwreck.ViewModelUtils.Components
 
         IBindableComponent IHasBindableComponent.Component => this;
 
-        protected bool SetProperty(ref string field, string value, Action onChanged = null, [CallerMemberName]string propertyName = null, bool shouldNotify = true)
+        protected bool SetProperty(ref string? field, string? value, Action onChanged = null, [CallerMemberName]string propertyName = null, bool shouldNotify = true)
         {
             if (value != field)
             {
@@ -116,7 +116,7 @@ namespace Shipwreck.ViewModelUtils.Components
 
         IBindableComponent IHasBindableComponent.Component => this;
 
-        protected bool SetProperty(ref string field, string value, Action onChanged = null, [CallerMemberName]string propertyName = null, bool shouldNotify = true)
+        protected bool SetProperty(ref string? field, string? value, Action onChanged = null, [CallerMemberName]string propertyName = null, bool shouldNotify = true)
         {
             if (value != field)
             {

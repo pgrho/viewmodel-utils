@@ -2,17 +2,17 @@
 
 public partial interface ICommandViewModel
 {
-    string Title { get; }
+    string? Title { get; }
 
-    string Mnemonic { get; }
+    string? Mnemonic { get; }
 
-    string Description { get; }
+    string? Description { get; }
 
     bool IsVisible { get; }
     bool IsEnabled { get; }
 
-    string Icon { get; }
-    string Href { get; }
+    string? Icon { get; }
+    string? Href { get; }
 
     BorderStyle Style { get; }
 

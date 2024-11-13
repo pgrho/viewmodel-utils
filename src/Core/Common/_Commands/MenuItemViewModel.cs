@@ -13,9 +13,9 @@ public class MenuItemViewModel : ObservableModel, ICommandViewModel
 
     #region Title
 
-    private string _Title;
+    private string? _Title;
 
-    public string Title
+    public string? Title
     {
         get => _Title ?? CommandTitle;
         set => SetProperty(ref _Title, value);
@@ -25,9 +25,9 @@ public class MenuItemViewModel : ObservableModel, ICommandViewModel
 
     #region Command
 
-    private CommandViewModelBase _Command;
+    private CommandViewModelBase? _Command;
 
-    public CommandViewModelBase Command
+    public CommandViewModelBase? Command
     {
         get => _Command;
         set
@@ -51,19 +51,19 @@ public class MenuItemViewModel : ObservableModel, ICommandViewModel
         }
     }
 
-    public string CommandTitle => _Command?.Title;
+    public string? CommandTitle => _Command?.Title;
 
-    public string Mnemonic => _Command?.Mnemonic;
+    public string? Mnemonic => _Command?.Mnemonic;
 
-    public string Href => _Command?.Href;
-    public string Description => _Command?.Description;
-    public string Icon => _Command?.Icon;
+    public string? Href => _Command?.Href;
+    public string? Description => _Command?.Description;
+    public string? Icon => _Command?.Icon;
     public BorderStyle Style => _Command?.Style ?? BorderStyle.None;
     public bool IsVisible => _Command?.IsVisible ?? true;
     public bool IsEnabled => _Command?.IsEnabled ?? true;
     public int BadgeCount => _Command?.BadgeCount ?? 0;
 
-    private void Command_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void Command_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         switch (e.PropertyName)
         {
@@ -119,11 +119,11 @@ public class MenuItemViewModel : ObservableModel, ICommandViewModel
 
     #endregion ContainsVisible
 
-    private BulkUpdateableCollection<MenuItemViewModel> _Children;
+    private BulkUpdateableCollection<MenuItemViewModel>? _Children;
 
     public BulkUpdateableCollection<MenuItemViewModel> Children
     {
-        get => _Children ??= new BulkUpdateableCollection<MenuItemViewModel>();
+        get => _Children ??= new();
         set
         {
             if (value != _Children)

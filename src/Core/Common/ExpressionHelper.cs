@@ -13,6 +13,6 @@ internal static class ExpressionHelper
             ?? ((MemberExpression)expression.Body).Member.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName
             ?? ((MemberExpression)expression.Body).Member.Name;
 
-    internal static Func<CommandViewModelBase, T> AddCommandArgument<T>(this Func<T> func)
+    internal static Func<CommandViewModelBase, T>? AddCommandArgument<T>(this Func<T>? func)
         => func != null ? _ => func() : null;
 }

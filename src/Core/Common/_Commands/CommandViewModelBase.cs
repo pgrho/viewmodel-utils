@@ -5,15 +5,15 @@ namespace Shipwreck.ViewModelUtils;
 public abstract partial class CommandViewModelBase : ObservableModel, ICommandViewModel, IDisposable, ICommand
 {
     protected CommandViewModelBase(
-        string title = null,
-        string mnemonic = null,
-        string description = null,
+        string? title = null,
+        string? mnemonic = null,
+        string? description = null,
         bool isVisible = true,
         bool isEnabled = true,
-        string icon = null,
+        string? icon = null,
         BorderStyle style = default,
         int badgeCount = 0,
-        string href = null)
+        string? href = null)
     {
         _Title = title;
         _Mnemonic = mnemonic;
@@ -28,43 +28,43 @@ public abstract partial class CommandViewModelBase : ObservableModel, ICommandVi
 
     #region Title
 
-    private string _Title;
+    private string? _Title;
 
-    public string Title
+    public string? Title
     {
         get => _Title;
         protected set => SetProperty(ref _Title, value);
     }
 
-    protected virtual string ComputeTitle() => null;
+    protected virtual string? ComputeTitle() => null;
 
     #endregion Title
 
     #region Mnemonic
 
-    private string _Mnemonic;
+    private string? _Mnemonic;
 
-    public string Mnemonic
+    public string? Mnemonic
     {
         get => _Mnemonic;
         protected set => SetProperty(ref _Mnemonic, value);
     }
 
-    protected virtual string ComputeMnemonic() => null;
+    protected virtual string? ComputeMnemonic() => null;
 
     #endregion Mnemonic
 
     #region Description
 
-    private string _Description;
+    private string? _Description;
 
-    public string Description
+    public string? Description
     {
         get => _Description;
         protected set => SetProperty(ref _Description, value);
     }
 
-    protected virtual string ComputeDescription() => null;
+    protected virtual string? ComputeDescription() => null;
 
     #endregion Description
 
@@ -119,15 +119,15 @@ public abstract partial class CommandViewModelBase : ObservableModel, ICommandVi
 
     #region Href
 
-    private string _Href;
+    private string? _Href;
 
-    public string Href
+    public string? Href
     {
         get => _Href;
         protected set => SetProperty(ref _Href, value);
     }
 
-    protected virtual string ComputeHref() => null;
+    protected virtual string? ComputeHref() => null;
 
     #endregion Href
 
@@ -151,15 +151,15 @@ public abstract partial class CommandViewModelBase : ObservableModel, ICommandVi
 
     #region Icon
 
-    private string _Icon;
+    private string? _Icon;
 
-    public string Icon
+    public string? Icon
     {
         get => _Icon;
         protected set => SetProperty(ref _Icon, value);
     }
 
-    protected virtual string ComputeIcon() => null;
+    protected virtual string? ComputeIcon() => null;
 
     #endregion Icon
 
@@ -208,17 +208,17 @@ public abstract partial class CommandViewModelBase : ObservableModel, ICommandVi
 
     #region ICommand
 
-    private EventHandler _CanExecuteChanged;
+    private EventHandler? _CanExecuteChanged;
 
-    event EventHandler ICommand.CanExecuteChanged
+    event EventHandler? ICommand.CanExecuteChanged
     {
         add => _CanExecuteChanged += value;
         remove => _CanExecuteChanged -= value;
     }
 
-    bool ICommand.CanExecute(object parameter) => IsEnabled && IsVisible;
+    bool ICommand.CanExecute(object? parameter) => IsEnabled && IsVisible;
 
-    void ICommand.Execute(object parameter) => Execute();
+    void ICommand.Execute(object? parameter) => Execute();
 
     #endregion ICommand
 

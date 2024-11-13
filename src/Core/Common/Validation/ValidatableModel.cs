@@ -4,11 +4,11 @@ namespace Shipwreck.ViewModelUtils.Validation;
 
 public abstract class ValidatableModel : ObservableModel, INotifyDataErrorInfo
 {
-    public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+    public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
     #region INotifyDataErrorInfo
 
-    private Dictionary<string, HashSet<string>> _Errors;
+    private Dictionary<string, HashSet<string>>? _Errors;
 
     public Dictionary<string, HashSet<string>> Errors
         => _Errors ?? (_Errors = new Dictionary<string, HashSet<string>>());
@@ -16,7 +16,7 @@ public abstract class ValidatableModel : ObservableModel, INotifyDataErrorInfo
     public bool HasErrors
         => Errors?.Count > 0;
 
-    IEnumerable INotifyDataErrorInfo.GetErrors(string propertyName)
+    IEnumerable INotifyDataErrorInfo.GetErrors(string? propertyName)
     {
         if (Errors != null)
         {
@@ -24,7 +24,7 @@ public abstract class ValidatableModel : ObservableModel, INotifyDataErrorInfo
             {
                 return Errors.SelectMany(e => e.Value);
             }
-            else if (Errors.TryGetValue(propertyName, out var l))
+            else if (Errors.TryGetValue(propertyName!, out var l))
             {
                 return l.AsEnumerable();
             }

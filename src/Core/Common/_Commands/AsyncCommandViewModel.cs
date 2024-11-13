@@ -5,30 +5,30 @@ internal sealed partial class AsyncCommandViewModel : CommandViewModelBase
     #region Instance Members
 
     private readonly Func<CommandViewModelBase, Task> _Execute;
-    private readonly Func<CommandViewModelBase, string> _TitleGetter = null;
-    private readonly Func<CommandViewModelBase, string> _MnemonicGetter = null;
-    private readonly Func<CommandViewModelBase, string> _DescriptionGetter = null;
-    private readonly Func<CommandViewModelBase, bool> _IsVisibleGetter = null;
-    private readonly Func<CommandViewModelBase, bool> _IsEnabledGetter = null;
-    private readonly Func<CommandViewModelBase, string> _IconGetter = null;
-    private readonly Func<CommandViewModelBase, BorderStyle> _TypeGetter = null;
-    private readonly Func<CommandViewModelBase, int> _BadgeCountGetter = null;
-    private readonly Func<CommandViewModelBase, string> _HrefGetter = null;
+    private readonly Func<CommandViewModelBase, string>? _TitleGetter;
+    private readonly Func<CommandViewModelBase, string>? _MnemonicGetter;
+    private readonly Func<CommandViewModelBase, string>? _DescriptionGetter;
+    private readonly Func<CommandViewModelBase, bool>? _IsVisibleGetter;
+    private readonly Func<CommandViewModelBase, bool>? _IsEnabledGetter;
+    private readonly Func<CommandViewModelBase, string>? _IconGetter;
+    private readonly Func<CommandViewModelBase, BorderStyle>? _TypeGetter;
+    private readonly Func<CommandViewModelBase, int>? _BadgeCountGetter;
+    private readonly Func<CommandViewModelBase, string>? _HrefGetter;
 
     private readonly ICommandViewModelHandler _Handler;
 
     public AsyncCommandViewModel(
         Func<CommandViewModelBase, Task> execute
-        , string title = null, Func<CommandViewModelBase, string> titleGetter = null
-        , string mnemonic = null, Func<CommandViewModelBase, string> mnemonicGetter = null
-        , string description = null, Func<CommandViewModelBase, string> descriptionGetter = null
-        , bool isVisible = true, Func<CommandViewModelBase, bool> isVisibleGetter = null
-        , bool isEnabled = true, Func<CommandViewModelBase, bool> isEnabledGetter = null
-        , string icon = null, Func<CommandViewModelBase, string> iconGetter = null
-        , BorderStyle style = default, Func<CommandViewModelBase, BorderStyle> styleGetter = null
-        , int badgeCount = 0, Func<CommandViewModelBase, int> badgeCountGetter = null
-        , string href = null, Func<CommandViewModelBase, string> hrefGetter = null
-        , ICommandViewModelHandler handler = null
+        , string? title = null, Func<CommandViewModelBase, string>? titleGetter = null
+        , string? mnemonic = null, Func<CommandViewModelBase, string>? mnemonicGetter = null
+        , string? description = null, Func<CommandViewModelBase, string>? descriptionGetter = null
+        , bool isVisible = true, Func<CommandViewModelBase, bool>? isVisibleGetter = null
+        , bool isEnabled = true, Func<CommandViewModelBase, bool>? isEnabledGetter = null
+        , string? icon = null, Func<CommandViewModelBase, string>? iconGetter = null
+        , BorderStyle style = default, Func<CommandViewModelBase, BorderStyle>? styleGetter = null
+        , int badgeCount = 0, Func<CommandViewModelBase, int>? badgeCountGetter = null
+        , string? href = null, Func<CommandViewModelBase, string>? hrefGetter = null
+        , ICommandViewModelHandler? handler = null
         )
         : base(
               title: title

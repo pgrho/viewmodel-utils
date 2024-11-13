@@ -115,7 +115,7 @@ public abstract class VirtualizedCollection<T> : ObservableModel, IList<T>, IRea
         }
     }
 
-    public event NotifyCollectionChangedEventHandler CollectionChanged;
+    public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
     #region PageIndex
 
@@ -286,7 +286,7 @@ public abstract class VirtualizedCollection<T> : ObservableModel, IList<T>, IRea
                 var newPageCount = 0;
                 var empty = true;
                 var pv = _Version;
-                PageResult oldResult = null;
+                PageResult? oldResult = null;
                 for (var i = _Pages.Count - 1; i >= 0; i--)
                 {
                     var oldPage = _Pages[i];

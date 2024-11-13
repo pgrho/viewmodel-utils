@@ -31,5 +31,5 @@ public sealed class TraceEventModel
     public TraceEventType EventType { get; }
     public int Id { get; }
 
-    public string Message { get; }
+    public string? Message { get; }
 }

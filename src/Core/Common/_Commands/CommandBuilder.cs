@@ -19,7 +19,7 @@ public class CommandBuilder : CommandBuilderBase
 
     public override CommandViewModelBase Build()
     {
-        CommandViewModelBase c = null;
+        CommandViewModelBase? c = null;
         return c = CommandViewModel.Create(
             ExecutionHandler,
             title: Title,

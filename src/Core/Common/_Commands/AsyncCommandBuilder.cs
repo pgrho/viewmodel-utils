@@ -6,7 +6,7 @@ public class AsyncCommandBuilder : CommandBuilderBase
 
     public AsyncCommandBuilder(Func<Task> executionHandler)
     {
-        _ExecutionHandler = executionHandler.AddCommandArgument();
+        _ExecutionHandler = executionHandler.AddCommandArgument()!;
     }
 
     public AsyncCommandBuilder(Func<CommandViewModelBase, Task> executionHandler)
@@ -16,7 +16,7 @@ public class AsyncCommandBuilder : CommandBuilderBase
 
     public override CommandViewModelBase Build()
     {
-        CommandViewModelBase c = null;
+        CommandViewModelBase? c = null;
         return c = CommandViewModel.CreateAsync(
             _ExecutionHandler,
             title: Title,
