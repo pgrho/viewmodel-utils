@@ -10,7 +10,7 @@ public interface IMemberFilter
 }
 public interface IMemberFilter<T> : IMemberFilter
 {
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     bool IMemberFilter.IsMatch(object obj) => obj is T item && IsMatch(item);
 #endif
 

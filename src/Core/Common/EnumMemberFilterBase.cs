@@ -20,7 +20,7 @@ public abstract partial class EnumMemberFilterBase<T, TValue> : IMemberFilter<T>
     protected abstract bool TryParse(string text, out TValue? value);
 
     private const string _SPLITTER_PATTERN = ",";
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     [GeneratedRegex(_SPLITTER_PATTERN, RegexOptions.IgnoreCase)]
     private static partial Regex SplitterPattern();
 #else

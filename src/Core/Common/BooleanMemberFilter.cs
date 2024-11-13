@@ -15,7 +15,7 @@ public sealed partial class BooleanMemberFilter<T> : EnumMemberFilterBase<T, boo
     private const string _TRUE_PATTERN = "^(?:[+-]?1|t(?:rue)?|y(?:es)?)$";
     private const string _FALSE_PATTERN = "^(?:[+-]?0|f(?:alse)?|no?)$";
     private const string _NULL_PATTERN = "^null$";
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     [GeneratedRegex(_TRUE_PATTERN, RegexOptions.IgnoreCase)]
     private static partial Regex TruePattern();
     [GeneratedRegex(_FALSE_PATTERN, RegexOptions.IgnoreCase)]

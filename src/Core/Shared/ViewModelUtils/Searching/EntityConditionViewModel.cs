@@ -73,7 +73,7 @@ public abstract partial class EntityConditionViewModel : ConditionViewModel
     }
 
     private const string NULL_PATTERN = @"^\{NULL\}$";
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
 
     [GeneratedRegex(NULL_PATTERN, RegexOptions.IgnoreCase)]
     private static partial Regex NullRegex();

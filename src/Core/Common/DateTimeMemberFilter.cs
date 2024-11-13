@@ -68,7 +68,7 @@ public sealed partial class DateTimeMemberFilter<T> : IMemberFilter<T>
 
     private const string _SINGLE_PATTERN = $"^(?<op>|!?=|[<>]=?)" + DATE1_PATTERN + "$";
     private const string _BETWEEN_PATTERN = "^" + DATE1_PATTERN + "\\.\\." + DATE2_PATTERN + "$";
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     [GeneratedRegex(_SINGLE_PATTERN)]
     private static partial Regex SinglePattern();
     [GeneratedRegex(_BETWEEN_PATTERN)]

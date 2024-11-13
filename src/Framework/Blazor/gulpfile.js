@@ -7,8 +7,14 @@ var sass = require('gulp-sass')(require('sass'));
 var cleanCss = require('gulp-clean-css');
 var tsProject = ts.createProject('Scripts/tsconfig.json');
 
-var jtToast = process.env['PkgBlazorJqueryToast'];
-var typeahead = process.env['PkgBlazorTypeahead'];
+function getArgs(name) {
+    const i = process.argv.indexOf(name);
+    return i >= 0 ? process.argv[i + 1] : null;
+}
+
+var jtToast = getArgs('--toast');
+var typeahead = getArgs('--typeahead');
+
 gulp.task('clean', function () {
     return del(['wwwroot/*.js', 'wwwroot/*.css', 'Scripts/Shipwreck.ViewModelUtils.Blazor.js']);
 });

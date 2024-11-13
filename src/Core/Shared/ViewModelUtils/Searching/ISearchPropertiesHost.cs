@@ -11,7 +11,7 @@ public interface ISearchPropertiesHost : IHasPageLogger
     CommandViewModelBase AddConditionsCommand { get; }
 
     string GetDisplayName(QueryGroupInfo group)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
         => null;
 
 #else
@@ -19,7 +19,7 @@ public interface ISearchPropertiesHost : IHasPageLogger
 #endif
 
     string GetDisplayName(QueryPropertyInfo property)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
         => null;
 
 #else
@@ -27,7 +27,7 @@ public interface ISearchPropertiesHost : IHasPageLogger
 #endif
 
     bool ShouldInclude(QueryGroupInfo group)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
         => true;
 
 #else
@@ -35,7 +35,7 @@ public interface ISearchPropertiesHost : IHasPageLogger
 #endif
 
     bool ShouldInclude(QueryPropertyInfo property)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
         => true;
 
 #else
@@ -43,7 +43,7 @@ public interface ISearchPropertiesHost : IHasPageLogger
 #endif
 
     bool TryCreateCondition(SearchPropertyViewModel property, out ConditionViewModel condition)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     {
         condition = null;
         return false;
@@ -54,7 +54,7 @@ public interface ISearchPropertiesHost : IHasPageLogger
 #endif
 
     IEnumerable<CommandViewModelBase> CreateConditionCommands(ConditionViewModel condition)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
         => null;
 
 #else
@@ -66,7 +66,7 @@ public interface ISearchPropertiesHost : IHasPageLogger
     void BeginSearch();
 
     void OnConditionChanged(ConditionViewModel condition)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     { }
 #else
     ;

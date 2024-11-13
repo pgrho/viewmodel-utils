@@ -8,7 +8,7 @@ public interface IHasExtensionColumns : IHasColumns
     IEnumerable<string> GetDefaultExtensionColumns();
 
     string GetColumnDisplayName(string columnName)
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
         => null
 #endif
         ;

@@ -1,24 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0;net7.0-windows</TargetFrameworks>
+    <TargetFrameworks>net9.0;net9.0-windows</TargetFrameworks>
     <RootNamespace>Shipwreck</RootNamespace>
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net7.0-windows'">
+  <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-windows'">
     <DefineConstants>$(DefineConstants);IS_WEBVIEW</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(TargetFramework)'=='net7.0'">
+  <PropertyGroup Condition="'$(TargetFramework)'=='net9.0'">
     <DefineConstants>$(DefineConstants);IS_WASM</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net7.0-windows'">
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="7.0.59" />
+  <ItemGroup Condition="'$(TargetFramework)'=='net9.0-windows'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="9.0.0" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net7.0'">
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.3" />
+  <ItemGroup Condition="'$(TargetFramework)'=='net9.0'">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

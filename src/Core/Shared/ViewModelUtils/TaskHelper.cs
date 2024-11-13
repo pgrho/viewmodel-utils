@@ -8,7 +8,7 @@ public static partial class TaskHelper
     public static ConfiguredTaskAwaitable<TResult> ConfigureAwait<TResult>(this Task<TResult> task)
         => task.ConfigureAwait(FrameworkPageViewModel.ShouldCaptureContext);
 
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     public static ConfiguredValueTaskAwaitable ConfigureAwait(this ValueTask task)
         => task.ConfigureAwait(FrameworkPageViewModel.ShouldCaptureContext);
 

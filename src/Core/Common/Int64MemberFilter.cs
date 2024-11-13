@@ -68,7 +68,7 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
     public ReadOnlyCollection<long?>? ParsedOperands { get; private set; }
 
     private const string _BETWEEN_PATTERN = "^([-+]?[0-9]+)\\.\\.([-+]?[0-9]+)$";
-#if NET7_0_OR_GREATER
+#if NET9_0_OR_GREATER
     [GeneratedRegex(_BETWEEN_PATTERN)]
     private static partial Regex BetweenPattern();
 #else

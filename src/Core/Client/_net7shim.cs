@@ -1,4 +1,4 @@
-﻿#if !NET7_0_OR_GREATER
+﻿#if !NET9_0_OR_GREATER
 namespace System.Diagnostics.CodeAnalysis;
 
 [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]

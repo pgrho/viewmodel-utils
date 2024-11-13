@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net7.0-windows</TargetFrameworks>
+    <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
     <UseWPF>true</UseWPF>
@@ -16,9 +16,9 @@
   <ItemGroup>
     <PackageReference Include="Notification.Wpf" Version="7.0.0" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
-    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.4" />
+    <PackageReference Include="Microsoft-WindowsAPICodePack-Shell" Version="1.1.5" />
     <PackageReference Include="Shipwreck.BootstrapControls.PresentationFramework" Version="4.2.1-alpha002" />
-    <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.3" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.PresentationFramework" Version="5.14.5" />
   </ItemGroup>
 
   <ItemGroup>

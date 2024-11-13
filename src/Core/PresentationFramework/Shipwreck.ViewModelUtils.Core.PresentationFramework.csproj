@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net7.0-windows</TargetFrameworks>
+    <TargetFrameworks>net48;net9.0-windows</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
     <UseWPF>true</UseWPF>
@@ -13,9 +13,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)'=='net7.0-windows'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net9.0-windows'">
     <PackageReference Include="Microsoft.Extensions.Logging"
-                      Version="7.0.0" />
+                      Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>
