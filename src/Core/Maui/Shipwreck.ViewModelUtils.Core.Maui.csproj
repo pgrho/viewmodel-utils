@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Shipwreck</RootNamespace>
+    <DefineConstants>$(DefineConstants);IS_MAUI</DefineConstants>
+  </PropertyGroup>
+
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems" Label="Shared" />
+  <ItemGroup>
+    <Compile Include="..\PresentationFramework\Generated Codes\Interactions.cs" Link="Generated Codes\Interactions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\PresentationFramework\Resources\*.resx" Link="Resources\%(Filename).resx" />
+    <Compile Include="..\PresentationFramework\Resources\*.cs" Link="Resources\%(Filename).cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.14" />
+    <ProjectReference Include="..\Common\Shipwreck.ViewModelUtils.Common.csproj" />
+  </ItemGroup>
+</Project>

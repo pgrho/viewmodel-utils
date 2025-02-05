@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bs4="clr-namespace:Shipwreck.BootstrapControls;assembly=Shipwreck.BootstrapControls.Maui"
+    xmlns:fa5="clr-namespace:Shipwreck.FontAwesomeControls;assembly=Shipwreck.FontAwesomeControls.Maui"
+    xmlns:vmu="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Core.Maui"
+    xmlns:vmuf="clr-namespace:Shipwreck.ViewModelUtils;assembly=Shipwreck.ViewModelUtils.Maui"
+    x:Class="Shipwreck.ViewModelUtils.IconButton"
+    x:DataType="vmu:ICommandViewModel"
+    IsVisible="{Binding IsVisible, TargetNullValue=False, FallbackValue=False}">
+    <ContentView.Resources>
+        <vmuf:BorderStyleToColorSchemeConverter
+            x:Key="BorderStyleToColorSchemeConverter" />
+    </ContentView.Resources>
+    <ContentView.Content>
+        <bs4:ButtonFrame
+            x:Name="frame"
+            x:DataType="vmu:ICommandViewModel"
+            Margin="0"
+            IsOpaque="False"
+            Scheme="{Binding Style, Converter={StaticResource BorderStyleToColorSchemeConverter}}"
+            IsEnabled="{Binding IsEnabled}">
+            <bs4:ButtonFrame.Triggers>
+                <DataTrigger
+                    TargetType="bs4:ButtonFrame"
+                    Binding="{Binding IsEnabled}"
+                    Value="False">
+                    <Setter
+                        Property="Opacity"
+                        Value="0.65" />
+                </DataTrigger>
+            </bs4:ButtonFrame.Triggers>
+            <bs4:ButtonFrame.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding}" />
+            </bs4:ButtonFrame.GestureRecognizers>
+            <fa5:FontAwesomeLabel
+                x:Name="icon"
+                VerticalOptions="Center"
+                Icon="{Binding Icon}">
+            </fa5:FontAwesomeLabel>
+        </bs4:ButtonFrame>
+    </ContentView.Content>
+</ContentView>

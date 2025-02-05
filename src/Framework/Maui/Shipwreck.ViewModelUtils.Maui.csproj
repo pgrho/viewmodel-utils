@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0-android</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Shipwreck</RootNamespace>
+    <DefineConstants>$(DefineConstants);IS_MAUI</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Shipwreck.BootstrapControls.Maui" Version="4.2.1-alpha002" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.Maui" Version="5.14.5" />
+    <ProjectReference Include="..\..\Core\Maui\Shipwreck.ViewModelUtils.Core.Maui.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiXaml Update="ViewModelUtils\CommandButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="ViewModelUtils\EntitySelectorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="ViewModelUtils\IconButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+  </ItemGroup>
+
+  <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
+  <Import Project="..\Converters\Shipwreck.ViewModelUtils.Converters.projitems" Label="Shared" />
+
+</Project>

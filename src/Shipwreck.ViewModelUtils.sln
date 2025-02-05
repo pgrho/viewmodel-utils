@@ -71,6 +71,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.De
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipwreck.ViewModelUtils.Core.PresentationFramework.Tests", "Core\PresentationFramework.Tests\Shipwreck.ViewModelUtils.Core.PresentationFramework.Tests.csproj", "{D6435B34-6DA9-4340-A440-410E1614902A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.ViewModelUtils.Core.Maui", "Core\Maui\Shipwreck.ViewModelUtils.Core.Maui.csproj", "{710B5318-A834-F2BB-F78B-05234B7FD33D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipwreck.ViewModelUtils.Maui", "Framework\Maui\Shipwreck.ViewModelUtils.Maui.csproj", "{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -489,6 +493,46 @@ Global
 		{D6435B34-6DA9-4340-A440-410E1614902A}.Release|x64.Build.0 = Release|Any CPU
 		{D6435B34-6DA9-4340-A440-410E1614902A}.Release|x86.ActiveCfg = Release|Any CPU
 		{D6435B34-6DA9-4340-A440-410E1614902A}.Release|x86.Build.0 = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|x64.Build.0 = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Debug|x86.Build.0 = Debug|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|iPhone.Build.0 = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|x64.ActiveCfg = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|x64.Build.0 = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|x86.ActiveCfg = Release|Any CPU
+		{710B5318-A834-F2BB-F78B-05234B7FD33D}.Release|x86.Build.0 = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|x64.Build.0 = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Debug|x86.Build.0 = Debug|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|iPhone.Build.0 = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|x64.ActiveCfg = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|x64.Build.0 = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|x86.ActiveCfg = Release|Any CPU
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -517,6 +561,8 @@ Global
 		{8740D847-E398-4E62-80A0-F9385B342EB9} = {AE42DF8F-F082-4673-B441-CA4741871EDB}
 		{33853870-24B8-4A32-9A1E-E709A8416D94} = {AE42DF8F-F082-4673-B441-CA4741871EDB}
 		{D6435B34-6DA9-4340-A440-410E1614902A} = {E1EF93AF-DC8D-4825-B9F1-AE80703B2943}
+		{710B5318-A834-F2BB-F78B-05234B7FD33D} = {E1EF93AF-DC8D-4825-B9F1-AE80703B2943}
+		{A3D3513D-9577-4AF4-B1B7-B2BD992B15CB} = {34DFF1AB-433A-4BF2-A1BD-1BC11288556E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBFC9127-DF00-440C-BFE6-99D620181698}
@@ -529,10 +575,14 @@ Global
 		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{3495e59a-e9ef-46bd-922f-d0bcabb10d72}*SharedItemsImports = 5
 		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{3d621ad2-9037-4fa9-bdd1-51c36ad2eb41}*SharedItemsImports = 13
+		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{710b5318-a834-f2bb-f78b-05234b7fd33d}*SharedItemsImports = 5
+		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{710b5318-a834-f2bb-f78b-05234b7fd33d}*SharedItemsImports = 5
 		Core\Converters\Shipwreck.ViewModelUtils.Core.Converters.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{89d18b3d-a9e7-4928-955b-d65c5c9cd7a4}*SharedItemsImports = 5
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9c106d03-1713-4b2e-ad83-4b99a0dd6f17}*SharedItemsImports = 5
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{9eaba68f-46bb-4e67-b740-1b8732d45bb0}*SharedItemsImports = 13
+		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{a3d3513d-9577-4af4-b1b7-b2bd992b15cb}*SharedItemsImports = 5
+		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{a3d3513d-9577-4af4-b1b7-b2bd992b15cb}*SharedItemsImports = 5
 		Core\Shared\Shipwreck.ViewModelUtils.Core.Shared.projitems*{a9b5722f-dfc4-4a3e-ba20-8ce24ebed9c1}*SharedItemsImports = 13
 		Framework\Converters\Shipwreck.ViewModelUtils.Converters.projitems*{e26ad196-1656-488e-ba36-8de042a0efb6}*SharedItemsImports = 5
 		Framework\Shared\Shipwreck.ViewModelUtils.Shared.projitems*{e26ad196-1656-488e-ba36-8de042a0efb6}*SharedItemsImports = 5
