@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
-    <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.0.7" />
+    <PackageReference Include="Shipwreck.ReflectionUtils" Version="0.1.0" />
     <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
     <ProjectReference Include="..\Models\Shipwreck.ViewModelUtils.Models.csproj" />
   </ItemGroup>
