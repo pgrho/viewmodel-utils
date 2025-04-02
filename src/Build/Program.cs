@@ -105,7 +105,7 @@ internal static class Program
                 Console.WriteLine("Building {0}", proj);
                 var pc = await ExecuteAsync(new ProcessStartInfo(devenv.FullName)
                 {
-                    ArgumentList = { Path.Combine(solDir, "Shipwreck.ViewModelUtils.sln"), "/Build", "Release", "/Project", proj }
+                    ArgumentList = { Path.Combine(solDir, "Shipwreck.ViewModelUtils.slnx"), "/Build", "Release", "/Project", proj }
                 }, encoding: Encoding.GetEncoding(932));
                 if (pc.ExitCode != 0
                     || !ValidatePackage(proj, version))
