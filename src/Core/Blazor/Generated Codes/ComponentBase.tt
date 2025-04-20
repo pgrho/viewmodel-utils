@@ -12,7 +12,7 @@ foreach (var g in new [] {
 }.GroupBy(e => e.NS))
 {
     var isComponent = g.Key.StartsWith("Shipwreck.ViewModelUtils.Components");
-    var commonArgs = isComponent ? ", Action onChanged = null, [CallerMemberName]string propertyName = null, bool shouldNotify = true" : ", [CallerMemberName]string propertyName = null, Action onChanged = null";
+    var commonArgs = isComponent ? ", Action onChanged = null, [CallerMemberName] string? propertyName = null, bool shouldNotify = true" : ", [CallerMemberName] string? propertyName = null, Action onChanged = null";
     var commonApply = isComponent ? ", onChanged, propertyName, shouldNotify: shouldNotify" : ", propertyName, onChanged";
     var notification = isComponent ? "if (propertyName != null) RaisePropertyChanged(propertyName, shouldNotify)" : "if (propertyName != null) RaisePropertyChanged(propertyName)";
 #>
@@ -51,7 +51,7 @@ namespace <#= g.Key #>
 
         IBindableComponent IHasBindableComponent.Component => this;
 
-        protected bool SetProperty(ref string field, string value<#= commonArgs #>)
+        protected bool SetProperty([NotNullIfNotNull(nameof(value))] ref string? field, string? value<#= commonArgs #>)
         {
             if (value != field)
             {
@@ -63,7 +63,7 @@ namespace <#= g.Key #>
             return false;
         }
 
-        protected bool SetProperty<TValue>(ref TValue field, TValue value<#= commonArgs #>)
+        protected bool SetProperty<TValue>([NotNullIfNotNull(nameof(value))] ref TValue field, TValue value<#= commonArgs #>)
         {
             if (!((field as IEquatable<TValue>)?.Equals(value) ?? Equals(field, value)))
             {
@@ -89,7 +89,7 @@ foreach (var v in new [] { "byte", "ushort", "uint", "ulong" })
 if (isComponent)
 {
 #>
-        protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null, bool shouldNotify = true)
+        protected virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null, bool shouldNotify = true)
         {
             if (shouldNotify) ShouldRenderCore = true;
 

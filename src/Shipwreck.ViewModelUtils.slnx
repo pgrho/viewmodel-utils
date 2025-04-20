@@ -35,10 +35,10 @@
       <BuildDependency Project="Framework/Blazor/Shipwreck.ViewModelUtils.Blazor.csproj" />
     </Project>
     <Project Path="Demo/PresentationFramework/Shipwreck.ViewModelUtils.Demo.PresentationFramework.csproj" />
-    <Project Path="Demo/XamarinForms.Android/Shipwreck.ViewModelUtils.Demo.XamarinForms.Android.csproj">
+    <Project Path="Demo/XamarinForms.Android/Shipwreck.ViewModelUtils.Demo.XamarinForms.Android.csproj" Id="52441e96-2f31-4213-b7c1-24227f4d14b7">
       <Deploy />
     </Project>
-    <Project Path="Demo/XamarinForms.iOS/Shipwreck.ViewModelUtils.Demo.XamarinForms.iOS.csproj">
+    <Project Path="Demo/XamarinForms.iOS/Shipwreck.ViewModelUtils.Demo.XamarinForms.iOS.csproj" Id="da41b53c-615f-40e6-81c4-bdf3e7a90f57">
       <Platform Solution="*|Any CPU" Project="iPhoneSimulator" />
       <Platform Solution="*|iPhone" Project="iPhone" />
       <Platform Solution="*|iPhoneSimulator" Project="iPhoneSimulator" />

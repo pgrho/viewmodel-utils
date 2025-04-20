@@ -250,7 +250,7 @@ public class BulkUpdateableCollection<T> : ObservableCollection<T>
         return c;
     }
 
-    protected bool SetProperty(ref string? field, string? value, Action? onChanged = null, [CallerMemberName] string? propertyName = null)
+    protected bool SetProperty([NotNullIfNotNull(nameof(value))] ref string? field, string? value, Action? onChanged = null, [CallerMemberName] string? propertyName = null)
     {
         if (value != field)
         {
@@ -262,7 +262,7 @@ public class BulkUpdateableCollection<T> : ObservableCollection<T>
         return false;
     }
 
-    protected bool SetProperty<TValue>(ref TValue field, TValue value, Action? onChanged = null, [CallerMemberName] string? propertyName = null)
+    protected bool SetProperty<TValue>([NotNullIfNotNull(nameof(value))] ref TValue field, TValue value, Action? onChanged = null, [CallerMemberName] string? propertyName = null)
     {
         if (!((field as IEquatable<TValue>)?.Equals(value) ?? Equals(field, value)))
         {
