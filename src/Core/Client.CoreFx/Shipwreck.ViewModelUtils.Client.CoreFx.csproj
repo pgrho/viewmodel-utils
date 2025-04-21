@@ -1,23 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-      <TargetFrameworks>netstandard2.0;net48;net9</TargetFrameworks>
-        <RootNamespace>Shipwreck.ViewModelUtils.Client</RootNamespace>
-        <AssemblyName>Shipwreck.ViewModelUtils.Client</AssemblyName>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageId>Shipwreck.ViewModelUtils.Client.CoreFx</PackageId>
-        <Product>Shipwreck.ViewModelUtils.Client.CoreFx</Product>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net48;net9</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Shipwreck.ViewModelUtils.Client.CoreFx</PackageId>
+    <Product>Shipwreck.ViewModelUtils.Client.CoreFx</Product>
+  </PropertyGroup>
 
-    <ItemGroup> 
-        <Compile Include="..\Client\*.cs" Link="Shared Code\%(Filename).cs" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="System.Text.Json" Version="9.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Models\Shipwreck.ViewModelUtils.Models.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Client\Shipwreck.ViewModelUtils.Client.csproj" />
+  </ItemGroup>
 </Project>

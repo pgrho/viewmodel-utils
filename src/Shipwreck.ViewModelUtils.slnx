@@ -9,7 +9,6 @@
   <Folder Name="/1. Core/">
     <Project Path="Core/Blazor/Shipwreck.ViewModelUtils.Core.Blazor.csproj" />
     <Project Path="Core/Client.CoreFx/Shipwreck.ViewModelUtils.Client.CoreFx.csproj" />
-    <Project Path="Core/Client.Newtonsoft/Shipwreck.ViewModelUtils.Client.Newtonsoft.csproj" />
     <Project Path="Core/Client/Shipwreck.ViewModelUtils.Client.csproj" />
     <Project Path="Core/Common/Shipwreck.ViewModelUtils.Common.csproj" />
     <Project Path="Core/Converters/Shipwreck.ViewModelUtils.Core.Converters.shproj" />
