@@ -9,7 +9,7 @@ public abstract class ObservableModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    protected bool SetProperty(ref string? field, string? value, Action? onChanged = null, [CallerMemberName] string? propertyName = null)
+    protected bool SetProperty([NotNullIfNotNull(nameof(value))] ref string? field, string? value, Action? onChanged = null, [CallerMemberName] string? propertyName = null)
     {
         if (value != field)
         {

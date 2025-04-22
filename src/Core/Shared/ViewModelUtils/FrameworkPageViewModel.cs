@@ -321,7 +321,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     public bool IsInitialized
     {
         get => (_Flags & IS_INITIALIZED) != 0;
-        private set
+        protected set
         {
             if (SetFlagProperty(ref _Flags, IS_INITIALIZED, value) && IsInitialized)
             {

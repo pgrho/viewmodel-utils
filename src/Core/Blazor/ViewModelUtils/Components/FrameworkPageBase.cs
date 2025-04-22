@@ -49,16 +49,26 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
         DataContext = GetOrCreateDataContext();
     }
 
+    protected virtual void SetDataContextParameter()
+    {
+        DataContext = GetOrCreateDataContext();
+    }
+
     #endregion DataContext
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        using (CreateInitializingScope())
+        {
+            InitializeDataContext(); 
+        }
+    }
 
     protected override async Task OnParametersSetAsync()
     {
-        var t = base.OnParametersSetAsync();
-
-        if (t != null)
-        {
-            await t;
-        }
+        await base.OnParametersSetAsync();
 
         using (CreateInitializingScope())
         {
@@ -91,7 +101,7 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
 
     FrameworkPageViewModel IHasFrameworkPageViewModel.Page => DataContext;
 
-    IInteractionService IHasInteractionService.Interaction => DataContext?.Interaction; 
+    IInteractionService IHasInteractionService.Interaction => DataContext?.Interaction;
 
     #endregion
 }
