@@ -341,6 +341,7 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
     #region IsVisible
 
     private bool _IsVisible;
+    private CancellationTokenSource _VisibleSource;
 
     public bool IsVisible
     {
@@ -351,15 +352,20 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
             {
                 if (_IsVisible)
                 {
+                    _VisibleSource?.Cancel();
+                    _VisibleSource = new();
                     OnAppearing().GetHashCode();
                 }
                 else
                 {
+                    _VisibleSource?.Cancel();
                     OnDisappearing().GetHashCode();
                 }
             }
         }
     }
+
+    protected CancellationToken VisibleToken => _VisibleSource?.Token ?? default;
 
     protected virtual async Task OnAppearing()
     {
