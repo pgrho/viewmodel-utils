@@ -1,12 +1,16 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>, IHasJSRuntime, IHasFrameworkPageViewModel
+public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>, IHasJSRuntime, IHasFrameworkPageViewModel, IDisposable
 {
     [Inject]
     public IJSRuntime JS { get; set; }
 
     [Inject]
     public NavigationManager NavigationManager { get; set; }
+    [Inject]
+    public PersistentComponentState PersitentState { get; set; }
+
+    private PersistingComponentStateSubscription _PersistingSubscription;
 
     protected virtual IDisposable CreateInitializingScope() => null;
 
@@ -56,13 +60,27 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
 
     #endregion DataContext
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _PersistingSubscription = PersitentState.RegisterOnPersisting(OnPersistingAsync);
+    }
+
+    private Task OnPersistingAsync()
+    {
+        DataContext.OnPersisting();
+        return Task.CompletedTask;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
 
         using (CreateInitializingScope())
         {
-            InitializeDataContext(); 
+            InitializeDataContext();
+
+            DataContext.TryTakeFromJson();
         }
     }
 
@@ -104,4 +122,23 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
     IInteractionService IHasInteractionService.Interaction => DataContext?.Interaction;
 
     #endregion
+
+
+    #region IDisposable
+
+    protected bool IsDisposed { get; set; }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        _PersistingSubscription.Dispose();
+        IsDisposed = true;
+    }
+
+#pragma warning disable CA1063 // Implement IDisposable Correctly
+
+    public void Dispose()
+#pragma warning restore CA1063 // Implement IDisposable Correctly
+            => Dispose(true);
+
+    #endregion IDisposable
 }

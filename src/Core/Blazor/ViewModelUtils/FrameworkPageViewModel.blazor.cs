@@ -28,4 +28,7 @@ public partial class FrameworkPageViewModel : IHasJSRuntime, IHasBindableCompone
 
     partial void GetProcessType(ref ProcessType value)
         => value = Page.JS is IJSInProcessRuntime ? ProcessType.BlazorWebAssembly : ProcessType.BlazorServer;
+
+    protected internal virtual void OnPersisting() { }
+    protected internal virtual bool TryTakeFromJson() => false;
 }
