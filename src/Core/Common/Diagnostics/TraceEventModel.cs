@@ -3,16 +3,19 @@
 public sealed class TraceEventModel
 {
     internal TraceEventModel(
-        TraceEventCache eventCache,
+        TraceEventCache? eventCache,
         string source,
         TraceEventType eventType,
         int id,
-        string message,
-        object[] data)
+        string? message,
+        object?[]? data)
     {
-        ProcessId = eventCache.ProcessId;
-        ThreadId = eventCache.ThreadId;
-        DateTime = eventCache.DateTime;
+        ProcessId = eventCache?.ProcessId
+            ?? Process.GetCurrentProcess().Id;
+        ThreadId = eventCache?.ThreadId
+            ?? Thread.CurrentThread.ManagedThreadId.ToString();
+        DateTime = eventCache?.DateTime
+            ?? DateTime.Now;
 
         Source = source;
 
