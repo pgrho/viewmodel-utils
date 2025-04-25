@@ -1,5 +1,6 @@
 ﻿// @ts-ignore
 namespace Shipwreck.ViewModelUtils {
+    let _timeout: any;
     export function toggleModal(element: Element, isOpen: boolean, obj) {
         (<any>$)(element).one('hidden.bs.modal', function () {
             obj.invokeMethodAsync('OnClosed');
@@ -11,8 +12,22 @@ namespace Shipwreck.ViewModelUtils {
             show: !!isOpen,
             backdrop: false,
         }).modal(isOpen ? 'show' : 'hide');
-        if (!element && !isOpen) {
-            document.body.classList.remove("modal-open");
+
+
+        const h = () => {
+            if (document.querySelector('.modal.show')) {
+                document.body.classList.add("modal-open");
+            } else {
+                document.body.classList.remove("modal-open");
+                if (_timeout) {
+                    clearInterval(_timeout);
+                    _timeout = 0;
+                }
+            }
+        };
+        h();
+        if (!_timeout) {
+            _timeout = setInterval(h, 1000);
         }
     }
 }
