@@ -2,9 +2,6 @@
 
 public class CommandBuilder : CommandBuilderBase
 {
-    [Obsolete]
-    public CommandBuilder() { }
-
     public CommandBuilder(Action executionHandler)
     {
         ExecutionHandler = _ => executionHandler();

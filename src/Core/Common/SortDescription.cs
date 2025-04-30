@@ -11,10 +11,10 @@ public struct SortDescription
     public string Member { get; }
     public bool IsDescending { get; }
 
-    public static string ToString(IEnumerable<SortDescription> sortDescriptions)
+    public static string? ToString(IEnumerable<SortDescription>? sortDescriptions)
         => sortDescriptions == null ? null : string.Join(",", sortDescriptions.Select(e => e.IsDescending ? e.Member + " desc" : e.Member));
 
-    public static SortDescription[] Parse(string order)
+    public static SortDescription[] Parse(string? order)
     {
         if (!string.IsNullOrWhiteSpace(order))
         {
@@ -40,6 +40,6 @@ public struct SortDescription
                 return list.ToArray();
             }
         }
-        return null;
+        return [];
     }
 }

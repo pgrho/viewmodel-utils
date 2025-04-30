@@ -8,9 +8,9 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
     #region Value
 
     private bool _HasValue;
-    private TValue _Value;
+    private TValue? _Value;
 
-    public TValue Value
+    public TValue? Value
     {
         get
         {
@@ -49,10 +49,10 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
 
     protected abstract TValue Calculate();
 
-    protected virtual bool Equals(TValue left, TValue right)
-        => EqualityComparer<TValue>.Default.Equals(left, right);
+    protected virtual bool Equals(TValue? left, TValue? right)
+        => EqualityComparer<TValue?>.Default.Equals(left, right);
 
-    public event EventHandler ValueChanged;
+    public event EventHandler? ValueChanged;
 
     protected virtual void OnValueChanged()
         => ValueChanged?.Invoke(this, EventArgs.Empty);
@@ -61,9 +61,9 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
 
     #region Source
 
-    private IEnumerable<TItem> _Source;
+    private IEnumerable<TItem>? _Source;
 
-    public IEnumerable<TItem> Source
+    public IEnumerable<TItem>? Source
     {
         get => _Source;
         set
@@ -75,11 +75,11 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
                 {
                     if (prev is INotifyCollectionChanged ncc)
                     {
-                        ncc.CollectionChanged -= Source_CollectionChanged;
+                        ncc.CollectionChanged -= Source_CollectionChanged!;
                     }
                     if (prev is INotifyPropertyChanged npc)
                     {
-                        npc.PropertyChanged -= Source_PropertyChanged;
+                        npc.PropertyChanged -= Source_PropertyChanged!;
                     }
 
                     foreach (var e in prev)
@@ -96,11 +96,11 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
                     }
                     if (value is INotifyCollectionChanged ncc)
                     {
-                        ncc.CollectionChanged += Source_CollectionChanged;
+                        ncc.CollectionChanged += Source_CollectionChanged!;
                     }
                     if (value is INotifyPropertyChanged npc)
                     {
-                        npc.PropertyChanged += Source_PropertyChanged;
+                        npc.PropertyChanged += Source_PropertyChanged!;
                     }
                 }
             }
@@ -111,8 +111,8 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
     {
         if (item is INotifyPropertyChanged n)
         {
-            n.PropertyChanged -= Item_PropertyChanged;
-            n.PropertyChanged += Item_PropertyChanged;
+            n.PropertyChanged -= Item_PropertyChanged!;
+            n.PropertyChanged += Item_PropertyChanged!;
         }
     }
 
@@ -120,7 +120,7 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
     {
         if (item is INotifyPropertyChanged n)
         {
-            n.PropertyChanged -= Item_PropertyChanged;
+            n.PropertyChanged -= Item_PropertyChanged!;
         }
     }
 
@@ -182,7 +182,7 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
                 return;
         }
 
-        foreach (var m in Source)
+        foreach (var m in Source ?? [])
         {
             OnItemAdded(m);
         }
@@ -191,7 +191,7 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
 
     private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (OnItemPropertyChanged(e.PropertyName))
+        if (OnItemPropertyChanged(e.PropertyName!))
         {
             Invalidate();
         }
@@ -199,7 +199,7 @@ public abstract class CollectionObserver<TItem, TValue> : IDisposable
 
     private void Source_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        if (OnSourcePropertyChanged(e.PropertyName))
+        if (OnSourcePropertyChanged(e.PropertyName!))
         {
             Invalidate();
         }

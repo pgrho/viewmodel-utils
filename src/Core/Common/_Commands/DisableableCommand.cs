@@ -31,13 +31,13 @@ public sealed class DisableableCommand : ICommand, INotifyPropertyChanged
     public void SetIsEnabled(bool value)
         => IsEnabled = value;
 
-    public event EventHandler CanExecuteChanged;
+    public event EventHandler? CanExecuteChanged;
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-    public bool CanExecute(object parameter)
+    public bool CanExecute(object? parameter)
         => _IsEnabled;
 
-    public void Execute(object parameter)
+    public void Execute(object? parameter)
         => _Executed();
 }

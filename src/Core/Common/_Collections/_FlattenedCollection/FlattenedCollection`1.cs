@@ -20,7 +20,7 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
         public override int GetHashCode()
             => Parent.GetHashCode() ^ (Child?.GetHashCode() << 16 ?? 0);
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
             => obj is Entry e
             && e.Parent == Parent
             && e.Child == Child;
@@ -32,15 +32,15 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
     protected FlattenedCollection(IList<TParent> parents)
     {
         _Entries = new ObservableCollection<Entry>();
-        ((INotifyPropertyChanged)_Entries).PropertyChanged += _Entries_PropertyChanged;
-        _Entries.CollectionChanged += _Entries_CollectionChanged;
+        ((INotifyPropertyChanged)_Entries).PropertyChanged += _Entries_PropertyChanged!;
+        _Entries.CollectionChanged += _Entries_CollectionChanged!;
 
         _Parents = parents;
         if (parents.Count > 0)
         {
             OnReset();
         }
-        ((INotifyCollectionChanged)_Parents).CollectionChanged += _Parents_CollectionChanged;
+        ((INotifyCollectionChanged)_Parents).CollectionChanged += _Parents_CollectionChanged!;
     }
 
     public object this[int index]
@@ -90,7 +90,7 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
 
     #region IList
 
-    object IList.this[int index]
+    object? IList.this[int index]
     {
         get => this[index];
         set => throw new NotSupportedException();
@@ -99,7 +99,7 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
     bool IList.IsFixedSize => false;
     bool IList.IsReadOnly => true;
 
-    public int IndexOf(object value)
+    public int IndexOf(object? value)
     {
         lock (((ICollection)_Entries).SyncRoot)
         {
@@ -115,15 +115,15 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
         return -1;
     }
 
-    int IList.Add(object value) => throw new NotSupportedException();
+    int IList.Add(object? value) => throw new NotSupportedException();
 
     void IList.Clear() => throw new NotSupportedException();
 
-    bool IList.Contains(object value) => IndexOf(value) >= 0;
+    bool IList.Contains(object? value) => IndexOf(value) >= 0;
 
-    void IList.Insert(int index, object value) => throw new NotSupportedException();
+    void IList.Insert(int index, object? value) => throw new NotSupportedException();
 
-    void IList.Remove(object value) => throw new NotSupportedException();
+    void IList.Remove(object? value) => throw new NotSupportedException();
 
     void IList.RemoveAt(int index) => throw new NotSupportedException();
 
@@ -131,7 +131,7 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
 
     #region INotifyPropertyChanged
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler? PropertyChanged;
 
     private void _Entries_PropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -145,7 +145,7 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
 
     #region INotifyCollectionChanged
 
-    public event NotifyCollectionChangedEventHandler CollectionChanged;
+    public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
     private void _Entries_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
@@ -154,16 +154,16 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
         {
             if (e.NewItems?.Count > 0)
             {
-                ne = new NotifyCollectionChangedEventArgs(e.Action, ConvertItems(e.NewItems), ConvertItems(e.OldItems), e.NewStartingIndex);
+                ne = new(e.Action, ConvertItems(e.NewItems), ConvertItems(e.OldItems), e.NewStartingIndex);
             }
             else
             {
-                ne = new NotifyCollectionChangedEventArgs(e.Action, ConvertItems(e.OldItems), e.OldStartingIndex);
+                ne = new(e.Action, ConvertItems(e.OldItems), e.OldStartingIndex);
             }
         }
         else if (e.NewItems?.Count > 0)
         {
-            ne = new NotifyCollectionChangedEventArgs(e.Action, ConvertItems(e.NewItems), e.NewStartingIndex);
+            ne = new(e.Action, ConvertItems(e.NewItems), e.NewStartingIndex);
         }
         CollectionChanged?.Invoke(this, ne);
     }
@@ -173,7 +173,7 @@ public abstract class FlattenedCollection<TParent> : IList, INotifyPropertyChang
         var r = new object[items.Count];
         for (var i = 0; i < r.Length; i++)
         {
-            var e = (Entry)items[i];
+            var e = (Entry)items[i]!;
             r[i] = e.Child ?? e.Parent;
         }
         return r;

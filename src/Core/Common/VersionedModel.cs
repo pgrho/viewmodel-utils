@@ -12,8 +12,8 @@ public abstract class VersionedModel<TKey, TVersion> : ObservableModel, IVersion
 
     #region Update
 
-    private WeakReference<object> _PreviousUpdate;
-    private TVersion _PreviousUpdateVersion;
+    private WeakReference<object>? _PreviousUpdate;
+    private TVersion? _PreviousUpdateVersion;
 
     protected abstract TVersion GetVersion(object parameter);
 
@@ -44,8 +44,8 @@ public abstract class VersionedModel<TKey, TVersion> : ObservableModel, IVersion
         return true;
     }
 
-    protected bool ShouldUpdate(object previousUpdateParameter, TVersion previousUpdateVersion, object newParameter)
-        => previousUpdateParameter != newParameter || !Equals(GetVersion(previousUpdateParameter), previousUpdateVersion);
+    protected bool ShouldUpdate(object previousUpdateParameter, TVersion? previousUpdateVersion, object newParameter)
+        => previousUpdateParameter != newParameter || !Equals(GetVersion(previousUpdateParameter), previousUpdateVersion!);
 
     void IVersionedModel<TKey, TVersion>.Update(object other) => Update(other);
 

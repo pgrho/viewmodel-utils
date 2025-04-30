@@ -32,7 +32,7 @@ public abstract class ValidatableModel : ObservableModel, INotifyDataErrorInfo
         return Enumerable.Empty<string>();
     }
 
-    protected internal bool AddError(string errorMessage, [CallerMemberName] string propertyName = null)
+    protected internal bool AddError(string errorMessage, [CallerMemberName] string? propertyName = null)
     {
         var ph = HasErrors;
         propertyName = propertyName ?? string.Empty;
@@ -54,7 +54,7 @@ public abstract class ValidatableModel : ObservableModel, INotifyDataErrorInfo
         return false;
     }
 
-    protected internal bool SetErrors(IEnumerable<string> errorMessages, [CallerMemberName] string propertyName = null)
+    protected internal bool SetErrors(IEnumerable<string> errorMessages, [CallerMemberName] string? propertyName = null)
     {
         propertyName = propertyName ?? string.Empty;
         if (errorMessages?.Any() == true)
@@ -85,7 +85,7 @@ public abstract class ValidatableModel : ObservableModel, INotifyDataErrorInfo
         }
     }
 
-    protected internal bool RemoveError(string errorMessage, [CallerMemberName] string propertyName = null)
+    protected internal bool RemoveError(string errorMessage, [CallerMemberName] string? propertyName = null)
     {
         var ph = HasErrors;
         propertyName = propertyName ?? string.Empty;
@@ -108,7 +108,7 @@ public abstract class ValidatableModel : ObservableModel, INotifyDataErrorInfo
         return false;
     }
 
-    protected internal bool ClearError([CallerMemberName] string propertyName = null)
+    protected internal bool ClearError([CallerMemberName] string? propertyName = null)
     {
         var ph = HasErrors;
         propertyName = propertyName ?? string.Empty;

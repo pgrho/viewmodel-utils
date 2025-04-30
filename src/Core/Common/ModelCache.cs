@@ -1,6 +1,7 @@
 ﻿namespace Shipwreck.ViewModelUtils;
 
 public class ModelCache<TKey, TVersion>
+    where TKey : notnull
 {
     private interface ITypeCache
     {
@@ -162,7 +163,7 @@ public class ModelCache<TKey, TVersion>
         }
     }
 
-    private Dictionary<Type, ITypeCache> _Caches;
+    private Dictionary<Type, ITypeCache>? _Caches;
 
     protected virtual bool IsValidKey(TKey key) => true;
 

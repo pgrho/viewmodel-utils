@@ -3,7 +3,6 @@
 public sealed class Table
 {
     private RenderFragment _HeaderRenderer;
-    private RenderFragment _CellRenderer;
 
     internal Table(IEnumerable<TableColumn> columns)
     {

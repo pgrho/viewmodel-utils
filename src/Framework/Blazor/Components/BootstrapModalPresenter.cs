@@ -16,7 +16,7 @@ public sealed class BootstrapModalPresenter : ModalPresenterBase
 
         if (ModalType == null && !firstRender)
         {
-            JS.InvokeVoidAsync("Shipwreck.ViewModelUtils.toggleModal", null, false, null);
+            JS.InvokeVoidAsync("Shipwreck.ViewModelUtils.toggleModal", null, false, null).GetHashCode();
         }
     }
 }

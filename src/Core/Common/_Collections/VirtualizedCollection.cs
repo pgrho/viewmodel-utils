@@ -530,25 +530,25 @@ public abstract class VirtualizedCollection<T> : ObservableModel, IList<T>, IRea
     bool IList.IsReadOnly => true;
     bool IList.IsFixedSize => false;
 
-    object IList.this[int index]
+    object? IList.this[int index]
     {
         get => this[index];
         set => throw new NotSupportedException();
     }
 
-    int IList.Add(object value) => throw new NotSupportedException();
+    int IList.Add(object? value) => throw new NotSupportedException();
 
     void IList.Clear() => throw new NotSupportedException();
 
-    void IList.Insert(int index, object value) => throw new NotSupportedException();
+    void IList.Insert(int index, object? value) => throw new NotSupportedException();
 
-    void IList.Remove(object value) => throw new NotSupportedException();
+    void IList.Remove(object? value) => throw new NotSupportedException();
 
     void IList.RemoveAt(int index) => throw new NotSupportedException();
 
-    bool IList.Contains(object value) => value is T e && IndexOfCore(e) >= 0;
+    bool IList.Contains(object? value) => value is T e && IndexOfCore(e) >= 0;
 
-    int IList.IndexOf(object value) => value is T e ? IndexOfCore(e) : -1;
+    int IList.IndexOf(object? value) => value is T e ? IndexOfCore(e) : -1;
 
     #endregion IList
 
