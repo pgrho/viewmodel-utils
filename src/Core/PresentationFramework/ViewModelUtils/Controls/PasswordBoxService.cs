@@ -1,4 +1,6 @@
-﻿namespace Shipwreck.ViewModelUtils.Controls;
+﻿using System.Windows.Media;
+
+namespace Shipwreck.ViewModelUtils.Controls;
 
 public static class PasswordBoxService
 {
