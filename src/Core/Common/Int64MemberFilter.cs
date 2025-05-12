@@ -38,7 +38,7 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
     public static string BetweenOperator => BETWEEN_OPERATOR;
     public static string ListInOperator => LIST_IN_OPERATOR;
 
-    private readonly static string DEFAULT_DESCRIPTION = $@"整数値を検索します。
+    private static readonly string DEFAULT_DESCRIPTION = $@"整数値を検索します。
 {EQ_OPERATOR}: 一致
 {NE_OPERATOR}: 不一致
 {LT_OPERATOR}: 未満
@@ -147,14 +147,29 @@ public sealed partial class Int64MemberFilter<T> : IMemberFilter<T>
                         }
                         if (ParsedOperator == null)
                         {
-                            if (long.TryParse(value, out var lv))
+                            var comps = value.Split(',');
+                            var ary = new long?[comps.Length];
+                            for (var i = 0; i < comps.Length; i++)
                             {
-                                ParsedOperator = EQ_OPERATOR;
-                                ParsedOperands = new(new long?[] { lv });
+                                var c = comps[i];
+                                if (!string.IsNullOrEmpty(c))
+                                {
+                                    if (long.TryParse(c, out var v))
+                                    {
+                                        ary[i] = v;
+                                    }
+                                    else
+                                    {
+                                        ParsedOperator = string.Empty;
+                                        break;
+                                    }
+                                }
                             }
-                            else
+
+                            if (ParsedOperator == null)
                             {
-                                ParsedOperator = string.Empty;
+                                ParsedOperator = ary.Length == 1 ? EQ_OPERATOR : LIST_IN_OPERATOR;
+                                ParsedOperands = new(ary);
                             }
                         }
                     }
