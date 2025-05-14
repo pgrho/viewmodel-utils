@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0-android</TargetFramework>
+    <TargetFrameworks>net9.0-windows;net9.0-android</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RootNamespace>Shipwreck</RootNamespace>
     <DefineConstants>$(DefineConstants);IS_MAUI</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Shipwreck.BootstrapControls.Maui" Version="4.2.1-alpha002" />
-    <PackageReference Include="Shipwreck.FontAwesomeControls.Maui" Version="5.14.5" />
+    <PackageReference Include="Shipwreck.BootstrapControls.Maui" Version="4.2.1-alpha003" />
+    <PackageReference Include="Shipwreck.FontAwesomeControls.Maui" Version="5.14.6" />
     <ProjectReference Include="..\..\Core\Maui\Shipwreck.ViewModelUtils.Core.Maui.csproj" />
   </ItemGroup>
 
