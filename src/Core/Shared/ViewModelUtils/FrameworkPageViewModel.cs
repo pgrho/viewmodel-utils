@@ -91,10 +91,10 @@ public abstract partial class FrameworkPageViewModel : ValidatableModel, IFramew
 
     partial void PlatformCreateNavigaionService(ref INavigationService s);
 
-    public bool IsSupported(NavigationEntry entry)
+    public virtual bool IsSupported(NavigationEntry entry)
         => Navigation?.IsSupported(this, entry) == true;
 
-    public bool NavigateTo(NavigationEntry entry)
+    public virtual bool NavigateTo(NavigationEntry entry)
     {
         if (IsSupported(entry))
         {
