@@ -1,7 +1,5 @@
-﻿using Android.Graphics.Drawables;
-using Microsoft.Maui.Controls.Xaml;
+﻿using Microsoft.Maui.Controls.Xaml;
 using Microsoft.Maui.Controls;
-using static Android.Icu.Text.CaseMap;
 
 namespace Shipwreck.ViewModelUtils;
 

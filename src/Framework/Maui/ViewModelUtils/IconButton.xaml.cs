@@ -1,8 +1,7 @@
-﻿using Android.Graphics.Drawables;
-using Microsoft.Maui.Controls.Xaml;
+﻿using Microsoft.Maui.Controls.Xaml;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Converters;
-using System.ComponentModel; 
+using System.ComponentModel;
 
 namespace Shipwreck.ViewModelUtils;
 
