@@ -12,11 +12,5 @@
   <ItemGroup>
     <Compile Include="..\..\_GlobalUsings.cs" Link="Properties\_GlobalUsings.cs" />
   </ItemGroup>
-  <Target Name="PostPack"
-          AfterTargets="Pack"
-          Condition="'$(GeneratePackageOnBuild)'=='true'">
-    <Exec Command="XCOPY &quot;$(MSBuildProjectDirectory)\bin\Release\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Release&quot; /D /C /I /Y /F
-        &#xD;&#xA;XCOPY &quot;$(MSBuildProjectDirectory)\bin\Debug\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Debug&quot; /D /C /I /Y /F"
-          ContinueOnError="WarnAndContinue" />
-  </Target>
+
 </Project>

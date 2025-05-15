@@ -6,12 +6,13 @@
     <IsPackable>true</IsPackable>
     <RootNamespace>Shipwreck.ViewModelUtils</RootNamespace>
     <OutputType>Library</OutputType>
+    <BuildInParallel>false</BuildInParallel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-windows'">
     <DefineConstants>$(DefineConstants);IS_WEBVIEW</DefineConstants>
   </PropertyGroup>
-    <PropertyGroup Condition="'$(TargetFramework)'=='net9.0'">
-      <DefineConstants>$(DefineConstants);IS_WASM</DefineConstants>
+  <PropertyGroup Condition="'$(TargetFramework)'=='net9.0'">
+    <DefineConstants>$(DefineConstants);IS_WASM</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,9 +49,11 @@
   </ItemGroup>
 
   <Import Project="..\Shared\Shipwreck.ViewModelUtils.Shared.projitems" Label="Shared" />
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Condition="$(SkipNpmInstall)!='true'"
-          Command="$(ProjectDir)node_modules\.bin\gulp.CMD --toast &quot;$(PkgShipwreck_BlazorJqueryToast)&quot; --typeahead &quot;$(PkgShipwreck_BlazorTypeahead)&quot;" />
+  <Target Name="CustomClean" BeforeTargets="CoreClean">
+    <ItemGroup>
+      <_CustomFilesToDelete Include="wwwroot\Shipwreck.*"/>
+    </ItemGroup>
+    <Delete Files='@(_CustomFilesToDelete)'/>
   </Target>
   <ProjectExtensions>
     <VisualStudio>

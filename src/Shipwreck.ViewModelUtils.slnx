@@ -57,6 +57,7 @@
     <File Path="../global.json" />
     <File Path="../remove-nupkg.ps1" />
     <File Path="Directory.build.props" />
+    <File Path="Directory.build.targets" />
     <File Path="nuget.config" />
   </Folder>
   <Project Path="Build/Shipwreck.ViewModelUtils.Build.csproj" />

@@ -6,6 +6,7 @@
     <OutputType>Library</OutputType>
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <BuildInParallel>false</BuildInParallel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='net9.0-windows'">
     <DefineConstants>$(DefineConstants);IS_WEBVIEW</DefineConstants>
@@ -61,6 +62,11 @@
       <UserProperties NpmRestoreOnProjectOpen="True" package_1json__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
-
+  <Target Name="CustomClean" BeforeTargets="CoreClean">
+    <ItemGroup>
+      <_CustomFilesToDelete Include="wwwroot\Shipwreck.*"/>
+    </ItemGroup>
+    <Delete Files='@(_CustomFilesToDelete)'/>
+  </Target>
 
 </Project>

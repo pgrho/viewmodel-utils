@@ -1,0 +1,18 @@
+﻿<Project>
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <PropertyGroup>
+            <_ToastPath>$(PkgShipwreck_BlazorJqueryToast)\staticwebassets\</_ToastPath>
+            <_TypeaheadPath>$(PkgShipwreck_BlazorTypeahead)\staticwebassets\</_TypeaheadPath>
+        </PropertyGroup>
+
+        <Exec Condition="Exists('prebuild.ps1')"
+			  Command="pwsh -ep RemoteSigned -File $(ProjectDir)prebuild.ps1 $(ProjectDir) $(ConfigurationName) $(_ToastPath) $(_TypeaheadPath)" />
+    </Target>
+    <Target Name="PostPack"
+            AfterTargets="Pack"
+            Condition="'$(GeneratePackageOnBuild)'=='true'">
+        <Exec Command="XCOPY &quot;$(MSBuildProjectDirectory)\bin\Release\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Release&quot; /D /C /I /Y /F
+        &#xD;&#xA;XCOPY &quot;$(MSBuildProjectDirectory)\bin\Debug\$(MSBuildProjectName).*.nupkg&quot; &quot;$(MSBuildProjectDirectory)\..\..\..\nuget\Debug&quot; /D /C /I /Y /F"
+              ContinueOnError="WarnAndContinue" />
+    </Target>
+</Project>
