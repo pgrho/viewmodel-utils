@@ -99,6 +99,20 @@ internal static class Program
                 {
                     return 1;
                 }
+
+                if (Directory.Exists(Path.Combine(Path.GetDirectoryName(proj), "wwwroot")))
+                {
+                    Console.WriteLine("Building {0} (2)", proj);
+                    var pc2 = await ExecuteAsync(new ProcessStartInfo("dotnet.exe")
+                    {
+                        ArgumentList = { "build", proj, "-c", "Release", "-v", "n" }
+                    });
+                    if (pc2.ExitCode != 0
+                        || !ValidatePackage(proj, version))
+                    {
+                        return 1;
+                    }
+                }
             }
             foreach (var proj in csprojs.Except(dotnetProjs))
             {
