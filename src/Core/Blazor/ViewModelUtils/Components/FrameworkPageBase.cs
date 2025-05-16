@@ -3,12 +3,22 @@
 public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>, IHasJSRuntime, IHasFrameworkPageViewModel, IDisposable
 {
     [Inject]
+    public IServiceProvider ServiceProvider { get; set; }
+
+    [Inject]
     public IJSRuntime JS { get; set; }
 
     [Inject]
     public NavigationManager NavigationManager { get; set; }
-    [Inject]
-    public PersistentComponentState PersitentState { get; set; }
+
+    #region PersistentComponentState
+
+    private PersistentComponentState _PersistentState;
+
+    public PersistentComponentState PersistentState
+        => _PersistentState ??= ServiceProvider?.GetService(typeof(PersistentComponentState)) as PersistentComponentState;
+
+    #endregion PersistentComponentState
 
     private PersistingComponentStateSubscription _PersistingSubscription;
 
@@ -63,7 +73,7 @@ public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageVie
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        _PersistingSubscription = PersitentState.RegisterOnPersisting(OnPersistingAsync);
+        _PersistingSubscription = PersistentState?.RegisterOnPersisting(OnPersistingAsync) ?? default;
     }
 
     private Task OnPersistingAsync()
