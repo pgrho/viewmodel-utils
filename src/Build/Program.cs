@@ -9,7 +9,7 @@ internal static class Program
 {
     private class Parameter
     {
-        public bool Clean { get; set; } = true;
+        public bool Clean { get; set; } = false;
         public bool Build { get; set; } = true;
         public string NugetSource { get; set; }
         public string NugetApiKey { get; set; }
