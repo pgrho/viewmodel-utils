@@ -6,13 +6,13 @@
     var isEnabled = d != null && (IsEnabled ?? d.IsEnabled);
     var theme = Theme ?? FormGroupTheme.Default;
     <div class="@theme.InputGroupClass @GroupClass">
-        @if (d.UseList)
+        @if (UseList ?? d.UseList)
         {
             <select @ref="_Select"
-                id="@ElementId"
-                class="@theme.SelectControlClass"
-                @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")"
-                @onkeydown="@OnSelectKeyDown">
+                    id="@ElementId"
+                    class="@theme.SelectControlClass"
+                    @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")"
+                    @onkeydown="@OnSelectKeyDown">
                 @if (!IsRequired)
                 {
                     <option value="" selected="@(d.SelectedItem == null ? "selected" : null)"></option>
@@ -23,8 +23,8 @@
                     {
                         var id = ElementId + "/" + d.GetId(e);
                         <option @key="@id"
-                    value="@d.GetCode(e)"
-                    selected="@(e == d.SelectedItem ? "selected" : null)">
+                                value="@d.GetCode(e)"
+                                selected="@(e == d.SelectedItem ? "selected" : null)">
                             @d.GetDisplayText(e)
                         </option>
                     }
@@ -34,8 +34,8 @@
             {
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary"
-                    tabindex="-1"
-                    @onclick="@d.ShowModal">
+                            tabindex="-1"
+                            @onclick="@d.ShowModal">
                         <span class="fas fa-ellipsis-h"></span>
                     </button>
                 </div>
@@ -44,22 +44,22 @@
         else
         {
             <form class="input-group-prepend m-0"
-              @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
-              @onsubmit:preventDefault>
+                  @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
+                  @onsubmit:preventDefault>
                 <EntityTypeahead @ref="_Typeahead"
-                             id="@ElementId"
-                             class="@($"{theme.ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
-                             style="@CodeStyle"
-                             IsEnabled="@isEnabled"
-                             AppendToSelector="@AppendToSelector"
-                             DataContext="@d" />
+                                 id="@ElementId"
+                                 class="@($"{theme.ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
+                                 style="@CodeStyle"
+                                 IsEnabled="@isEnabled"
+                                 AppendToSelector="@AppendToSelector"
+                                 DataContext="@d" />
             </form>
             @if (d.HasModal && isEnabled)
             {
                 <div class="input-group-prepend">
                     <button class="btn btn-outline-secondary"
-                    tabindex="-1"
-                    @onclick="@d.ShowModal">
+                            tabindex="-1"
+                            @onclick="@d.ShowModal">
                         <span class="fas fa-ellipsis-h"></span>
                     </button>
                 </div>
@@ -67,9 +67,9 @@
             @if (IsNameVisible)
             {
                 <div class="@($"{theme.ControlClass} {NameClass}")"
-             style="@NameStyle"
-             readonly="readonly"
-             tabindex="-1">
+                     style="@NameStyle"
+                     readonly="readonly"
+                     tabindex="-1">
                     @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
                 </div>
             }
