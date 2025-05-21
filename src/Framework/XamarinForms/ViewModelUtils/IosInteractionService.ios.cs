@@ -26,7 +26,7 @@ public class IosInteractionService : InteractionService
         return Task.CompletedTask;
     }
 
-    protected void ShowAlert(object context, string message, string title, BorderStyle style, double seconds)
+    protected virtual void ShowAlert(object context, string message, string title, BorderStyle style, double seconds)
     {
         if (context is IHasFrameworkPageViewModel hp
                 && hp.Page is FrameworkPageViewModel pvm)

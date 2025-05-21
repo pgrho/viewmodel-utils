@@ -177,7 +177,7 @@ public abstract class InteractionService : IInteractionService
 
     public virtual Task<string> OpenDirectoryAsync(object context, string directoryName = null) => throw new NotImplementedException();
 
-    public Task<string> SaveDirectoryAsync(object context, string directoryName = null) => throw new NotImplementedException();
+    public virtual Task<string> SaveDirectoryAsync(object context, string directoryName = null) => throw new NotImplementedException();
 
     #endregion FileDialog
 
@@ -187,11 +187,11 @@ public abstract class InteractionService : IInteractionService
 
     private ConditionalWeakTable<object, TaskCompletionSource<object>> _ModalTasks = new ConditionalWeakTable<object, TaskCompletionSource<object>>();
 
-    public bool IsModalSupported(object context, Type viewModelType)
+    public virtual bool IsModalSupported(object context, Type viewModelType)
         => _ModalCreators.ContainsKey(viewModelType)
         || (viewModelType.BaseType != null && IsModalSupported(context, viewModelType.BaseType));
 
-    public Task OpenModalAsync(object context, object viewModel)
+    public virtual Task OpenModalAsync(object context, object viewModel)
     {
         if (context is IHasPage hp
             && hp.Page is IHasPseudoModal hpm
@@ -237,7 +237,7 @@ public abstract class InteractionService : IInteractionService
         }
     }
 
-    public Task CloseModalAsync(object context, object viewModel)
+    public virtual Task CloseModalAsync(object context, object viewModel)
     {
         if (context is IHasPage hp
             && hp.Page is IHasPseudoModal hpm

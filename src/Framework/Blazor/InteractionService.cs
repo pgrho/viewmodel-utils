@@ -162,11 +162,11 @@ public class InteractionService : IInteractionService
         return this;
     }
 
-    public bool IsModalSupported(object context, Type viewModelType)
+    public virtual bool IsModalSupported(object context, Type viewModelType)
         => ModalOpeners.ContainsKey(viewModelType)
         || (viewModelType.BaseType != null && IsModalSupported(context, viewModelType.BaseType));
 
-    public Task OpenModalAsync(object context, object viewModel)
+    public virtual Task OpenModalAsync(object context, object viewModel)
     {
         try
         {
@@ -198,7 +198,7 @@ public class InteractionService : IInteractionService
         return Task.FromException(new NotSupportedException());
     }
 
-    Task IInteractionService.CloseModalAsync(object context, object viewModel)
+    public virtual Task CloseModalAsync(object context, object viewModel)
     {
         var mp = (viewModel as IHasModalPresenter)?.ModalPresenter
             ?? (context as IHasModalPresenter)?.ModalPresenter;
