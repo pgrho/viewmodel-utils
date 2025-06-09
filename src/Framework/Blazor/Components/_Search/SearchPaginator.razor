@@ -27,15 +27,15 @@
         @if (PageSize > 0 && Count > PageSize)
         {
             var pMax = (Count - 1) / PageSize;
-            const int R = 5;
+            var R = SiblingRange;
 
             <ul class="pagination">
                 <li class="page-item @(PageIndex > 0 ? null : "disabled")">
                     <a href="javascript:void(0)"
                        class="page-link"
-                       @onclick="@(() => PageIndex--)"
+                       @onclick="@(() => SetPageIndex(PageIndex - 1))"
                        @onclick:preventDefault="true"
-                       data-enhance-nav="false">前へ</a>
+                       data-enhance-nav="false">@PreviousText</a>
                 </li>
 
                 @for (var d = -R; d <= R; d++)
@@ -46,7 +46,7 @@
                         <li class="page-item @(i == PageIndex ? "active" : null)">
                             <a href="javascript:void(0)"
                                class="page-link"
-                               @onclick="@(() => PageIndex = i)"
+                               @onclick="@(() => SetPageIndex(i))"
                                @onclick:preventDefault="true"
                                data-enhance-nav="false">@(i + 1)</a>
                         </li>
@@ -56,9 +56,9 @@
                 <li class="page-item @(PageIndex < pMax ? null : "disabled")">
                     <a href="javascript:void(0)"
                        class="page-link"
-                       @onclick="@(() => PageIndex++)"
+                       @onclick="@(() => SetPageIndex(PageIndex + 1))"
                        @onclick:preventDefault="true"
-                       data-enhance-nav="false">次へ</a>
+                       data-enhance-nav="false">@NextText</a>
                 </li>
             </ul>
         }
@@ -68,8 +68,8 @@
             <span class="form-control mb-3 border-0">
                 表示件数:
                 <select class="form-control form-control-sm custom-select custom-select-sm"
-                        @bind="@PageSize">
-                    @foreach (var e in new[] { 50, 100, 250, 500, 1000 })
+                        @bind="@PageSizePrivate">
+                    @foreach (var e in PageSizes ?? [])
                     {
                         <option value="@e"
                                 selected="@(e == PageSize ? "selected" : null)">
@@ -83,6 +83,8 @@
 }
 @code
 {
+    private static readonly ReadOnlyCollection<int> _DefaultPageSizes = new([50, 100, 250, 500, 1000]);
+
     private int Count => FilteredCount ?? TotalCount;
 
     [Parameter]
@@ -93,24 +95,34 @@
 
     #region PageSize
 
-    private int _PageSize;
+    [Parameter]
+    public IEnumerable<int> PageSizes { get; set; } = _DefaultPageSizes;
 
     [Parameter]
-    public int PageSize
-    {
-        get => _PageSize;
-        set
-        {
-            if (value != _PageSize)
-            {
-                _PageSize = value;
+    public int PageSize { get; set; }
 
-                using (Host?.PushPropertyChangedExpectation())
+    private int PageSizePrivate
+    {
+        get => PageSize;
+        set => SetPageSize(value);
+    }
+
+    protected void SetPageSize(int value)
+    {
+        var cv = PageSize;
+        if (value != cv)
+        {
+            var h = PageSizeChanged;
+            if (h != null)
+            {
+                h(value);
+                if (PageSize != cv)
                 {
-                    PageSizeChanged?.Invoke(_PageSize);
+                    return;
                 }
-                StateHasChanged();
             }
+
+            PageSize = value;
         }
     }
 
@@ -121,24 +133,28 @@
 
     #region PageIndex
 
-    private int _PageIndex;
+    [Parameter]
+    public int SiblingRange { get; set; } = 5;
 
     [Parameter]
-    public int PageIndex
-    {
-        get => _PageIndex;
-        set
-        {
-            if (value != _PageIndex)
-            {
-                _PageIndex = value;
+    public int PageIndex { get; set; }
 
-                using (Host?.PushPropertyChangedExpectation())
+    protected void SetPageIndex(int value)
+    {
+        var cv = PageIndex;
+        if (value != cv)
+        {
+            var h = PageIndexChanged;
+            if (h != null)
+            {
+                h(value);
+                if (PageIndex != cv)
                 {
-                    PageIndexChanged?.Invoke(_PageIndex);
+                    return;
                 }
-                StateHasChanged();
             }
+
+            PageIndex = value;
         }
     }
 
@@ -149,6 +165,12 @@
 
     [Parameter]
     public bool ShowPageSize { get; set; } = true;
+
+    [Parameter]
+    public string PreviousText { get; set; } = "前へ";
+
+    [Parameter]
+    public string NextText { get; set; } = "次へ";
 
     [Parameter]
     public IReadOnlyList<CommandViewModelBase> Commands { get; set; }

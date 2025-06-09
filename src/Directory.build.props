@@ -1,6 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
-    <Version>0.4.0.1-alpha000</Version>
+    <Version>0.4.1-alpha000</Version>
     <Authors>shipwreck.jp</Authors>
     <Copyright>Copyright © 2021-2025 shipwreck.jp</Copyright>
     <LangVersion>13.0</LangVersion>
