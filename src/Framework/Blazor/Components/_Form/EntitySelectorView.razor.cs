@@ -89,6 +89,9 @@ public partial class EntitySelectorView
     public bool? UseList { get; set; }
 
     [Parameter]
+    public bool UseModal { get; set; }
+
+    [Parameter]
     public string GroupClass { get; set; } = "entity-selector";
 
     [Parameter]

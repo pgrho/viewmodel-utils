@@ -5,6 +5,7 @@
     var d = DataContext;
     var isEnabled = d != null && (IsEnabled ?? d.IsEnabled);
     var theme = Theme ?? FormGroupTheme.Default;
+    var hasModal = UseModal && d.HasModal && isEnabled;
     <div class="@theme.InputGroupClass @GroupClass">
         @if (UseList ?? d.UseList)
         {
@@ -30,7 +31,7 @@
                     }
                 }
             </select>
-            @if (d.HasModal && isEnabled)
+            @if (hasModal)
             {
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary"
@@ -43,9 +44,13 @@
         }
         else
         {
+            var codeStyle = (CodeStyle != null ? CodeStyle + ";" : null)
+            + (hasModal && IsNameVisible ? "border-top-right-radius:0;border-bottom-right-radius:0;margin-right:-1px" : null);
+
             <form class="input-group-prepend m-0"
                   @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
                   @onsubmit:preventDefault>
+
                 <EntityTypeahead @ref="_Typeahead"
                                  id="@ElementId"
                                  class="@($"{theme.ControlClass} {(IsRequired ? "required" : null)} {CodeClass}")"
@@ -54,9 +59,10 @@
                                  AppendToSelector="@AppendToSelector"
                                  DataContext="@d" />
             </form>
-            @if (d.HasModal && isEnabled)
+            @if (hasModal)
             {
-                <div class="input-group-prepend">
+                var divClass = IsNameVisible ? "input-group-prepend" : "input-group-append";
+                <div class="@divClass">
                     <button class="btn btn-outline-secondary"
                             tabindex="-1"
                             @onclick="@d.ShowModal">
