@@ -1,0 +1,52 @@
+﻿@inherits BindableComponentBase<ToastData>
+<div @ref="_Element"
+     class="toast fade hide"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     data-autohide="true"
+     data-delay="@((int)(DataContext?.Duration.TotalMilliseconds ?? 3000))"
+     style="@ToastPresenter?.ToastStyle">
+    @{
+        string css, icon;
+        switch (DataContext?.Style & ~BorderStyle.Outline)
+        {
+            case BorderStyle.Primary:
+                css = "bg-primary text-light";
+                icon = "fas fa-info-circle";
+                break;
+            case BorderStyle.Secondary:
+                css = "bg-secondary text-light";
+                icon = "fas fa-info-circle";
+                break;
+            case BorderStyle.Info:
+                css = "bg-info text-light";
+                icon = "fas fa-info-circle";
+                break;
+            case BorderStyle.Success:
+                css = "bg-success text-light";
+                icon = "fas fa-info-circle";
+                break;
+            case BorderStyle.Danger:
+                css = "bg-danger text-light";
+                icon = "fas fa-times-circle";
+                break;
+            case BorderStyle.Warning:
+                css = "bg-warning text-dark";
+                icon = "fas fa-exclamation-triangle";
+                break;
+
+            default:
+                icon = css = null;
+                break;
+        }
+    }
+    <div class="toast-body @css"
+         style="@ToastPresenter?.ToastBodyStyle">
+        @if (icon != null)
+        {
+            <span class="@icon mr-2"></span>
+        }
+        @DataContext?.Message
+    </div>
+</div>

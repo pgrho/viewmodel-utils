@@ -11,7 +11,22 @@
         </div>
 
         <div class="content px-4">
-            @Body
+            <CascadingValue IsFixed="true" Value="this">
+                @Body
+            </CascadingValue>
         </div>
     </div>
 </div>
+<BootstrapModalPresenter @ref="_ModalPresenter" />
+<BootstrapModalPresenter @ref="_PopoverPresenter" />
+<BootstrapToastPresenter @ref="_ToastPresenter" />
+@code
+{
+    private BootstrapModalPresenter _ModalPresenter;
+    private BootstrapModalPresenter _PopoverPresenter;
+    private BootstrapToastPresenter _ToastPresenter;
+
+    public ModalPresenterBase ModalPresenter => _ModalPresenter;
+    public ModalPresenterBase PopoverPresenter => _PopoverPresenter;
+    public ToastPresenterBase ToastPresenter => _ToastPresenter;
+}

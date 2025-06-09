@@ -1,0 +1,12 @@
+﻿@inherits ToastPresenterBase
+@if (Source?.Count > 0)
+{
+    <div class="@DivClass" style="@DivStyle">
+        <CascadingValue IsFixed="true" Value="this">
+            @foreach (ToastData e in Source)
+            {
+                <BootstrapToastItem @key="@e.GetHashCode()" DataContext="e" />
+            }
+        </CascadingValue>
+    </div>
+}

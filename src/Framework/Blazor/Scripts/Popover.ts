@@ -46,4 +46,10 @@ namespace Shipwreck.ViewModelUtils {
         $([reference, popper]).focusout(h);
     }
 
+    // @ts-ignore
+    export function initializeToast(element, obj) {
+        (<any>$)(element).one('hidden.bs.toast', function () {
+            obj.invokeMethodAsync('OnHidden');
+        }).toast('show');
+    }
 }

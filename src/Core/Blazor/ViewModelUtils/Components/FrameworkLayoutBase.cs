@@ -1,6 +1,6 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<FrameworkLayoutViewModel>, IHasJSRuntime, IHasInteractionService, IHasModalPresenter, IHasPopoverPresenter
+public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<FrameworkLayoutViewModel>, IHasJSRuntime, IHasInteractionService, IHasModalPresenter, IHasPopoverPresenter, IHasToastPresenter
 {
     [Inject]
     public IJSRuntime JS { get; set; }
@@ -72,6 +72,8 @@ public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<Framewor
     public abstract ModalPresenterBase ModalPresenter { get; }
 
     public abstract ModalPresenterBase PopoverPresenter { get; }
+
+    public virtual ToastPresenterBase ToastPresenter => null;
 
     protected override Task OnInitializedAsync()
     {

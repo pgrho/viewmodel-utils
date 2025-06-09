@@ -79,6 +79,13 @@ public class InteractionService : IInteractionService
                 }
             }
 
+            var tp = (context as IHasToastPresenter)?.ToastPresenter;
+            if (tp != null)
+            {
+                tp.Add(style, message, title);
+                return Task.CompletedTask;
+            }
+
             var js = (context as IHasJSRuntime)?.JS;
 
             return js?.ShowToastAsync(new ToastOptions
