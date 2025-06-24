@@ -228,11 +228,7 @@ public abstract partial class FrameworkModalViewModelBase : ObservableModel, IFr
             {
                 LogError("AlertAsync(\"{0}\") Exception={1}", message, t.Exception);
             }
-        }
-#if IS_WEBVIEW
-        , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-        );
+        }, TaskSchedulerHelper.Default());
 
         return task;
     }
@@ -264,11 +260,7 @@ public abstract partial class FrameworkModalViewModelBase : ObservableModel, IFr
             {
                 LogError("ConfirmAsync(\"{0}\") Exception={1}", message, t.Exception);
             }
-        }
-#if IS_WEBVIEW
-        , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-        );
+        }, TaskSchedulerHelper.Default());
 
         return task;
     }

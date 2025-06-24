@@ -89,11 +89,9 @@ public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<Framewor
 
         if (ipc != _PageContext && _PageContext != null)
         {
-            Task.Delay(1).ContinueWith(t => StateHasChanged()
-#if IS_WEBVIEW
-            , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-            );
+            Task.Delay(1).ContinueWith(
+                t => StateHasChanged(),
+                TaskSchedulerHelper.Default());
         }
 
         return t;

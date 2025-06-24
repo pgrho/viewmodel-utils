@@ -17,11 +17,7 @@ public partial class EntitySelectorView
                 _ItemsTask = DataContext.GetItemsTask();
                 if (_ItemsTask.Status < TaskStatus.RanToCompletion)
                 {
-                    _ItemsTask.ContinueWith(_ => StateHasChanged()
-#if IS_WEBVIEW
-            , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-                    );
+                    _ItemsTask.ContinueWith(_ => StateHasChanged(), TaskSchedulerHelper.Default());
                 }
                 _ItemsTask.ContinueWith(_ =>
                 {
@@ -31,11 +27,7 @@ public partial class EntitySelectorView
                     {
                         DataContext.SelectedItem = sel;
                     }
-                }
-#if IS_WEBVIEW
-            , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-            );
+                }, TaskSchedulerHelper.Default());
             }
             return _ItemsTask;
         }

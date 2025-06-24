@@ -164,11 +164,7 @@
                 {
                     LogError("AlertAsync(\"{0}\") Exception={1}", message, t.Exception);
                 }
-            }
-#if IS_WEBVIEW
-            , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-            );
+            }, TaskSchedulerHelper.Default());
 
             return task;
         }
@@ -201,11 +197,7 @@
                 {
                     LogError("ConfirmAsync(\"{0}\") Exception={1}", message, t.Exception);
                 }
-            }
-#if IS_WEBVIEW
-            , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-            );
+            }, TaskSchedulerHelper.Default());
 
             return task;
         }
@@ -451,11 +443,7 @@ namespace Shipwreck.ViewModelUtils
                 {
                     LogError("AlertAsync(\"{0}\") Exception={1}", message, t.Exception);
                 }
-            }
-#if IS_WEBVIEW
-            , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-            );
+            }, TaskSchedulerHelper.Default());
 
             return task;
         }
@@ -488,11 +476,7 @@ namespace Shipwreck.ViewModelUtils
                 {
                     LogError("ConfirmAsync(\"{0}\") Exception={1}", message, t.Exception);
                 }
-            }
-#if IS_WEBVIEW
-            , TaskScheduler.FromCurrentSynchronizationContext()
-#endif
-            );
+            }, TaskSchedulerHelper.Default());
 
             return task;
         }

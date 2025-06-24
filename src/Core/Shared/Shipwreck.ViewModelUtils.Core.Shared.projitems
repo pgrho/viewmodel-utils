@@ -20,6 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\ConditionCreationBehavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\IFrameworkSearchPageViewModelHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Searching\ISearchPropertiesHost.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\TaskSchedulerHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)viewmodelutils\ToastLogViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\Validation\DirectoryPathValidator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelUtils\EntitySelectorBase.cs" />
