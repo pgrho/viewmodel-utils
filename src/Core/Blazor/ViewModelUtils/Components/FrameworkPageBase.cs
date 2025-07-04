@@ -1,6 +1,10 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>, IHasJSRuntime, IHasFrameworkPageViewModel, IDisposable
+public abstract class FrameworkPageBase : BindableComponentBase<FrameworkPageViewModel>
+    , IHasJSRuntime
+    , IHasNavigationManager
+    , IHasFrameworkPageViewModel
+    , IDisposable
 {
     [Inject]
     public IServiceProvider ServiceProvider { get; set; }

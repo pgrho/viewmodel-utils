@@ -16,14 +16,17 @@ public class NavigationService : INavigationService
     {
         if (entry?.Path is string url)
         {
-            var au = NavigationManager.ToAbsoluteUri(url);
-            if (au.ToString() == NavigationManager.Uri)
+            var nm = (context as IHasNavigationManager)?.NavigationManager
+                ?? (context as IHasFrameworkPageViewModel)?.Page?.NavigationManager
+                ?? NavigationManager;
+            var au = nm.ToAbsoluteUri(url);
+            if (au.ToString() == nm.Uri)
             {
                 Console.WriteLine("NavigationService.NavigateTo: Suppressed navigating to same url ({0})", au);
                 return;
             }
             Console.WriteLine("NavigationService.NavigateTo: {0}", url);
-            NavigationManager.NavigateTo(url);
+            nm.NavigateTo(url);
         }
     }
 

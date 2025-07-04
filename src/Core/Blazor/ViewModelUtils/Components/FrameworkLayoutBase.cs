@@ -1,9 +1,18 @@
 ﻿namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<FrameworkLayoutViewModel>, IHasJSRuntime, IHasInteractionService, IHasModalPresenter, IHasPopoverPresenter, IHasToastPresenter
+public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<FrameworkLayoutViewModel>
+    , IHasJSRuntime
+    , IHasNavigationManager
+    , IHasInteractionService
+    , IHasModalPresenter
+    , IHasPopoverPresenter
+    , IHasToastPresenter
 {
     [Inject]
     public IJSRuntime JS { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
 
     [Inject]
     public IInteractionService Interaction { get; set; }
