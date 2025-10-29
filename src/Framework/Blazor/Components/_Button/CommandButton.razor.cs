@@ -2,6 +2,7 @@
 
 public partial class CommandButton : BindableComponentBase<ICommandViewModel>
 {
+    private ElementReference _Element;
     [Parameter]
     public string BaseClass { get; set; } = "btn";
 
@@ -46,4 +47,10 @@ public partial class CommandButton : BindableComponentBase<ICommandViewModel>
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+
+    [Inject]
+    public IJSRuntime JS { get; set; }
+
+    public ValueTask FocusAsync()
+        => JS.FocusAsync(_Element, false);
 }
