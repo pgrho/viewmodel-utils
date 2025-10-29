@@ -15,4 +15,6 @@ public sealed class MenuPageViewModel : PageViewModel
 
     public void NavigateToListTest()
         => Page?.NavigationManager?.NavigateTo("/listTest");
+    public void NavigateToButtonTest()
+        => Page?.NavigationManager?.NavigateTo("/buttonTest");
 }

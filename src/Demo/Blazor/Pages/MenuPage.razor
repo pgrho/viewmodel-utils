@@ -15,6 +15,9 @@
     <button class="btn btn-block" @onclick="@(() => DataContext?.NavigateToListTest())">
         ListTest
     </button>
+    <button class="btn btn-block" @onclick="@(() => DataContext?.NavigateToButtonTest())">
+        ButtonTest
+    </button>
 
     <div>
         <button @onclick="@(() => DataContext?.ShowSuccessToastAsync(DateTime.Now.ToString()))">ShowSuccessToastAsync</button>

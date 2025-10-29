@@ -1,0 +1,22 @@
+﻿@inherits PageBase<ButtonTestPageViewModel>
+@page "/buttonTest"
+@using (OnBeginRender())
+{
+    if (DataContext is ButtonTestPageViewModel d)
+    {
+        <input @bind="d.CommandTitle" />
+        <input @bind="d.Description" />
+        <input @bind="d.Icon" />
+        <Checkbox @bind-IsChecked="d.IsVisible">IsVisible</Checkbox>
+        <Checkbox @bind-IsChecked="d.IsEnabled">IsEnabled</Checkbox>
+        <CommandButton BaseClass="btn btn-block"
+        DataContext="d.Command" />
+    }
+}
+@code
+{
+    private static Table _Table;
+
+    protected override FrameworkPageViewModel GetOrCreateDataContext()
+        => base.DataContext as ButtonTestPageViewModel ?? new ButtonTestPageViewModel(this);
+}
