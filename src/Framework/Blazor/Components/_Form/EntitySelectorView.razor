@@ -12,7 +12,8 @@
             <select @ref="_Select"
                     id="@ElementId"
                     class="@theme.SelectControlClass"
-                    @bind="@SelectedCode" disabled="@(isEnabled ? null : "disabled")"
+                    @bind="@SelectedCode"
+                    disabled="@(isEnabled ? null : "disabled")"
                     @onkeydown="@OnSelectKeyDown">
                 @if (!IsRequired)
                 {
@@ -72,12 +73,15 @@
             }
             @if (IsNameVisible)
             {
-                <div class="@($"{theme.ControlClass} {NameClass}")"
-                     style="@NameStyle"
-                     readonly="readonly"
-                     tabindex="-1">
-                    @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
-                </div>
+                <DataContextScope DataContext="d"
+                                  DependsOnProperties="@(new[]{nameof(d.SelectedItem)})">
+                    <div class="@($"{theme.ControlClass} {NameClass}")"
+                         style="@NameStyle"
+                         readonly="readonly"
+                         tabindex="-1">
+                        @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
+                    </div>
+                </DataContextScope>
             }
         }
     </div>
