@@ -126,6 +126,7 @@ public partial class EntitySelectorView
         finally
         {
             _IsUpdatingSelectedCode = false;
+            StateHasChanged();
         }
     }
 
