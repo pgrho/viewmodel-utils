@@ -23,6 +23,13 @@
                         <div class="content-flex-footer px-0">
                             <CommandButton BaseClass="btn btn-block btn-lg"
                                            DataContext="@d.SearchCommand" />
+
+                            @foreach (var c in Commands ?? [])
+                            {
+                                <CommandButton @key="@c.GetHashCode()"
+                                               BaseClass="btn btn-block"
+                                               DataContext="@c" />
+                            }
                         </div>
                     </div>
                 </div>
@@ -41,4 +48,6 @@
     public string TypeName { get; set; }
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public IEnumerable<CommandViewModelBase> Commands { get; set; }
 }
