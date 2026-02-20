@@ -2,7 +2,7 @@
 @inherits FormGroupBase
 @using (OnBeginRender())
 {
-    var theme = Theme ?? FormGroupTheme.Default; 
+    var theme = Theme ?? FormGroupTheme.Default;
     <div id="@FormGroupId"
          class="@theme.FormGroupClass @AdditionalClass">
         <label for="@EntitySelectorId"
@@ -24,6 +24,7 @@
                             IsRequired="@GetIsRequired()"
                             IsNameVisible="@IsNameVisible"
                             AppendToSelector="@AppendToSelector"
+                            UseModal="@UseModal"
                             EnterCommand="@EnterCommand"
                             EnterCommandParameter="@EnterCommandParameter" />
     </div>

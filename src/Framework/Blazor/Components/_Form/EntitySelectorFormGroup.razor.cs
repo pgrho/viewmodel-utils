@@ -23,4 +23,7 @@ public partial class EntitySelectorFormGroup
 
     [Parameter]
     public string AppendToSelector { get; set; } = ".body-root";
+
+    [Parameter]
+    public bool UseModal { get; set; } = true;
 }
