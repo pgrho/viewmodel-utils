@@ -15,17 +15,17 @@
                 <tr @key="@op.Value">
                     <td style="max-width: 1.5rem">
                         <a href="javascript:void(0)"
-                           class="btn btn-block btn-link border-0 p-0"
-                           @onclick="@(() => Toggle(op.Value, !selected))"
-                           data-enhance-nav="true">
+                               class="btn btn-block btn-link border-0 p-0"
+                               @onclick="@(() => Toggle(op.Value, !selected))"
+                               data-enhance-nav="true">
                             <span class="@(selected ? "fas fa-check-square" : "far fa-square")"></span>
                         </a>
                     </td>
                     <td>
                         <a href="javascript:void(0)"
-                           class="btn btn-block btn-link border-0 p-0 text-left"
-                           @onclick="@(() => Select(op.Value))"
-                           data-enhance-nav="true">
+                               class="btn btn-block btn-link border-0 p-0 text-left"
+                               @onclick="@(() => Select(op.Value))"
+                               data-enhance-nav="true">
                             @(op.Name.TrimOrNull() ?? "(null)")
                         </a>
                     </td>

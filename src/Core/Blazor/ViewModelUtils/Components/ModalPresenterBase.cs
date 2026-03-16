@@ -2,37 +2,53 @@
 
 public abstract class ModalPresenterBase : BindableComponentBase
 {
-    protected Type ModalType { get; private set; }
-
-    public KeyValuePair<string, object>[] _Properties;
-
-    private WeakReference<ComponentBase> _Modal;
-
-    public ComponentBase Modal
+    public sealed class ModalStack
     {
-        get => _Modal != null && _Modal.TryGetTarget(out var c) ? c : null;
-        private set
+        public ModalStack(ModalPresenterBase presenter, Type modalType, IEnumerable<KeyValuePair<string, object>> properties)
         {
-            var current = Modal;
-            if (current != value)
+            Presenter = presenter;
+            ModalType = modalType;
+            Properties = new(properties?.ToArray() ?? []);
+        }
+
+        public ModalPresenterBase Presenter { get; }
+
+        public Type ModalType { get; set; }
+        public ReadOnlyCollection<KeyValuePair<string, object>> Properties { get; }
+
+        private WeakReference<ComponentBase> _Modal;
+
+        public ComponentBase Modal
+        {
+            get => _Modal != null && _Modal.TryGetTarget(out var c) ? c : null;
+            internal set
             {
-                _Modal = value == null ? null : new WeakReference<ComponentBase>(value);
-                if (current is IModal currentModal)
+                var current = Modal;
+                if (current != value)
                 {
-                    currentModal.Presenter = null;
-                }
-                if (value is IModal newModal)
-                {
-                    newModal.Presenter = this;
+                    _Modal = value == null ? null : new WeakReference<ComponentBase>(value);
+                    if (current is IModal currentModal)
+                    {
+                        currentModal.Presenter = null;
+                    }
+                    if (value is IModal newModal)
+                    {
+                        newModal.Presenter = Presenter;
+                    }
                 }
             }
         }
+
+        public bool IsRendered { get; set; }
     }
+
+    private readonly List<ModalStack> _Stack = new();
+
+    public bool HasStack => _Stack.Any();
 
     public void ShowModal(Type modalType, IEnumerable<KeyValuePair<string, object>> properties)
     {
-        ModalType = modalType;
-        _Properties = properties?.ToArray();
+        _Stack.Add(new(this, modalType, properties));
 
         StateHasChanged();
     }
@@ -55,38 +71,64 @@ public abstract class ModalPresenterBase : BindableComponentBase
     }
 
     public void CloseModal()
+        => CloseModal((e, i) => i == 0);
+
+    public void CloseAll()
+        => CloseModal((_, _) => true);
+
+    public void CloseByDataContext(object dataContext)
+        => CloseModal(e => e.Properties.FirstOrDefault(p => p.Key == "DataContext").Value == dataContext);
+
+    public void CloseModal(Func<ModalStack, bool> predicate)
+        => CloseModal((e, i) => predicate(e));
+
+    public void CloseModal(Func<ModalStack, int, bool> predicate)
     {
-        var m = Modal;
-        if (m != null)
+        var targets = _Stack.AsEnumerable().Reverse().Where(predicate).ToList();
+        var ms = targets.Select(e => e.Modal).ToList();
+
+        if (_Stack.RemoveAll(e => targets.Contains(e)) > 0)
         {
-            ShowModal(null, null);
+            StateHasChanged();
+        }
+
+        foreach (var m in ms)
+        {
             (m as IDisposable)?.Dispose();
         }
     }
 
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
-        if (ModalType != null)
+        var en = _Stack.LastOrDefault();
+        if (en != null)
         {
-            var isModal = typeof(IModal).IsAssignableFrom(ModalType);
             var i = 0;
 
-            builder.OpenComponent(i++, ModalType);
-
-            if (_Properties?.Length > 0)
+            var isModal = typeof(IModal).IsAssignableFrom(en.ModalType);
+            //if (!en.IsRendered)
             {
-                foreach (var kv in _Properties)
+                builder.OpenComponent(i++, en.ModalType);
+
+                foreach (var kv in en.Properties)
                 {
                     builder.AddAttribute(i++, kv.Key, kv.Value);
                 }
+
+                builder.AddComponentReferenceCapture(i++, m => en.Modal = m as ComponentBase);
+
+                builder.CloseComponent();
+
+                en.IsRendered = true;
             }
-
-            builder.AddComponentReferenceCapture(i++, m => Modal = m as ComponentBase);
-
-            builder.CloseComponent();
-
-            ModalType = null;
-            _Properties = null;
+            foreach (var pre in _Stack)
+            {
+                if (pre != en)
+                {
+                    en.IsRendered = false;
+                    en.Modal = null;
+                }
+            }
 
             if (isModal)
             {

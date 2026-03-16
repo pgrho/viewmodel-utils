@@ -5,7 +5,7 @@
     var d = DataContext;
     <PopoverFrame ReferenceElement="@ReferenceElement"
                   Boundaries="@Boundaries"
-                  OnClosed="@(() => Presenter?.CloseModal())">
+                  OnClosed="@(() => Presenter?.CloseByDataContext(DataContext))">
         <ListScope T="CommandViewModelBase"
                    Source="d">
             @foreach (var c in d ?? Enumerable.Empty<CommandViewModelBase>())
@@ -39,11 +39,11 @@
         }
 
         presenter.ShowModal(typeof(CommandsPopover), new Dictionary<string, object>
-            {
-                [nameof(DataContext)] = dataContext,
-                [nameof(ReferenceElement)] = reference,
-                [nameof(Presenter)] = presenter,
-                [nameof(Boundaries)] = boundaries,
-            });
+        {
+            [nameof(DataContext)] = dataContext,
+            [nameof(ReferenceElement)] = reference,
+            [nameof(Presenter)] = presenter,
+            [nameof(Boundaries)] = boundaries,
+        });
     }
 }

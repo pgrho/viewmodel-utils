@@ -14,7 +14,7 @@ public sealed class BootstrapModalPresenter : ModalPresenterBase
     {
         await (base.OnAfterRenderAsync(firstRender) ?? Task.CompletedTask);
 
-        if (ModalType == null && !firstRender)
+        if (!HasStack && !firstRender)
         {
             JS.InvokeVoidAsync("Shipwreck.ViewModelUtils.toggleModal", null, false, null).GetHashCode();
         }

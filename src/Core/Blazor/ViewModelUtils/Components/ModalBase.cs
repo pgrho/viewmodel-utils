@@ -80,9 +80,14 @@ public abstract class ModalBase<T> : BindableComponentBase<T>, IModal, IHasJSRun
     {
         _IsOpen = false;
 
-        if (Presenter?.Modal == this)
+        var d = DataContext;
+        if (d != null)
         {
-            Presenter.CloseModal();
+            Presenter?.CloseByDataContext(d);
+        }
+        else
+        {
+            Presenter?.CloseModal((e, i) => e.Modal == this);
         }
     }
 

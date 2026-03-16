@@ -34,8 +34,8 @@ public abstract class FrameworkLayoutBase : BindableLayoutComponentBase<Framewor
     protected virtual void OnPageChanged()
     {
         PageContext = _Page?.DataContext;
-        ModalPresenter?.CloseModal();
-        PopoverPresenter?.CloseModal();
+        ModalPresenter?.CloseAll();
+        PopoverPresenter?.CloseAll();
     }
 
     #endregion Page

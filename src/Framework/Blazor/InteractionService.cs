@@ -215,7 +215,14 @@ public class InteractionService : IInteractionService
         var mp = (viewModel as IHasModalPresenter)?.ModalPresenter
             ?? (context as IHasModalPresenter)?.ModalPresenter;
 
-        mp?.CloseModal();
+        if (viewModel != null)
+        {
+            mp?.CloseByDataContext(viewModel);
+        }
+        else
+        {
+            mp?.CloseModal();
+        }
 
         return Task.CompletedTask;
     }
