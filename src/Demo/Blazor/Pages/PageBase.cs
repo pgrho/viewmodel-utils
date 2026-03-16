@@ -4,7 +4,7 @@ using Shipwreck.ViewModelUtils.Demo.Blazor.Shared;
 
 namespace Shipwreck.ViewModelUtils.Demo.Blazor.Pages;
 
-public abstract class PageBase : FrameworkPageBase, IHasToastPresenter
+public abstract class PageBase : FrameworkPageBase, IHasToastPresenter, IHasModalPresenter, IHasPopoverPresenter
 {
     [CascadingParameter]
     public MainLayout Layout { get; set; }
@@ -13,6 +13,10 @@ public abstract class PageBase : FrameworkPageBase, IHasToastPresenter
     public InteractionService Interaction { get; set; }
 
     public ToastPresenterBase ToastPresenter => Layout?.ToastPresenter;
+
+    public ModalPresenterBase ModalPresenter => Layout?.ModalPresenter;
+
+    public ModalPresenterBase PopoverPresenter => Layout?.PopoverPresenter;
 }
 
 public abstract class PageBase<T> : PageBase

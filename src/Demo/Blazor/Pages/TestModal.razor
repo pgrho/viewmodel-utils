@@ -1,0 +1,21 @@
+﻿@inherits BootstrapModalBase<TestModalViewModel>
+@using (OnBeginRender())
+{
+    var d = DataContext;
+    <div @ref="@ModalElement"
+         class="modal"
+         tabindex="-1"
+         role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    @d.GetHashCode(): @d.OpenedAt.ToString("o")
+                </div>
+                <div class="modal-footer">
+                    <CommandButton DataContext="d.OpenCommand" />
+                    <CommandButton DataContext="d.CancelCommand" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

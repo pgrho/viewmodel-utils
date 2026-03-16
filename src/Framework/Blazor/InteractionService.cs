@@ -196,6 +196,11 @@ public class InteractionService : IInteractionService
                         return Task.CompletedTask;
                     }
                 }
+                return Task.FromException(new NotSupportedException($"ModalType is not registered for {viewModel?.GetType()}."));
+            }
+            else
+            {
+                return Task.FromException(new NotSupportedException("ModalPresenterBase is not found."));
             }
         }
         catch (Exception ex)

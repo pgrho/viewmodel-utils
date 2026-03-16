@@ -18,6 +18,7 @@
     <button class="btn btn-block" @onclick="@(() => DataContext?.NavigateToButtonTest())">
         ButtonTest
     </button>
+    <CommandButton DataContext="DataContext.OpenModalCommand" />
 
     <div>
         <button @onclick="@(() => DataContext?.ShowSuccessToastAsync(DateTime.Now.ToString()))">ShowSuccessToastAsync</button>
