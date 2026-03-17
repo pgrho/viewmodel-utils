@@ -109,6 +109,7 @@ public partial class EntitySelectorView
 
     private async void SetSelectedCode(string value)
     {
+        var se = DataContext?.SelectedItem;
         try
         {
             _IsUpdatingSelectedCode = true;
@@ -119,13 +120,17 @@ public partial class EntitySelectorView
             else if (DataContext.UseList && ItemsTask is Task<System.Collections.IList> t)
             {
                 var items = await t;
-                DataContext.SelectedItem = items.OfType<object>().FirstOrDefault(e => DataContext.GetCode(e) == value)
-                                        ?? DataContext.SelectedItem;
+                var ne = items.OfType<object>().FirstOrDefault(e => DataContext.GetCode(e) == value) ?? DataContext.SelectedItem;
+                DataContext.SelectedItem = ne;
             }
         }
         finally
         {
             _IsUpdatingSelectedCode = false;
+            if (DataContext?.SelectedItem != se)
+            {
+                StateHasChanged();
+            }
         }
     }
 
