@@ -35,8 +35,11 @@ public abstract class FormGroupBase : BindableComponentBase
     public string Description { get; set; }
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public string InputMode { get; set; }
 
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+     
     #region IsEnabled
 
     [Parameter]

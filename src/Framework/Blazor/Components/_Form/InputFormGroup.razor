@@ -25,20 +25,21 @@
         {
             <div class="@theme.InputGroupClass">
                 <input id="@InputId"
-                   class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
-                   type="@(Type ?? (DataList?.Count> 0 ? "search" : "text"))"
-                   @ref="_GroupInput"
-                   @bind="@InternalValue"
-                   placeholder="@GetPlaceholder()"
-                   autocomplete="@(GetAutoComplete() ?? "on")"
-                   disabled="@(GetIsDisabled() ? "disabled" : null)"
-                   readonly="@(IsReadOnly ? "readonly" : null)"
-                   list="@(DataList?.Count>0 ? DataListId : null)"
-                   @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
+                       class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
+                       type="@(Type ?? (DataList?.Count > 0 ? "search" : "text"))"
+                       @ref="_GroupInput"
+                       @bind="@InternalValue"
+                       placeholder="@GetPlaceholder()"
+                       autocomplete="@(GetAutoComplete() ?? "on")"
+                       disabled="@(GetIsDisabled() ? "disabled" : null)"
+                       readonly="@(IsReadOnly ? "readonly" : null)"
+                       list="@(DataList?.Count > 0 ? DataListId : null)"
+                       inputmode="@InputMode"
+                       @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
                 @if (DataList?.Count > 0)
                 {
                     <span class="fas fa-chevron-down text-muted"
-                  style="pointer-events: none; position: absolute; right: 0.5rem; top: 0.5rem"></span>
+                          style="pointer-events: none; position: absolute; right: 0.5rem; top: 0.5rem"></span>
                     <datalist id="@DataListId">
                         @foreach (var t in DataList)
                         {
@@ -51,15 +52,16 @@
         else
         {
             <input id="@InputId"
-               class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
-               type="@(Type ?? "text")"
-               @ref="_SingleInput"
-               @bind="@InternalValue"
-               placeholder="@GetPlaceholder()"
-               autocomplete="@GetAutoComplete()"
-               disabled="@(GetIsDisabled() ? "disabled" : null)"
-               readonly="@(IsReadOnly ? "readonly" : null)"
-               @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
+                   class="@theme.ControlClass @(GetIsRequired() ? "required" : null) @AdditionalInputClass"
+                   type="@(Type ?? "text")"
+                   @ref="_SingleInput"
+                   @bind="@InternalValue"
+                   placeholder="@GetPlaceholder()"
+                   autocomplete="@GetAutoComplete()"
+                   disabled="@(GetIsDisabled() ? "disabled" : null)"
+                   readonly="@(IsReadOnly ? "readonly" : null)"
+                   inputmode="@InputMode"
+                   @onfocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))" />
         }
     </form>
 }

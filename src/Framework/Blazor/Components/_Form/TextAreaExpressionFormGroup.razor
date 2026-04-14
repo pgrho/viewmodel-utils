@@ -30,6 +30,7 @@
                   placeholder="@GetPlaceholder()"
                   readonly="@(GetIsReadOnly() ? "readonly" : null)"
                   disabled="@(GetIsDisabled() ? "disabled" : null)"
+                  inputmode="@InputMode"
                   @bind="@InternalValue"
                   @onfocus="@OnFocus"
                   @onblur="@OnBlur"></textarea>

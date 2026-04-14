@@ -61,4 +61,8 @@ public abstract class ExpressionBoundFormGroup<T> : ExpressionBoundComponent<T>
 
     [Parameter]
     public string AdditionalInputClass { get; set; }
+
+    [Parameter]
+    public string InputMode { get; set; }
+
 }
