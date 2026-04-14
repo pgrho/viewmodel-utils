@@ -19,6 +19,12 @@ public partial class QueryPropertyInfo : ICloneable
     [DataMember]
     public string DefaultOperator { get; set; }
 
+    [DataMember, DefaultValue(false)]
+    public bool IsNumeric { get; set; }
+
+    [DataMember, DefaultValue(false)]
+    public bool IsAlphaNumeric { get; set; }
+
     protected virtual QueryPropertyInfo CreateInstance() => new QueryPropertyInfo();
 
     public virtual void CopyTo(QueryPropertyInfo other)
@@ -27,6 +33,8 @@ public partial class QueryPropertyInfo : ICloneable
         other.DisplayName = DisplayName;
         other.TypeName = TypeName;
         other.DefaultOperator = DefaultOperator;
+        other.IsNumeric = IsNumeric;
+        other.IsAlphaNumeric = IsAlphaNumeric;
     }
 
     public QueryPropertyInfo Clone(string newName = null, string newDisplayName = null, string newTypeName = null, string newDefaultOperator = null)

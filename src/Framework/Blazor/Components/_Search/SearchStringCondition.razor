@@ -3,7 +3,7 @@
 @inherits BindableComponentBase<StringConditionViewModel>
 @using (OnBeginRender())
 {
-    var d = DataContext; 
+    var d = DataContext;
     if (d != null)
     {
         <SearchConditionHeader DataContext="@d" />
@@ -16,6 +16,7 @@
                 <input @ref="@_Input"
                        class="form-control"
                        type="text"
+                       inputmode="@(d.Property.IsNumeric ? "numeric" : null)"
                        @bind="@d.Value" />
                 <SearchRemoveButton DataContext="@d" />
             </form>

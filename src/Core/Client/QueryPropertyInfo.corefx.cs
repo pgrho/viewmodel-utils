@@ -25,6 +25,16 @@ public partial class QueryPropertyInfo
             obj.DefaultOperator = reader.ReadString();
             return true;
         }
+        if (reader.ValueTextEquals(nameof(obj.IsAlphaNumeric)))
+        {
+            obj.IsAlphaNumeric = reader.ReadBoolean();
+            return true;
+        }
+        if (reader.ValueTextEquals(nameof(obj.IsNumeric)))
+        {
+            obj.IsNumeric = reader.ReadBoolean();
+            return true;
+        }
         return false;
     }
 
@@ -34,5 +44,13 @@ public partial class QueryPropertyInfo
         writer.WriteString(nameof(value.DisplayName), value.DisplayName);
         writer.WriteString(nameof(value.TypeName), value.TypeName);
         writer.WriteString(nameof(value.DefaultOperator), value.DefaultOperator);
+        if (value.IsAlphaNumeric)
+        {
+            writer.WriteBoolean(nameof(value.IsAlphaNumeric), value.IsAlphaNumeric);
+        }
+        else if (value.IsNumeric)
+        {
+            writer.WriteBoolean(nameof(value.IsNumeric), value.IsNumeric);
+        }
     }
 }
