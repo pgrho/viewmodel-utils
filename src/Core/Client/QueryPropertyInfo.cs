@@ -3,6 +3,10 @@
 [DataContract]
 public partial class QueryPropertyInfo : ICloneable
 {
+    public static string Numeric { get; } = "numeric";
+    public static string Decimal { get; } = "decimal";
+    public static string Tel { get; } = "tel";
+
     public QueryPropertyInfo()
     {
     }
@@ -19,11 +23,8 @@ public partial class QueryPropertyInfo : ICloneable
     [DataMember]
     public string DefaultOperator { get; set; }
 
-    [DataMember, DefaultValue(false)]
-    public bool IsNumeric { get; set; }
-
-    [DataMember, DefaultValue(false)]
-    public bool IsAlphaNumeric { get; set; }
+    [DataMember, DefaultValue(null)]
+    public string InputMode { get; set; }
 
     protected virtual QueryPropertyInfo CreateInstance() => new QueryPropertyInfo();
 
@@ -33,8 +34,7 @@ public partial class QueryPropertyInfo : ICloneable
         other.DisplayName = DisplayName;
         other.TypeName = TypeName;
         other.DefaultOperator = DefaultOperator;
-        other.IsNumeric = IsNumeric;
-        other.IsAlphaNumeric = IsAlphaNumeric;
+        other.InputMode = InputMode;
     }
 
     public QueryPropertyInfo Clone(string newName = null, string newDisplayName = null, string newTypeName = null, string newDefaultOperator = null)

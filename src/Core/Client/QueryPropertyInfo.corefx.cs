@@ -25,14 +25,9 @@ public partial class QueryPropertyInfo
             obj.DefaultOperator = reader.ReadString();
             return true;
         }
-        if (reader.ValueTextEquals(nameof(obj.IsAlphaNumeric)))
+        if (reader.ValueTextEquals(nameof(obj.InputMode)))
         {
-            obj.IsAlphaNumeric = reader.ReadBoolean();
-            return true;
-        }
-        if (reader.ValueTextEquals(nameof(obj.IsNumeric)))
-        {
-            obj.IsNumeric = reader.ReadBoolean();
+            obj.InputMode = reader.ReadString();
             return true;
         }
         return false;
@@ -42,15 +37,17 @@ public partial class QueryPropertyInfo
     {
         writer.WriteString(nameof(value.Name), value.Name);
         writer.WriteString(nameof(value.DisplayName), value.DisplayName);
-        writer.WriteString(nameof(value.TypeName), value.TypeName);
-        writer.WriteString(nameof(value.DefaultOperator), value.DefaultOperator);
-        if (value.IsAlphaNumeric)
+        if (!string.IsNullOrEmpty(value.TypeName))
         {
-            writer.WriteBoolean(nameof(value.IsAlphaNumeric), value.IsAlphaNumeric);
+            writer.WriteString(nameof(value.TypeName), value.TypeName);
         }
-        else if (value.IsNumeric)
+        if (!string.IsNullOrEmpty(value.DefaultOperator))
         {
-            writer.WriteBoolean(nameof(value.IsNumeric), value.IsNumeric);
+            writer.WriteString(nameof(value.DefaultOperator), value.DefaultOperator);
+        }
+        if (!string.IsNullOrEmpty(value.InputMode))
+        {
+            writer.WriteString(nameof(value.InputMode), value.InputMode);
         }
     }
 }

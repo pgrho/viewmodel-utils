@@ -21,8 +21,7 @@ public class SearchPropertyViewModel : ObservableModel
     public bool IsBoolean => Model is BooleanQueryPropertyInfo;
     public bool IsDateTime => Model is DateTimeQueryPropertyInfo;
     public bool IsEnum => Model is EnumQueryPropertyInfo;
-    public bool IsNumeric => Model.IsNumeric;
-    public bool IsAlphaNumeric => Model.IsAlphaNumeric;
+    public string InputMode => Model.InputMode; 
 
     #region LocalName
 

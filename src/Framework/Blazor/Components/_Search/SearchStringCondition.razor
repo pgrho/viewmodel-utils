@@ -16,7 +16,7 @@
                 <input @ref="@_Input"
                        class="form-control"
                        type="text"
-                       inputmode="@(d.Property.IsNumeric ? "numeric" : null)"
+                       inputmode="@d.Property.InputMode"
                        @bind="@d.Value" />
                 <SearchRemoveButton DataContext="@d" />
             </form>
