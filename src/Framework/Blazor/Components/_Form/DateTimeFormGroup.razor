@@ -2,7 +2,7 @@
 @inherits FormGroupBase
 @using (OnBeginRender())
 {
-    var theme = Theme ?? FormGroupTheme.Default; 
+    var theme = Theme ?? FormGroupTheme.Default;
     <form id="@FormGroupId"
           class="@theme.FormGroupClass @AdditionalClass"
           @onsubmit="@(() => EnterCommand?.Execute(EnterCommandParameter))"
@@ -21,13 +21,12 @@
         </label>
         <DateTimePicker @ref="_DateTimePicker"
                         Id="@DateTimePickerId"
-                        ClassName="@(Theme?.ControlClass + " datetimepicker-input " + AdditionalInputClass)"
+                        ClassName="@(Theme?.ControlClass + " " + AdditionalInputClass)"
                         IsEnabled="@(!GetIsDisabled())"
                         IsReadOnly="@IsReadOnly"
                         IsRequired="@GetIsRequired()"
                         Placeholder="@GetPlaceholder()"
                         Mode="@Mode"
-                        UseCurrent="@UseCurrent"
                         OnFocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
                         @bind-Value="InternalValue" />
     </form>
@@ -38,4 +37,4 @@
 
     public override ValueTask FocusAsync(bool selectAll = false)
         => _DateTimePicker.FocusAsync(selectAll);
- }
+}

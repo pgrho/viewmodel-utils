@@ -15,6 +15,7 @@ public sealed class MenuPageViewModel : PageViewModel
 
     public void NavigateToListTest()
         => Page?.NavigationManager?.NavigateTo("/listTest");
+
     public void NavigateToButtonTest()
         => Page?.NavigationManager?.NavigateTo("/buttonTest");
 
@@ -34,4 +35,28 @@ public sealed class MenuPageViewModel : PageViewModel
                       await ShowErrorToastAsync(ex.Message);
                   }
               }, title: "Open Modal");
+
+    #region Date
+
+    private DateTime? _Date;
+
+    public DateTime? Date
+    {
+        get => _Date;
+        set => SetProperty(ref _Date, value);
+    }
+
+    #endregion Date
+
+    #region Second
+
+    private DateTime? _Second;
+
+    public DateTime? Second
+    {
+        get => _Second;
+        set => SetProperty(ref _Second, value);
+    }
+
+    #endregion Second
 }

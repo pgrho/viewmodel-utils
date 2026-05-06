@@ -1,22 +1,347 @@
 ﻿@namespace Shipwreck.ViewModelUtils.Components
 @inherits BindableComponentBase
-@using (OnBeginRender())
-{
-    <input @ref="@_Element"
-           id="@Id"
-           type="text"
-           class="@ClassName @(IsRequired ? "required" : null)"
+@{
+    var popId = $"{Id}--popover";
+}
+<span style="position:relative;margin:0;padding:0">
+    <input @ref="_Input"
            autocomplete="off"
-           style="ime-mode: disabled"
-           data-toggle="datetimepicker"
-           data-target="#@Id"
            placeholder="@Placeholder"
+           class="@ClassName @(IsRequired ? "required" : null)"
            disabled="@(IsEnabled ? null : "disabled")"
            readonly="@(IsReadOnly ? "readonly" : null)"
-           @onfocus="@OnFocus"
-           @onblur="@OnBlur"
+           @bind="@StringValue"
+           @onfocus="@InputOnFocus"
+           @onblur="@InputOnBlur"
+           @onclick="@InputOnClick"
            @attributes="@AdditionalAttributes" />
-}
-@code
-{
+    <button style="position:absolute;z-index:-100;left:0;top:0;right:0;bottom:0;margin:0;padding:0;opacity:0;pointer-events:none;anchor-name:--@popId"
+            tabindex="-1"
+            popovertarget="@popId">
+    </button>
+    <div @ref="_Popover"
+         id="@popId"
+         tabindex="0"
+         style="border-width:1px;position-anchor:--@popId;position-area:block-end;position-try-fallbacks: flip-block;"
+         popover="manual">
+        @if (_View == DateTimePickerMode.Date)
+        {
+            var ms = _ViewRange = new(_ViewRange.Year, _ViewRange.Month, 1);
+            var me = ms.AddMonths(1).AddDays(-1);
+
+            var hasPrev = !(MinimumDate >= _ViewRange);
+            var hasNext = !(MaximumDate <= _ViewRange.AddMonths(1));
+
+            if (_MonthDataTask == null
+                || _MonthDataRange != _ViewRange)
+            {
+                _MonthDataRange = _ViewRange;
+                if (MonthDataProvider == null)
+                {
+                    _MonthDataTask = Task.FromResult<IReadOnlyDictionary<DateTime, string>?>(null);
+                }
+                else
+                {
+                    var start = ms.AddDays(-(int)ms.DayOfWeek);
+                    var end = me.AddDays(6 - (int)me.DayOfWeek);
+
+                    _MonthDataTask = MonthDataProvider(start, end);
+                    _MonthDataTask.ContinueWith(t =>
+                    {
+                        if (t == _MonthDataTask
+                            && t.IsCompletedSuccessfully
+                            && t.Result?.Count > 0)
+                        {
+                            StateHasChanged();
+                        }
+                    });
+                }
+            }
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <button class="btn btn-sm @(hasPrev ? "btn-outline-primary" : "btn-outline-secondary") border-0"
+                                    disabled="@(hasPrev ? null : "disabled")"
+                                    style="min-width:1rem"
+                                    @onclick="@(() => _ViewRange = _ViewRange.AddMonths(-1))">
+                                <span class="fas fa-chevron-left"></span>
+                            </button>
+                        </th>
+                        <th colspan="5">
+                            <button class="btn btn-block btn-sm btn-outline-secondary border-0"
+                                    @onclick="@(() => _View = DateTimePickerMode.Month)">
+                                @_ViewRange.ToString("yyyy'年 'M'月'")
+                            </button>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm @(hasNext ? "btn-outline-primary" : "btn-outline-secondary") border-0"
+                                    disabled="@(hasNext ? null : "disabled")"
+                                    style="min-width:1rem"
+                                    @onclick="@(() => _ViewRange = _ViewRange.AddMonths(1))">
+                                <span class="fas fa-chevron-right"></span>
+                            </button>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>日</th>
+                        <th>月</th>
+                        <th>火</th>
+                        <th>水</th>
+                        <th>木</th>
+                        <th>金</th>
+                        <th>土</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var titles = _MonthDataTask.IsCompletedSuccessfully ? _MonthDataTask.Result : null;
+                        var pv = PrivateValue;
+
+                        for (var w = ms.AddDays(-(int)ms.DayOfWeek); w <= me; w = w.AddDays(7))
+                        {
+                            <tr>
+                                @for (var i = 0; i < 7; i++)
+                                {
+                                    var dt = w.AddDays(i);
+                                    var disabled = dt < MinimumDate || MaximumDate < dt;
+                                    string? title = null;
+                                    if (titles != null)
+                                    {
+                                        titles.TryGetValue(dt, out title);
+                                    }
+                                    var cls = dt <= pv && pv < dt.AddDays(1) ? "btn-primary"
+                                                : title != null ? "btn-warning"
+                                                : dt.Month == ms.Month ? "btn-outline-secondary text-dark"
+                                                : "btn-outline-secondary";
+                                    <td>
+                                        <button class="btn btn-sm @cls border-0"
+                                                title="@title"
+                                                disabled="@(disabled ? "disabled" : null)"
+                                                style="min-width:1rem;@(disabled ? "opacity: 0.2;" : null)"
+                                                @onclick="@(() => OnSelected(dt))">
+                                            @dt.Day
+                                        </button>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+        }
+        else
+        {
+            Func<DateTime, int, DateTime> add;
+            DateTime prev, next;
+            int cols, rows, offset = 0;
+            string title, format;
+            switch (_View)
+            {
+                case DateTimePickerMode.Year:
+                    _ViewRange = new((_ViewRange.Year / 10) * 10, 1, 1);
+                    prev = _ViewRange.AddYears(-10);
+                    next = _ViewRange.AddYears(+10);
+                    add = (v, d) => v.AddYears(d);
+                    cols = 3;
+                    rows = 4;
+                    offset = -1;
+                    title = $"{_ViewRange.Year}-{_ViewRange.Year + 9}";
+                    format = "yyyy'年'";
+                    break;
+
+                case DateTimePickerMode.Month:
+                    _ViewRange = new(_ViewRange.Year, 1, 1);
+                    prev = _ViewRange.AddYears(-1);
+                    next = _ViewRange.AddYears(+1);
+                    add = (v, d) => v.AddMonths(d);
+                    cols = 3;
+                    rows = 4;
+                    title = _ViewRange.ToString("yyyy'年'");
+                    format = "M'月'";
+                    break;
+
+                case DateTimePickerMode.Hour:
+                    _ViewRange = _ViewRange.Date;
+                    prev = _ViewRange.AddDays(-1);
+                    next = _ViewRange.AddDays(+1);
+                    add = (v, d) => v.AddHours(d);
+                    cols = 4;
+                    rows = 6;
+                    title = _ViewRange.ToString("yy'年 'M'月 'd'日'");
+                    format = "HH";
+                    break;
+
+                case DateTimePickerMode.Minute:
+                    _ViewRange = _ViewRange.Date.AddHours(_ViewRange.Hour);
+                    prev = _ViewRange.AddHours(-1);
+                    next = _ViewRange.AddHours(+1);
+                    add = (v, d) => v.AddMinutes(d);
+                    cols = 6;
+                    rows = 10;
+                    title = _ViewRange.ToString("M'月 'd'日 'H'時'");
+                    format = "mm";
+                    break;
+
+                default:
+                    throw new NotSupportedException();
+            }
+            var hasPrev = !(MinimumDate >= _ViewRange);
+            var hasNext = !(MaximumDate < next);
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <button class="btn btn-sm @(hasPrev ? "btn-outline-primary" : "btn-outline-secondary") border-0"
+                                    disabled="@(hasPrev ? null : "disabled")"
+                                    style="min-width:1rem"
+                                    @onclick="@(() => _ViewRange = prev)">
+                                <span class=" fas fa-chevron-left"></span>
+                            </button>
+                        </th>
+                        <th colspan="@(cols * 2 - 2)">
+                            <button class="btn btn-block btn-sm btn-outline-secondary border-0"
+                                    disabled="@(_View == DateTimePickerMode.Year ? "disabled" : null)"
+                                    @onclick="@(() => _View = _View - 1)">
+                                @title
+                            </button>
+                        </th>
+                        <th>
+                            <button class="btn btn-sm @(hasNext ? "btn-outline-primary" : "btn-outline-secondary") border-0"
+                                    disabled="@(hasNext ? null : "disabled")"
+                                    style="min-width:1rem"
+                                    @onclick="@(() => _ViewRange = next)">
+                                <span class="fas fa-chevron-right"></span>
+                            </button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @for (var i = 0; i < rows; i++)
+                    {
+                        <tr>
+                            @for (var j = 0; j < cols; j++)
+                            {
+                                var dt = add(_ViewRange, j + i * cols + offset);
+                                var ndt = add(dt, 1);
+                                var cls = dt <= PrivateValue && PrivateValue < ndt ? "btn-outline-primary" : "btn-outline-secondary text-dark";
+                                var disabled = ndt <= MinimumDate || MaximumDate < dt;
+                                <td colspan="2">
+                                    <button class="btn btn-sm @cls border-0"
+                                            disabled="@(disabled ? "disabled" : null)"
+                                            style="@(disabled ? "opacity:0.2" : null)"
+                                            @onclick="@(() => OnSelected(dt))">
+                                        @dt.ToString(format)
+                                    </button>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</span>
+@code {
+
+    private DateTime _ViewRange = new(2000, 1, 1);
+    private ElementReference _Input;
+    private ElementReference _Popover;
+    private bool _IsOpen;
+    private DateTimePickerMode _View;
+
+
+    private DateTime? _MonthDataRange;
+    private Task<IReadOnlyDictionary<DateTime, string>> _MonthDataTask;
+
+    private DateTime? PrivateValue
+    {
+        get
+        {
+            if (NonNullValue != default)
+            {
+                return NonNullValue;
+            }
+            return Value;
+        }
+        set
+        {
+            ValueChanged?.Invoke(value);
+            NonNullValueChanged?.Invoke(value ?? DateTime.Today);
+        }
+    }
+
+    private string DefaultFormat()
+    => Mode switch
+    {
+        DateTimePickerMode.Year => "yyyy",
+        DateTimePickerMode.Month => "yyyy-MM",
+        DateTimePickerMode.Date => "yyyy-MM-dd",
+        DateTimePickerMode.Hour => "yyyy-MM-dd HH",
+        _ => "yyyy-MM-dd HH:mm",
+    };
+
+    private string StringValue
+    {
+        get => PrivateValue?.ToString(DefaultFormat());
+        set => PrivateValue = DateTime.TryParse(value, out var dt)
+                            || DateTime.TryParseExact(value, DefaultFormat(), null, DateTimeStyles.NoCurrentDateDefault, out dt) ? dt : null;
+    }
+
+    private void InputOnFocus()
+    {
+        if (!_IsOpen && IsEnabled && !IsReadOnly)
+        {
+            _IsOpen = true;
+            _View = Mode switch
+            {
+                DateTimePickerMode.Year => Mode,
+                DateTimePickerMode.Month => Mode,
+                _ => DateTimePickerMode.Date,
+            };
+            _ViewRange = PrivateValue ?? DateTime.Today;
+            IJS!.ShowPopover(_Popover);
+        }
+        OnFocus?.Invoke();
+    }
+
+    private void InputOnBlur()
+    {
+        Task.Delay(100).ContinueWith(_ =>
+            {
+                if (!IJS!.ContainsActiveElement(_Popover))
+                {
+                    _IsOpen = false;
+                    IJS!.HidePopover(_Popover);
+                    OnBlur?.Invoke();
+                }
+                else
+                {
+                    IJS!.Focus(_Input, true);
+                }
+            });
+    }
+
+    private void InputOnClick()
+        => InputOnFocus();
+
+    private void OnSelected(DateTime dt)
+    {
+        if (_View < Mode && _View < DateTimePickerMode.Minute)
+        {
+            _ViewRange = dt;
+            _View = (_View + 1);
+        }
+        else
+        {
+            PrivateValue = dt;
+            _IsOpen = false;
+            IJS!.HidePopover(_Popover);
+            OnBlur?.Invoke();
+        }
+    }
 }

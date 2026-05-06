@@ -20,10 +20,7 @@ public partial class DateTimeFormGroup
 
     [Parameter]
     public DateTimePickerMode Mode { get; set; } = DateTimePickerMode.Date;
-
-    [Parameter]
-    public bool UseCurrent { get; set; }
-
+     
     #region NullableDateTime
 
     private DateTime? _NullableDateTime;

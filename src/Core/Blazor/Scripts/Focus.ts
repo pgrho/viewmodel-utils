@@ -8,4 +8,18 @@ namespace Shipwreck.ViewModelUtils {
             }
         }
     }
+    export function containsActiveElement(p: Element) {
+        for (let e = document.activeElement; e; e = e.parentElement) {
+            if (e === p) {
+                return true;
+            }
+        }
+        return false;
+    }
+    export function showPopover(e: HTMLElement) {
+        (e as any).showPopover();
+    }
+    export function hidePopover(e: HTMLElement) {
+        (e as any).hidePopover();
+    }
 }

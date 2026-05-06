@@ -53,7 +53,6 @@ gulp.task('bundlejs', function () {
         'node_modules/popper.js/dist/umd/popper.min.js',
         'node_modules/bootstrap/dist/js/bootstrap.min.js',
         'node_modules/moment/min/moment-with-locales.min.js',
-        'node_modules/tempusdominus-bootstrap-4/build/js/tempusdominus-bootstrap-4.min.js',
         jtToast + 'Shipwreck.BlazorJqueryToast.js',
         typeahead + 'Shipwreck.BlazorTypeahead.js',
         '../../Core/Blazor/wwwroot/Shipwreck.ViewModelUtils.Core.Blazor.min.js',
@@ -72,7 +71,6 @@ gulp.task('fwcss', function () {
 gulp.task('bundlecss', function () {
     return gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.min.css',
-        'node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css',
         jtToast + 'Shipwreck.BlazorJqueryToast.css',
         'wwwroot/Shipwreck.ViewModelUtils.Blazor.min.css'
     ])

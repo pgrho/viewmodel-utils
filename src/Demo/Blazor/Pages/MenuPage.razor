@@ -2,6 +2,7 @@
 @page "/"
 @using (OnBeginRender())
 {
+    var d = DataContext;
     <h1>Hello, world!</h1>
 
     @("Welcome to your new app.")
@@ -24,9 +25,13 @@
         <button @onclick="@(() => DataContext?.ShowSuccessToastAsync(DateTime.Now.ToString()))">ShowSuccessToastAsync</button>
         <button @onclick="@(() => DataContext?.ShowErrorToastAsync(DateTime.Now.ToString()))">ShowErrorToastAsync</button>
     </div>
+    <DateTimePicker Mode="DateTimePickerMode.Date"
+                    @bind-Value="d.Date" />
+    <DateTimePicker Mode="DateTimePickerMode.Second"
+                    @bind-Value="d.Second" />
 }
 @code
 {
     protected override FrameworkPageViewModel GetOrCreateDataContext()
-        => base.DataContext as MenuPageViewModel ?? new MenuPageViewModel(this);
+        => base.DataContext as MenuPageViewModel ?? new(this);
 }
