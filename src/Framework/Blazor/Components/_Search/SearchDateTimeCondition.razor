@@ -10,12 +10,13 @@
         <SearchConditionHeader DataContext="@d" />
         <dd>
             <form class="input-group"
+                  style="flex-wrap:nowrap"
                   @onsubmit="@d.Host.BeginSearch">
                 <SearchOperatorButton @bind-Operator="@d.Operator"
                                       Operators="@DateTimeConditionViewModel.Operators"
                                       OnSelected="@(() => _Input.FocusAsync())" />
                 <DateTimePicker @ref="@_Input"
-                                UseCurrent="false"
+                                SpanStyle="flex-shrink:1;flex-grow:1;"
                                 Mode="@Mode"
                                 @bind-Value="@d.Value" />
                 <SearchRemoveButton DataContext="@d" />

@@ -8,7 +8,6 @@ public partial class DateTimePicker : BindableComponentBase
     [Parameter]
     public string Id { get; set; } = "DateTimePicker-" + (++_NewId);
 
-    private bool _ShouldInvoke;
 
     [Inject]
     public IJSRuntime JS { get; set; }
@@ -30,6 +29,9 @@ public partial class DateTimePicker : BindableComponentBase
     public Action<DateTime> NonNullValueChanged { get; set; }
 
     #endregion Value
+
+    [Parameter]
+    public string SpanStyle { get; set; }
 
     [Parameter]
     public string ClassName { get; set; } = "form-control";
