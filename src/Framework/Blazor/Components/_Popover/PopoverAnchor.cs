@@ -1,18 +1,28 @@
-﻿using KeyboardEventArgs = Microsoft.AspNetCore.Components.Web.KeyboardEventArgs;
+﻿using Microsoft.AspNetCore.Components.Web;
+
+using KeyboardEventArgs = Microsoft.AspNetCore.Components.Web.KeyboardEventArgs;
 using MouseEventArgs = Microsoft.AspNetCore.Components.Web.MouseEventArgs;
 
 namespace Shipwreck.ViewModelUtils.Components;
 
-public abstract class PopoverTarget<T> : BindableComponentBase<T>
+public abstract class PopoverAnchor<T> : BindableComponentBase<T>
     where T : class
 {
     protected ElementReference TargetElement { get; set; }
 
-    [CascadingParameter]
-    public IHasPopoverPresenter PopoverPresenterProvider { get; set; }
+    public PopoverFrame? Frame { get; protected set; }
 
-    [CascadingParameter]
-    public IContainerElementProvider ContainerElementProvider { get; set; }
+    [Parameter]
+    public bool IsPrimary { get; set; }
+
+    [Parameter]
+    public int? TabIndex { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IDictionary<string, object> AdditionalAttributes { get; set; }
 
     [Parameter]
     public ICommand Command { get; set; }
@@ -20,8 +30,11 @@ public abstract class PopoverTarget<T> : BindableComponentBase<T>
     [Parameter]
     public PopoverTargetCommandMode CommandMode { get; set; } = PopoverTargetCommandMode.Replace;
 
-    protected ElementReference ContainerElement => ContainerElementProvider?.Container ?? default;
+    protected virtual int? GetTabIndex() => TabIndex;
 
+    protected virtual bool ShouldPopover(KeyboardEventArgs e) => e.Key == " " || e.Key == "Enter";
+
+    protected virtual bool ShouldPopover(MouseEventArgs e) => true;
     protected void OnKeyDown(KeyboardEventArgs e)
     {
         if (ShouldPopover(e))
@@ -34,14 +47,10 @@ public abstract class PopoverTarget<T> : BindableComponentBase<T>
                     return;
                 }
             }
-            ShowPopover(DataContext);
+
+            Frame?.OnButtonFocus();
         }
     }
-
-    protected virtual bool ShouldPopover(KeyboardEventArgs e) => e.Key == " " || e.Key == "Enter";
-
-    protected virtual bool ShouldPopover(MouseEventArgs e) => true;
-
     protected void OnClick(MouseEventArgs e)
     {
         if (ShouldPopover(e))
@@ -54,9 +63,9 @@ public abstract class PopoverTarget<T> : BindableComponentBase<T>
                     return;
                 }
             }
-            ShowPopover(DataContext);
+            Frame?.OnButtonFocus();
         }
     }
 
-    protected abstract void ShowPopover(T dataContext);
+    protected void OnBlur() => Frame?.OnButtonBlur(TargetElement);
 }
