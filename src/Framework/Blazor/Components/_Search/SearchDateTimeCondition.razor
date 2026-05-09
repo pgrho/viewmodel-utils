@@ -48,7 +48,7 @@
             {
                 return DateTimePickerMode.Hour;
             }
-            return DateTimePickerMode.Minute;
+            return DataContext?.Property.IsDate == true ? DateTimePickerMode.Date : DateTimePickerMode.Minute;
         }
     }
 
