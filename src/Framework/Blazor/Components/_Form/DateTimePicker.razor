@@ -335,6 +335,11 @@
         {
             _ViewRange = dt;
             _View = (_View + 1);
+            if (_View > DateTimePickerMode.Date)
+            {
+                ValueChanged?.Invoke(dt);
+                NonNullValueChanged?.Invoke(dt);
+            }
         }
         else
         {

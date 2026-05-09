@@ -3,9 +3,7 @@
 @using (OnBeginRender())
 {
     var d = DataContext;
-    <PopoverFrame ReferenceElement="@ReferenceElement"
-                  Boundaries="@Boundaries"
-                  OnClosed="@(() => Presenter?.CloseByDataContext(DataContext))">
+    <PopoverFrame Frame="@Frame">
         <ListScope T="CommandViewModelBase"
                    Source="d">
             @foreach (var c in d ?? Enumerable.Empty<CommandViewModelBase>())
@@ -23,27 +21,5 @@
 @code
 {
     [Parameter]
-    public ElementReference ReferenceElement { get; set; }
-
-    [Parameter]
-    public ElementReference Boundaries { get; set; }
-
-    [Parameter]
-    public ModalPresenterBase Presenter { get; set; }
-
-    public static void Show(ModalPresenterBase presenter, ElementReference reference, CommandViewModelCollection dataContext, ElementReference boundaries = default)
-    {
-        if (dataContext.VisibleCount <= 0)
-        {
-            return;
-        }
-
-        presenter.ShowModal(typeof(CommandsPopover), new Dictionary<string, object>
-        {
-            [nameof(DataContext)] = dataContext,
-            [nameof(ReferenceElement)] = reference,
-            [nameof(Presenter)] = presenter,
-            [nameof(Boundaries)] = boundaries,
-        });
-    }
+    public PopoverFrame Frame { get; set; }
 }
