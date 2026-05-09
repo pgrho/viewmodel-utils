@@ -39,6 +39,15 @@
                                           ViewType="typeof(SearchMultipleOptionCondition<>).MakeGenericType(mopc.ValueType)"
                                           Attributes="@(new Dictionary<string, object>() { ["DataContext"] = c })" />
                         break;
+
+                    default:
+                        if(GetConditionViewType(c) is Type t)
+                        {
+                            <ContentPresenter @key="@c.GetHashCode()"
+                                              ViewType="@t"
+                                              Attributes="@(new Dictionary<string, object>() { ["DataContext"] = c })" />
+                        }
+                        break;
                 }
             }
         </dl>
@@ -51,4 +60,6 @@
 
     protected override bool OnItemPropertyChanged(ConditionViewModel item, string propertyName)
         => false;
+
+    protected virtual Type GetConditionViewType(object dataContext) => null;
 }
