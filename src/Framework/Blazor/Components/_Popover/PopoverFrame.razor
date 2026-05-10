@@ -21,7 +21,10 @@
                     </CascadingValue>
                 </dl>
                 @FooterContent
-                <PopoverCommandsRow DataContext="Commands" />
+                @if (Commands != null)
+                {
+                    <PopoverCommandsRow DataContext="Commands" />
+                }
             </div>
         </div>
     }
