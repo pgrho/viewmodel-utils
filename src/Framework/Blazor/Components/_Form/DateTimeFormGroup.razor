@@ -19,7 +19,7 @@
                 @Title
             }
         </label>
-        <DateTimePicker @ref="_DateTimePicker"
+        <DateTimePicker @ref="DateTimePicker"
                         Id="@DateTimePickerId"
                         ClassName="@(Theme?.ControlClass + " " + AdditionalInputClass)"
                         IsEnabled="@(!GetIsDisabled())"
@@ -28,12 +28,35 @@
                         Placeholder="@GetPlaceholder()"
                         Mode="@Mode"
                         OnFocus="@(() => OnFocusCommand?.Execute(OnFocusCommandParameter))"
-                        @bind-Value="InternalValue" />
+                        NonNullValue="@DateTime"
+                        NonNullValueChanged="@(e => { DateTimeChanged?.Invoke(e); StateHasChanged(); })"
+                        Value="@NullableDateTime"
+                        ValueChanged="@(e => { NullableDateTimeChanged?.Invoke(e); StateHasChanged(); })" />
     </form>
 }
 @code
 {
     private DateTimePicker _DateTimePicker;
+    private DateTimePicker DateTimePicker
+    {
+        get => _DateTimePicker;
+        set
+        {
+            if (value != _DateTimePicker)
+            {
+                _DateTimePicker = value;
+                if (value != null)
+                {
+#pragma warning disable BL0005
+                    value.NonNullValue = _DateTime;
+                    value.Value = _NullableDateTime;
+#pragma warning restore BL0005
+                }
+            }
+        }
+    }
+
+
 
     public override ValueTask FocusAsync(bool selectAll = false)
         => _DateTimePicker.FocusAsync(selectAll);

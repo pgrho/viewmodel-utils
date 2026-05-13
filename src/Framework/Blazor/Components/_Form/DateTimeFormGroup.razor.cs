@@ -20,32 +20,29 @@ public partial class DateTimeFormGroup
 
     [Parameter]
     public DateTimePickerMode Mode { get; set; } = DateTimePickerMode.Date;
-     
+
     #region NullableDateTime
 
     private DateTime? _NullableDateTime;
 
+    private DateTime _DateTime; 
+
+#pragma warning disable BL0005
+#pragma warning disable BL0007
+
     [Parameter]
     public DateTime? NullableDateTime
     {
-        get => _NullableDateTime;
+        get => DateTimePicker?.Value ?? _NullableDateTime;
         set
         {
-            if (!Equals(value, _NullableDateTime))
+            if (DateTimePicker is DateTimePicker p)
+            {
+                p.Value = value;
+            }
+            else
             {
                 _NullableDateTime = value;
-                using (Host?.PushPropertyChangedExpectation(BindingPropertyName))
-                {
-                    NullableDateTimeChanged?.Invoke(_NullableDateTime);
-                }
-                using (Host?.PushPropertyChangedExpectation(BindingPropertyName))
-                {
-                    DateTimeChanged?.Invoke(DateTime);
-                }
-                if (!IsUpdatingSource)
-                {
-                    ShouldRenderCore = true;
-                }
             }
         }
     }
@@ -53,29 +50,28 @@ public partial class DateTimeFormGroup
     [Parameter]
     public DateTime DateTime
     {
-        get => _NullableDateTime ?? default;
-        set => NullableDateTime = value;
-    }
-
-    protected DateTime? InternalValue
-    {
-        get => NullableDateTime;
+        get => DateTimePicker?.NonNullValue ?? _DateTime;
         set
         {
-            IsUpdatingSource = true;
-            NullableDateTime = value;
-            IsUpdatingSource = false;
+            if (DateTimePicker is DateTimePicker p)
+            {
+                p.NonNullValue = value;
+            }
+            else
+            {
+                _DateTime = value;
+            }
         }
     }
 
-    [Parameter]
-    public Action<DateTime> DateTimeChanged { get; set; }
+#pragma warning restore BL0007
+#pragma warning restore BL0005
 
     [Parameter]
     public Action<DateTime?> NullableDateTimeChanged { get; set; }
 
     [Parameter]
-    public string BindingPropertyName { get; set; }
+    public Action<DateTime> DateTimeChanged { get; set; }
 
     #endregion NullableDateTime
 }
