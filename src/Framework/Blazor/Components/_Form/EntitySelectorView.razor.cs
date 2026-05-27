@@ -101,6 +101,11 @@ public partial class EntitySelectorView
     [Parameter]
     public bool IsNameVisible { get; set; } = true;
 
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    public static Func<object, Type> ChildContentProvider { get; set; }
+
     private string SelectedCode
     {
         get => DataContext?.SelectedItem != null ? DataContext.GetCode(DataContext.SelectedItem) : null;

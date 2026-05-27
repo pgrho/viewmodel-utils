@@ -79,7 +79,20 @@
                          style="@NameStyle"
                          readonly="readonly"
                          tabindex="-1">
-                        @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
+
+                        @if (ChildContent != null)
+                        {
+                            @ChildContent
+                        }
+                        else if (d.SelectedItem != null && ChildContentProvider?.Invoke(d.SelectedItem) is Type t)
+                        {
+                            <ContentPresenter ViewType="t"
+                                              Attributes="@(new Dictionary<string, object>() { ["DataContext"] = d.SelectedItem })" />
+                        }
+                        else
+                        {
+                            @(d?.SelectedItem != null ? d.GetName(d.SelectedItem) : null)
+                        }
                     </div>
                 </DataContextScope>
             }
