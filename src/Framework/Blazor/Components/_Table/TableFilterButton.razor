@@ -1,0 +1,111 @@
+﻿@namespace Shipwreck.ViewModelUtils.Components
+@inherits PopoverAnchor<IFilterable>
+@using (OnBeginRender())
+{
+    if (DataContext is IFilterable d
+    && Cell.FilterKey is string fk
+    && !string.IsNullOrEmpty(fk)
+    && d.IsFilterSupported(fk))
+    {
+        <a @ref="@TargetElement"
+           class="@(string.IsNullOrEmpty(d.GetFilter(fk)) ? "text-muted" : "text-light")"
+           href="javascript:void(0)"
+           @onkeydown="@OnKeyDown"
+           @onclick="@OnClick"
+           @onclick:preventDefault="true"
+           data-enhance-nav="false">
+            <span class="fas fa-filter"></span>
+        </a>
+        <PopoverFrame @ref="Frame"
+                      Title="@(Cell.FilterName ?? Cell.Header)"
+                      LabelColumn="4">
+            @if (d.GetFilterOptions(fk) is var options && options != null)
+            {
+                <table class="table table-sm">
+                    <tbody>
+                        @{
+                            _Values ??= options.Where(e => e.IsSelected).Select(e => e.Value).ToHashSet();
+                        }
+                        @foreach (var op in options)
+                        {
+                            var selected = _Values.Contains(op.Value);
+                            <tr @key="@op.Value">
+                                <td style="max-width: 1.5rem">
+                                    <a href="javascript:void(0)"
+                                       class="btn btn-block btn-link border-0 p-0"
+                                       @onclick="@(() => Toggle(op.Value, !selected))"
+                                       data-enhance-nav="true">
+                                        <span class="@(selected ? "fas fa-check-square" : "far fa-square")"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)"
+                                       class="btn btn-block btn-link border-0 p-0 text-left"
+                                       @onclick="@(() => Select(op.Value))"
+                                       data-enhance-nav="true">
+                                        @(op.Name.TrimOrNull() ?? "(null)")
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <input class="form-control" @bind="@InternalValue" />
+            }
+            @if (!string.IsNullOrEmpty(Cell.FilterDescription))
+            {
+                <div>@Cell.FilterDescription</div>
+            }
+            <button class="btn btn-sm btn-block"
+                    @onclick="@(() => Frame.JS.HidePopoverAsync(TargetElement))">
+                <span class="fas fa-times"></span>
+                閉じる
+            </button>
+        </PopoverFrame>
+    }
+}
+@code
+{
+    [Parameter]
+    public TableHeaderSortableCell Cell { get; set; }
+
+    private string InternalValue
+    {
+        get => Cell.Filter;
+        set
+        {
+            if (Cell.Filter != value)
+            {
+                Cell.Filter = value;
+            }
+        }
+    }
+    private HashSet<string> _Values;
+
+    private void Toggle(string value, bool isSelected)
+    {
+        if (isSelected ? _Values.Add(value) : _Values.Remove(value))
+        {
+            OnChanged();
+        }
+    }
+
+    private void Select(string value)
+    {
+        if (_Values?.Count == 1 && _Values.First() == value)
+        {
+            return;
+        }
+        _Values = new() { value };
+        OnChanged();
+    }
+
+    private void OnChanged()
+        => InternalValue = (
+            _Values?.Count == DataContext.GetFilterOptions(Cell.FilterKey).Count()
+            ? string.Empty
+            : string.Join(",", _Values ?? []));
+}

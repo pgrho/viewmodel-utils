@@ -27,38 +27,7 @@
             </a>
             @if (d is IFilterable filterable && !string.IsNullOrEmpty(fk) && filterable.IsFilterSupported(fk))
             {
-                <a @ref="@_FilterButton"
-                   class="@(string.IsNullOrEmpty(filterable.GetFilter(fk)) ? "text-muted" : "text-light")"
-                   href="javascript:void(0)"
-                   @onclick="@(() =>
-                   {
-                       if (!filterable.TryShowPopover(fk, this, _FilterButton))
-                       {
-                           if (filterable.GetFilterOptions(fk) is var options && options !=null)
-                           {
-                               EnumFilterPopover.Show(
-                                   HasPopoverPresenter.PopoverPresenter,
-                                   _FilterButton,
-                                   value: Filter,
-                                   valueChanged: v => Filter = v,
-                                   title: FilterName ?? Header,
-                                   description: FilterDescription,
-                                   options: options);
-                            }
-                            else
-                            {
-                               FilterPopover.Show(
-                                   HasPopoverPresenter.PopoverPresenter,
-                                   _FilterButton,
-                                   value: Filter,
-                                   valueChanged: v => Filter = v,
-                                   title: FilterName ?? Header,
-                                   description: FilterDescription);
-                            }
-                       }
-                   })"
-                   @onclick:preventDefault="true"
-                   data-enhance-nav="false"><span class="fas fa-filter"></span></a>
+                <TableFilterButton DataContext="filterable" Cell="@this" />
             }
         }
         else
