@@ -7,17 +7,21 @@
     && !string.IsNullOrEmpty(fk)
     && d.IsFilterSupported(fk))
     {
+        var style = (Frame != null ? $"anchor-name:{Frame.AnchorName};" : null);
         <a @ref="@TargetElement"
            class="@(string.IsNullOrEmpty(d.GetFilter(fk)) ? "text-muted" : "text-light")"
+           style="@style"
            href="javascript:void(0)"
            @onkeydown="@OnKeyDown"
            @onclick="@OnClick"
            @onclick:preventDefault="true"
+           @onblur="@OnBlur"
            data-enhance-nav="false">
             <span class="fas fa-filter"></span>
         </a>
         <PopoverFrame @ref="Frame"
                       Title="@(Cell.FilterName ?? Cell.Header)"
+                      ButtonBlurOverride="@((f, p, b) => ((IJSInProcessRuntime)f.JS).ContainsActiveElement(_Input))"
                       LabelColumn="4">
             @if (d.GetFilterOptions(fk) is var options && options != null)
             {
@@ -53,14 +57,15 @@
             }
             else
             {
-                <input class="form-control" @bind="@InternalValue" />
+                <input @ref="@_Input"
+                       class="form-control" @bind="@InternalValue" />
             }
             @if (!string.IsNullOrEmpty(Cell.FilterDescription))
             {
                 <div>@Cell.FilterDescription</div>
             }
             <button class="btn btn-sm btn-block"
-                    @onclick="@(() => Frame.JS.HidePopoverAsync(TargetElement))">
+                    @onclick="@(() => Frame.JS.HidePopoverAsync(Frame.PopoverElement))">
                 <span class="fas fa-times"></span>
                 閉じる
             </button>
@@ -84,6 +89,7 @@
         }
     }
     private HashSet<string> _Values;
+    private ElementReference _Input;
 
     private void Toggle(string value, bool isSelected)
     {

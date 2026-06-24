@@ -57,7 +57,12 @@
     [Parameter]
     public RenderFragment FooterContent { get; set; }
 
+    [Parameter]
+    public Func<PopoverFrame, ElementReference, ElementReference, bool> ButtonBlurOverride { get; set; }
+
     private ElementReference _Popover;
+    public ElementReference PopoverElement => _Popover;
+
     private bool _IsOpen;
 
     public void OnButtonFocus()
@@ -73,6 +78,11 @@
     {
         Task.Delay(1).ContinueWith(_ =>
             {
+                if (ButtonBlurOverride?.Invoke(this, _Popover, button) == true)
+                {
+                    return;
+                }
+
                 if (!IJS!.ContainsActiveElement(_Popover))
                 {
                     _IsOpen = false;
