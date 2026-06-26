@@ -2,7 +2,7 @@
 @inherits ListComponentBase<MenuItemViewModel, MenuItemViewModel>
 @using (OnBeginRender())
 {
-    var d = DataContext; 
+    var d = DataContext;
     if (d.ContainsVisible)
     {
         var title = d.Title ?? d.CommandTitle;
@@ -34,14 +34,8 @@
                    data-toggle="dropdown"
                    aria-haspopup="true"
                    aria-expanded="false">
-                    @if (!string.IsNullOrEmpty(d?.Icon))
-                    {
-                        <span class="@d?.Icon"></span>
-                    }
-                    @title
-                    @if (d.BadgeCount > 0)
-                    {
-                        <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+                    @{
+                        DefaultContentRenderer(__builder, d);
                     }
                 </a>
                 <div class="dropdown-menu"
@@ -71,14 +65,8 @@
                    @onclick="@(() => d?.Command?.Execute())"
                    @onclick:preventDefault="true"
                    data-enhance-nav="false">
-                    @if (!string.IsNullOrEmpty(d?.Icon))
-                    {
-                        <span class="@d?.Icon"></span>
-                    }
-                    @title
-                    @if (d.BadgeCount > 0)
-                    {
-                        <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+                    @{
+                        DefaultContentRenderer(__builder, d);
                     }
                 </a>
             </li>
@@ -89,4 +77,31 @@
 {
     [Parameter]
     public string Title { get; set; }
+
+    [Parameter]
+    public RenderFragment<MenuItemViewModel> ContentRenderer { get; set; }
+
+    private void DefaultContentRenderer(RenderTreeBuilder __builder, MenuItemViewModel d)
+    {
+        if (ContentRenderer != null)
+        {
+            @ContentRenderer(d)
+        }
+        else
+        {
+            var title = d.Title ?? d.CommandTitle;
+            if (!string.IsNullOrEmpty(d?.Icon))
+            {
+                <span class="@d?.Icon @d.IconClass"></span>
+            }
+            if (!string.IsNullOrEmpty(title))
+            {
+                <span class="@d.TitleClass">@title</span>
+            }
+            if (d.BadgeCount > 0)
+            {
+                <span class="badge badge-pill badge-danger">@(d.BadgeCount.ToString("#,0"))</span>
+            }
+        }
+    }
 }

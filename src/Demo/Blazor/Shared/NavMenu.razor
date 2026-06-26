@@ -12,12 +12,17 @@
         <ul class="nav flex-column">
             <li class="nav-item px-3">
                 <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-            Home
-                </NavLink>  
+                    Home
+                </NavLink>
                 <NavLink class="nav-link" href="/listTest" Match="NavLinkMatch.All">
                     ListTest
                 </NavLink>
             </li>
+            <NavItems Source="@GetMenuItems()">
+                <ContentRenderer Context="d">
+                    <span class="text-danger">@d.CommandTitle</span>
+                </ContentRenderer>
+            </NavItems>
         </ul>
     </div>
 }
@@ -30,4 +35,13 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    private MenuItemViewModel[] _NavItems;
+    private MenuItemViewModel[] GetMenuItems()
+        => _NavItems ??= new MenuItemViewModel[]
+        {
+            new(CommandViewModel.Create(()=>{ }, title: "Hoge")),
+            new(CommandViewModel.Create(()=>{ }, title: "Fuga")),
+            new(CommandViewModel.Create(()=>{ }, title: "Piyo")),
+        };
 }

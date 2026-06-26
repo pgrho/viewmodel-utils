@@ -23,6 +23,30 @@ public class MenuItemViewModel : ObservableModel, ICommandViewModel
 
     #endregion Title
 
+    #region IconClass
+
+    private string? _IconClass;
+
+    public string? IconClass
+    {
+        get => _IconClass;
+        set => SetProperty(ref _IconClass, value);
+    }
+
+    #endregion IconClass
+
+    #region TitleClass
+
+    private string? _TitleClass;
+
+    public string? TitleClass
+    {
+        get => _TitleClass;
+        set => SetProperty(ref _TitleClass, value);
+    }
+
+    #endregion TitleClass
+
     #region Command
 
     private CommandViewModelBase? _Command;

@@ -8,11 +8,14 @@
         {
             <NavItem @key="@e.GetHashCode()"
                      DataContext="@e"
-                     Source="@e.Children" />
+                     Source="@e.Children"
+                     ContentRenderer="@ContentRenderer" />
         }
     }
 }
 @code
 {
 
+    [Parameter]
+    public RenderFragment<MenuItemViewModel> ContentRenderer { get; set; }
 }
